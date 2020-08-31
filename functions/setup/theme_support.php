@@ -20,3 +20,6 @@ function init_theme_support() {
 	\add_post_type_support( 'page', 'excerpt' );
 }
 \add_action('after_setup_theme', ns('init_theme_support'), 10);
+
+global $content_width;
+$content_width = 1200;
