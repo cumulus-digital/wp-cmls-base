@@ -50,12 +50,13 @@ let $j = jQuery.noConflict();
 	}
 
 	$('body > header .hamburger').click(function(e) {
-		this.focus();
 		e.stopPropagation()
 		if (menuOpenState) {
+			this.blur();
 			menuClose();
 			return;
 		}
+		this.focus();
 		menuOpen();
 	});
 	$('html').click(function(e) {
@@ -64,8 +65,9 @@ let $j = jQuery.noConflict();
 		}
 	});
 	$('html').focusin(function(e) {
+		const $context = $('body > header .hamburger, body > header .menu');
 		if (
-			! $('body > header .hamburger, body > header .menu').has(e.target).length
+			! ($context.is(e.target) || $context.has(e.target).length)
 			&& menuOpenState
 		) {
 			menuClose();
