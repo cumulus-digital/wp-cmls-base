@@ -1,0 +1,46 @@
+{
+  "name": "wp-cmls-base",
+  "version": "1.0.0",
+  "description": "Base wordpress theme for CMLS sites",
+  "main": "index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "format:js": "wp-scripts format-js",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:md:docs": "wp-scripts lint-md-docs",
+    "lint:md:js": "wp-scripts lint-md-js",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "packages-update": "wp-scripts packages-update",
+    "start": "wp-scripts start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cumulus-digital/wp-cmls-base"
+  },
+  "keywords": [
+    "wordpress",
+    "cmls"
+  ],
+  "author": "vena",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/cumulus-digital/wp-cmls-base/issues"
+  },
+  "homepage": "https://github.com/cumulus-digital/wp-cmls-base#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "^12.1.1",
+    "bourbon": "^7.0.0",
+    "classlist-polyfill": "^1.2.0",
+    "hamburgers": "^1.1.3",
+    "jquery": "^3.5.1",
+    "lodash": "^4.17.20",
+    "postcss-preset-env": "^6.7.0"
+  },
+  "dependencies": {},
+  "browserslist": [
+    "last 3 versions or > 1%"
+  ]
+}

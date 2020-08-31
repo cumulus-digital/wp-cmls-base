@@ -1,0 +1,75 @@
+/**
+ * Misc adjustments to built in styles from WP and block devs
+ */
+
+// Handle Kadence inherit max content width from theme
+.kb-theme-content-width {
+    max-width: $width-max;
+}
+
+// Allow reversing columns on mobile
+.reverse-columns-on-mobile {
+    flex-wrap: wrap-reverse;
+}
+
+// Fix padding on UGB Cards
+.ugb-feature-grid .ugb-feature-grid__item {
+    padding: 1em !important;
+}
+// Remove absurd margin on UGB Buttons
+.ugb-button-wrapper {
+    margin: 0 -.5em;
+}
+
+// remove underline on kadence block link wrappers
+.kt-blocks-info-box-link-wrap {
+    text-decoration: none;
+}
+// Max width for kadence info block images
+.kt-blocks-info-box-media {
+    width: 100%;
+}
+.kt-blocks-info-box-media img {
+    max-width: 100%;
+    height: auto;
+}
+
+// Allow audio player to get smaller
+.wp-block-audio audio {
+    min-width: 150px;
+}
+
+// RSS Aggregator styles
+.wp-rss-aggregator {
+    font-size: 0.8em;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .feed-source {
+        display: none;
+    }
+
+    .nav-links {
+		border-top: 1px solid RGBA(0,0,0,0.2);
+		padding-top: .5em;
+		margin-top: .5em;
+
+		> * {
+			display: inline-block;
+		}
+	}
+}
+
+// Kadence block top divider fix on mobile
+@include phone {
+    .kt-row-layout-top-sep {
+        top: -1px;
+    }
+    .kt-row-layout-bottom-sep {
+        bottom: -1px;
+    }
+}

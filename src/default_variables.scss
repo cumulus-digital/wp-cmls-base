@@ -1,0 +1,52 @@
+@import 'global.scss';
+
+:root {
+	--#{$PREFIX}-color-site-background: transparent;
+
+	--#{$PREFIX}-color-masthead-background: #00598e;
+	--#{$PREFIX}-color-masthead-background-overlay: #ffffff;
+	--#{$PREFIX}-color-masthead-foreground: rgba(255, 255, 255, 1);
+	--#{$PREFIX}-color-masthead-foreground-overlay: rgba(0, 0, 0, 0.95);
+	--#{$PREFIX}-file-masthead-background: none;
+    --#{$PREFIX}-file-masthead-background-cssurl: none;
+	--#{$PREFIX}-file-masthead-background-overlay: none;
+    --#{$PREFIX}-file-masthead-background-overlay-cssurl: none;
+	--#{$PREFIX}-file-masthead-logo: none;
+    --#{$PREFIX}-file-masthead-logo-cssurl: none;
+	--#{$PREFIX}-file-masthead-logo-overlay: none;
+	--#{$PREFIX}-file-masthead-logo-overlay-cssurl: none;
+	--#{$PREFIX}-file-masthead-logo-inside: none;
+    --#{$PREFIX}-file-masthead-logo-inside-cssurl: none;
+	--#{$PREFIX}-file-masthead-logo-inside-overlay: none;
+    --#{$PREFIX}-file-masthead-logo-inside-overlay-cssurl: none;
+
+	--#{$PREFIX}-color-main_menu-background: #000000;
+	--#{$PREFIX}-color-main_menu-foreground: #ffffff;
+	--#{$PREFIX}-color-main_menu-foreground-hover_foreground: #FFFFFF;
+	--#{$PREFIX}-color-main_menu-foreground-hover_background: #00598e;
+	--#{$PREFIX}-file-main_menu-background: none;
+	--#{$PREFIX}-file-main_menu-background-cssurl: none;
+	--#{$PREFIX}-setting-main_menu-background-position: top left;
+	--#{$PREFIX}-setting-main_menu-background-size: cover;
+
+	--#{$PREFIX}-color-content-background: #000000;
+	--#{$PREFIX}-color-content-foreground: #000000;
+
+	--#{$PREFIX}-color-footer-background: #000000;
+	--#{$PREFIX}-color-footer-foreground: #ffffff;
+	--#{$PREFIX}-file-footer-logo: none;
+    --#{$PREFIX}-file-footer-logo-cssurl: none;
+
+	--#{$PREFIX}-color-site_background: #ffffff;
+	--#{$PREFIX}-color-brand: #00598e;
+	--#{$PREFIX}-color-highlight: #3399cc;
+	--#{$PREFIX}-color-accent: #a33cb3;
+	--#{$PREFIX}-color-favicon-mstile: #00598e;
+	--#{$PREFIX}-color-favicon-chrome: #00598e;
+
+	--#{$PREFIX}-font-font_family: 'Montserrat', sans-serif;
+	--#{$PREFIX}-font-base_size: 19px;
+	--#{$PREFIX}-font-base_lineheight: 1.25;
+
+	--#{$PREFIX}-masthead-height: 8vh;
+}

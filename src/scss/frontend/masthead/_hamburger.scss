@@ -1,0 +1,79 @@
+$hamburger-padding-x           : 0;
+$hamburger-padding-y           : 0;
+$hamburger-layer-width         : 2em;
+$hamburger-layer-height        : 5px;
+$hamburger-layer-spacing       : 6px;
+$hamburger-layer-color         : #000;
+$hamburger-layer-border-radius : 1em;
+$hamburger-hover-opacity       : 1;
+$hamburger-active-layer-color  : #fff;
+$hamburger-active-hover-opacity: $hamburger-hover-opacity;
+
+// To use CSS filters as the hover effect instead of opacity,
+// set $hamburger-hover-use-filter as true and
+// change the value of $hamburger-hover-filter accordingly.
+$hamburger-hover-use-filter   : false;
+$hamburger-hover-filter       : opacity(50%);
+$hamburger-active-hover-filter: $hamburger-hover-filter;
+
+$hamburger-types: ( spin );
+
+@import "hamburgers/_sass/hamburgers/hamburgers.scss";
+
+.hamburger {
+	position: relative;
+	z-index: 2;
+	cursor: pointer;
+	height: 100%;
+	width: var(--#{$PREFIX}-masthead-height);
+
+	&::after {
+		display: block;
+		content: '';
+		background-color: #000;
+		width: 100%;
+		height: 0%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		transition: height 0.05s linear;
+		transition-delay: 0.3s;
+		z-index: 2;
+	}
+
+	.hamburger-box {
+		vertical-align: middle;
+	}
+
+	.hamburger-inner,
+	.hamburger-inner::before,
+	.hamburger-inner::after {
+		transition: all 0.2s;
+		z-index: 3;
+		background-color: var(--#{$PREFIX}-color-masthead-foreground);
+	}
+	body.under-masthead &:not(.is-active) {
+		.hamburger-inner,
+		.hamburger-inner::before,
+		.hamburger-inner::after {
+			background-color: var(--#{$PREFIX}-color-masthead-foreground-overlay);
+		}
+	}
+
+	/*
+	&:not(.is-active):hover {
+		.hamburger-inner,
+		.hamburger-inner::before,
+		.hamburger-inner::after {
+			box-shadow: 0 2px 1px rgba(0,0,0,0.8);
+		}
+	}
+	*/
+
+	&.is-active {
+		&::after {
+			height: 100%;
+			transition-delay: 0s;
+		}
+	}
+}

@@ -1,0 +1,151 @@
+/**
+ * General styles applied to all content
+ */
+
+/*
+html {
+	min-height: 120vh;
+}
+*/
+
+html,body {
+	background-color: var(--#{$PREFIX}-color-site-background);
+	color: var(--#{$PREFIX}-color-content-foreground);
+
+	font-family: var(--#{$PREFIX}-font-font_family);
+	font-size: var(--#{$PREFIX}-font-base_size);
+
+		@include tablet {
+			font-size: calc(var(--#{$PREFIX}-font-base_size) * 0.95);
+		}
+		@include phone {
+			font-size: calc(var(--#{$PREFIX}-font-base_size) * 0.9);
+		}
+
+	line-height: var(--#{$PREFIX}-font-base_lineheight);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	display: block;
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 1.2;
+	margin: 0 0 .5em;
+	padding: 0;
+}
+	h1 { font-size: 2.5em; }
+	h2 { font-size: 2em; }
+	h3 { font-size: 1.75em; }
+	h4 { font-size: 1.5em; }
+	h6 { font-size: 1.25em; }
+
+p {
+	margin-top: 0;
+}
+
+a {
+	color: var(--#{$PREFIX}-color-brand);
+	outline: 0;
+
+	&:hover, &:focus {
+		color: var(--#{$PREFIX}-color-highlight);
+	}
+	@media (hover: none) {
+		color: var(--#{$PREFIX}-color-brand);
+	}
+
+	img { border: 0; }
+}
+
+figure {
+	margin: 0;
+
+	&.aligncenter {
+		margin: 0 auto;
+	}
+}
+
+img:not([src]) { visibility: hidden; }
+
+body > main,
+body.editor-styles-wrapper {
+	background-color: var(--#{$PREFIX}-color-content-background);
+	font-size: 1rem;
+}
+body.editor-styles-wrapper {
+	font-size: var(--#{$PREFIX}-font-base_size);
+}
+
+.row {
+	position: relative;
+	overflow: visible;
+}
+.row-container {
+	margin: 0 auto;
+	max-width: $width-max;
+	position: relative;
+	overflow-x: visible;
+}
+
+// Images with attribution
+img[data-credit], .has_image[data-credit], figure.wp-block-image, figure.wp-block-video {
+	position: relative;
+	img {
+		display: inherit;
+	}
+	&:after, figcaption {
+		content: attr(data-credit);
+		background-color: var(--#{$PREFIX}-color-brand);
+		color: #fff;
+
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		z-index: 2;
+
+		padding: .75em .9em;
+		margin: 0;
+
+		font-size: 0.4rem;
+	}
+}
+figure.wp-block-image:after,
+figure.wp-block-video:after {
+	display: none;
+}
+figure.wp-block-video figcaption {
+	bottom: auto;
+	top: 0;
+}
+
+.text-shadow-1 {
+	text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+.text-shadow-2 {
+	text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.text-shadow-3 {
+	text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+}
+
+.body {
+	p:last-child { margin-bottom: 0; }
+}
+
+.no-link-underline a,
+a.no-link-underline {
+	text-decoration: none;
+}
+
+.negative-margin-top-1em {
+	margin-top: -1em;
+}
+.negative-margin-top-2em {
+	margin-top: -2em;
+}
+
+figure.circle-mask img,
+img.circle-mask {
+	border-radius: 100%;
+	overflow: hidden;
+}

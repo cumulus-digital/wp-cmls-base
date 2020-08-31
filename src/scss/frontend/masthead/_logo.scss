@@ -1,0 +1,45 @@
+.logo {
+	grid-area: head_logo;
+	height: 100%;
+	justify-items: start;
+	overflow: visible;
+
+	a {
+		display: block;
+		height: 100%;
+		width: auto;
+
+		/*
+		background-image: var(--#{$PREFIX}-logo-masthead-cssurl);
+		background-position: center left;
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+		*/
+
+		/*
+		body:not(.home) & {
+			background-image: var(--#{$PREFIX}-logo-masthead-inside-cssurl);
+		}
+		*/
+	}
+
+	img {
+		display: none;
+		height: 100%;
+	}
+
+	body.home & {
+		img.logo-main { display: inline-block; }
+	}
+	body.home.under-masthead & {
+		img.logo-main { display: none; }
+		img.logo-main-overlay { display: inline-block; }
+	}
+	body:not(.home) & {
+		img.logo-inside { display: inline-block; }
+	}
+	body:not(.home).under-masthead & {
+		img.logo-inside { display: none; }
+		img.logo-inside-overlay { display: inline-block; }
+	}
+}

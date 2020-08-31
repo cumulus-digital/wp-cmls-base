@@ -1,0 +1,10 @@
+#wpadminbar { position: fixed !important; }
+html { position: relative; }
+body.admin-bar {
+	& > .masthead {
+		top: 32px;
+		@include tablet() {
+			top: 46px;
+		}
+	}
+}

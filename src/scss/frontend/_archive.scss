@@ -1,0 +1,44 @@
+main.archive {
+    .cards {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: stretch;
+        flex-wrap: wrap;
+
+        figure.featured-image {
+            display: block;
+            width: 100%;
+            
+            img {
+                display: inline-block;
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
+    .cards > * {
+        display: flex;
+        flex-direction: column;
+        flex-basis: calc(25% - 1em);
+        margin: 0 .5em 1em;
+
+        @include phone {
+            flex-basis: calc( 50% - 1em );
+        }
+
+    }
+    .cards > a {
+        text-decoration: none;
+        color: inherit;
+
+        &:focus {
+            outline: 2px;
+            outline-style: solid;
+            outline-color: var(--#{$PREFIX}-color-highlight);
+        }
+        &:hover figure.featured-image {
+            transform: scale(1.03);
+        }
+    }
+}

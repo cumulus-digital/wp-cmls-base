@@ -1,0 +1,161 @@
+{
+    "key": "group_5f467bc4cb553",
+    "title": "Display Options",
+    "fields": [
+        {
+            "key": "field_5f46f4d6962ca",
+            "label": "Alt. Display Title",
+            "name": "cmls-alt_title",
+            "type": "text",
+            "instructions": "Override this post's display title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f467c3c135f3",
+            "label": "Hide post title",
+            "name": "cmls-header_options-hide_header",
+            "type": "true_false",
+            "instructions": "Optionally hide this post's title on its landing page",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Hide",
+            "ui_off_text": "Show"
+        },
+        {
+            "key": "field_5f4a8103a333e",
+            "label": "Custom title CSS classes",
+            "name": "cmls-header_options-custom_classes",
+            "type": "text",
+            "instructions": "Add custom CSS classes to the post title",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f467c3c135f3",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "acfvalidate-css_classes",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f467c05135f2",
+            "label": "Bleed post under masthead",
+            "name": "cmls-header_options-begin_under_masthead",
+            "type": "true_false",
+            "instructions": "By default, posts have spacing at the top so they begin after the fixed masthead. Toggle this to begin the post underneath the masthead.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5f468b5982125",
+            "label": "Make masthead transparent",
+            "name": "cmls-header_options-transparent_masthead",
+            "type": "true_false",
+            "instructions": "When the post bleeds under the masthead, you may want to make the masthead background transparent when the window is scrolled to the top.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f467c05135f2",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5f46cb203f6f6",
+            "label": "Disable bottom padding",
+            "name": "cmls-footer_options-disable_bottom_padding",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "field",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1598731213
+}

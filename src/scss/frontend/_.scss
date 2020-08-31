@@ -1,0 +1,58 @@
+@import '../shared/_';
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+body > main {
+	display: block;
+	position: relative;
+	z-index: 2;
+	overflow: visible;
+
+	padding: var(--#{$PREFIX}-masthead-height) 1em 1em;
+}
+body.begin_under_masthead > main {
+	padding-top: 0;
+}
+body.disable_bottom_padding > main {
+	padding-bottom: 0;
+}
+
+.page_title {
+	padding-top: 1em;
+	text-align: center;
+}
+
+article {
+	& > header {
+		position: relative;
+		text-align: center;
+
+		h1 {
+			position: relative;
+			line-height: 1.1;
+		}
+		h2 {
+			font-size: 1.4em;
+		}
+	}
+
+}
+
+@import '_wpadminbar';
+@import './masthead/_';
+@import './footer/_';
+@import '_pagination';
+@import '_archive';
