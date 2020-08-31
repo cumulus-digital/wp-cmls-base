@@ -10,28 +10,12 @@
 .has-grey-color {
 	color: #888;
 }
-.has-light-grey-color {
+.has-lightgrey-color {
 	color: #d6d6d6;
 }
+.has-darkgrey-color,
 .has-cumulus-dark-grey-color {
 	color: #333;
-}
-.has-cumulus-blue-color,
-.has-brand-color {
-	color: var(--#{$PREFIX}-color-brand);
-}
-.has-cumulus-light-blue-color,
-.has-highlight-color {
-	color: var(--#{$PREFIX}-color-highlight);
-}
-.has-accent-color {
-	color: var(--#{$PREFIX}-color-accent);
-}
-.has-wwopn-purple-color {
-	color: #6a2774;
-}
-.has-wwopn-light-purple-color {
-	color: #a33cb3;
 }
 
 // Named background colors
@@ -41,28 +25,45 @@
 .has-black-background-color {
 	background-color: #000;
 }
-.has-darkgrey-background-color {
-	background-color: #333;
-}
 .has-grey-background-color {
 	background-color: #888;
 }
-.has-light-grey-background-color {
+.has-lightgrey-background-color {
 	background-color: #d6d6d6;
 }
+.has-darkgrey-background-color,
 .has-cumulus-dark-grey-background-color {
 	background-color: #333;
 }
-.has-cumulus-blue-background-color,
-.has-brand-background-color {
+
+// Var-based colors & backwards compatibility
+.has-brand-color,
+.has-cumulus-blue-color {
+	color: var(--#{$PREFIX}-color-brand);
+}
+.has-highlight-color,
+.has-cumulus-light-blue-color {
+	color: var(--#{$PREFIX}-color-highlight);
+}
+.has-accent-color {
+	color: var(--#{$PREFIX}-color-accent);
+}
+.has-brand-background-color,
+.has-cumulus-blue-background-color {
 	background-color: var(--#{$PREFIX}-color-brand);
 }
-.has-cumulus-light-blue-background-color,
-.has-highlight-background-color {
+.has-highlight-background-color,
+.has-cumulus-light-blue-background-color {
 	background-color: var(--#{$PREFIX}-color-highlight);
 }
 .has-accent-background-color {
 	background-color: var(--#{$PREFIX}-color-accent);
+}
+.has-wwopn-purple-color {
+	color: #6a2774;
+}
+.has-wwopn-light-purple-color {
+	color: #a33cb3;
 }
 .has-wwopn-purple-background-color {
 	background-color: #6a2774;
