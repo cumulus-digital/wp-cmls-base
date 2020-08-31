@@ -21,7 +21,11 @@ body > main {
 	z-index: 2;
 	overflow: visible;
 
-	padding: var(--#{$PREFIX}-masthead-height) 1em 1em;
+	padding: var(--#{$PREFIX}-masthead-height) 0 1em;
+
+	.row-container {
+		padding: 0 1em;
+	}
 }
 body.begin_under_masthead > main {
 	padding-top: 0;
@@ -39,6 +43,7 @@ article {
 	& > header {
 		position: relative;
 		text-align: center;
+		word-break: break-word;
 
 		h1 {
 			position: relative;

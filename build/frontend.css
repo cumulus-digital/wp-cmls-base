@@ -396,7 +396,9 @@ body > main {
   position: relative;
   z-index: 2;
   overflow: visible;
-  padding: var(--cmls_base-masthead-height) 1em 1em; }
+  padding: var(--cmls_base-masthead-height) 0 1em; }
+  body > main .row-container {
+    padding: 0 1em; }
 
 body.begin_under_masthead > main {
   padding-top: 0; }
@@ -410,7 +412,8 @@ body.disable_bottom_padding > main {
 
 article > header {
   position: relative;
-  text-align: center; }
+  text-align: center;
+  word-break: break-word; }
   article > header h1 {
     position: relative;
     line-height: 1.1; }
