@@ -12,6 +12,7 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 if (
 	\is_singular()
 	&& strlen(\get_the_title())
+	&& ! \is_front_page()
 ):
 ?>
 	<?php if ( ! \get_field('cmls-header_options-hide_header', \get_the_ID(), FALSE)): ?>
