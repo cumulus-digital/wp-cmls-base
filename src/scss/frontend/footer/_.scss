@@ -63,7 +63,7 @@ body > footer {
 		text-decoration: none;
 
 		&:hover {
-			color: var(--#{$PREFIX}-color-accent);
+			color: var(--#{$PREFIX}-color-highlight);
 			text-decoration: underline;
 		}
 	}
