@@ -22,8 +22,9 @@ function acfSaveJson() {
     return theme_path() . '/acf-json';
 }
 \add_filter('acf/settings/save_json', ns('acfSaveJson'));
-function acfLoadJson($pths) {
-    if (is_child_theme()) {
+function acfLoadJson($paths) {
+    if (\is_child_theme()) {
+        $paths[] = theme_path() . '/acf-json';
         $paths[] = child_theme_path() . '/acf-json';
     }
     return $paths;
