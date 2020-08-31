@@ -60,6 +60,9 @@ $hamburger-types: ( spin );
 		}
 	}
 
+	&.is-active:focus {
+		outline: 0;
+	}
 	/*
 	&:not(.is-active) {
 		@include hover {

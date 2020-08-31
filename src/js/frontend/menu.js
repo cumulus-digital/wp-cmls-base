@@ -50,6 +50,7 @@ let $j = jQuery.noConflict();
 	}
 
 	$('body > header .hamburger').click(function(e) {
+		this.focus();
 		e.stopPropagation()
 		if (menuOpenState) {
 			menuClose();
