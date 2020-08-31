@@ -47,8 +47,10 @@ a {
 	color: var(--#{$PREFIX}-color-brand);
 	outline: 0;
 
-	&:hover, &:focus {
-		color: var(--#{$PREFIX}-color-highlight);
+	@media not all and (hover: none) {
+		&:hover, &:focus {
+			color: var(--#{$PREFIX}-color-highlight);
+		}
 	}
 	@media (hover: none) {
 		color: var(--#{$PREFIX}-color-brand);

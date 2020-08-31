@@ -43,9 +43,11 @@
 		position: relative;
 		z-index: 2;
 	}
-		a:hover,a:focus {
-			color: var(--#{$PREFIX}-color-main_menu-foreground-hover_foreground);
-			background-color: var(--#{$PREFIX}-color-main_menu-foreground-hover_background);
+		@media not all and (hover: none) {
+			a:hover,a:focus {
+				color: var(--#{$PREFIX}-color-main_menu-foreground-hover_foreground);
+				background-color: var(--#{$PREFIX}-color-main_menu-foreground-hover_background);
+			}
 		}
 
 	body.menu-active & {
