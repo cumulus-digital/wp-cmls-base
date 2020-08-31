@@ -61,11 +61,13 @@ $hamburger-types: ( spin );
 	}
 
 	/*
-	&:not(.is-active):hover {
-		.hamburger-inner,
-		.hamburger-inner::before,
-		.hamburger-inner::after {
-			box-shadow: 0 2px 1px rgba(0,0,0,0.8);
+	&:not(.is-active) {
+		@include hover {
+			.hamburger-inner,
+			.hamburger-inner::before,
+			.hamburger-inner::after {
+				box-shadow: 0 2px 1px rgba(0,0,0,0.8);
+			}
 		}
 	}
 	*/

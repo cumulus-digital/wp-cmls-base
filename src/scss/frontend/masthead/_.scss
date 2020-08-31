@@ -98,7 +98,7 @@
 			text-decoration: none;
 			color: inherit;
 
-			&:hover {
+			@include hover {
 				color: var(--#{$PREFIX}-color-brand);
 			}
 		}

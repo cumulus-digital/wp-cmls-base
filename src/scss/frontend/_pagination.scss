@@ -26,10 +26,8 @@ aside.pagination {
 		color: #fff;
 		text-decoration: none;
 
-		@media not all and (hover: none) {
-			&:hover {
-				background: #000;
-			}
+		@include hover {
+			background: #000;
 		}
 	}
 	span.dots {

@@ -37,8 +37,8 @@ main.archive {
 			outline-style: solid;
 			outline-color: var(--#{$PREFIX}-color-highlight);
 		}
-		@media not all and (hover: none) {
-			&:hover figure.featured-image {
+		@include hover {
+			figure.featured-image {
 				transform: scale(1.03);
 			}
 		}
