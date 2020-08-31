@@ -101,7 +101,7 @@ function base_post_title($post = 0) {
 	$post = \get_post($post);
 	$id    = isset($post->ID) ? $post->ID : 0;
 
-	$alt_title = \get_field('cmls-alt_title', $id);
+	$alt_title = \get_field('cmls-alt_title', $id, null);
 	if ($alt_title) {
 		return \apply_filters('the_title', $alt_title, $id);
 	}

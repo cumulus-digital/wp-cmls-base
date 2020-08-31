@@ -10,7 +10,7 @@ function filterPostTitlesForAltTitle($title, $id=null) {
 		return $title;
 	}
 
-	$alt_title = \get_field('cmls-alt_title', $id);
+	$alt_title = \get_field('cmls-alt_title', $id, null);
 	if ($alt_title) {
 		return $alt_title;
 	}
@@ -26,7 +26,7 @@ function filterHeadTitleForAltTitle($title) {
 			$type === 'post' ||
 			$type === 'page'
 		) {
-			$alt_title = \get_field('cmls-alt_title');
+			$alt_title = \get_field('cmls-alt_title', get_the_ID(), null);
 			if ($alt_title) {
 				$title['title'] = $alt_title;
 			}
