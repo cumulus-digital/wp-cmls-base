@@ -49,7 +49,7 @@ let $j = jQuery.noConflict();
 		menuOpenState = false;
 	}
 
-	$('.hamburger').click(function(e) {
+	$('body > header .hamburger').click(function(e) {
 		e.stopPropagation()
 		if (menuOpenState) {
 			menuClose();
@@ -59,6 +59,14 @@ let $j = jQuery.noConflict();
 	});
 	$('html').click(function(e) {
 		if (menuOpenState) {
+			menuClose();
+		}
+	});
+	$('html').focusin(function(e) {
+		if (
+			! $('body > header .hamburger, body > header .menu').has(e.target).length
+			&& menuOpenState
+		) {
 			menuClose();
 		}
 	});
