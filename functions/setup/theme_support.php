@@ -21,5 +21,5 @@ function init_theme_support() {
 }
 \add_action('after_setup_theme', ns('init_theme_support'), 10);
 
-//global $content_width;
-//$content_width = 1200;
+global $content_width;
+$content_width = 1200;
