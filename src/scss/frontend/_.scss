@@ -61,7 +61,7 @@ article {
 .cmls-anchor {
 	display: block;
 	position: relative;
-	top: calc( var(--#{$PREFIX}-masthead-height) * -1 + 1em );
+	top: calc( (var(--#{$PREFIX}-masthead-height) * -1) - 1em );
 	visibility: hidden;
 }
 
