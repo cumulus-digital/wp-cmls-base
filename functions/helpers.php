@@ -176,3 +176,23 @@ function getURLFromFilePost($post) {
 	}
 	return null;
 }
+
+/**
+ * Fetch and generate bodyclasses for a given id
+ *
+ * @param [type] $id
+ * @return void
+ */
+function generateBodyClasses($id = null) {
+	$page_custom_fields = \get_fields($id);
+	if (gav($page_custom_fields, 'cmls-header_options-begin_under_masthead')) {
+		BodyClasses::add('begin_under_masthead');
+
+		if (gav($page_custom_fields, 'cmls-header_options-transparent_masthead')) {
+			BodyClasses::add('transparent_masthead');
+		}	
+	}
+	if (gav($page_custom_fields, 'cmls-footer_options-disable_bottom_padding')) {
+		BodyClasses::add('disable_bottom_padding');
+	}
+}

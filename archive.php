@@ -6,32 +6,6 @@
 namespace CMLS_Base;
 if (!defined('ABSPATH')) die('No direct access allowed');
 
-// Allow a page to take over
-$currentQuery = \get_queried_object();
-$slug = '';
-if (property_exists($currentQuery, 'slug')) {
-	$slug = $currentQuery->slug;
-} else if (property_exists($currentQuery, 'rewrite')) {
-	if (array_key_exists('slug', $currentQuery->rewrite)) {
-		$slug = $currentQuery->rewrite['slug'];
-	}
-}
-if ($slug) {
-	$query = new \WP_Query(array(
-		'post_type' => 'page',
-		'name' => $slug
-	));
-	//\query_posts('pagename=' . $slug);
-	if ($query->have_posts()) {
-		$wp_query = $query;
-		$posts = $query->get_posts();
-		$post = array_shift($posts);
-		\get_template_part('singular', 'page');
-		return;
-	}
-	\wp_reset_query();
-}
-
 \get_header();
 ?>
 
