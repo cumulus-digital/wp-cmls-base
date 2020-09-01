@@ -34,6 +34,11 @@
 	height: auto;
 }
 
+// Make kadence advanced buttons align properly
+.wp-block-kadence-advancedbtn .kt-btn-wrap {
+	vertical-align: middle;
+}
+
 // Allow audio player to get smaller
 .wp-block-audio audio {
 	min-width: 150px;
