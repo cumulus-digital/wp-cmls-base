@@ -84,3 +84,5 @@ let $j = jQuery.noConflict();
 
     });
 }($j, window.self));
+
+import './backend/blocks/anchor.js';

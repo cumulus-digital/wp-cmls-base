@@ -58,6 +58,13 @@ article {
 
 }
 
+.cmls-anchor {
+	display: block;
+	position: relative;
+	top: calc( var(--#{$PREFIX}-masthead-height) * -1 + 1em );
+	visibility: hidden;
+}
+
 @import '_wpadminbar';
 @import './masthead/_';
 @import './footer/_';
