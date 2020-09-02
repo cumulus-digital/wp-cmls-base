@@ -59,6 +59,11 @@
 	width: 100%;
 }
 
+// Faster transitions for kadance advanced buttons
+.kt-btn-wrap .kt-button {
+	transition-duration: .15s;
+}
+
 // Allow audio player to get smaller
 .wp-block-audio audio {
 	min-width: 150px;
