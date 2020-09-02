@@ -39,7 +39,7 @@
 	vertical-align: middle;
 }
 .kt-force-btn-fullwidth {
-	flex: wrap;
+	flex-wrap: wrap;
 }
 .kt-force-btn-fullwidth.kt-btn-align-center .kt-btn-wrap,
 .kt-force-btn-fullwidth.kt-btn-align-center .kt-button {
@@ -50,6 +50,7 @@
 .kt-force-btn-fullwidth.kt-btn-align-center .kt-button {
 	align-items: center;
 	justify-content: center;
+	width: 100%;
 }
 
 // Allow audio player to get smaller
