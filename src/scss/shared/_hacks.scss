@@ -38,6 +38,15 @@
 .wp-block-kadence-advancedbtn .kt-btn-wrap {
 	vertical-align: middle;
 }
+.kt-force-btn-fullwidth {
+	flex: wrap;
+}
+.kt-force-btn-fullwidth.kt-btn-align-center .kt-btn-wrap,
+.kt-force-btn-fullwidth.kt-btn-align-center .kt-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
 // Allow audio player to get smaller
 .wp-block-audio audio {
