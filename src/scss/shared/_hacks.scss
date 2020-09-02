@@ -2,6 +2,12 @@
  * Misc adjustments to built in styles from WP and block devs
  */
 
+// Wordpress tries to make images responsive, but then
+// doesn't let you set an image block without width/height...
+.wp-block-image img {
+    height: auto;
+}
+
 // Handle Kadence inherit max content width from theme
 .kb-theme-content-width {
 	max-width: $width-max;
