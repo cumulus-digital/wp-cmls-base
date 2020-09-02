@@ -44,6 +44,10 @@
 .kt-force-btn-fullwidth.kt-btn-align-center .kt-btn-wrap,
 .kt-force-btn-fullwidth.kt-btn-align-center .kt-button {
 	display: flex;
+	align-items: stretch;
+	justify-content: stretch;
+}
+.kt-force-btn-fullwidth.kt-btn-align-center .kt-button {
 	align-items: center;
 	justify-content: center;
 }
