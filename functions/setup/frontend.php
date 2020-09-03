@@ -86,26 +86,28 @@ function letPagesOverrideArchives(&$query) {
 	}
 	if ($query->is_archive()) {
 		$currentQuery = \get_queried_object();
-		$slug = '';
-		if ($currentQuery && property_exists($currentQuery, 'slug')) {
-			$slug = $currentQuery->slug;
-		} else if (property_exists($currentQuery, 'rewrite')) {
-			if (array_key_exists('slug', $currentQuery->rewrite)) {
-				$slug = $currentQuery->rewrite['slug'];
+		if ($currentQuery) {
+			$slug = '';
+			if (property_exists($currentQuery, 'slug')) {
+				$slug = $currentQuery->slug;
+			} else if (property_exists($currentQuery, 'rewrite')) {
+				if (array_key_exists('slug', $currentQuery->rewrite)) {
+					$slug = $currentQuery->rewrite['slug'];
+				}
+			}
+			if ($slug) {
+				global $wpdb;
+				$check = $wpdb->get_var($wpdb->prepare("SELECT COUNT(post_title) FROM {$wpdb->posts} WHERE post_name=%s", $slug));
+				if ($check) {
+					$query->init();
+					$query->set('post_type', 'page');
+					$query->set('name', $slug);
+					$query->get_posts();
+					return $query;
+				}
 			}
 		}
-		if ($slug) {
-			$query->init();
-			$query->set('post_type', 'page');
-			$query->set('name', $slug);
-			$query->get_posts();
-			//echo '<pre>'; var_dump($query); die();
-			return $query;
-			$query = new \WP_Query(array(
-				'post_type' => 'page',
-				'name' => $slug
-			));
-		}
 	}
+	return $query;
 }
 \add_action('pre_get_posts', ns('letPagesOverrideArchives'));
