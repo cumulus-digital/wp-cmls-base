@@ -1,5 +1,6 @@
-main.archive {
-	.cards {
+main.archive,
+.inline-archive {
+	.cards, &.cards {
 		display: flex;
 		justify-content: center;
 		align-content: center;
@@ -16,30 +17,63 @@ main.archive {
 				height: auto;
 			}
 		}
-	}
-	.cards > * {
-		display: flex;
-		flex-direction: column;
-		flex-basis: calc(25% - 1em);
-		margin: 0 .5em 1em;
 
-		@include phone {
-			flex-basis: calc( 50% - 1em );
-		}
+		& > article {
+			display: block;
+			width: calc(25% - 1em);
+			margin: 0 .5em 1em;
+			font-size: 0.8em;
 
-	}
-	.cards > a {
-		text-decoration: none;
-		color: inherit;
+			@include phone {
+				width: calc( 50% - 1em );
+			}
 
-		&:focus {
-			outline: 2px;
-			outline-style: solid;
-			outline-color: var(--#{$PREFIX}-color-highlight);
-		}
-		@include hover {
-			figure.featured-image {
-				transform: scale(1.03);
+			& > a {
+				display: flex;
+				flex-direction: column;
+				flex-basis: calc(25% - 1em);
+				text-decoration: none;
+				height: 100%;
+				color: inherit;
+
+				transition: transform 0.1s, box-shadow 0.1s;
+				position: relative;
+				z-index: 1;
+	
+				border-radius: .25em;
+				box-shadow: 0 0 .75em rgba(0, 0, 0, 0.2);
+				overflow: hidden;
+
+				&:focus {
+					outline: 2px;
+					outline-style: solid;
+					outline-color: var(--#{$PREFIX}-color-highlight);
+				}
+				@include hover {
+					transform: scale(1.03);
+					box-shadow:
+						0 0 1px 0 var(--#{$PREFIX}-color-highlight),
+						0 0 1.5em rgba(0,0,0,0.15);
+					z-index: 2;
+				}
+	
+			}
+
+			header {
+				padding: .5em 1em;
+
+				h1, h2, h3, h4, h5, h6 {
+					line-height: 1.15;
+					margin-bottom: 0;
+				}
+
+				.meta {
+					font-size: 0.8em;
+				}
+			}
+
+			.body {
+				padding: 0 1em 1em;
 			}
 		}
 	}

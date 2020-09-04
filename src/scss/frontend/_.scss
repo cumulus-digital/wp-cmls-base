@@ -42,7 +42,7 @@ body.disable_bottom_padding > main {
 }
 
 article {
-	& > header {
+	header {
 		position: relative;
 		text-align: center;
 		word-break: break-word;
@@ -53,6 +53,15 @@ article {
 		}
 		h2 {
 			font-size: 1.4em;
+		}
+		h3 {
+			font-size: 1.25em;
+		}
+		h4, h5 {
+			font-size: 1em;
+		}
+		h6 {
+			font-size: .75em;
 		}
 	}
 

@@ -97,7 +97,7 @@ function letPagesOverrideArchives(&$query) {
 			}
 			if ($slug) {
 				global $wpdb;
-				$check = $wpdb->get_var($wpdb->prepare("SELECT COUNT(post_title) FROM {$wpdb->posts} WHERE post_name=%s", $slug));
+				$check = $wpdb->get_var($wpdb->prepare("SELECT COUNT(post_title) FROM {$wpdb->posts} WHERE post_name=%s LIMIT 1", $slug));
 				if ($check) {
 					$query->init();
 					$query->set('post_type', 'page');
