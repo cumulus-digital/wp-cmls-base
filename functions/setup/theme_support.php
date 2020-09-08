@@ -14,7 +14,7 @@ function init_theme_support() {
 	\add_theme_support( 'title-tag' );
 	\add_theme_support( 'wp-block-styles' );
 	\add_theme_support( 'responsive-embeds' );
-	\add_theme_support( 'post-thumbnails', array('page', 'post') );
+	\add_theme_support( 'post-thumbnails' );
 	\add_theme_support( 'post-formats', array( 'aside', 'gallery', 'video' ) );
 
 	\add_post_type_support( 'page', 'excerpt' );
