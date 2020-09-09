@@ -86,13 +86,14 @@ body > footer {
 			li {
 				display: block;
 				margin: 0 1em .25em 0;
-				overflow: hidden;
+				//overflow: hidden;
 			}
 
 			@include phone {
 				display: block;
 				column-count: 1;
-				font-size: 1rem;
+				font-size: 0.9rem;
+				margin-top: .5em;
 
 				li {
 					display: inline-block;
