@@ -35,7 +35,8 @@ function generateCustomCSS() {
 	$css = '';
 
 	if ( ! empty($fonts['font-webfont_url'])) {
-		$css .= '@import url("' . \esc_url($fonts['font-webfont_url']) . '");' . "\n";
+		enqueueCustomFontURL($fonts['font-webfont_url']);
+		//$css .= '@import url("' . \esc_url($fonts['font-webfont_url']) . '");' . "\n";
 	}
 
 	if ( ! empty($fonts['font-font_family'])) {
@@ -67,6 +68,15 @@ function directOutputCustomCSS() {
 	<?php
 }
 \add_action('wp_head', ns('directOutputCustomCSS'), 100);
+
+function enqueueCustomFontURL($url) {
+	\wp_enqueue_style(
+		'custom-webfont-url',
+		\esc_url($url),
+		array(),
+		null
+	);
+}
 
 // Register customizations as editor options
 function registerCustomEditorColors() {
