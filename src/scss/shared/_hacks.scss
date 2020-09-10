@@ -8,6 +8,11 @@
     height: auto;
 }
 
+// Only child figures should be inline-block
+figure:only-child {
+	display: inline-block;
+}
+
 // Handle Kadence inherit max content width from theme
 .kb-theme-content-width {
 	max-width: $width-max;
