@@ -11,6 +11,11 @@
 // Only child figures should be inline-block
 :root figure.wp-block-image:only-child {
 	display: inline-block;
+	margin-bottom: 0;
+}
+
+.nomargin {
+	margin: 0;
 }
 
 // Handle Kadence inherit max content width from theme
