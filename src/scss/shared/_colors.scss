@@ -2,72 +2,72 @@
  * Named colors
  */
 .has-white-color {
-	color: #fff;
+	color: #fff !important;
 }
 .has-black-color {
-	color: #000;
+	color: #000 !important;
 }
 .has-grey-color {
-	color: #888;
+	color: #888 !important;
 }
 .has-lightgrey-color {
-	color: #d6d6d6;
+	color: #d6d6d6 !important;
 }
 .has-darkgrey-color,
 .has-cumulus-dark-grey-color {
-	color: #333;
+	color: #333 !important;
 }
 
 // Named background colors
 .has-white-background-color {
-	background-color: #fff;
+	background-color: #fff !important;
 }
 .has-black-background-color {
-	background-color: #000;
+	background-color: #000 !important;
 }
 .has-grey-background-color {
-	background-color: #888;
+	background-color: #888 !important;
 }
 .has-lightgrey-background-color {
-	background-color: #d6d6d6;
+	background-color: #d6d6d6 !important;
 }
 .has-darkgrey-background-color,
 .has-cumulus-dark-grey-background-color {
-	background-color: #333;
+	background-color: #333 !important;
 }
 
 // Var-based colors & backwards compatibility
 .has-brand-color,
 .has-cumulus-blue-color {
-	color: var(--#{$PREFIX}-color-brand);
+	color: var(--#{$PREFIX}-color-brand) !important;
 }
 .has-highlight-color,
 .has-cumulus-light-blue-color {
-	color: var(--#{$PREFIX}-color-highlight);
+	color: var(--#{$PREFIX}-color-highlight) !important;
 }
 .has-accent-color {
-	color: var(--#{$PREFIX}-color-accent);
+	color: var(--#{$PREFIX}-color-accent) !important;
 }
 .has-brand-background-color,
 .has-cumulus-blue-background-color {
-	background-color: var(--#{$PREFIX}-color-brand);
+	background-color: var(--#{$PREFIX}-color-brand) !important;
 }
 .has-highlight-background-color,
 .has-cumulus-light-blue-background-color {
-	background-color: var(--#{$PREFIX}-color-highlight);
+	background-color: var(--#{$PREFIX}-color-highlight) !important;
 }
 .has-accent-background-color {
-	background-color: var(--#{$PREFIX}-color-accent);
+	background-color: var(--#{$PREFIX}-color-accent) !important;
 }
 .has-wwopn-purple-color {
-	color: #6a2774;
+	color: #6a2774 !important;
 }
 .has-wwopn-light-purple-color {
-	color: #a33cb3;
+	color: #a33cb3 !important;
 }
 .has-wwopn-purple-background-color {
-	background-color: #6a2774;
+	background-color: #6a2774 !important;
 }
 .has-wwopn-light-purple-background-color {
-	background-color: #a33cb3;
+	background-color: #a33cb3 !important;
 }
