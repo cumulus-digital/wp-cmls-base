@@ -14,6 +14,11 @@
 	margin-bottom: 0;
 }
 
+// figures with links should be inline-blocks
+:root figure a {
+	display: inline-block;
+}
+
 .nomargin {
 	margin: 0;
 }
