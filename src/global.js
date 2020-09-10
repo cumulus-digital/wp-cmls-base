@@ -2,7 +2,7 @@ window.THEME_PREFIX = "cmls_base";
 
 // Polyfill for CSS Vars
 window.self.document.addEventListener("DOMContentLoaded", function(){
-	if (window.self.document.body.classList.contains('logged-in')) {
+	if (window.self.document.body.className.indexOf('logged-in') > -1) {
 		console.log(
 			'Note: child theme CSS links should be added to the array window.additionalCssIncludes so vars may be ponyfilled!'
 		);
