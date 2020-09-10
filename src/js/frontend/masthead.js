@@ -82,3 +82,4 @@ windowListeners(
     null,
     true
 );
+setInterval(recalculateMastheadHeight, 3000);
