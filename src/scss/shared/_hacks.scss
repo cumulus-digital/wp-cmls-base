@@ -9,7 +9,7 @@
 }
 
 // Only child figures should be inline-block
-figure:only-child {
+:root figure.wp-block-image:only-child {
 	display: inline-block;
 }
 
