@@ -87,7 +87,7 @@ function letPagesOverrideArchives(&$query) {
 	if ($query->is_archive()) {
 		$currentQuery = \get_queried_object();
 		if ($currentQuery) {
-			$slug = '';
+			$slug = false;
 			if (property_exists($currentQuery, 'slug')) {
 				$slug = $currentQuery->slug;
 			} else if (property_exists($currentQuery, 'rewrite')) {
@@ -97,7 +97,7 @@ function letPagesOverrideArchives(&$query) {
 			}
 			if ($slug) {
 				global $wpdb;
-				$check = $wpdb->get_var($wpdb->prepare("SELECT COUNT(post_title) FROM {$wpdb->posts} WHERE post_name=%s LIMIT 1", $slug));
+				$check = $wpdb->get_var($wpdb->prepare("SELECT COUNT(post_title) FROM {$wpdb->posts} WHERE post_name=%s AND post_type='page' LIMIT 1", $slug));
 				if ($check) {
 					$query->init();
 					$query->set('post_type', 'page');
