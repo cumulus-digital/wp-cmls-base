@@ -60,3 +60,14 @@ if (defined('WPSEO_VERSION')) {
 		}
 	});
 }
+
+// Remove users from automatically generated sitemap in WP 5.5
+\add_filter(
+    'wp_sitemaps_add_provider',
+    function($provider, $name = null) {
+		if (is_a($provider, 'WP_Sitemaps_Users')) {
+			return false;
+		}
+		return $provider;
+	}
+);
