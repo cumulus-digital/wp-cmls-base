@@ -196,3 +196,32 @@ function generateBodyClasses($id = null) {
 		BodyClasses::add('disable_bottom_padding');
 	}
 }
+
+// Figure out what type of archive this is
+function make_post_class() {
+	$arch_type = '';
+	$post_type = \get_post_type();
+	$qo = \get_queried_object();
+	if (\is_search()) {
+		$arch_type = 'search';
+	}
+
+	if (\is_post_type_archive()) {
+		$arch_type = 'post-type-archive';
+		$post_type = \get_query_var('post_type');
+	} else if (\is_author()) {
+		$arch_type = 'author';
+		$post_type = $qo->user_nicename;
+	} else if (\is_category()) {
+		$arch_type = 'category';
+		$post_type = $qo->taxonomy . '-' . $qo->slug;
+	} else if (\is_tag()) {
+		$arch_type = 'tag';
+		$post_type = $qo->taxonomy . '-' . $qo->slug;
+	} else if (\is_tax()) {
+		$arch_type = 'tax';
+		$post_type = $qo->taxonomy . '-' . $qo->slug;
+	}
+	//var_dump($arch_type); var_dump($post_type);
+	return \sanitize_html_class($arch_type . '-' . $post_type);
+}

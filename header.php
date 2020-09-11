@@ -16,7 +16,7 @@ if (
 
 $slug = null;
 $qo = \get_queried_object();
-if (property_exists($qo, 'post_name')) {
+if (is_object($qo) && property_exists($qo, 'post_name')) {
 	$slug = 'slug-' . \esc_attr($qo->post_name);
 }
 ?>

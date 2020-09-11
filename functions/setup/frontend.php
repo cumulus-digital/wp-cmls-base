@@ -37,6 +37,7 @@ function frontendScriptsAndStyles() {
 }
 \add_action('wp_enqueue_scripts', ns('frontendScriptsAndStyles'));
 
+// Basic post queries are limited to 12
 function setQueryLimitToTwelve($query) {
 	if (\is_admin() || ! $query->is_main_query()) {
 		return;
@@ -46,6 +47,7 @@ function setQueryLimitToTwelve($query) {
 }
 \add_action('pre_get_posts', ns('setQueryLimitToTwelve'));
 
+// remove title on homepage
 function removePageTitleOnHomepage($title) {
 	if (\is_home() || \is_front_page()) {
 		return false;
@@ -53,6 +55,7 @@ function removePageTitleOnHomepage($title) {
 }
 \add_filter('pre_get_document_title', ns('removePageTitleOnHomepage'), 999, 1);
 
+// Remove prefix from private/protected titles
 function filterRemovePrivateProtectedPrepend($format, $post) {
 	if ( ! \is_admin()) {
 		return '%s';
@@ -111,3 +114,36 @@ function letPagesOverrideArchives(&$query) {
 	return $query;
 }
 \add_action('pre_get_posts', ns('letPagesOverrideArchives'));
+
+// Allow restricting search results
+function searchOnlyPostTypes($query) {
+	if ($query->is_main_query() && $query->is_search) {
+		if ( ! empty($_GET['t'])) {
+			$request_type = explode(',', $_GET['t']);
+			if (count($request_type)) {
+				$types = array();
+				// do not allow searches for certain types
+				array_walk($request_type, function($type) use (&$types) {
+					switch (strtolower($type)) {
+						case 'nav_menu_item':
+						case 'attachment':
+						case 'revision':
+							return;
+					}
+					if (strtolower($type) === 'any') {
+						$type = 'page';
+					}
+					$types[] = trim($type);
+				});
+				$query->set('post_type', $types);
+			}
+		}
+		$front_page = array(\get_option('page_on_front'));
+		if (count($front_page)) {
+			$query->set('post__not_in', $front_page);
+		}
+		$query->set('post_status', 'publish');
+	}
+	return $query;
+}
+\add_filter('pre_get_posts', ns('searchOnlyPostTypes'));

@@ -52,6 +52,7 @@ let $j = jQuery.noConflict();
 	$('body > header .hamburger').click(function(e) {
 		e.stopPropagation()
 		if (menuOpenState) {
+			console.log('closing on hamburger click');
 			this.blur();
 			menuClose();
 			return;
@@ -59,17 +60,18 @@ let $j = jQuery.noConflict();
 		this.focus();
 		menuOpen();
 	});
-	$('html').click(function(e) {
-		if (menuOpenState) {
-			menuClose();
-		}
-	});
-	$('html').focusin(function(e) {
-		const $context = $('body > header .hamburger, body > header .menu');
+	$('html').on('click focusin', function(e) {
+		const $context = $(
+			'body > header .hamburger,' +
+			'body > header .menu,' +
+			'body > header .menu .search' +
+			'body > header .menu .search input'
+		);
 		if (
 			! ($context.is(e.target) || $context.has(e.target).length)
 			&& menuOpenState
 		) {
+			console.log('closing on focusin');
 			menuClose();
 		}
 	});

@@ -64,6 +64,7 @@ class themeMods {
 		'setting-main_menu-background-position' => 'top left',
 		'setting-main_menu-background-size' => 'cover',
 		'setting-main_menu-background-repeat' => 'no-repeat',
+		'setting-main_menu-include_search' => false,
 		
 		'color-content-background' => '#ffffff',
 		'color-content-foreground' => '#000000',

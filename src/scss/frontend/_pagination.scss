@@ -10,6 +10,10 @@ aside.pagination {
 	}
 	.nav-links::before {
 		content: 'Pages: ';
+
+		@include phone() {
+			content: '';
+		}
 	}
 
 	.page-numbers {

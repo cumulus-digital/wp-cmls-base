@@ -1,22 +1,27 @@
 <?php
 /**
  * CMLS Base Theme
- * Post archive template
+ * Template
+ * Masthead Menu
  */
 namespace CMLS_Base;
 if (!defined('ABSPATH')) die('No direct access allowed');
 
 \get_header();
 ?>
+<main role="main" class="search">
 
-<main role="main" class="archive">
-
-	<?php \get_template_part('templates/pages/archive-header'); ?>
+	<header class="row page_title">
+		<div class="row-container">
+			<h1>Search Results</h1>
+			<?php \get_template_part('templates/masthead/search') ?>
+		</div>
+	</header>
 
 	<?php if (\have_posts()): ?>
 
 		<div class="row">
-			<div class="row-container cards">
+			<div class="row-container">
 			<?php while (\have_posts()): \the_post() ?>
 
 				<?php \get_template_part('templates/pages/excerpt', make_post_class()); ?>
@@ -33,13 +38,12 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 
 		<article class="row">
 			<div class="row-container">
-				<p>Sorry, nothing here.</p>
+				<p>Sorry, nothing found.</p>
 			</div>
 		</article>
-	
+
 	<?php endif ?>
 
 </main>
-
 <?php
 \get_footer();

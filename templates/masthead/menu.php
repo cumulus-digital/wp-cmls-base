@@ -16,5 +16,8 @@ if (!defined('ABSPATH')) die('No direct access allowed');
     </button>
     <div class="menu" id="header_menu">
         <?php header_menu() ?>
+        <?php if (themeMods::get('setting-main_menu-include_search')): ?>
+            <?php \get_template_part('templates/masthead/search') ?>
+        <?php endif ?>
     </div>
 </nav>

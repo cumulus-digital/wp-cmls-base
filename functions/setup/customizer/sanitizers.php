@@ -126,3 +126,7 @@ function themeCustomizer_requireImage($file, $setting) {
 		'Must be a valid image (JPG, GIF, PNG, SVG, or WebP).'
 	);
 }
+
+function themeCustomizer_sanitizeCheckbox($input) {
+	return (1 === absint($input) ? true : false);
+}

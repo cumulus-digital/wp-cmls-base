@@ -34,7 +34,7 @@
 		padding: 0;
 	}
 
-	a, span {
+	a, span, .search {
 		display: block;
 		color: inherit;
 		text-decoration: none;
@@ -56,6 +56,31 @@
 
 		&.is-open {
 			overflow-y: auto;
+		}
+	}
+
+	.search {
+		padding-bottom: .75em;
+		form {
+			margin: 0;
+			padding: 0;
+			display: flex;
+		}
+		input {
+			border: 1px solid var(--#{$PREFIX}-color-main_menu-foreground);
+			background-color: var(--#{$PREFIX}-color-main_menu-background);
+			color: var(--#{$PREFIX}-color-main_menu-foreground);
+			padding: .25em .35em;
+
+			&[name="s"] {
+				width: calc(100% - 5em - .5em);
+				margin-right: .5em;
+			}
+			&[type="submit"] {
+				background-color: var(--#{$PREFIX}-color-main_menu-foreground);
+				color: var(--#{$PREFIX}-color-main_menu-background);
+				width: 5em;
+			}
 		}
 	}
 }

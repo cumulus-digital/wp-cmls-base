@@ -1,0 +1,75 @@
+main.search {
+    header.page_title {
+        text-align: left;
+        margin-bottom: 1em;
+        h1 {
+            font-size: 1.5em;
+        }
+    }
+
+    article {
+        display: flex;
+        text-align: left;
+        margin-bottom: 1em;
+        padding-bottom: 1em;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+
+            @include hover() {
+                h2, h3 {
+                    color: var(--#{$PREFIX}-color-brand);
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .featured-image {
+            border: 1px solid rgba(0,0,0, 0.3);
+            float: left;
+            width: 10%;
+            margin: 0 1em 0 0;
+            padding: .25em;
+
+            img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+            }
+
+            & ~ header, & ~ .body {
+                padding-left: calc(10% + 1em);
+            }
+
+            @include phone() {
+                float: none;
+                width: 20%;
+                margin: 0 1em .5em 0;
+
+                & ~ header, & ~ .body {
+                    padding-left: 0
+                }
+            }
+        }
+
+        header {
+            text-align: left;
+            margin-bottom: .25em;
+
+            h2, h3 {
+                margin-bottom: .05em;
+            }
+
+            .meta {
+                font-size: 0.75em;
+            }
+        }
+
+    }
+}
