@@ -83,6 +83,12 @@ function filterRemoveArchivePrepend($title) {
 }
 \add_filter('get_the_archive_title', ns('filterRemoveArchivePrepend'));
 
+// Alter the excerpt ellipsis
+function replaceExcerptMore($more) {
+    return '…';
+}
+add_filter('excerpt_more', ns('replaceExcerptMore'));
+
 function letPagesOverrideArchives(&$query) {
 	if (\is_admin() || ! $query->is_main_query()) {
 		return $query;
