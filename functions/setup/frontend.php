@@ -83,11 +83,21 @@ function filterRemoveArchivePrepend($title) {
 }
 \add_filter('get_the_archive_title', ns('filterRemoveArchivePrepend'));
 
+function endExcerptWithSentence( $excerpt ) {
+	// Return manually created excerpts immediately
+	if (\has_excerpt()) {
+		return $excerpt;
+	}	
+    $excerpt = explode( '(#~)', str_replace( ['…','? ','! ','. '], ['($/s$/)','?(#~)','!(#~)','. (#~)'], preg_replace( '!\s+!', ' ', trim( $excerpt ) ) ) );
+    return ( !strpos( end( $excerpt ), '($/s$/)' ) ) ? implode( ' ', $excerpt ) : implode( ' ', array_slice( $excerpt, 0, -1 ) );
+}
+\add_filter( 'get_the_excerpt', ns('endExcerptWithSentence'));
+
 // Alter the excerpt ellipsis
 function replaceExcerptMore($more) {
     return '…';
 }
-add_filter('excerpt_more', ns('replaceExcerptMore'));
+\add_filter('excerpt_more', ns('replaceExcerptMore'));
 
 function letPagesOverrideArchives(&$query) {
 	if (\is_admin() || ! $query->is_main_query()) {
