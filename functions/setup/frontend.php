@@ -56,7 +56,7 @@ function removePageTitleOnHomepage($title) {
 \add_filter('pre_get_document_title', ns('removePageTitleOnHomepage'), 999, 1);
 
 // Remove prefix from private/protected titles
-function filterRemovePrivateProtectedPrepend($format, $post) {
+function filterRemovePrivateProtectedPrepend($format) {
 	if ( ! \is_admin()) {
 		return '%s';
 	}
