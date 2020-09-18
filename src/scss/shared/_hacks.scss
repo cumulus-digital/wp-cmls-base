@@ -4,7 +4,9 @@
 
 // Wordpress tries to make images responsive, but then
 // doesn't let you set an image block without width/height...
-.wp-block-image img {
+.wp-block-image img,
+.wp-block-media-text__media img,
+.wp-block-media-text__media video {
     height: auto;
 }
 
@@ -72,6 +74,11 @@
 	align-items: center;
 	justify-content: center;
 	width: 100%;
+}
+
+// Kadence tabs should align bottom
+.kt-tabs-title-list {
+    align-items: flex-end;
 }
 
 // Faster transitions for kadance advanced buttons
