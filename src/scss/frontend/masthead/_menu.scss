@@ -48,6 +48,11 @@
 				color: var(--#{$PREFIX}-color-main_menu-foreground-hover_foreground);
 				background-color: var(--#{$PREFIX}-color-main_menu-foreground-hover_background);
 			}
+			small {
+				display: block;
+				font-size: .6em;
+				opacity: 0.8;
+			}
 		}
 
 	body.menu-active & {
