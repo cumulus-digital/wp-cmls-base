@@ -94,13 +94,23 @@ class themeMods {
 	}
 
 	/**
-	 * Retrieve a defined theme mod var, optionally override predefined default
+	 * Retrieve a defined theme mod var, optionally override predefined default. Strips all tags.
 	 *
 	 * @param string $key
 	 * @param mixed $default
 	 * @return mixed
 	 */
 	public static function get($key, $default=893759834267529) {
+		return \wp_strip_all_tags(self::getRaw($key, $default));
+	}
+
+	/**
+	 * Retrieve a theme mod var without stripping tags
+	 * @param  string  $key
+	 * @param  mixed $default
+	 * @return mixed
+	 */
+	public static function getRaw($key, $default=893759834267529) {
 		self::check($key);
 		
 		// If a default is not overridden, use our predefined default
@@ -115,7 +125,7 @@ class themeMods {
 			\set_theme_mod($key, $default);
 		}
 
-		return \wp_strip_all_tags($mod);
+		return $mod;
 	}
 	
 	public static function getColors() {

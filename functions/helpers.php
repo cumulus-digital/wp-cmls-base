@@ -142,7 +142,7 @@ function rgbS($hex) {
  * @return string
  */
 function getCopyright() {
-	$copyright = \esc_html(themeMods::get('text-copyright'));
+	$copyright = themeCustomizer_sanitizeSimpleHTML(themeMods::getRaw('text-copyright'));
 	$copyright = str_replace('$year', date('Y'), $copyright);
 	return $copyright;
 }

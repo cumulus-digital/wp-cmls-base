@@ -8,14 +8,14 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 function themeCustomizerIdentity($wpc) {
 	$wpc->add_setting('text-copyright', array(
 		'default' => themeMods::getDefault('text-copyright'),
-		'sanitize_callback' => 'sanitize_text_field',
-		'sanitize_js_callback' => 'sanitize_text_field'
+		'sanitize_callback' => ns('themeCustomizer_sanitizeSimpleHTML'),
+		'sanitize_js_callback' => ns('themeCustomizer_sanitizeSimpleHTML')
 	));
 		$wpc->add_control( 'text-copyright', array(
 			'type' => 'text',
 			'section' => 'title_tagline',
 			'label' => 'Copyright Notice',
-			'description' => 'Customize the copyright notice.<br>Available macros: $year'
+			'description' => 'Customize the copyright notice.<br>Available macros: $year<br>Allowed HTML tags:<br>A BR EM STRONG SMALL'
 		));
 
 	// Additional favicon stuff

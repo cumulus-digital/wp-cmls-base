@@ -130,3 +130,17 @@ function themeCustomizer_requireImage($file, $setting) {
 function themeCustomizer_sanitizeCheckbox($input) {
 	return (1 === absint($input) ? true : false);
 }
+
+function themeCustomizer_sanitizeSimpleHTML($input) {
+	$allowed = array(
+		'a' => array(
+			'href' => array(),
+			'title' => array()
+		),
+		'br' => array(),
+		'em' => array(),
+		'strong' => array(),
+		'small' => array(),
+	);
+	return \wp_kses($input, $allowed, array('http', 'https'));
+}
