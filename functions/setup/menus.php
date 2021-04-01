@@ -40,6 +40,14 @@ function header_menu() {
 	makeMenu('header-menu');
 }
 
+function has_header_menu() {
+	return \has_nav_menu('header-menu');
+}
+
 function footer_menu() {
 	makeMenu('footer-menu');
+}
+
+function has_footer_menu() {
+	return \has_nav_menu('footer-menu');
 }

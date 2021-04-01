@@ -6,6 +6,7 @@
  */
 namespace CMLS_Base;
 if (!defined('ABSPATH')) die('No direct access allowed');
+if ( has_header_menu()):
 ?>
 <nav class="menu-container">
     <button class="hamburger hamburger--spin" type="button"
@@ -21,3 +22,5 @@ if (!defined('ABSPATH')) die('No direct access allowed');
         <?php endif ?>
     </div>
 </nav>
+<?php
+endif;

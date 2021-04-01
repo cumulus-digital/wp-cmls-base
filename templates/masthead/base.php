@@ -19,7 +19,7 @@ $customizer_files = getCustomizerFiles();
 
 		<?php \get_template_part('templates/masthead/menu-beforetext') ?>
 
-        <?php \get_template_part('templates/masthead/menu') ?>
+        <?php \get_template_part('templates/masthead/header-menu') ?>
 	</div>
 
 </header>
