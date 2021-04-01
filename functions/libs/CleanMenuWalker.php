@@ -45,7 +45,7 @@ class CleanMenuWalker extends \Walker_Nav_Menu
 		$item_output .= '<a'. $attributes .'>';
 		$item_output .= $args->link_before . \apply_filters( 'the_title', $item->title, $item->ID );
 		$item_output .= $args->link_after;
-		$item_output .= $item->description ? '<small>' . $item->description . '</small>' : '';
+		$item_output .= ! empty($item->description) ? '<small>' . $item->description . '</small>' : '';
 		$item_output .= '</a>';
 		$item_output .= $args->after;
 
