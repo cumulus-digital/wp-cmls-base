@@ -4,6 +4,12 @@
 	justify-items: start;
 	overflow: visible;
 
+	img {
+		display: none;
+		height: 100%;
+		transition: all 0.1s;
+	}
+
 	a {
 		display: block;
 		height: 100%;
@@ -21,11 +27,13 @@
 			background-image: var(--#{$PREFIX}-logo-masthead-inside-cssurl);
 		}
 		*/
-	}
-
-	img {
-		display: none;
-		height: 100%;
+	
+		@include hover {
+			img {
+				transform: scale(1.04);
+				filter: drop-shadow(0 0 .5em rgba(0,0,0,0.6));
+			}
+		}
 	}
 
 	body.home & {
