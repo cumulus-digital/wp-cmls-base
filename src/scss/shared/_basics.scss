@@ -133,6 +133,8 @@ figure.wp-block-video figcaption {
 }
 
 .body {
+	p, ol, ul, li { margin-bottom: .75em; }
+	li li { margin-bottom: .25em; }
 	p:last-child { margin-bottom: 0; }
 }
 
