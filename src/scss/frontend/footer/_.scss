@@ -79,6 +79,7 @@ body > footer {
 		grid-area: foot_nav;
 
 		& > ul {
+			display: flex;
 			column-count: 4;
 			column-gap: .25em;
 			height: 100%;
