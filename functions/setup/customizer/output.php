@@ -11,7 +11,9 @@ function generateCustomCSS() {
 	$colors = themeMods::getColors();
 	$fonts = array(
 		'font-webfont_url' => themeMods::get('font-webfont_url'),
-		'font-font_family' => themeMods::get('font-font_family')
+		'font-font_family' => themeMods::get('font-font_family'),
+		'font-header_webfont_url' => themeMods::get('font-header_webfont_url'),
+		'font-header_family' => themeMods::get('font-header_family')
 	);
 	$text = array(
 		'text-copyright' => themeMods::get('text-copyright'),
@@ -34,18 +36,20 @@ function generateCustomCSS() {
 
 	$css = '';
 
-	if ( ! empty($fonts['font-webfont_url'])) {
-		enqueueCustomFontURL($fonts['font-webfont_url']);
-		//$css .= '@import url("' . \esc_url($fonts['font-webfont_url']) . '");' . "\n";
-	}
-
-	if ( ! empty($fonts['font-font_family'])) {
-		//$css .= 'html,body { font-family: ' . \wp_strip_all_tags($fonts['font-font_family']) . "; }\n";
+	// Enqueue fonts
+	foreach ($fonts as $key => $val) {
+		if (stripos($key, '_url') !== false && ! empty($val)) {
+			enqueueCustomFontURL($val, $key);
+		}
 	}
 
 	$css .= ":root {\n";
 	foreach($vars as $key=>$val) {
-		$css .= '--' . PREFIX . '-' . $key . ':' . \wp_strip_all_tags($val) . ';' . "\n";
+		$val = \wp_strip_all_tags($val);
+		$val = str_replace(';', '\3A', $val);
+		if ( ! empty($val)) {
+			$css .= '--' . PREFIX . '-' . $key . ':' . $val . ';' . "\n";
+		}
 	}
 	$css .= '}';
 	
@@ -69,9 +73,9 @@ function directOutputCustomCSS() {
 }
 \add_action('wp_head', ns('directOutputCustomCSS'), 100);
 
-function enqueueCustomFontURL($url) {
+function enqueueCustomFontURL($url, $key) {
 	\wp_enqueue_style(
-		'custom-webfont-url',
+		'custom-webfont-url-' . $key,
 		\esc_url($url),
 		array(),
 		null

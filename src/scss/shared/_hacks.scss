@@ -86,6 +86,18 @@
 	transition-duration: .15s;
 }
 
+// Remove uneditable padding on kadence carousel
+:root .kt-blocks-carousel,
+:root .wp-block-kadence-testimonials .kt-blocks-carousel {
+	padding-bottom: 0;
+}
+
+// Allow for aligning testimonials centered vertically
+:root .align-middle.wp-block-kadence-testimonials .slick-track {
+	display: flex;
+	align-items: center;
+}
+
 // Allow audio player to get smaller
 .wp-block-audio audio {
 	min-width: 150px;

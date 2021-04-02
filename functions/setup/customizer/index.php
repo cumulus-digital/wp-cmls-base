@@ -82,6 +82,8 @@ class themeMods {
 		
 		'font-webfont_url' => 'https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap',
 		'font-font_family' => "'Montserrat', sans-serif",
+		'font-header_webfont_url' => null,
+		'font-header_family' => "inherit",
 	);
 
 	// Do not allow access to an undefined theme mod

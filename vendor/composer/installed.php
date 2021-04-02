@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'e7129d6ef8550ba2f0c8a02bc8dc3daee6384c47',
+    'reference' => '7839f086b32ab77c980eb427cf4123076f07834b',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'e7129d6ef8550ba2f0c8a02bc8dc3daee6384c47',
+      'reference' => '7839f086b32ab77c980eb427cf4123076f07834b',
     ),
     'wptrt/control-color-alpha' => 
     array (

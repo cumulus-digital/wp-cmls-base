@@ -26,7 +26,7 @@ function themeCustomizerContent($wpc) {
             $wpc->add_control( 'font-font_family', array(
                 'type' => 'text',
                 'section' => 'cmls-content-font',
-                'label' => 'Font Family',
+                'label' => 'Base Font Family',
                 'description' => 'CSS font-family property for the base theme font, for example: arial, sans-serif.<br><br><strong>Be sure to include a generic fallback!</strong><br>See <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-family" target="_blank" rel="noopener">MDN: font-family</a> for more information.'
             ));
 
@@ -37,8 +37,29 @@ function themeCustomizerContent($wpc) {
             $wpc->add_control( 'font-webfont_url', array(
                 'type' => 'url',
                 'section' => 'cmls-content-font',
-                'label' => 'Webfont URL',
+                'label' => 'Base Webfont URL',
                 'description' => 'If you wish to use a web font, enter the full URL as given by the provider. It\'s a good idea to always use HTTPS!'
+            ));
+        $wpc->add_setting( 'font-header_family', array(
+            'default' => themeMods::getDefault('font-header_family'),
+            'sanitize_callback' => ns('themeCustomizer_requireFallbackFont')
+        ));
+            $wpc->add_control( 'font-header_family', array(
+                'type' => 'text',
+                'section' => 'cmls-content-font',
+                'label' => 'Header Font Family',
+                'description' => 'Set an alternate font family for H2-6 tags in body content.'
+            ));
+
+        $wpc->add_setting( 'font-header_webfont_url', array(
+            'default' => themeMods::getDefault('font-header_webfont_url'),
+            'sanitize_callback' => 'esc_url_raw'
+        ));
+            $wpc->add_control( 'font-header_webfont_url', array(
+                'type' => 'url',
+                'section' => 'cmls-content-font',
+                'label' => 'Header Webfont URL',
+                'description' => 'See Base Webfont URL for instructions.'
             ));
 
     $wpc->add_section( 'cmls-content-colors', array(
