@@ -22,8 +22,26 @@ function generateCustomCSS() {
 	);
 	$settings = themeMods::getSettings();
 
+	// Generate CSS URL vars for files
 	foreach($files as $key=>$val) {
-		$files[$key . '-cssurl'] = 'url(' . $val . ')';
+		$val = addslashes($val);
+		$files[$key] = "'${val}'";
+		$files[$key . '-cssurl'] = "url('${val}')";
+	}
+
+	// Sanitize text
+	array_walk_recursive($text, function(&$item, $key) {
+		$item = "'" . addslashes($item) . "'";
+	});
+
+	// Sanitize colors
+	$colors = preg_replace('/[^\'",\.\(\)#0-9a-z]/', '', $colors);
+
+	// Enqueue fonts
+	foreach ($fonts as $key => $val) {
+		if (stripos($key, '_url') !== false && ! empty($val)) {
+			enqueueCustomFontURL($val, $key);
+		}
 	}
 
 	$vars = array_merge(
@@ -33,17 +51,7 @@ function generateCustomCSS() {
 		$text,
 		$settings
 	);
-
-	$css = '';
-
-	// Enqueue fonts
-	foreach ($fonts as $key => $val) {
-		if (stripos($key, '_url') !== false && ! empty($val)) {
-			enqueueCustomFontURL($val, $key);
-		}
-	}
-
-	$css .= ":root {\n";
+	$css = ":root {\n";
 	foreach($vars as $key=>$val) {
 		$val = \wp_strip_all_tags($val);
 		$val = str_replace(';', '\3A', $val);
