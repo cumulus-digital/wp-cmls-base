@@ -135,12 +135,16 @@ function themeCustomizer_sanitizeSimpleHTML($input) {
 	$allowed = array(
 		'a' => array(
 			'href' => array(),
-			'title' => array()
+			'title' => array(),
+			'target' => array(),
+			'rel' => array(),
 		),
-		'br' => array(),
+		'br' => array(
+			'clear' => array(),
+		),
 		'em' => array(),
 		'strong' => array(),
 		'small' => array(),
 	);
-	return \wp_kses($input, $allowed, array('http', 'https'));
+	return \wp_kses($input, $allowed, array('http', 'https', 'sms', 'tel', 'mailto'));
 }
