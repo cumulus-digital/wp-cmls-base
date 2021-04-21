@@ -10,8 +10,7 @@ function acfDisableAdminInProd() {
     if (
         strstr(\get_site_url(), '.local') === false &&
         strstr(\get_site_url(), '.dev') === false &&
-        strstr(\get_site_url(), 'localhost') === false &&
-        (bool)ip2long($_SERVER['HTTP_HOST']) === false
+        strstr(\get_site_url(), 'localhost') === false
     ) {
         \acf_update_setting('show_admin', false);
     }
