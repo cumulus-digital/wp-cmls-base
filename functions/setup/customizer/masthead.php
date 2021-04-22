@@ -226,7 +226,28 @@ function themeCustomizerMasthead($wpc) {
                 'type' => 'url',
                 'section' => 'cmls-masthead-text_before_menu',
                 'label' => 'Link URL',
-                'description' => 'Optionally link the Hamburger Label. External links must begin with "http://" or "https://".'
+                'description' => 'Optionally link the Hamburger Label.'
             ));
+        $wpc->add_setting( 'text-masthead-before_menu-link_newtab', array(
+            'default' => themeMods::getDefault('text-masthead-before_menu-link_newtab'),
+            'sanitize_callback' => ns('themeCustomizer_sanitizeCheckbox'),
+            'sanitize_js_callback' => ns('themeCustomizer_sanitizeCheckbox')
+        ));
+            $wpc->add_control( 'text-masthead-before_menu-link_newtab', array(
+                'type' => 'checkbox',
+                'section' => 'cmls-masthead-text_before_menu',
+                'label' => 'Open link in a new window/tab.'
+            ));
+        $wpc->add_setting( 'text-masthead-before_menu-link_rel', array(
+            'default' => themeMods::getDefault('text-masthead-before_menu-link_rel'),
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+            $wpc->add_control( 'text-masthead-before_menu-link_rel', array(
+                'type' => 'text',
+                'section' => 'cmls-masthead-text_before_menu',
+                'label' => 'Link Relationship',
+                'description' => 'Set the "rel" parameter for the Hamburger Label link. See <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types" target="_blank" rel="noopener">Link Types</a> for details. When linking to another website, you should set this to "<em><strong>external noopener</strong></em>".'
+            ));
+
 }
 \add_action('customize_register', ns('themeCustomizerMasthead'));

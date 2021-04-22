@@ -42,6 +42,8 @@ class themeMods {
 		'text-copyright' => 'Copyright $year',
 		'text-masthead-before_menu' => 'EXPLORE',
 		'text-masthead-before_menu-link' => null,
+		'text-masthead-before_menu-link_newtab' => false,
+		'text-masthead-before_menu-link_rel' => null,
 		'color-site-background' => null,
 		
 		'color-masthead-background' => '#00598e',
