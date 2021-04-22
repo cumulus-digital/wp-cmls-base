@@ -1,4 +1,5 @@
 import jQuery from 'jquery';
+const debounce = require('lodash/debounce');
 
 let $j = jQuery.noConflict();
 
@@ -22,7 +23,7 @@ let $j = jQuery.noConflict();
 		}
 	}
 	var transitionEnd = whichTransitionEvent();
-	var menuOpenState = false;
+	var menuIsOpen = false;
 
 	function menuOpen() {
 		$('#header_menu').one(transitionEnd, function(e) {
@@ -35,7 +36,7 @@ let $j = jQuery.noConflict();
 				'aria-label': 'Close menu',
 				'aria-expanded': true
 			});
-		menuOpenState = true;
+		menuIsOpen = true;
 	}
 	function menuClose() {
 		$('#header_menu').removeClass('is-open');
@@ -46,34 +47,33 @@ let $j = jQuery.noConflict();
 				'aria-label': 'Open menu',
 				'aria-expanded': false
 			});
-		menuOpenState = false;
+		menuIsOpen = false;
 	}
 
-	$('body > header .hamburger').click(function(e) {
-		e.stopPropagation()
-		if (menuOpenState) {
-			console.log('closing on hamburger click');
-			this.blur();
+	$('html').on('click focusin', debounce(function(e) {
+		const context = {
+			'menu': $('body > header .menu-container *'),
+			'hamburger': $('body > header .hamburger')
+		};
+
+		// Close menu if click is anywhere outside menu
+		if ( ! (context.menu.is(e.target) || context.menu.has(e.target).length)) {
 			menuClose();
 			return;
 		}
-		this.focus();
-		menuOpen();
-	});
-	$('html').on('click focusin', function(e) {
-		const $context = $(
-			'body > header .hamburger,' +
-			'body > header .menu,' +
-			'body > header .menu .search' +
-			'body > header .menu .search input'
-		);
+
+		// Close menu if open and click is on hamburger
 		if (
-			! ($context.is(e.target) || $context.has(e.target).length)
-			&& menuOpenState
+			(context.hamburger.is(e.target) || context.hamburger.has(e.target).length)
+			&& menuIsOpen
 		) {
-			console.log('closing on focusin');
 			menuClose();
+			context.hamburger.blur();
+			return;
 		}
-	});
+
+		menuOpen();
+
+	}, 200, {leading: true, trailing: false}));
 
 }($j, window.self));
