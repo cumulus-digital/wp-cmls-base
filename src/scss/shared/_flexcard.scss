@@ -1,0 +1,55 @@
+/* Styles for flexible card block classes */
+.flexcard-inline {
+	display: inline-flex;
+	flex: 0 1 auto;
+	box-shadow: 0 0 0.5em rgba(0,0,0,0.25);
+	border-radius: 0.5em;
+	padding: 1em;
+	margin: 0 .5em .5em;
+	max-width: calc(50% - 1.2em);
+	vertical-align: top;
+
+	p:last-child {
+		margin-bottom: 0;
+	}
+
+	.flexcard-cover {
+		margin: -1em -1em .75em;
+		width: calc(100% + 2em);
+
+		img {
+			max-width: 100%;
+		}
+	}
+
+	&.valign-middle {
+		vertical-align: middle;
+	}
+	&.valign-bottom {
+		vertical-align: bottom;
+	}
+	&.max20 {
+		max-width: calc(20% - 1.2em);
+	}
+	&.max25 {
+		max-width: calc(25% - 1.2em);
+	}
+		@include tablet {
+			&.max20,
+			&.max25 {
+				max-width: calc(50% - 1.15em);
+			}
+		}
+		@include phone {
+			&.max20,
+			&.max25,
+			&.max30 {
+				max-width: 100%;
+			}
+		}
+	&.max30 {
+		max-width: calc(30% - 1.15em);
+	}
+}
+
+
