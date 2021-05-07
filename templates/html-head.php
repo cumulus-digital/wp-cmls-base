@@ -14,7 +14,15 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-	<meta name="description" content="<?php bloginfo('description') ?>">
+	<meta name="description" content="<?php
+		if ( \is_singular() && \has_excerpt() ) {
+			echo \wp_kses( \get_the_excerpt(), [] );
+		} else if ( \get_bloginfo('description') ) {
+			echo \wp_kses( \get_bloginfo('description'), [] );
+		} else {
+			echo \wp_kses( \get_bloginfo('name'), [] );
+		}
+	?>">
 
 	<?php \wp_site_icon() ?>
 
