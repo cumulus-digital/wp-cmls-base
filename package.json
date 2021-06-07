@@ -1,6 +1,6 @@
 {
   "name": "wp-cmls-base",
-  "version": "1.0.0",
+  "version": "1.0.56",
   "description": "Base wordpress theme for CMLS sites",
   "main": "index.js",
   "scripts": {
@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/cumulus-digital/wp-cmls-base#readme",
   "devDependencies": {
-    "@wordpress/scripts": "^15.0.1",
+    "@wordpress/scripts": "^16.1.2",
     "bourbon": "^7.0.0",
     "classlist-polyfill": "^1.2.0",
     "hamburgers": "^1.1.3",
