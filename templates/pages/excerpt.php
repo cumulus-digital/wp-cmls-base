@@ -33,7 +33,7 @@ if ($args) {
 >
 	<a href="<?php \the_permalink() ?>" title="<?php echo \esc_attr(\get_the_title()) ?>">
 		<?php if ($show_image): ?>
-			<?php \get_template_part('templates/pages/featured_image'); ?>
+			<?php cmls_get_template_part('templates/pages/featured_image'); ?>
 		<?php endif ?>
 		<header>
 			<<?php echo $title_tag ?>>

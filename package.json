@@ -1,6 +1,6 @@
 {
   "name": "wp-cmls-base",
-  "version": "1.0.56",
+  "version": "1.0.57",
   "description": "Base wordpress theme for CMLS sites",
   "main": "index.js",
   "scripts": {

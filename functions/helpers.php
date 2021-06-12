@@ -225,3 +225,52 @@ function make_post_class() {
 	//var_dump($arch_type); var_dump($post_type);
 	return \sanitize_html_class($arch_type . '-' . $post_type);
 }
+
+// Custom get_template_part to use custom locate_template
+function cmls_get_template_part($slug, $name = null, $args = array()) {
+
+	// Try to fill $name if not filled
+	if ($name === null && \in_the_loop()) {
+		$name = \get_post_type();
+	}
+
+	\do_action("get_template_part_{$slug}", $slug, $name, $args);
+	$templates = array();
+	$name = (string) $name;
+	if ('' !== $name) {
+		$templates[] = "{$slug}-{$name}.php";
+	}
+	$templates[] = "{$slug}.php";
+	\do_action('get_template_part', $slug, $name, $templates, $args);
+	if ( ! cmls_locate_template($templates, true, false, $args)) {
+		return false;
+	}
+}
+// Custom replacement for locate_template which allows filtering template paths
+function cmls_locate_template($template_names, $load = false, $require_once = true, $args = array()) {
+	$paths = array(
+		\STYLESHEETPATH,
+		\TEMPLATEPATH,
+		\ABSPATH . \WPINC . '/theme-compat'
+	);
+	$paths = \apply_filters('cmls-locate_template_path', $paths);
+
+	$located = '';
+	foreach ((array) $template_names as $template_name) {
+		if ( ! $template_name) {
+			continue;
+		}
+		foreach($paths as $path) {
+			if (file_exists($path . '/' . $template_name)) {
+				$located = $path . '/' . $template_name;
+				break 2;
+			}
+		}
+	}
+
+	if ($load && '' !== $located) {
+		\load_template($located, $require_once, $args);
+	}
+
+	return $located;
+}

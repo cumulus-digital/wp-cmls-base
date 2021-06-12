@@ -38,6 +38,6 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 	<link rel="manifest" href="/site.webmanifest">
 	-->
 
-	<?php \get_template_part('templates/child-html-head'); ?>
+	<?php cmls_get_template_part('templates/child-html-head'); ?>
 	<?php \wp_head(); ?>
 </head>

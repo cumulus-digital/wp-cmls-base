@@ -13,13 +13,13 @@ $customizer_files = getCustomizerFiles();
 <header class="row masthead">
 
 	<div class="row-container">
-		<?php \get_template_part('templates/masthead/logo') ?>
+		<?php cmls_get_template_part('templates/masthead/logo') ?>
 
 		<span class="spacer"></span>
 
-		<?php \get_template_part('templates/masthead/menu-beforetext') ?>
+		<?php cmls_get_template_part('templates/masthead/menu-beforetext') ?>
 
-        <?php \get_template_part('templates/masthead/header-menu') ?>
+        <?php cmls_get_template_part('templates/masthead/header-menu') ?>
 	</div>
 
 </header>

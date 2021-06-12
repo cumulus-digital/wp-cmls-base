@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 <main role="main" class="<?php echo \is_singular() ? 'single' : 'archive' ?>">
 
     <?php if ( ! \is_singular()): ?>
-        <?php \get_template_part('templates/pages/archive-header'); ?>
+        <?php cmls_get_template_part('templates/pages/archive-header'); ?>
     <?php endif ?>
 
     <?php if (\have_posts()): ?>
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 
                 <?php while (\have_posts()): \the_post() ?>
 
-                    <?php \get_template_part('templates/pages/base'); ?>
+                    <?php cmls_get_template_part('templates/pages/base'); ?>
 
                 <?php endwhile ?>
 
@@ -29,7 +29,7 @@ if (!defined('ABSPATH')) die('No direct access allowed');
         </div>
 
         <?php if (is_paginated()): ?>
-            <?php \get_template_part('templates/pages/pagination'); ?>
+            <?php cmls_get_template_part('templates/pages/pagination'); ?>
         <?php endif ?>
 
     <?php else: ?>

@@ -11,22 +11,30 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 
 <main role="main" class="archive">
 
-	<?php \get_template_part('templates/pages/archive-header'); ?>
+	<?php cmls_get_template_part('templates/pages/archive-header'); ?>
+
+	<?php \do_action('cmls_template-archive-before_content'); ?>
 
 	<?php if (\have_posts()): ?>
 
 		<div class="row">
 			<div class="row-container cards">
+
+			<?php \do_action('cmls_template-archive-before_posts'); ?>
+
 			<?php while (\have_posts()): \the_post() ?>
 
-				<?php \get_template_part('templates/pages/excerpt', make_post_class()); ?>
+				<?php cmls_get_template_part('templates/pages/excerpt', make_post_class()); ?>
 				
 			<?php endwhile ?>
+
+			<?php \do_action('cmls_template-archive-after_posts'); ?>
+
 			</div>
 		</div>
 
 		<?php if (is_paginated()): ?>
-			<?php \get_template_part('templates/pages/pagination'); ?>
+			<?php cmls_get_template_part('templates/pages/pagination'); ?>
 		<?php endif ?>
 
 	<?php else: ?>
@@ -38,6 +46,8 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 		</article>
 	
 	<?php endif ?>
+
+	<?php \do_action('cmls_template-archive-after_content'); ?>
 
 </main>
 

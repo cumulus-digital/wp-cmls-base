@@ -17,11 +17,11 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 		<a href="<?php \the_permalink() ?>" title="<?php echo \esc_attr(\get_the_title()) ?>">
 	<?php endif ?>
 
-		<?php \get_template_part('templates/pages/featured_image'); ?>
+		<?php cmls_get_template_part('templates/pages/featured_image'); ?>
 
-		<?php \get_template_part('templates/pages/header'); ?>
+		<?php cmls_get_template_part('templates/pages/header'); ?>
 
-		<?php \get_template_part('templates/pages/body'); ?>
+		<?php cmls_get_template_part('templates/pages/body'); ?>
 
 	<?php if ( ! is_singular()): ?>
 		</a>

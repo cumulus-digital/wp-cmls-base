@@ -13,11 +13,17 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 
     <div class="row">
         <div class="row-container">
+
+            <?php \do_action('cmls_template-singular-before_post'); ?>
+
             <?php while (\have_posts()): \the_post() ?>
 
-                <?php \get_template_part('templates/pages/base'); ?>
+                <?php cmls_get_template_part('templates/pages/base'); ?>
 
             <?php endwhile ?>
+
+            <?php \do_action('cmls_template-singular-after_post'); ?>
+
         </div>
     </div>
 

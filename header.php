@@ -12,7 +12,7 @@ if (
 	generateBodyClasses();
 }
 
-\get_template_part('templates/html-head');
+cmls_get_template_part('templates/html-head');
 
 $slug = null;
 $qo = \get_queried_object();
@@ -23,4 +23,4 @@ if (is_object($qo) && property_exists($qo, 'post_name')) {
 <body <?php \body_class($slug); ?>>
 	<?php if ( function_exists('gtm4wp_the_gtm_tag') ) { \gtm4wp_the_gtm_tag(); } ?>
 
-	<?php \get_template_part('templates/masthead/base'); ?>
+	<?php cmls_get_template_part('templates/masthead/base'); ?>
