@@ -28,7 +28,7 @@ if (
 
 <?php
 if (
-	! is_singular()
+	! \is_singular()
 	&& strlen(\get_the_title())
 ):
 ?>
