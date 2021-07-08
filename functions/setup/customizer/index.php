@@ -45,7 +45,7 @@ class themeMods {
 		'text-masthead-before_menu-link_newtab' => false,
 		'text-masthead-before_menu-link_rel' => null,
 		'color-site-background' => null,
-		
+
 		'color-masthead-background' => '#00598e',
 		'color-masthead-background-overlay' => 'rgba(255, 255, 255, 1)',
 		'color-masthead-foreground' => 'rgba(255, 255, 255, 1)',
@@ -57,7 +57,7 @@ class themeMods {
 		'file-masthead-logo-inside' => 'ref:file-masthead-logo',
 		'file-masthead-logo-inside-overlay' => 'ref:file-masthead-logo-overlay',
 		'setting-masthead-transparent_on_homepage' => false,
-		
+
 		'color-main_menu-background' => '#000000',
 		'color-main_menu-foreground' => '#ffffff',
 		'color-main_menu-foreground-hover_foreground' => '#ffffff',
@@ -67,21 +67,21 @@ class themeMods {
 		'setting-main_menu-background-size' => 'cover',
 		'setting-main_menu-background-repeat' => 'no-repeat',
 		'setting-main_menu-include_search' => false,
-		
+
 		'color-content-background' => '#ffffff',
 		'color-content-foreground' => '#000000',
-		
+
 		'color-footer-background' => '#000000',
 		'color-footer-foreground' => '#ffffff',
 		'file-footer-logo' => 'ref:file-masthead-logo',
-		
+
 		'color-site_background' => '#ffffff',
 		'color-brand' => '#00598e',
 		'color-highlight' => '#3399cc',
 		'color-accent' => '#a33cb3',
 		'color-favicon-mstile' => '#00598e',
 		'color-favicon-chrome' => '#00598e',
-		
+
 		'font-webfont_url' => 'https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap',
 		'font-font_family' => "'Montserrat', sans-serif",
 		'font-header_webfont_url' => null,
@@ -116,7 +116,7 @@ class themeMods {
 	 */
 	public static function getRaw($key, $default=893759834267529) {
 		self::check($key);
-		
+
 		// If a default is not overridden, use our predefined default
 		if ($default == 893759834267529) {
 			$default = self::getDefault($key);
@@ -131,7 +131,7 @@ class themeMods {
 
 		return $mod;
 	}
-	
+
 	public static function getColors() {
 		$keys = self::getFilteredKeys('color');
 		$colors = array();
@@ -184,7 +184,7 @@ class themeMods {
 				$posts_by_id[$p->ID] = $p;
 			}
 			foreach($post_ids as $pId) {
-				$files[$pId['key']] = 
+				$files[$pId['key']] =
 					\wp_make_link_relative(
 						$posts_by_id[$pId['id']]->guid
 					);
@@ -226,7 +226,7 @@ class themeMods {
 		}
 		return $val;
 	}
-	
+
 }
 
 function getCustomizerFiles() {

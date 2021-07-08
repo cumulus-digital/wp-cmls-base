@@ -50,7 +50,7 @@ let $j = jQuery.noConflict();
 		menuIsOpen = false;
 	}
 
-	$('html').on('click focusin', debounce(function(e) {
+	$('html').on('click.cmlsBase focusin.cmlsBase', debounce(function(e) {
 		const context = {
 			'menu': $('body > header .menu-container *'),
 			'hamburger': $('body > header .hamburger')

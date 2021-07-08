@@ -5,7 +5,7 @@
  */
 
 // Helper functions
-use function CMLS_Base\{
+use function \CMLS_Base\{
 	ns,
 	theme_url,
 	child_theme_url,
@@ -25,5 +25,6 @@ use function CMLS_Base\{
 	cmls_locate_template
 };
 
-use CMLS_Base\BodyClasses;
-use CMLS_Base\CleanMenuWalker;
+use \CMLS_Base\BodyClasses;
+use \CMLS_Base\CleanMenuWalker;
+use \CMLS_Base\themeMods;
