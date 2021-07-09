@@ -1,3 +1,6 @@
+vendor/
+!vendor/wptrt
+!vendor/composer
 node_modules/
 *.log
 
