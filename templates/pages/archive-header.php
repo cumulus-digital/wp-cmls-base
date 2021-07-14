@@ -5,18 +5,20 @@
  * Archive Header
  */
 
+\defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
+
 ?>
 <header class="row page_title">
     <div class="row-container">
         <h1>
-            <?php if (\is_tag()): ?>
+            <?php if ( \is_tag() ): ?>
                 <span class="prepend">Tag: </span>
-                <?php echo \esc_html(\single_term_title()) ?>
-            <?php elseif (\is_category() || \is_tax()): ?>
-                <?php echo \esc_html(\single_term_title()) ?>
+                <?php echo \esc_html( \single_term_title() ); ?>
+            <?php elseif ( \is_category() || \is_tax() ): ?>
+                <?php echo \esc_html( \single_term_title() ); ?>
             <?php else: ?>
-                <?php echo \post_type_archive_title() ?>
-            <?php endif ?>
+                <?php echo \post_type_archive_title(); ?>
+            <?php endif; ?>
         </h1>
     </div>
 </header>

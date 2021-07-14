@@ -3,8 +3,10 @@
  * CMLS Base Theme
  * 404
  */
+
 namespace CMLS_Base;
-if (!defined('ABSPATH')) die('No direct access allowed');
+
+\defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 \get_header();
 ?>
@@ -13,13 +15,13 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 
     <div class="row">
         <div class="row-container">
-        
+
             <article>
 
                 <header class="page_title">
                     <h1>404</h1>
                 </header>
-                
+
                 <div class="body">
                     There's nothing here.
                 </div>

@@ -2,8 +2,10 @@
 /**
  * Init theme support
  */
+
 namespace CMLS_Base;
-if (!defined('ABSPATH')) die('No direct access allowed');
+
+\defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 function init_theme_support() {
 	\add_theme_support( 'menus' );
@@ -15,11 +17,11 @@ function init_theme_support() {
 	\add_theme_support( 'wp-block-styles' );
 	\add_theme_support( 'responsive-embeds' );
 	\add_theme_support( 'post-thumbnails' );
-	\add_theme_support( 'post-formats', array( 'aside', 'gallery', 'video' ) );
+	\add_theme_support( 'post-formats', [ 'aside', 'gallery', 'video' ] );
 
 	\add_post_type_support( 'page', 'excerpt' );
 }
-\add_action('after_setup_theme', ns('init_theme_support'), 10);
+\add_action( 'after_setup_theme', ns( 'init_theme_support' ), 10 );
 
 global $content_width;
 $content_width = 1200;

@@ -2,35 +2,42 @@
 /**
  * Customizer setup
  */
+
 namespace CMLS_Base;
-if (!defined('ABSPATH')) die('No direct access allowed');
+
+\defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 // Register alpha control
-if( is_admin() ){
-	\add_action( 'wp_default_scripts', ns('wp_default_custom_scripts'));
-	function wp_default_custom_scripts( $scripts ){
-			//$scripts->add( 'wp-color-picker', "/wp-admin/js/color-picker$suffix.js", array( 'iris' ), false, 1 );
-			\did_action( 'init' ) && $scripts->localize(
-					'wp-color-picker',
-					'wpColorPickerL10n',
-					array(
-							'clear'            => \__( 'Clear' ),
-							'clearAriaLabel'   => \__( 'Clear color' ),
-							'defaultString'    => \__( 'Default' ),
-							'defaultAriaLabel' => \__( 'Select default color' ),
-							'pick'             => \__( 'Select Color' ),
-							'defaultLabel'     => \__( 'Color value' ),
-					)
-			);
+if ( \is_admin() ) {
+	\add_action( 'wp_default_scripts', ns( 'wp_default_custom_scripts' ) );
+	function wp_default_custom_scripts( $scripts ) {
+		//$scripts->add( 'wp-color-picker', "/wp-admin/js/color-picker$suffix.js", array( 'iris' ), false, 1 );
+		\did_action( 'init' ) && $scripts->localize(
+			'wp-color-picker',
+			'wpColorPickerL10n',
+			[
+				'clear'            => \__( 'Clear' ),
+				'clearAriaLabel'   => \__( 'Clear color' ),
+				'defaultString'    => \__( 'Default' ),
+				'defaultAriaLabel' => \__( 'Select default color' ),
+				'pick'             => \__( 'Select Color' ),
+				'defaultLabel'     => \__( 'Color value' ),
+			]
+		);
 	}
 }
-\add_action( 'customize_register', function($wpc) {
+\add_action( 'customize_register', function ( $wpc ) {
+
+	if ( ! \class_exists( 'WPTRT\Customize\Control\ColorAlpha' ) ) {
+		require theme_path() . '/vendor/wptrt/control-color-alpha/src/ColorAlpha.php';
+	}
 	$wpc->register_control_type( '\WPTRT\Customize\Control\ColorAlpha' );
-});
+
+} );
 
 class themeMods {
 
-	private static $cache = array();
+	private static $cache = [];
 
 	/**
 	 * Define available theme mod variables and their default values. Default values
@@ -38,62 +45,62 @@ class themeMods {
 	 *
 	 * @var array
 	 */
-	private static $vars = array(
-		'text-copyright' => 'Copyright $year',
-		'text-masthead-before_menu' => 'EXPLORE',
-		'text-masthead-before_menu-link' => null,
+	private static $vars = [
+		'text-copyright'                        => 'Copyright $year',
+		'text-masthead-before_menu'             => 'EXPLORE',
+		'text-masthead-before_menu-link'        => null,
 		'text-masthead-before_menu-link_newtab' => false,
-		'text-masthead-before_menu-link_rel' => null,
-		'color-site-background' => null,
+		'text-masthead-before_menu-link_rel'    => null,
+		'color-site-background'                 => null,
 
-		'color-masthead-background' => '#00598e',
-		'color-masthead-background-overlay' => 'rgba(255, 255, 255, 1)',
-		'color-masthead-foreground' => 'rgba(255, 255, 255, 1)',
-		'color-masthead-foreground-overlay' => 'rgba(0, 0, 0, 0.95)',
-		'file-masthead-background' => null,
-		'file-masthead-background-overlay' => null,
-		'file-masthead-logo' => null,
-		'file-masthead-logo-overlay' => 'ref:file-masthead-logo',
-		'file-masthead-logo-inside' => 'ref:file-masthead-logo',
-		'file-masthead-logo-inside-overlay' => 'ref:file-masthead-logo-overlay',
+		'color-masthead-background'                => '#00598e',
+		'color-masthead-background-overlay'        => 'rgba(255, 255, 255, 1)',
+		'color-masthead-foreground'                => 'rgba(255, 255, 255, 1)',
+		'color-masthead-foreground-overlay'        => 'rgba(0, 0, 0, 0.95)',
+		'file-masthead-background'                 => null,
+		'file-masthead-background-overlay'         => null,
+		'file-masthead-logo'                       => null,
+		'file-masthead-logo-overlay'               => 'ref:file-masthead-logo',
+		'file-masthead-logo-inside'                => 'ref:file-masthead-logo',
+		'file-masthead-logo-inside-overlay'        => 'ref:file-masthead-logo-overlay',
 		'setting-masthead-transparent_on_homepage' => false,
 
-		'color-main_menu-background' => '#000000',
-		'color-main_menu-foreground' => '#ffffff',
+		'color-main_menu-background'                  => '#000000',
+		'color-main_menu-foreground'                  => '#ffffff',
 		'color-main_menu-foreground-hover_foreground' => '#ffffff',
 		'color-main_menu-foreground-hover_background' => '#00598e',
-		'file-main_menu-background' => null,
-		'setting-main_menu-background-position' => 'top left',
-		'setting-main_menu-background-size' => 'cover',
-		'setting-main_menu-background-repeat' => 'no-repeat',
-		'setting-main_menu-include_search' => false,
+		'file-main_menu-background'                   => null,
+		'setting-main_menu-background-position'       => 'top left',
+		'setting-main_menu-background-size'           => 'cover',
+		'setting-main_menu-background-repeat'         => 'no-repeat',
+		'setting-main_menu-include_search'            => false,
 
 		'color-content-background' => '#ffffff',
 		'color-content-foreground' => '#000000',
 
 		'color-footer-background' => '#000000',
 		'color-footer-foreground' => '#ffffff',
-		'file-footer-logo' => 'ref:file-masthead-logo',
+		'file-footer-logo'        => 'ref:file-masthead-logo',
 
 		'color-site_background' => '#ffffff',
-		'color-brand' => '#00598e',
-		'color-highlight' => '#3399cc',
-		'color-accent' => '#a33cb3',
-		'color-favicon-mstile' => '#00598e',
-		'color-favicon-chrome' => '#00598e',
+		'color-brand'           => '#00598e',
+		'color-highlight'       => '#3399cc',
+		'color-accent'          => '#a33cb3',
+		'color-favicon-mstile'  => '#00598e',
+		'color-favicon-chrome'  => '#00598e',
 
-		'font-webfont_url' => 'https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap',
-		'font-font_family' => "'Montserrat', sans-serif",
+		'font-webfont_url'        => 'https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap',
+		'font-font_family'        => "'Montserrat', sans-serif",
 		'font-header_webfont_url' => null,
-		'font-header_family' => "inherit",
-	);
+		'font-header_family'      => 'inherit',
+	];
 
 	// Do not allow access to an undefined theme mod
-	private static function check($key) {
-		if ( ! array_key_exists($key, self::$vars)) {
+	private static function check( $key ) {
+		if ( ! \array_key_exists( $key, self::$vars ) ) {
 			echo '<pre>';
-			debug_print_backtrace();
-			die('Attempted to access an undefined theme mod variable: ' . \wp_strip_all_tags($key));
+			\debug_print_backtrace();
+			exit( 'Attempted to access an undefined theme mod variable: ' . \wp_strip_all_tags( $key ) );
 		}
 	}
 
@@ -101,46 +108,52 @@ class themeMods {
 	 * Retrieve a defined theme mod var, optionally override predefined default. Strips all tags.
 	 *
 	 * @param string $key
-	 * @param mixed $default
+	 * @param mixed  $default
+	 *
 	 * @return mixed
 	 */
-	public static function get($key, $default=893759834267529) {
-		return \wp_strip_all_tags(self::getRaw($key, $default));
+	public static function get( $key, $default = 893759834267529 ) {
+		return \wp_strip_all_tags( self::getRaw( $key, $default ) );
 	}
 
 	/**
 	 * Retrieve a theme mod var without stripping tags
-	 * @param  string  $key
-	 * @param  mixed $default
+	 *
+	 * @param string $key
+	 * @param mixed  $default
+	 *
 	 * @return mixed
 	 */
-	public static function getRaw($key, $default=893759834267529) {
-		self::check($key);
+	public static function getRaw( $key, $default = 893759834267529 ) {
+		self::check( $key );
 
 		// If a default is not overridden, use our predefined default
-		if ($default == 893759834267529) {
-			$default = self::getDefault($key);
+		if ( $default == 893759834267529 ) {
+			$default = self::getDefault( $key );
 		}
 
-		$mod = self::selfRef(\get_theme_mod($key, $default));
+		$mod = self::selfRef( \get_theme_mod( $key, $default ) );
 
 		// If a theme mod is not set, set the predefined default.
-		if ( ! $mod && $mod !== $default &&  ! strpos($default, 'ref:')) {
-			\set_theme_mod($key, $default);
+		if ( ! $mod && $mod !== $default && ! \mb_strpos( $default, 'ref:' ) ) {
+			\set_theme_mod( $key, $default );
 		}
 
 		return $mod;
 	}
 
 	public static function getColors() {
-		$keys = self::getFilteredKeys('color');
-		$colors = array();
-		foreach($keys as $key) {
-			$color = self::get($key);
-			if ($color !== NULL) {
+		$keys   = self::getFilteredKeys( 'color' );
+		$colors = [];
+
+		foreach ( $keys as $key ) {
+			$color = self::get( $key );
+
+			if ( $color !== null ) {
 				$colors[$key] = $color;
 			}
 		}
+
 		return $colors;
 	}
 
@@ -148,11 +161,13 @@ class themeMods {
 	 * Retrieve the predefined default for a given defined theme mod var
 	 *
 	 * @param string $key
+	 *
 	 * @return mixed
 	 */
-	public static function getDefault($key) {
-		self::check($key);
-		$default = self::selfRef(self::$vars[$key]);
+	public static function getDefault( $key ) {
+		self::check( $key );
+		$default = self::selfRef( self::$vars[$key] );
+
 		return $default;
 	}
 
@@ -162,71 +177,80 @@ class themeMods {
 			return self::$cache['files'];
 		}
 		*/
-		$keys = self::getFilteredKeys('file');
-		$files = array();
-		$post_ids = array();
-		foreach($keys as $key) {
-			$file_post_id = self::get($key);
-			if ($file_post_id) {
-				$post_ids[$key] = array(
+		$keys     = self::getFilteredKeys( 'file' );
+		$files    = [];
+		$post_ids = [];
+
+		foreach ( $keys as $key ) {
+			$file_post_id = self::get( $key );
+
+			if ( $file_post_id ) {
+				$post_ids[$key] = [
 					'key' => $key,
-					'id' => $file_post_id
-				);
+					'id'  => $file_post_id,
+				];
 			}
 		}
-		if (count($post_ids)) {
-			$posts = \get_posts(array(
+
+		if ( \count( $post_ids ) ) {
+			$posts = \get_posts( [
 				'post_type' => 'attachment',
-				'post__in' => array_column($post_ids, 'id')
-			));
-			$posts_by_id = array();
-			foreach($posts as $p) {
+				'post__in'  => \array_column( $post_ids, 'id' ),
+			] );
+			$posts_by_id = [];
+
+			foreach ( $posts as $p ) {
 				$posts_by_id[$p->ID] = $p;
 			}
-			foreach($post_ids as $pId) {
-				$files[$pId['key']] =
-					\wp_make_link_relative(
+
+			foreach ( $post_ids as $pId ) {
+				$files[$pId['key']] = \wp_make_link_relative(
 						$posts_by_id[$pId['id']]->guid
 					);
 			}
 		}
-		if (count($files)) {
+
+		if ( \count( $files ) ) {
 			//self::$cache['files'] = $files;
 			return $files;
 		}
-		return array();
+
+		return [];
 	}
 
-	public static function getFilteredKeys($filter) {
-		$keys = array_filter(array_keys(self::$vars), function($key) use ($filter) {
-			if (strpos($key, $filter . '-') === 0) {
+	public static function getFilteredKeys( $filter ) {
+		$keys = \array_filter( \array_keys( self::$vars ), function ( $key ) use ( $filter ) {
+			if ( \mb_strpos( $key, $filter . '-' ) === 0 ) {
 				return $key;
 			}
-		});
+		} );
+
 		return $keys;
 	}
 
 	public static function getSettings() {
-		$keys = self::getFilteredKeys('setting');
-		$settings = array();
-		foreach($keys as $key) {
-			$settings[$key] = self::get($key);
+		$keys     = self::getFilteredKeys( 'setting' );
+		$settings = [];
+
+		foreach ( $keys as $key ) {
+			$settings[$key] = self::get( $key );
 		}
+
 		return $settings;
 	}
 
-	public static function getStripped($key, $default=893759834267529) {
-		return \wp_strip_all_tags(self::get($key, $default));
+	public static function getStripped( $key, $default = 893759834267529 ) {
+		return \wp_strip_all_tags( self::get( $key, $default ) );
 	}
 
-	private static function selfRef($val) {
-		if (strpos($val, 'ref:') !== FALSE) {
-			$val = str_replace('ref:', '', $val);
-			$val = self::get($val);
+	private static function selfRef( $val ) {
+		if ( \mb_strpos( $val, 'ref:' ) !== false ) {
+			$val = \str_replace( 'ref:', '', $val );
+			$val = self::get( $val );
 		}
+
 		return $val;
 	}
-
 }
 
 function getCustomizerFiles() {

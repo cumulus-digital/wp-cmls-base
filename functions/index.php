@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 
 const PREFIX = 'cmls_base';
 
-require __DIR__ . '/libs/Composer.php';
+//require __DIR__ . '/libs/Composer.php';
 
 require __DIR__ . '/helpers.php';
 

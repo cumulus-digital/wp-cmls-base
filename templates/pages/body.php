@@ -4,14 +4,16 @@
  * Template
  * Pages Body
  */
+
 namespace CMLS_Base;
-if (!defined('ABSPATH')) die('No direct access allowed');
+
+\defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 ?>
 
 <div class="body">
-    <?php if (\is_singular()): ?>
+    <?php if ( \is_singular() ): ?>
         <?php \the_content(); ?>
     <?php else: ?>
         <?php \the_excerpt(); ?>
-    <?php endif ?>
+    <?php endif; ?>
 </div>

@@ -3,18 +3,20 @@
  * CMLS Base Theme
  * Footer
  */
+
 namespace CMLS_Base;
-if (!defined('ABSPATH')) die('No direct access allowed');
+
+\defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 ?>
 <footer class="row" role="contentinfo">
 
 	<div class="row-container">
 
 		<div class="logo">
-			<a aria-label="Home" href="<?php echo \home_url() ?>" title="Home">
-				<?php if (gav(themeMods::getFiles(), 'file-footer-logo')) : ?>
-					<img src="<?php echo gav(themeMods::getFiles(), 'file-footer-logo') ?>" alt="<?php echo \bloginfo('name') ?>">
-				<?php endif ?>
+			<a aria-label="Home" href="<?php echo \home_url(); ?>" title="Home">
+				<?php if ( gav( themeMods::getFiles(), 'file-footer-logo' ) ) : ?>
+					<img src="<?php echo gav( themeMods::getFiles(), 'file-footer-logo' ); ?>" alt="<?php echo \bloginfo( 'name' ); ?>">
+				<?php endif; ?>
 			</a>
 		</div>
 

@@ -4,8 +4,10 @@
  * Template
  * Pages Base
  */
+
 namespace CMLS_Base;
-if (!defined('ABSPATH')) die('No direct access allowed');
+
+\defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 ?>
 
 <article
@@ -13,18 +15,18 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 	<?php \post_class( \is_singular() ? 'single' : 'archive' ); ?>
 >
 
-	<?php if ( ! \is_singular()): ?>
-		<a href="<?php \the_permalink() ?>" title="<?php echo \esc_attr(\get_the_title()) ?>">
-	<?php endif ?>
+	<?php if ( ! \is_singular() ): ?>
+		<a href="<?php \the_permalink(); ?>" title="<?php echo \esc_attr( \get_the_title() ); ?>">
+	<?php endif; ?>
 
-		<?php cmls_get_template_part('templates/pages/featured_image'); ?>
+		<?php cmls_get_template_part( 'templates/pages/featured_image' ); ?>
 
-		<?php cmls_get_template_part('templates/pages/header'); ?>
+		<?php cmls_get_template_part( 'templates/pages/header' ); ?>
 
-		<?php cmls_get_template_part('templates/pages/body'); ?>
+		<?php cmls_get_template_part( 'templates/pages/body' ); ?>
 
-	<?php if ( ! \is_singular()): ?>
+	<?php if ( ! \is_singular() ): ?>
 		</a>
-	<?php endif ?>
+	<?php endif; ?>
 
 </article>

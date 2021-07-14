@@ -2,19 +2,21 @@
 /**
  * Menu initialization
  */
+
 namespace CMLS_Base;
-if (!defined('ABSPATH')) die('No direct access allowed');
+
+\defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 function init_nav_support() {
-	\register_nav_menus(array(
-		'header-menu' => __('Header Menu'),
-		'footer-menu' => __('Footer Menu')
-	));
+	\register_nav_menus( [
+		'header-menu' => \__( 'Header Menu' ),
+		'footer-menu' => \__( 'Footer Menu' ),
+	] );
 }
-\add_action( 'after_setup_theme', ns('init_nav_support') );
+\add_action( 'after_setup_theme', ns( 'init_nav_support' ) );
 
-function makeMenu($location, $options = array()) {
-	$defaults = array(
+function makeMenu( $location, $options = [] ) {
+	$defaults = [
 		'theme_location'  => $location,
 		'menu'            => '',
 		'container'       => '',
@@ -30,24 +32,24 @@ function makeMenu($location, $options = array()) {
 		'link_after'      => '',
 		'items_wrap'      => '<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement">%3$s</ul>',
 		'depth'           => 0,
-		'walker'          => new CleanMenuWalker
-	);
-	$resolved = array_merge($defaults, $options);
-	\wp_nav_menu($resolved);
+		'walker'          => new CleanMenuWalker(),
+	];
+	$resolved = \array_merge( $defaults, $options );
+	\wp_nav_menu( $resolved );
 }
 
 function header_menu() {
-	makeMenu('header-menu');
+	makeMenu( 'header-menu' );
 }
 
 function has_header_menu() {
-	return \has_nav_menu('header-menu');
+	return \has_nav_menu( 'header-menu' );
 }
 
 function footer_menu() {
-	makeMenu('footer-menu');
+	makeMenu( 'footer-menu' );
 }
 
 function has_footer_menu() {
-	return \has_nav_menu('footer-menu');
+	return \has_nav_menu( 'footer-menu' );
 }

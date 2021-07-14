@@ -2,8 +2,10 @@
 /**
  * Theme initialization
  */
+
 namespace CMLS_Base;
-if (!defined('ABSPATH')) die('No direct access allowed');
+
+\defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 require __DIR__ . '/global.php';
 require __DIR__ . '/theme_support.php';

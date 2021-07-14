@@ -6,21 +6,22 @@ $config = new PhpCsFixer\Config();
 require_once __DIR__ . '/vendor/cumulus-digital/wp-php-cs-fixer/loader.php';
 
 // Load WP core classes/functions/constants for qualifying
-$wp_core = \str_getcsv(\file_get_contents(__DIR__ . '/.php-cs-fixer/wp-core.csv'));
-$NFI_includes = \array_filter(\array_merge(
+$wp_core      = \str_getcsv( \file_get_contents( __DIR__ . '/.php-cs-fixer/wp-core.csv' ) );
+$NFI_includes = \array_filter( \array_merge(
 	['@compiler_optimized'],
 	['@internal'],
 	$wp_core
-));
+) );
 
 return $config
-->registerCustomFixers([
-	new WeDevs\Fixer\SpaceInsideParenthesisFixer(),
-	new WeDevs\Fixer\BlankLineAfterClassOpeningFixer()
-	])
-	->setRiskyAllowed(true)
-	->setIndent("\t")
-	->setRules(array_merge(
+	->registerCustomFixers( [
+		new WeDevs\Fixer\SpaceInsideParenthesisFixer(),
+		new WeDevs\Fixer\BlankLineAfterClassOpeningFixer(),
+	] )
+	->setRiskyAllowed( true )
+	->setIndent( "\t" )
+	->setRules( \array_merge(
+		WeDevs\Fixer\Fixer::rules(),
 		[
 			'@PSR2' => true,
 			// Each element of an array must be indented exactly once.
@@ -30,7 +31,7 @@ return $config
 			// Add leading `\` before constant invocation of internal constant to speed up resolving. Constant name match is case-sensitive, except for `null`, `false` and `true`.
 			'native_constant_invocation' => true,
 			// Add leading `\` before function invocation to speed up resolving.
-			'native_function_invocation' => ['strict'=>false, 'include'=>$NFI_includes],
+			'native_function_invocation' => ['strict' => false, 'include' => $NFI_includes],
 			// Master language constructs shall be used instead of aliases.
 			'no_alias_language_construct_call' => true,
 			// PHP single-line arrays should not have trailing comma.
@@ -43,11 +44,12 @@ return $config
 			'ternary_operator_spaces' => true,
 			// Multi-line arrays, arguments list and parameters list must have a trailing comma.
 			'trailing_comma_in_multiline' => true,
+			// Replace control structure alternative syntax to use braces.
+			'no_alternative_syntax' => false,
 		],
-		WeDevs\Fixer\Fixer::rules(),
-	))
+	) )
 	->setFinder(
 		PhpCsFixer\Finder::create()
-		->exclude('vendor')
-		->in(__DIR__)
+			->exclude( 'vendor' )
+			->in( __DIR__ )
 	);

@@ -3,8 +3,10 @@
  * CMLS Base Theme
  * Single post template
  */
+
 namespace CMLS_Base;
-if (!defined('ABSPATH')) die('No direct access allowed');
+
+\defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 \get_header();
 ?>
@@ -14,15 +16,15 @@ if (!defined('ABSPATH')) die('No direct access allowed');
     <div class="row">
         <div class="row-container">
 
-            <?php \do_action('cmls_template-singular-before_post'); ?>
+            <?php \do_action( 'cmls_template-singular-before_post' ); ?>
 
-            <?php while (\have_posts()): \the_post() ?>
+            <?php while ( \have_posts() ): \the_post(); ?>
 
-                <?php cmls_get_template_part('templates/pages/base'); ?>
+                <?php cmls_get_template_part( 'templates/pages/base' ); ?>
 
-            <?php endwhile ?>
+            <?php endwhile; ?>
 
-            <?php \do_action('cmls_template-singular-after_post'); ?>
+            <?php \do_action( 'cmls_template-singular-after_post' ); ?>
 
         </div>
     </div>
