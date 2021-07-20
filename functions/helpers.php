@@ -7,8 +7,8 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
-if ( ! \defined( 'CMLS_HELPERS_IMPORTED' ) ) {
-	\define( 'CMLS_HELPERS_IMPORTED', true );
+if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
+	\define( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED', true );
 
 	/**
 	 * Namespace a given function or class name, given as a string.
@@ -18,7 +18,7 @@ if ( ! \defined( 'CMLS_HELPERS_IMPORTED' ) ) {
 	 *
 	 * @return string
 	 */
-	function ns( $str, $ns=__NAMESPACE__ ) {
+	function ns( $str, $ns = __NAMESPACE__ ) {
 		return $ns . '\\' . $str;
 	}
 
