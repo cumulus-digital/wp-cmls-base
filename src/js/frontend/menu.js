@@ -1,5 +1,5 @@
 import jQuery from 'jquery';
-const debounce = require('lodash/debounce');
+import debounce from 'lodash/debounce';
 
 let $j = jQuery.noConflict();
 

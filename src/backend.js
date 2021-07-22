@@ -1,6 +1,6 @@
 import './backend.scss';
 import jQuery from 'jquery';
-require('classlist-polyfill');
+import 'classlist-polyfill';
 
 let $j = jQuery.noConflict();
 (function($, window, undefined) {
@@ -52,10 +52,10 @@ let $j = jQuery.noConflict();
             }
             title.removeClass('post_title_is_hidden');
         }
-        titleToggle.change(function() {
+        titleToggle.on('change', function() {
             toggleTitleOpacity(this.checked);
         });
-        $(window).load(function() {
+        $(window).on('load', function() {
             toggleTitleOpacity(titleToggle.is(':checked'));
         });
 
@@ -75,11 +75,11 @@ let $j = jQuery.noConflict();
             }
             window.wp.data.dispatch('core/notices').removeNotice('has-alt-title');
         }
-        altTitle.change(function() {
-            toggleAltTitle($(this).val().length);
+        altTitle.on('change', function() {
+            toggleAltTitle($(this).val() && $(this).val().length);
         });
-        $(window).load(function() {
-            toggleAltTitle(altTitle.val().length);
+        $(window).on('load', function() {
+            toggleAltTitle(altTitle && altTitle.val() && altTitle.val().length);
         });
 
     });
