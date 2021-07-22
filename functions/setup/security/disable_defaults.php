@@ -40,7 +40,7 @@ foreach ( $disable_options as $key => $value ) {
  * Remove users from core sitemap
  */
 \add_filter( 'wp_sitemaps_add_provider', function ( $provider, $name ) {
-	if ( $name === 'users' ) {
+	if ( $name === 'users' || \is_a( $provider, 'WP_Sitemaps_Users' ) ) {
 		return false;
 	}
 
@@ -51,6 +51,10 @@ foreach ( $disable_options as $key => $value ) {
  * Disable User REST endpoints
  */
 \add_filter( 'rest_endpoints', function ( $endpoints ) {
+	if ( \is_user_logged_in() || \is_admin() ) {
+		return $endpoints;
+	}
+
 	$disable = [
 		'/wp/v2/users',
 		'/wp/v2/users/me',
@@ -67,3 +71,8 @@ foreach ( $disable_options as $key => $value ) {
 
 	return $endpoints;
 } );
+
+/*
+ * Disable XML-RPC
+ */
+\add_filter( 'xmlrpc_enabled', '__return_false' );
