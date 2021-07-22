@@ -78,3 +78,14 @@ function remove_identity() {
 		} );
 	}
 } );
+
+/*
+ * Hide "uncategorized" taxonomies from sitemap
+ */
+\add_filter( 'wp_sitemaps_taxonomies_entry', function ( $entry, $term, $tax ) {
+	if ( \array_key_exists( 'loc', $entry ) && \mb_strstr( $entry['loc'], '/uncategorized/' ) ) {
+		return [];
+	}
+
+	return $entry;
+}, 99, 3 );
