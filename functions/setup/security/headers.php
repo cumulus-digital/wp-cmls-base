@@ -46,12 +46,12 @@ namespace CMLS_Base\Setup\Security;
 	 */
 	$csp = [
 		"manifest-src 'self'",
-		"font-src 'self' fonts.googleapis.com fonts.gstatic.com",
-		"img-src 'self'",
+		"font-src 'self' data: fonts.googleapis.com fonts.gstatic.com",
+		"img-src 'self' data:",
 	];
 
 	if ( \defined( 'CMLS_ADD_SCRIPT_NONCE' ) ) {
 		$csp[] = "script-src 'nonce-" . CMLS_SCRIPT_NONCE . "'";
 	}
-	\header( 'Content-Security-Policy: ' . \implode( '; ', \array_filter( $csp ) ) );
+	//\header( 'Content-Security-Policy: ' . \implode( '; ', \array_filter( $csp ) ) );
 } );
