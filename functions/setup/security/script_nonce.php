@@ -16,10 +16,13 @@ $script_nonce = \base64_encode( \random_bytes( 16 ) );
 /*
  * Add nonce to scripts loaded through the wp_enqueue_script() or wp_add_inline_script()
  */
-\add_filter( 'script_loader_tag', function ( $tag ) {
-	return \preg_replace(
-		'/<script( )*/',
-		'<script nonce="' . CMLS_SCRIPT_NONCE . '"$1',
-		$tag
-	);
-} );
+
+if ( \defined( 'CMLS_ADD_SCRIPT_NONCE' ) ) {
+	\add_filter( 'script_loader_tag', function ( $tag ) {
+		return \preg_replace(
+			'/<script( )*/',
+			'<script nonce="' . CMLS_SCRIPT_NONCE . '"$1',
+			$tag
+		);
+	} );
+}

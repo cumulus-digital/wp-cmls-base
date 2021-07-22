@@ -45,12 +45,13 @@ namespace CMLS_Base\Setup\Security;
 	 * Set script nonce in CSP
 	 */
 	$csp = [
-		"connect-src 'self'",
 		"manifest-src 'self'",
-		"script-src 'unsafe-inline' 'nonce-" . CMLS_SCRIPT_NONCE . "'",
-		//"style-src 'self' 'nonce-" . CMLS_SCRIPT_NONCE . "'",
 		"font-src 'self' fonts.googleapis.com fonts.gstatic.com",
 		"img-src 'self'",
 	];
+
+	if ( \defined( 'CMLS_ADD_SCRIPT_NONCE' ) ) {
+		$csp[] = "script-src 'nonce-" . CMLS_SCRIPT_NONCE . "'";
+	}
 	\header( 'Content-Security-Policy: ' . \implode( '; ', \array_filter( $csp ) ) );
 } );
