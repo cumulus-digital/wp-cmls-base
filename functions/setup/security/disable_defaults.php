@@ -48,7 +48,7 @@ foreach ( $disable_options as $key => $value ) {
 }, 10, 2 );
 
 /*
- * Disable User REST endpoints
+ * Disable potentially dangerous REST endpoints for non-logged-in users.
  */
 \add_filter( 'rest_endpoints', function ( $endpoints ) {
 	if ( \is_user_logged_in() || \is_admin() ) {
@@ -59,8 +59,14 @@ foreach ( $disable_options as $key => $value ) {
 		'/wp/v2/users',
 		'/wp/v2/users/me',
 		'/wp/v2/users/(?P<id>[\d]+)',
+		'/wp/v2/users/(?P<user_id>(?:[\d]+|me))/application-passwords',
+		'/wp/v2/users/(?P<user_id>(?:[\d]+|me))/application-passwords/introspect',
+		'/wp/v2/users/(?P<user_id>(?:[\d]+|me))/application-passwords/(?P<uuid>[\w\-]+)',
+		'/wp/v2/plugins',
+		'/wp/v2/plugins/(?P<plugin>[^.\/]+(?:\/[^.\/]+)?)',
 		'/acf/v3/users',
 		'/acf/v3/users/(?P<id>[\\d]+)/?(?P<field>[\\w\\-\\_]+)?',
+		'/acf/v3/users/(?P<id>[\d]+)/?(?P<field>[\w\-\_]+)?',
 	];
 
 	foreach ( $disable as $key => $endpoint ) {
