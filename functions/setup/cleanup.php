@@ -11,10 +11,9 @@ use Yoast_Notification_Center;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 // remove version info from head and feeds
-function remove_identity() {
+\add_filter( 'the_generator', function () {
 	return '';
-}
-\add_filter( 'the_generator', ns( 'remove_identity' ) );
+} );
 
 \add_action( 'init', function () {
 	// Remove generator meta
@@ -89,3 +88,8 @@ function remove_identity() {
 
 	return $entry;
 }, 99, 3 );
+
+/*
+ * Remove Attachment page links in admin
+ */
+\add_filter( 'attachment_link', '__return_false' );
