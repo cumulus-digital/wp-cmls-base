@@ -10,10 +10,13 @@ namespace CMLS_Base\Setup\Security;
 
 /*
  * Change the default wordpress nonce lifetime to 1 hour
+ * !! removed due to issues caused in other plugins
  */
+/*
 \add_filter( 'nonce_life', function () {
 	return HOUR_IN_SECONDS;
 } );
+*/
 
 require __DIR__ . '/script_nonce.php';
 require __DIR__ . '/disable_defaults.php';

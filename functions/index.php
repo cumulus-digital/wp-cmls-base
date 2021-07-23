@@ -1,6 +1,8 @@
 <?php
+
 namespace CMLS_Base;
-if (!defined('ABSPATH')) die('No direct access allowed');
+
+\defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 const PREFIX = 'cmls_base';
 
