@@ -12,12 +12,17 @@ function init_theme_support() {
 	\add_theme_support( 'editor-styles' );
 //		\add_editor_style('build/backend.css');
 	\add_theme_support( 'html5' );
+
 	\add_theme_support( 'align-wide' );
+	\add_theme_support( 'custom-spacing' );
+	\add_theme_support( 'custom-line-height' );
+	\add_theme_support( 'custom-units' );
+
 	\add_theme_support( 'title-tag' );
 	\add_theme_support( 'wp-block-styles' );
 	\add_theme_support( 'responsive-embeds' );
 	\add_theme_support( 'post-thumbnails' );
-	\add_theme_support( 'post-formats', [ 'aside', 'gallery', 'video' ] );
+	//\add_theme_support( 'post-formats', [ ] );
 
 	\add_post_type_support( 'page', 'excerpt' );
 }
