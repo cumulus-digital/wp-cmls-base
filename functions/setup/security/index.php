@@ -20,5 +20,6 @@ namespace CMLS_Base\Setup\Security;
 
 require __DIR__ . '/script_nonce.php';
 require __DIR__ . '/disable_defaults.php';
+require __DIR__ . '/disable_comments.php';
 require __DIR__ . '/headers.php';
 require __DIR__ . '/robots.php';

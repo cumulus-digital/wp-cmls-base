@@ -7,34 +7,10 @@ namespace CMLS_Base\Setup\Security;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
-/**
- * Disable pingbacks, pings, comments, and registration
- */
-$disable_options = [
-	'default_pingback_flag'        => false,
-	'default_ping_status'          => false,
-	'default_comment_status'       => false,
-	'close_comments_for_old_posts' => true,
-	'comments_notify'              => true,
-	'comment_moderation'           => true,
-	'users_can_register'           => false,
-];
-
-foreach ( $disable_options as $key => $value ) {
-	\update_option( $key, $value );
-}
-
 /*
- * Disable comments on attachments
+ * Disable user registration
  */
-\add_filter( 'wp_insert_post_data', function ( $data ) {
-	if ( $data['post_type'] === 'attachment' ) {
-		$data['comment_status'] = 'closed';
-		$data['ping_status'] = 'closed';
-	}
-
-	return $data;
-} );
+\update_option( 'users_can_register', false );
 
 /*
  * Remove users from core sitemap
