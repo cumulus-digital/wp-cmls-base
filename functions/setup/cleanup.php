@@ -93,3 +93,8 @@ use Yoast_Notification_Center;
  * Remove Attachment page links in admin
  */
 \add_filter( 'attachment_link', '__return_false' );
+
+/*
+ * Disable Kadence Design Library
+ */
+\add_filter( 'kadence_blocks_design_library_enabled', '__return_false' );
