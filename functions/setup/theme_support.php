@@ -15,7 +15,6 @@ function init_theme_support() {
 
 	\add_theme_support( 'align-wide' );
 	\add_theme_support( 'custom-spacing' );
-	\add_theme_support( 'custom-line-height' );
 	\add_theme_support( 'custom-units' );
 
 	\add_theme_support( 'title-tag' );
