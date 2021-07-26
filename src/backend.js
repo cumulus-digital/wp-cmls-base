@@ -82,6 +82,17 @@ let $j = jQuery.noConflict();
             toggleAltTitle(altTitle && altTitle.val() && altTitle.val().length);
         });
 
+        // Hide sticky toggle
+        $(window).on('load', function () {
+            // For Gutenberg
+            $('.edit-post-post-status .components-panel__row').each(function () {
+                if (this.innerText.indexOf('Stick to the top of the blog') > -1) {
+                    $(this).hide();
+                }
+            });
+            // For classic editor
+            $('#sticky-span').hide();
+        });
     });
 }($j, window.self));
 

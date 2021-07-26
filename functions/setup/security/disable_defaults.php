@@ -7,10 +7,13 @@ namespace CMLS_Base\Setup\Security;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
-/*
- * Disable user registration
- */
-\update_option( 'users_can_register', false );
+\add_action( 'init', function () {
+	// Disable user registration
+	\update_option( 'users_can_register', false );
+
+	// Remove sticky posts
+	\update_option( 'sticky_posts', [] );
+} );
 
 /*
  * Remove users from core sitemap

@@ -7,22 +7,24 @@ namespace CMLS_Base\Setup\Security;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
-/**
+/*
  * Disable pingbacks, pings, comments, and registration
  */
-$disable_options = [
-	'default_pingback_flag'        => false,
-	'default_ping_status'          => false,
-	'default_comment_status'       => false,
-	'close_comments_for_old_posts' => true,
-	'comments_notify'              => true,
-	'comment_moderation'           => true,
-	'comment_registration'         => true,
-];
+\add_action( 'init', function () {
+	$disable_options = [
+		'default_pingback_flag'        => false,
+		'default_ping_status'          => false,
+		'default_comment_status'       => false,
+		'close_comments_for_old_posts' => true,
+		'comments_notify'              => true,
+		'comment_moderation'           => true,
+		'comment_registration'         => true,
+	];
 
-foreach ( $disable_options as $key => $value ) {
-	\update_option( $key, $value );
-}
+	foreach ( $disable_options as $key => $value ) {
+		\update_option( $key, $value );
+	}
+} );
 
 /*
  * Disable comments on attachments
