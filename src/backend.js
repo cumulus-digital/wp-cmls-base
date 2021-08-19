@@ -52,10 +52,10 @@ let $j = jQuery.noConflict();
             }
             title.removeClass('post_title_is_hidden');
         }
-        titleToggle.on('change', function() {
+        titleToggle.on(`change.{window.THEME_PREFIX}`, function() {
             toggleTitleOpacity(this.checked);
         });
-        $(window).on('load', function() {
+        $(window).on(`load.{window.THEME_PREFIX}`, function() {
             toggleTitleOpacity(titleToggle.is(':checked'));
         });
 
@@ -75,15 +75,15 @@ let $j = jQuery.noConflict();
             }
             window.wp.data.dispatch('core/notices').removeNotice('has-alt-title');
         }
-        altTitle.on('change', function() {
+        altTitle.on(`change.{window.THEME_PREFIX}`, function() {
             toggleAltTitle($(this).val() && $(this).val().length);
         });
-        $(window).on('load', function() {
+        $(window).on(`load.{window.THEME_PREFIX}`, function() {
             toggleAltTitle(altTitle && altTitle.val() && altTitle.val().length);
         });
 
         // Hide sticky toggle
-        $(window).on('load', function () {
+        $(window).on(`load.{window.THEME_PREFIX}`, function () {
             // For Gutenberg
             $('.edit-post-post-status .components-panel__row').each(function () {
                 if (this.innerText.indexOf('Stick to the top of the blog') > -1) {

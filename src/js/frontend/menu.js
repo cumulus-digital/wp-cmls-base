@@ -50,30 +50,37 @@ let $j = jQuery.noConflict();
 		menuIsOpen = false;
 	}
 
-	$('html').on('click.cmlsBase focusin.cmlsBase', debounce(function(e) {
-		const context = {
-			'menu': $('body > header .menu-container *'),
-			'hamburger': $('body > header .hamburger')
-		};
+	$('html').on(
+		`click.{window.THEME_PREFIX} focusin.{window.THEME_PREFIX}`,
+		debounce(
+			function (e) {
+				const context = {
+					'menu': $('body > header .menu-container *'),
+					'hamburger': $('body > header .hamburger')
+				};
 
-		// Close menu if click is anywhere outside menu
-		if ( ! (context.menu.is(e.target) || context.menu.has(e.target).length)) {
-			menuClose();
-			return;
-		}
+				// Close menu if click is anywhere outside menu
+				if ( ! (context.menu.is(e.target) || context.menu.has(e.target).length)) {
+					menuClose();
+					return;
+				}
 
-		// Close menu if open and click is on hamburger
-		if (
-			(context.hamburger.is(e.target) || context.hamburger.has(e.target).length)
-			&& menuIsOpen
-		) {
-			menuClose();
-			context.hamburger.blur();
-			return;
-		}
+				// Close menu if open and click is on hamburger
+				if (
+					(context.hamburger.is(e.target) || context.hamburger.has(e.target).length)
+					&& menuIsOpen
+				) {
+					menuClose();
+					context.hamburger.blur();
+					return;
+				}
 
-		menuOpen();
+				menuOpen();
 
-	}, 200, {leading: true, trailing: false}));
+			},
+			200,
+			{ leading: true, trailing: false }
+		)
+	);
 
 }($j, window.self));
