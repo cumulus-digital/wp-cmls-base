@@ -1,7 +1,6 @@
 # Composer
 vendor/
-# Used in customizer setup
-!vendor/wptrt
+!build/composer/vendor/
 
 # npm
 node_modules/
