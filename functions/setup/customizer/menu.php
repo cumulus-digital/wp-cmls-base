@@ -7,9 +7,9 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
+use CMLS_Base\Vendors\WPTRT\Customize\Control\ColorAlpha;
 use WP_Customize_Control;
 use WP_Customize_Media_Control;
-use WPTRT\Customize\Control\ColorAlpha;
 
 function themeCustomizerNav( $wpc ) {
 	$wpc->add_setting( 'setting-main_menu-include_search', [
@@ -34,14 +34,14 @@ function themeCustomizerNav( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-main_menu-background',
-					[
-						'label'    => 'Background Color',
-						'section'  => 'cmls-main_menu-style',
-						'settings' => 'color-main_menu-background',
-					]
-				)
+			$wpc,
+			'color-main_menu-background',
+			[
+				'label'    => 'Background Color',
+				'section'  => 'cmls-main_menu-style',
+				'settings' => 'color-main_menu-background',
+			]
+		)
 	);
 	$wpc->add_setting( 'color-main_menu-foreground', [
 		'default'           => themeMods::getDefault( 'color-main_menu-foreground' ),
@@ -49,14 +49,14 @@ function themeCustomizerNav( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-main_menu-foreground',
-					[
-						'label'    => 'Text Color',
-						'section'  => 'cmls-main_menu-style',
-						'settings' => 'color-main_menu-foreground',
-					]
-				)
+			$wpc,
+			'color-main_menu-foreground',
+			[
+				'label'    => 'Text Color',
+				'section'  => 'cmls-main_menu-style',
+				'settings' => 'color-main_menu-foreground',
+			]
+		)
 	);
 	$wpc->add_setting( 'color-main_menu-foreground-hover_foreground', [
 		'default'           => themeMods::getDefault( 'color-main_menu-foreground-hover_foreground' ),
@@ -64,14 +64,14 @@ function themeCustomizerNav( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-main_menu-foreground-hover_foreground',
-					[
-						'label'    => 'Item Hover Text Color',
-						'section'  => 'cmls-main_menu-style',
-						'settings' => 'color-main_menu-foreground-hover_foreground',
-					]
-				)
+			$wpc,
+			'color-main_menu-foreground-hover_foreground',
+			[
+				'label'    => 'Item Hover Text Color',
+				'section'  => 'cmls-main_menu-style',
+				'settings' => 'color-main_menu-foreground-hover_foreground',
+			]
+		)
 	);
 	$wpc->add_setting( 'color-main_menu-foreground-hover_background', [
 		'default'           => themeMods::getDefault( 'color-main_menu-foreground-hover_background' ),
@@ -79,14 +79,14 @@ function themeCustomizerNav( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-main_menu-foreground-hover_background',
-					[
-						'label'    => 'Item Hover Background Color',
-						'section'  => 'cmls-main_menu-style',
-						'settings' => 'color-main_menu-foreground-hover_background',
-					]
-				)
+			$wpc,
+			'color-main_menu-foreground-hover_background',
+			[
+				'label'    => 'Item Hover Background Color',
+				'section'  => 'cmls-main_menu-style',
+				'settings' => 'color-main_menu-foreground-hover_background',
+			]
+		)
 	);
 
 	$wpc->add_setting( 'file-main_menu-background', [
@@ -96,14 +96,14 @@ function themeCustomizerNav( $wpc ) {
 	] );
 	$wpc->add_control(
 		new WP_Customize_Media_Control(
-					$wpc,
-					'file-main_menu-background',
-					[
-						'label'     => 'Background Image',
-						'section'   => 'cmls-main_menu-style',
-						'mime_type' => 'image',
-					]
-				)
+			$wpc,
+			'file-main_menu-background',
+			[
+				'label'     => 'Background Image',
+				'section'   => 'cmls-main_menu-style',
+				'mime_type' => 'image',
+			]
+		)
 	);
 
 	$wpc->add_setting( 'setting-main_menu-background-position', [
@@ -113,25 +113,25 @@ function themeCustomizerNav( $wpc ) {
 	] );
 	$wpc->add_control(
 		new WP_Customize_Control(
-					$wpc,
-					'setting-main_menu-background-position',
-					[
-						'label'   => 'Background Image Position',
-						'section' => 'cmls-main_menu-style',
-						'type'    => 'select',
-						'choices' => [
-							'top left'      => 'Top Left',
-							'top center'    => 'Top Center',
-							'top right'     => 'Top Right',
-							'center left'   => 'Center Left',
-							'center center' => 'Center Center',
-							'center right'  => 'Center Right',
-							'bottom left'   => 'Bottom Left',
-							'bottom center' => 'Bottom Center',
-							'bottom right'  => 'Bottom Right',
-						],
-					]
-				)
+			$wpc,
+			'setting-main_menu-background-position',
+			[
+				'label'   => 'Background Image Position',
+				'section' => 'cmls-main_menu-style',
+				'type'    => 'select',
+				'choices' => [
+					'top left'      => 'Top Left',
+					'top center'    => 'Top Center',
+					'top right'     => 'Top Right',
+					'center left'   => 'Center Left',
+					'center center' => 'Center Center',
+					'center right'  => 'Center Right',
+					'bottom left'   => 'Bottom Left',
+					'bottom center' => 'Bottom Center',
+					'bottom right'  => 'Bottom Right',
+				],
+			]
+		)
 	);
 
 	$wpc->add_setting( 'setting-main_menu-background-size', [
@@ -141,20 +141,20 @@ function themeCustomizerNav( $wpc ) {
 	] );
 	$wpc->add_control(
 		new WP_Customize_Control(
-					$wpc,
-					'setting-main_menu-background-size',
-					[
-						'label'   => 'Background Image Size',
-						'section' => 'cmls-main_menu-style',
-						'type'    => 'select',
-						'choices' => [
-							'cover'   => 'Cover',
-							'contain' => 'Contain',
-							'100%'    => '100%',
-							'auto'    => 'None',
-						],
-					]
-				)
+			$wpc,
+			'setting-main_menu-background-size',
+			[
+				'label'   => 'Background Image Size',
+				'section' => 'cmls-main_menu-style',
+				'type'    => 'select',
+				'choices' => [
+					'cover'   => 'Cover',
+					'contain' => 'Contain',
+					'100%'    => '100%',
+					'auto'    => 'None',
+				],
+			]
+		)
 	);
 }
 \add_action( 'customize_register', ns( 'themeCustomizerNav' ) );

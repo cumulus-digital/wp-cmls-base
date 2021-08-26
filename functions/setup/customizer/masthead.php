@@ -7,8 +7,8 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
+use CMLS_Base\Vendors\WPTRT\Customize\Control\ColorAlpha;
 use WP_Customize_Media_Control;
-use WPTRT\Customize\Control\ColorAlpha;
 
 // Register customizable colors
 function themeCustomizerMasthead( $wpc ) {
@@ -28,15 +28,15 @@ function themeCustomizerMasthead( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-masthead-background',
-					[
-						'label'       => 'Masthead Background',
-						'description' => 'Background of the masthead when the page is scrolled to the top.',
-						'section'     => 'cmls-masthead-colors',
-						'settings'    => 'color-masthead-background',
-					]
-				)
+			$wpc,
+			'color-masthead-background',
+			[
+				'label'       => 'Masthead Background',
+				'description' => 'Background of the masthead when the page is scrolled to the top.',
+				'section'     => 'cmls-masthead-colors',
+				'settings'    => 'color-masthead-background',
+			]
+		)
 	);
 	$wpc->add_setting( 'color-masthead-foreground', [
 		'default'           => themeMods::getDefault( 'color-masthead-foreground' ),
@@ -44,15 +44,15 @@ function themeCustomizerMasthead( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-masthead-foreground',
-					[
-						'label'       => 'Masthead Foreground',
-						'description' => 'Color of text and menu icon in the masthead.',
-						'section'     => 'cmls-masthead-colors',
-						'settings'    => 'color-masthead-foreground',
-					]
-				)
+			$wpc,
+			'color-masthead-foreground',
+			[
+				'label'       => 'Masthead Foreground',
+				'description' => 'Color of text and menu icon in the masthead.',
+				'section'     => 'cmls-masthead-colors',
+				'settings'    => 'color-masthead-foreground',
+			]
+		)
 	);
 	$wpc->add_setting( 'color-masthead-background-overlay', [
 		'default'           => themeMods::getDefault( 'color-masthead-background-overlay' ),
@@ -60,15 +60,15 @@ function themeCustomizerMasthead( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-masthead-background-overlay',
-					[
-						'label'       => 'Masthead Background (Scrolled)',
-						'description' => 'Background of the masthead when content is scrolled under the masthead.',
-						'section'     => 'cmls-masthead-colors',
-						'settings'    => 'color-masthead-background-overlay',
-					]
-				)
+			$wpc,
+			'color-masthead-background-overlay',
+			[
+				'label'       => 'Masthead Background (Scrolled)',
+				'description' => 'Background of the masthead when content is scrolled under the masthead.',
+				'section'     => 'cmls-masthead-colors',
+				'settings'    => 'color-masthead-background-overlay',
+			]
+		)
 	);
 	$wpc->add_setting( 'color-masthead-foreground-overlay', [
 		'default'           => themeMods::getDefault( 'color-masthead-foreground-overlay' ),
@@ -76,15 +76,15 @@ function themeCustomizerMasthead( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-masthead-foreground-overlay',
-					[
-						'label'       => 'Masthead Foreground (Scrolled)',
-						'description' => 'Color of text and menu icon in the masthead when content is scrolled under the masthead.',
-						'section'     => 'cmls-masthead-colors',
-						'settings'    => 'color-masthead-foreground-overlay',
-					]
-				)
+			$wpc,
+			'color-masthead-foreground-overlay',
+			[
+				'label'       => 'Masthead Foreground (Scrolled)',
+				'description' => 'Color of text and menu icon in the masthead when content is scrolled under the masthead.',
+				'section'     => 'cmls-masthead-colors',
+				'settings'    => 'color-masthead-foreground-overlay',
+			]
+		)
 	);
 
 	$wpc->add_section( 'cmls-masthead-background', [
@@ -102,14 +102,14 @@ function themeCustomizerMasthead( $wpc ) {
 	] );
 	$wpc->add_control(
 		new WP_Customize_Media_Control(
-					$wpc,
-					'file-masthead-background',
-					[
-						'label'     => 'Masthead Background',
-						'section'   => 'cmls-masthead-background',
-						'mime_type' => 'image',
-					]
-				)
+			$wpc,
+			'file-masthead-background',
+			[
+				'label'     => 'Masthead Background',
+				'section'   => 'cmls-masthead-background',
+				'mime_type' => 'image',
+			]
+		)
 	);
 	$wpc->add_setting( 'file-masthead-background-overlay', [
 		'default'              => themeMods::getDefault( 'file-masthead-background-overlay' ),
@@ -118,15 +118,15 @@ function themeCustomizerMasthead( $wpc ) {
 	] );
 	$wpc->add_control(
 		new WP_Customize_Media_Control(
-					$wpc,
-					'file-masthead-background-overlay',
-					[
-						'label'       => 'Masthead Background (Scrolled)',
-						'section'     => 'cmls-masthead-background',
-						'mime_type'   => 'image',
-						'description' => 'Optionally display a different background when the content is scrolled under the masthead. Defaults to Masthead Background.',
-					]
-				)
+			$wpc,
+			'file-masthead-background-overlay',
+			[
+				'label'       => 'Masthead Background (Scrolled)',
+				'section'     => 'cmls-masthead-background',
+				'mime_type'   => 'image',
+				'description' => 'Optionally display a different background when the content is scrolled under the masthead. Defaults to Masthead Background.',
+			]
+		)
 	);
 
 	$wpc->add_section( 'cmls-masthead-logo', [
@@ -141,14 +141,14 @@ function themeCustomizerMasthead( $wpc ) {
 	] );
 	$wpc->add_control(
 		new WP_Customize_Media_Control(
-						$wpc,
-						'file-masthead-logo',
-						[
-							'label'     => 'Main masthead logo',
-							'section'   => 'cmls-masthead-logo',
-							'mime_type' => 'image',
-						]
-					)
+			$wpc,
+			'file-masthead-logo',
+			[
+				'label'     => 'Main masthead logo',
+				'section'   => 'cmls-masthead-logo',
+				'mime_type' => 'image',
+			]
+		)
 	);
 	$wpc->add_setting( 'file-masthead-logo-overlay', [
 		'default'              => themeMods::getDefault( 'file-masthead-logo-overlay' ),
@@ -157,15 +157,15 @@ function themeCustomizerMasthead( $wpc ) {
 	] );
 	$wpc->add_control(
 		new WP_Customize_Media_Control(
-					$wpc,
-					'file-masthead-logo-overlay',
-					[
-						'label'       => 'Masthead Logo (Scrolled)',
-						'description' => 'Optionally display a different logo when the content is scrolled under the masthead. Defaults to Masthead Logo.',
-						'section'     => 'cmls-masthead-logo',
-						'mime_type'   => 'image',
-					]
-				)
+			$wpc,
+			'file-masthead-logo-overlay',
+			[
+				'label'       => 'Masthead Logo (Scrolled)',
+				'description' => 'Optionally display a different logo when the content is scrolled under the masthead. Defaults to Masthead Logo.',
+				'section'     => 'cmls-masthead-logo',
+				'mime_type'   => 'image',
+			]
+		)
 	);
 	$wpc->add_setting( 'file-masthead-logo-inside', [
 		'default'              => themeMods::getDefault( 'file-masthead-logo-inside' ),
@@ -174,15 +174,15 @@ function themeCustomizerMasthead( $wpc ) {
 	] );
 	$wpc->add_control(
 		new WP_Customize_Media_Control(
-					$wpc,
-					'file-masthead-logo-inside',
-					[
-						'label'       => 'Masthead logo on inside pages',
-						'description' => 'Optionally display a different logo on inside pages. Defaults to Masthead Logo.',
-						'section'     => 'cmls-masthead-logo',
-						'mime_type'   => 'image',
-					]
-				)
+			$wpc,
+			'file-masthead-logo-inside',
+			[
+				'label'       => 'Masthead logo on inside pages',
+				'description' => 'Optionally display a different logo on inside pages. Defaults to Masthead Logo.',
+				'section'     => 'cmls-masthead-logo',
+				'mime_type'   => 'image',
+			]
+		)
 	);
 	$wpc->add_setting( 'file-masthead-logo-inside-overlay', [
 		'default'              => themeMods::getDefault( 'file-masthead-logo-inside-overlay' ),
@@ -191,15 +191,15 @@ function themeCustomizerMasthead( $wpc ) {
 	] );
 	$wpc->add_control(
 		new WP_Customize_Media_Control(
-					$wpc,
-					'file-masthead-logo-inside-overlay',
-					[
-						'label'       => 'Masthead logo on inside pages (Scrolled)',
-						'description' => 'Optionally display a different logo on inside pages when the content is scrolled under the masthead. Defaults to Masthead Logo (Scrolled).',
-						'section'     => 'cmls-masthead-logo',
-						'mime_type'   => 'image',
-					]
-				)
+			$wpc,
+			'file-masthead-logo-inside-overlay',
+			[
+				'label'       => 'Masthead logo on inside pages (Scrolled)',
+				'description' => 'Optionally display a different logo on inside pages when the content is scrolled under the masthead. Defaults to Masthead Logo (Scrolled).',
+				'section'     => 'cmls-masthead-logo',
+				'mime_type'   => 'image',
+			]
+		)
 	);
 
 	$wpc->add_section( 'cmls-masthead-text_before_menu', [

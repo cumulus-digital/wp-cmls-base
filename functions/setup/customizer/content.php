@@ -7,7 +7,7 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
-use WPTRT\Customize\Control\ColorAlpha;
+use CMLS_Base\Vendors\WPTRT\Customize\Control\ColorAlpha;
 
 // Register customizable colors
 function themeCustomizerContent( $wpc ) {
@@ -75,14 +75,14 @@ function themeCustomizerContent( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-content-background',
-					[
-						'label'    => 'Content Area Background',
-						'section'  => 'cmls-content-colors',
-						'settings' => 'color-content-background',
-					]
-				)
+			$wpc,
+			'color-content-background',
+			[
+				'label'    => 'Content Area Background',
+				'section'  => 'cmls-content-colors',
+				'settings' => 'color-content-background',
+			]
+		)
 	);
 	$wpc->add_setting( 'color-content-foreground', [
 		'default'           => themeMods::getDefault( 'color-content-foreground' ),
@@ -90,14 +90,14 @@ function themeCustomizerContent( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-content-foreground',
-					[
-						'label'    => 'Content Area Text',
-						'section'  => 'cmls-content-colors',
-						'settings' => 'color-content-foreground',
-					]
-				)
+			$wpc,
+			'color-content-foreground',
+			[
+				'label'    => 'Content Area Text',
+				'section'  => 'cmls-content-colors',
+				'settings' => 'color-content-foreground',
+			]
+		)
 	);
 	$wpc->add_setting( 'color-brand', [
 		'default'           => themeMods::getDefault( 'color-brand' ),
@@ -105,14 +105,14 @@ function themeCustomizerContent( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-brand',
-					[
-						'label'    => 'Primary Brand',
-						'section'  => 'cmls-content-colors',
-						'settings' => 'color-brand',
-					]
-				)
+			$wpc,
+			'color-brand',
+			[
+				'label'    => 'Primary Brand',
+				'section'  => 'cmls-content-colors',
+				'settings' => 'color-brand',
+			]
+		)
 	);
 	$wpc->add_setting( 'color-highlight', [
 		'default'           => themeMods::getDefault( 'color-highlight' ),
@@ -120,14 +120,14 @@ function themeCustomizerContent( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-highlight',
-					[
-						'label'    => 'Highlight',
-						'section'  => 'cmls-content-colors',
-						'settings' => 'color-highlight',
-					]
-				)
+			$wpc,
+			'color-highlight',
+			[
+				'label'    => 'Highlight',
+				'section'  => 'cmls-content-colors',
+				'settings' => 'color-highlight',
+			]
+		)
 	);
 	$wpc->add_setting( 'color-accent', [
 		'default'           => themeMods::getDefault( 'color-accent' ),
@@ -135,14 +135,14 @@ function themeCustomizerContent( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-accent',
-					[
-						'label'    => 'Accent',
-						'section'  => 'cmls-content-colors',
-						'settings' => 'color-accent',
-					]
-				)
+			$wpc,
+			'color-accent',
+			[
+				'label'    => 'Accent',
+				'section'  => 'cmls-content-colors',
+				'settings' => 'color-accent',
+			]
+		)
 	);
 }
 \add_action( 'customize_register', ns( 'themeCustomizerContent' ) );

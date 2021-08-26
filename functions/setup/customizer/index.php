@@ -27,12 +27,12 @@ if ( \is_admin() ) {
 	}
 }
 \add_action( 'customize_register', function ( $wpc ) {
-
-	if ( ! \class_exists( 'WPTRT\Customize\Control\ColorAlpha' ) ) {
-		require theme_path() . '/vendor/wptrt/control-color-alpha/src/ColorAlpha.php';
+	/*
+	if ( ! \class_exists( '\CMLS_Base\Vendors\WPTRT\Customize\Control\ColorAlpha' ) ) {
+		require theme_path() . '/build/composer/vendor/wptrt/control-color-alpha/src/ColorAlpha.php';
 	}
-	$wpc->register_control_type( '\WPTRT\Customize\Control\ColorAlpha' );
-
+	*/
+	$wpc->register_control_type( '\CMLS_Base\Vendors\WPTRT\Customize\Control\ColorAlpha' );
 } );
 
 class themeMods {
@@ -205,8 +205,8 @@ class themeMods {
 
 			foreach ( $post_ids as $pId ) {
 				$files[$pId['key']] = \wp_make_link_relative(
-						$posts_by_id[$pId['id']]->guid
-					);
+					$posts_by_id[$pId['id']]->guid
+				);
 			}
 		}
 

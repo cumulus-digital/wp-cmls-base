@@ -7,8 +7,8 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
+use CMLS_Base\Vendors\WPTRT\Customize\Control\ColorAlpha;
 use WP_Customize_Media_Control;
-use WPTRT\Customize\Control\ColorAlpha;
 
 // Register customizable colors
 function themeCustomizerFooter( $wpc ) {
@@ -28,14 +28,14 @@ function themeCustomizerFooter( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-footer-background',
-					[
-						'label'    => 'Footer Background',
-						'section'  => 'cmls-footer-colors',
-						'settings' => 'color-footer-background',
-					]
-				)
+			$wpc,
+			'color-footer-background',
+			[
+				'label'    => 'Footer Background',
+				'section'  => 'cmls-footer-colors',
+				'settings' => 'color-footer-background',
+			]
+		)
 	);
 	$wpc->add_setting( 'color-footer-foreground', [
 		'default'           => themeMods::getDefault( 'color-footer-foreground' ),
@@ -43,14 +43,14 @@ function themeCustomizerFooter( $wpc ) {
 	] );
 	$wpc->add_control(
 		new ColorAlpha(
-					$wpc,
-					'color-footer-foreground',
-					[
-						'label'    => 'Footer Text',
-						'section'  => 'cmls-footer-colors',
-						'settings' => 'color-footer-foreground',
-					]
-				)
+			$wpc,
+			'color-footer-foreground',
+			[
+				'label'    => 'Footer Text',
+				'section'  => 'cmls-footer-colors',
+				'settings' => 'color-footer-foreground',
+			]
+		)
 	);
 
 	$wpc->add_section( 'cmls-footer-images', [
@@ -65,15 +65,15 @@ function themeCustomizerFooter( $wpc ) {
 	] );
 	$wpc->add_control(
 		new WP_Customize_Media_Control(
-					$wpc,
-					'file-footer-logo',
-					[
-						'label'       => 'Footer logo',
-						'description' => 'Defaults to Masthead Logo.',
-						'section'     => 'cmls-footer-images',
-						'mime_type'   => 'image',
-					]
-				)
+			$wpc,
+			'file-footer-logo',
+			[
+				'label'       => 'Footer logo',
+				'description' => 'Defaults to Masthead Logo.',
+				'section'     => 'cmls-footer-images',
+				'mime_type'   => 'image',
+			]
+		)
 	);
 
 	/*

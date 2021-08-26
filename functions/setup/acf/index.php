@@ -19,6 +19,13 @@ function acfDisableAdminInProd() {
 }
 \add_action( 'acf/init', ns( 'acfDisableAdminInProd' ) );
 
+// Load and save only our acf-json
+$ACF_JSON = new Vendors\vena\AcfJson\Loader( [
+	'group_5f467bc4cb553', // "Display Options"
+	'group_6126e1875bbac', // "Taxonomy Archive Options"
+], theme_path() );
+
+/*
 // Handle ACF json defs with child themes
 function acfSaveJson() {
 	return theme_path() . '/acf-json';
@@ -33,6 +40,7 @@ function acfLoadJson( $paths ) {
 	return $paths;
 }
 \add_filter( 'acf/settings/load_json', ns( 'acfLoadJson' ) );
+*/
 
 include __DIR__ . '/post_title.php';
 include __DIR__ . '/validation.php';
