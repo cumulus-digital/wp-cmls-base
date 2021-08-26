@@ -206,7 +206,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 * Fetch and generate bodyclasses for a given post id
 	 * from custom field settings.
 	 *
-	 * @param [type] $id
+	 * @param int $id
 	 *
 	 * @return void
 	 */
@@ -256,7 +256,13 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		return \sanitize_html_class( $arch_type . '-' . $post_type );
 	}
 
-	// Custom get_template_part to use custom locate_template
+	/**
+	 * Custom get_template_part to use custom locate_template
+	 *
+	 * @param string $slug
+	 * @param string $name
+	 * @param string $args
+	 */
 	function cmls_get_template_part( $slug, $name = null, $args = [] ) {
 
 		// Try to fill $name if not filled
@@ -279,7 +285,14 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		}
 	}
 
-	// Custom replacement for locate_template which allows filtering template paths
+	/**
+	 * Custom replacement for locate_template which allows filtering template paths
+	 *
+	 * @param array|string $template_names
+	 * @param bool         $load
+	 * @param bool         $require_once
+	 * @param array        $args
+	 */
 	function cmls_locate_template( $template_names, $load = false, $require_once = true, $args = [] ) {
 		$paths = [
 			STYLESHEETPATH,
@@ -309,5 +322,48 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		}
 
 		return $located;
+	}
+
+	/**
+	 * Determine if the current query is for a hierarchical post type
+	 */
+	function check_query_post_type_hierarchical() {
+		global $wp_query;
+
+		if ( isset( $wp_query->query['post_type'] ) ) {
+			return \is_post_type_hierarchical( $wp_query->query['post_type'] );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get ACF fields for an object, if none exist, try its ancestors
+	 *
+	 * @param object $term
+	 */
+	function get_parent_fields( $term ) {
+		if ( $term ) {
+			$fields = \get_fields( $term );
+
+			if (
+				! $fields
+				&& \property_exists( $term, 'parent' )
+				&& $term->parent !== 0
+			) {
+				$parents = \get_ancestors( $term->term_id, $term->taxonomy );
+
+				foreach ( $parents as $parent ) {
+					$pTerm   = \get_term( $parent );
+					$pFields = \get_fields( $pTerm );
+
+					if ( $pFields ) {
+						return $pFields;
+					}
+				}
+			}
+
+			return $fields;
+		}
 	}
 }

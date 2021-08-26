@@ -9,12 +9,19 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
-$title_tag   = 'h2';
-$show_image  = true;
-$show_date   = true;
-$show_source = true;
+$title_tag = 'h2';
+
+$show_title   = true;
+$show_image   = true;
+$show_date    = true;
+$show_source  = true;
+$show_excerpt = true;
 
 if ( $args ) {
+	if ( \array_key_exists( 'show_title', $args ) ) {
+		$show_title = $args['show_title'];
+	}
+
 	if ( \array_key_exists( 'title_tag', $args ) ) {
 		$title_tag = $args['title_tag'];
 	}
@@ -30,6 +37,10 @@ if ( $args ) {
 	if ( \array_key_exists( 'show_source', $args ) ) {
 		$show_source = $args['show_source'];
 	}
+
+	if ( \array_key_exists( 'show_excerpt', $args ) ) {
+		$show_excerpt = $args['show_excerpt'];
+	}
 }
 ?>
 
@@ -42,9 +53,11 @@ if ( $args ) {
 			<?php cmls_get_template_part( 'templates/pages/featured_image' ); ?>
 		<?php endif; ?>
 		<header>
-			<<?php echo $title_tag; ?>>
-				<?php \the_title(); ?>
-			</<?php echo $title_tag; ?>>
+			<?php if ( $show_title ): ?>
+				<<?php echo $title_tag; ?>>
+					<?php \the_title(); ?>
+				</<?php echo $title_tag; ?>>
+			<?php endif; ?>
 			<?php if ( $show_date || $show_source ): ?>
 			<div class="meta">
 				<?php if ( $show_date ): ?>
@@ -60,8 +73,10 @@ if ( $args ) {
 			</div>
 			<?php endif; ?>
 		</header>
+		<?php if ( $show_excerpt ): ?>
 		<div class="body">
 			<?php echo \wp_trim_excerpt( \get_the_excerpt() ); ?>
 		</div>
+		<?php endif; ?>
 	</a>
 </article>
