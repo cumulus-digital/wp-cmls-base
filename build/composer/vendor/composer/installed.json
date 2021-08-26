@@ -159,6 +159,10 @@
             "keywords": [
                 "wordpress"
             ],
+            "support": {
+                "issues": "https:\/\/github.com\/WPTRT\/control-color-alpha\/issues",
+                "source": "https:\/\/github.com\/WPTT\/control-color-alpha\/tree\/master"
+            },
             "install-path": "..\/wptrt\/control-color-alpha"
         }
     ],

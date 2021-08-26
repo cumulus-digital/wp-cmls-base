@@ -27,8 +27,8 @@ if (!class_exists('TGMPA_Bulk_Installer_Skin', false) && !interface_exists('TGMP
 if (!class_exists('TGMPA_Utils', false) && !interface_exists('TGMPA_Utils', false) && !trait_exists('TGMPA_Utils', false)) {
     spl_autoload_call('CMLS_Base\Vendors\TGMPA_Utils');
 }
-if (!class_exists('ComposerAutoloaderInite7fdf391eb6c6e0f3e478839a16c111b', false) && !interface_exists('ComposerAutoloaderInite7fdf391eb6c6e0f3e478839a16c111b', false) && !trait_exists('ComposerAutoloaderInite7fdf391eb6c6e0f3e478839a16c111b', false)) {
-    spl_autoload_call('CMLS_Base\Vendors\ComposerAutoloaderInite7fdf391eb6c6e0f3e478839a16c111b');
+if (!class_exists('ComposerAutoloaderInit68c41a34ef5606a729efc05054394373', false) && !interface_exists('ComposerAutoloaderInit68c41a34ef5606a729efc05054394373', false) && !trait_exists('ComposerAutoloaderInit68c41a34ef5606a729efc05054394373', false)) {
+    spl_autoload_call('CMLS_Base\Vendors\ComposerAutoloaderInit68c41a34ef5606a729efc05054394373');
 }
 
 // Functions whitelisting. For more information see:
@@ -53,9 +53,9 @@ if (!function_exists('my_theme_register_required_plugins')) {
         return \CMLS_Base\Vendors\my_theme_register_required_plugins(...func_get_args());
     }
 }
-if (!function_exists('composerRequiree7fdf391eb6c6e0f3e478839a16c111b')) {
-    function composerRequiree7fdf391eb6c6e0f3e478839a16c111b() {
-        return \CMLS_Base\Vendors\composerRequiree7fdf391eb6c6e0f3e478839a16c111b(...func_get_args());
+if (!function_exists('composerRequire68c41a34ef5606a729efc05054394373')) {
+    function composerRequire68c41a34ef5606a729efc05054394373() {
+        return \CMLS_Base\Vendors\composerRequire68c41a34ef5606a729efc05054394373(...func_get_args());
     }
 }
 
