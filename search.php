@@ -23,10 +23,16 @@ namespace CMLS_Base;
 	<?php if ( \have_posts() ): ?>
 
 		<div class="row">
-			<div class="row-container">
+			<div class="row-container list">
 			<?php while ( \have_posts() ): \the_post(); ?>
 
-				<?php cmls_get_template_part( 'templates/pages/excerpt', make_post_class() ); ?>
+				<?php
+cmls_get_template_part(
+	'templates/pages/excerpt',
+	make_post_class(),
+	[ 'display_format' => 'list' ]
+);
+				?>
 
 			<?php endwhile; ?>
 			</div>

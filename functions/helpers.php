@@ -5,6 +5,8 @@
 
 namespace CMLS_Base;
 
+use WP_Term;
+
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
@@ -241,7 +243,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 			$post_type = \get_query_var( 'post_type' );
 		} elseif ( \is_author() ) {
 			$arch_type = 'author';
-			$post_type = $qo->user_nicename;
+			$post_type = \get_the_author_meta( 'user_nicename' );
 		} elseif ( \is_category() ) {
 			$arch_type = 'category';
 			$post_type = $qo->taxonomy . '-' . $qo->slug;
@@ -326,6 +328,8 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 
 	/**
 	 * Determine if the current query is for a hierarchical post type
+	 *
+	 * @return bool
 	 */
 	function check_query_post_type_hierarchical() {
 		global $wp_query;
@@ -341,29 +345,170 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 * Get ACF fields for an object, if none exist, try its ancestors
 	 *
 	 * @param object $term
+	 *
+	 * @return array
 	 */
 	function get_parent_fields( $term ) {
-		if ( $term ) {
-			$fields = \get_fields( $term );
+		$fields = \get_fields( $term );
 
-			if (
+		if (
 				! $fields
 				&& \property_exists( $term, 'parent' )
 				&& $term->parent !== 0
 			) {
-				$parents = \get_ancestors( $term->term_id, $term->taxonomy );
+			$parents = \get_ancestors( $term->term_id, $term->taxonomy );
 
-				foreach ( $parents as $parent ) {
-					$pTerm   = \get_term( $parent );
-					$pFields = \get_fields( $pTerm );
+			foreach ( $parents as $parent ) {
+				$pTerm   = \get_term( $parent );
+				$pFields = \get_fields( $pTerm );
 
-					if ( $pFields ) {
-						return $pFields;
-					}
+				if ( $pFields ) {
+					return $pFields;
 				}
 			}
-
-			return $fields;
 		}
+
+		return $fields;
+	}
+
+	/**
+	 * Get a tax's ACF options, optionally bubbling up tax hierarchy
+	 *
+	 * @param string         $selector ACF field identifier
+	 * @param string|WP_Term $term     Term identifier
+	 *
+	 * @return string|array
+	 */
+	function get_tax_acf( $selector, $term ) {
+		$fieldObj  = \get_field_object( $selector, $term, true, true );
+		$useParent = \get_field( 'field_612877c8d84d3', $term );
+
+		if ( $useParent ) {
+			$parents   = \get_ancestors( $term->term_id, $term->taxonomy );
+			$gotParent = false;
+
+			foreach ( $parents as $parent ) {
+				$pTerm     = \get_term( $parent );
+				$useParent = \get_field( 'field_612877c8d84d3', $pTerm );
+
+				if ( $useParent ) {
+					continue;
+				}
+
+				$gotParent = true;
+				$fieldObj  = \get_field_object( $selector, $pTerm, true, true );
+			}
+
+			if ( ! $gotParent ) {
+				return [];
+			}
+		}
+
+		return $fieldObj['value'];
+	}
+
+	/**
+	 * Array filter to remove truly empty values
+	 *
+	 * @param array $array
+	 *
+	 * @return array
+	 */
+	function remove_empty( $array ) {
+		return \array_filter( $array, function ( $val ) {
+			return not_empty( $val );
+		} );
+	}
+
+	/**
+	 * Determine if a value is actually empty and not just falsy. Optionally can also
+	 * check if a key is set on an array using the 2nd parameter before checking for empty.
+	 *
+	 * @param mixed  $val
+	 * @param string $key            (optional)
+	 * @param bool   $false_is_empty
+	 *
+	 * @return bool
+	 */
+	function not_empty( $val, $key = null, $false_is_empty = false ) {
+		if ( $key && ! isset( $val[$key] ) ) {
+			return false;
+		} elseif ( $key ) {
+			$val = $val[$key];
+		}
+
+		if ( \is_string( $val ) ) {
+			return (bool) \mb_strlen( \trim( $val ) );
+		}
+
+		if ( \is_numeric( $val ) || \is_bool( $val ) ) {
+			if ( $false_is_empty ) {
+				return (bool) $val;
+			}
+
+			return true;
+		}
+
+		return false;
+
+		return \mb_strlen( \trim( $val ) ) || \is_numeric( $val ) || \is_bool( $val );
+	}
+
+	/**
+	 * Resolve args and default post display
+	 *
+	 * @param array $args
+	 *
+	 * @return array
+	 */
+	function resolve_post_display_args( $args = [] ) {
+		$default = [
+			'display_format'          => \is_author() || \is_search() ? 'list' : 'cards',
+			'show_image'              => true,
+			'show_title'              => true,
+			'show_date'               => check_query_post_type_hierarchical() ? false : true,
+			'show_author'             => \has_category( 'blog' ) ? true : false,
+			'show_category'           => \is_category() ? false : true,
+			'show_source'             => true,
+			'show_excerpt'            => true,
+			'thumbnail_size'          => 'large',
+			'header-background_color' => null,
+			'header-background_image' => null,
+			'header-text_color'       => null,
+		];
+
+		return \array_merge( $default, (array) $args );
+	}
+
+	/**
+	 * Retrieve display args for a taxonomy archive
+	 *
+	 * @param WP_Term $term
+	 *
+	 * @return array
+	 */
+	function get_tax_display_args( $term = null ) {
+		$return = [];
+
+		if ( \is_category() || \is_tag() || \is_tax() ) {
+			$term   = $term ? $term : \get_queried_object();
+			$fields = get_tax_acf( 'field_6128514db85a1', $term );
+
+			if ( $fields ) {
+				if ( isset( $fields['format'] ) ) {
+					$return['display_format'] = $fields['format'];
+				}
+
+				if ( isset( $fields['posts'] ) ) {
+					$return = \array_merge( $return, remove_empty( $fields['posts'] ) );
+				}
+
+				if ( isset( $fields['header'] ) ) {
+					$return = \array_merge( $return, remove_empty( $fields['header'] ) );
+				}
+			}
+		}
+
+		return resolve_post_display_args( $return );
 	}
 }

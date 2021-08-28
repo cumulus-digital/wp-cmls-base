@@ -1,5 +1,172 @@
 main.archive,
-.inline-archive {
+.inline-archive,
+main.search {
+
+	header.page_title {
+		background-color: var(--archive_header-background_color);
+		background-image: var(--archive_header-background_image);
+		background-position: center center;
+		background-size: cover;
+		color: var(--archive_header-text_color);
+		padding-bottom: .5em;
+		margin-bottom: 1em;
+		line-height: 1.15;
+
+		&.has_background {
+			padding-bottom: 1.5em;
+		}
+
+		h1,h2 {
+			margin: 0;
+		}
+	}
+
+	.category_parents {
+		color: inherit;
+		font-size: 0.75em;
+		line-height: 1.25;
+
+		a {
+			display: inline-block;
+			color: inherit;
+			background-color: rgba(0,0,0,0);
+			border-radius: .25em;
+			padding: .25em .5em;
+			margin: 0 .25em;
+			line-height: 1.2;
+			text-decoration: none;
+			white-space: nowrap;
+			word-break: break-word;
+			transition: all .2s;
+
+			@include hover {
+				background-color: var(--#{$PREFIX}-color-brand);
+				color: #fff;
+			}
+		}
+	}
+
+	.list, &.list {
+		display: block;
+
+		figure.featured-image {
+			display: block;
+			//float: left;
+			margin: 0 1em 0 0;
+			max-width: 200px;
+
+			@include phone {
+				float: none;
+				max-width: 100%;
+				margin: 0 0 .5em;
+			}
+
+			img {
+				display: inline-block;
+				width: 100%;
+				height: auto;
+			}
+		}
+
+		& > article {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			color: inherit;
+			text-decoration: none;
+			clear: both;
+			margin: 0 0 1.5em;
+			overflow: hidden;
+
+			&::after {
+				display: block;
+				content: '';
+				height: 1px;
+				width: 100%;
+				border-bottom: 1px solid var(--#{$PREFIX}-color-content-foreground);
+				opacity: 0.1;
+				margin: 1.5em 0 0;
+				//margin: 0 0 1em;
+			}
+			&:last-child::after {
+				display: none;
+			}
+
+			header {
+				text-align: left;
+			}
+
+			.post_category {
+				font-size: 0.6em;
+				.sep {
+					opacity: 0.5;
+				}
+				a {
+					color: inherit;
+					text-decoration: none;
+
+					@include hover {
+						color: var(--#{$PREFIX}-color-brand);
+						text-decoration: underline;
+					}
+				}
+			}
+
+			.post_title {
+				text-align: left;
+				font-size: 1.75em;
+				margin-bottom: 0.15em;
+
+				a {
+					color: inherit;
+					text-decoration: none;
+
+					@include hover {
+						color: var(--#{$PREFIX}-color-brand);
+					}
+				}
+			}
+
+			.meta {
+				font-size: 0.7em;
+				text-align: left;
+				> *::after {
+					content: " | ";
+					//color: var(--#{$PREFIX}-color-content-foreground);
+					margin: 0 .25em;
+					opacity: 0.5;
+				}
+				> *:last-child::after {
+					content: '';
+					display: none;
+				}
+
+				.author {
+					a {
+						color: inherit;
+						text-decoration: none;
+
+						@include hover {
+							color: var(--#{$PREFIX}-color-brand);
+							text-decoration: underline;
+						}
+					}
+				}
+			}
+
+			.featured-image ~ header {
+				margin-top: .25em;
+			}
+
+			header ~ .body {
+				margin-top: .5em;
+			}
+
+			.body {
+				font-size: 0.9rem;
+			}
+		}
+	}
 	.cards, &.cards {
 		display: flex;
 		justify-content: center;
@@ -10,17 +177,21 @@ main.archive,
 		figure.featured-image {
 			display: block;
 			width: 100%;
-			
+
 			img {
-				display: inline-block;
+				display: block;
 				width: 100%;
 				height: auto;
+				position: relative;
+				z-index: 1;
 			}
+
 		}
 
 		& > article {
 			display: block;
 			width: calc(25% - 1em);
+			position: relative;
 			margin: 0 .5em 1em;
 			font-size: 0.8em;
 
@@ -34,35 +205,38 @@ main.archive,
 				flex-basis: calc(25% - 1em);
 				text-decoration: none;
 				height: 100%;
+				background-color: #fff;
 				color: inherit;
 
 				transition: transform 0.1s, box-shadow 0.1s;
 				position: relative;
 				z-index: 1;
-	
-				border-radius: .25em;
-				box-shadow: 0 0 .75em rgba(0, 0, 0, 0.2);
+
+				border-radius: .3em;
+				box-shadow:
+					0 0 1px 0 rgba(0,0,0,0),
+					0 0 1em rgba(0, 0, 0, 0.14);
 				overflow: hidden;
 
 				&:focus {
 					outline: 2px;
 					outline-style: solid;
-					outline-color: var(--#{$PREFIX}-color-highlight);
+					outline-color: var(--#{$PREFIX}-color-brand);
 				}
 				@include hover {
 					transform: scale(1.03);
 					box-shadow:
-						0 0 1px 0 var(--#{$PREFIX}-color-highlight),
-						0 0 1.5em rgba(0,0,0,0.15);
+						0 0 1px 0 var(--#{$PREFIX}-color-brand),
+						0 0 1.5em rgba(0,0,0,0.14);
 					z-index: 2;
 				}
-	
+
 			}
 
 			header {
 				padding: .5em 1em;
 
-				h1, h2, h3, h4, h5, h6 {
+				.post_title {
 					line-height: 1.15;
 					margin-bottom: 0;
 				}
@@ -75,6 +249,11 @@ main.archive,
 			.body {
 				padding: 0 1em 1em;
 			}
+		}
+
+		&.small > article {
+			width: calc(16.66666667% - 1em);
+			font-size: 0.75em;
 		}
 	}
 }
