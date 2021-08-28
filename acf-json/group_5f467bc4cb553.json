@@ -136,16 +136,9 @@
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "hierarchical_post_type",
                 "operator": "==",
-                "value": "post"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "page"
+                "value": "true"
             }
         ]
     ],
@@ -157,5 +150,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1598731213
+    "modified": 1630113251
 }
