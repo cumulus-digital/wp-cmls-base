@@ -90,7 +90,7 @@ class themeMods {
 		'color-favicon-chrome'  => '#00598e',
 
 		'font-webfont_url'        => 'https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap',
-		'font-font_family'        => "'Montserrat', sans-serif",
+		'font-font_family'        => "'Montserrat', Helvetica, Arial, sans-serif",
 		'font-header_webfont_url' => null,
 		'font-header_family'      => 'inherit',
 	];
