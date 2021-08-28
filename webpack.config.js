@@ -1,16 +1,21 @@
-const defaultConfig = require( './node_modules/@wordpress/scripts/config/webpack.config.js' );
+const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
+let defaultConfig = require('./node_modules/@wordpress/scripts/config/webpack.config.js');
 const path = require( 'path' );
+
+// Ensure CleanWebpackPlugin doesn't remove composer build dir from php-scoper
+let plugins = defaultConfig.plugins;
+for (let i in plugins) {
+	if (plugins[i] instanceof CleanWebpackPlugin) {
+		plugins[i] = new CleanWebpackPlugin({
+			cleanAfterEveryBuildPatterns: ['!fonts/**', '!images/**', '!composer/**'],
+			cleanOnceBeforeBuildPatterns: ['**/*', '!composer/**'],
+		});
+	}
+}
+defaultConfig.plugins = plugins;
 
 module.exports = {
 	...defaultConfig,
-	/*
-	resolve: { alias: { vue: 'vue/dist/vue.esm.js' } },
-	externals: {
-		...defaultConfig.externals,
-		$: 'jQuery',
-		jquery: 'jQuery'
-	},
-	*/
 	entry: {
 		default_variables: path.resolve( process.cwd(), 'src', 'default_variables.scss' ),
 		global: path.resolve( process.cwd(), 'src', 'global.js' ),
