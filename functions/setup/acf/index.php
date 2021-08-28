@@ -25,22 +25,7 @@ $ACF_JSON = new Vendors\vena\AcfJson\Loader( [
 	'group_6126e1875bbac', // "Taxonomy Archive Options"
 ], theme_path() );
 
-/*
-// Handle ACF json defs with child themes
-function acfSaveJson() {
-	return theme_path() . '/acf-json';
-}
-\add_filter( 'acf/settings/save_json', ns( 'acfSaveJson' ) );
-function acfLoadJson( $paths ) {
-	if ( \is_child_theme() ) {
-		$paths[] = theme_path() . '/acf-json';
-		$paths[] = child_theme_path() . '/acf-json';
-	}
-
-	return $paths;
-}
-\add_filter( 'acf/settings/load_json', ns( 'acfLoadJson' ) );
-*/
-
+include __DIR__ . '/location-hierarchical_post.php';
+include __DIR__ . '/location-hierarchical_taxonomy.php';
 include __DIR__ . '/post_title.php';
 include __DIR__ . '/validation.php';
