@@ -5,6 +5,7 @@
 
 namespace CMLS_Base;
 
+use WP_Query;
 use WP_Term;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
@@ -510,5 +511,35 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		}
 
 		return resolve_post_display_args( $return );
+	}
+
+	/**
+	 * Determine if a given taxonomy query includes children
+	 *
+	 * @param WP_Query $query (optional) Query to check, or check global $wp_query
+	 *
+	 * @return bool
+	 */
+	function tax_query_includes_children( $query = null ) {
+		if ( ! $query ) {
+			global $wp_query;
+			$query = $wp_query;
+		}
+
+		if (
+			\property_exists( $query, 'query_vars' )
+			&& \array_key_exists( 'tax_query', $query->query_vars )
+		) {
+			return \in_array( true, \array_column( $query->query_vars['tax_query'], 'include_children' ) );
+		}
+
+		if (
+			\property_exists( $query, 'tax_query' )
+			&& \property_exists( $query->tax_query, 'queries' )
+		) {
+			return \in_array( true, \array_column( $query->tax_query->queries, 'include_children' ) );
+		}
+
+		return false;
 	}
 }
