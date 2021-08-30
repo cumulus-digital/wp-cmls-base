@@ -37,6 +37,7 @@ cmls_get_template_part(
 			?>
 		<?php endif; ?>
 
+		<?php if ( $display_args['show_title'] || $display_args['show_date'] || $display_args['show_author'] || $display_args['show_excerpt'] ): ?>
 		<div>
 
 			<header>
@@ -102,6 +103,7 @@ cmls_get_template_part(
 			<?php endif; ?>
 
 		</div>
+		<?php endif; ?>
 
 	<?php if ( $display_args['display_format'] === 'cards' ): ?>
 	</a>
