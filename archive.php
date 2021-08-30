@@ -11,12 +11,20 @@ namespace CMLS_Base;
 // Defaults
 $display_args = get_tax_display_args();
 
+// This term
+$this_term     = \get_queried_object();
+$term_children = null;
+
+if ( \property_exists( $this_term, 'taxonomy' ) && \is_taxonomy_hierarchical( $this_term->taxonomy ) ) {
+	$term_children = \get_terms( [ 'taxonomy' => $this_term->taxonomy, 'parent' => $this_term->term_id, 'hide_empty' => true ] );
+}
+
 \get_header();
 ?>
 
 <main role="main" class="archive">
 
-	<?php cmls_get_template_part( 'templates/pages/archive-header', null, $display_args ); ?>
+	<?php cmls_get_template_part( 'templates/pages/archive-header', null, \array_merge( $display_args, [ 'term_children' => $term_children ] ) ); ?>
 
 	<?php \do_action( 'cmls_template-archive-before_content' ); ?>
 

@@ -9,15 +9,19 @@ main.search {
 		background-size: cover;
 		color: var(--archive_header-text_color);
 		padding-bottom: .5em;
-		margin-bottom: 1em;
+		margin-bottom: 1rem;
 		line-height: 1.15;
 
 		&.has_background {
-			padding-bottom: 1.5em;
+			padding-bottom: 1.5rem;
 		}
 
 		h1,h2 {
 			margin: 0;
+
+			.prepend {
+				font-weight: 100;
+			}
 		}
 	}
 
@@ -44,6 +48,78 @@ main.search {
 				color: #fff;
 			}
 		}
+	}
+
+	.tax-children-nav {
+		margin: 1rem auto 2rem;
+
+		ul, li {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		ul {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: .5em;
+		}
+		li, a {
+			display: inline-block;
+		}
+		a {
+			background-color: var(--#{$PREFIX}-color-brand);
+			color: var(--#{$PREFIX}-color-content-background);
+			border-radius: .2em;
+			white-space: nowrap;
+			word-break: break-word;
+			text-decoration: none;
+			padding: .75em 1.5em;
+			position: relative;
+			transition: all .05s;
+
+			@include hover {
+				background-color: var(--#{$PREFIX}-color-highlight);
+				box-shadow: 0 .05em .25em rgba(0,0,0,0.15);
+				text-shadow: 1px 1px 1px rgba(0,0,0,0.75);
+				transform: scale(1.03);
+			}
+		}
+	}
+	.tax-children {
+		margin: 1.5rem 0 0;
+
+		.row {
+			margin-bottom: 2.5rem;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			.row-container {
+				justify-content: left;
+			}
+		}
+
+		.tax-child-header {
+			font-size: 0.8rem;
+			margin: 0 auto .75rem;
+
+			h3 {
+				margin: 0;
+			}
+			a {
+				color: inherit;
+				text-decoration: none;
+
+				@include hover {
+					color: var(--#{$PREFIX}-color-brand);
+				}
+			}
+		}
+	}
+	.tax-posts ~ .tax-children {
+		margin-top: 2.5rem;
 	}
 
 	.list, &.list {
@@ -173,6 +249,7 @@ main.search {
 		align-content: center;
 		align-items: stretch;
 		flex-wrap: wrap;
+		gap: .75rem;
 
 		figure.featured-image {
 			display: block;
@@ -190,19 +267,18 @@ main.search {
 
 		& > article {
 			display: block;
-			width: calc(25% - 1em);
+			width: calc(25% - .75em);
 			position: relative;
-			margin: 0 .5em 1em;
 			font-size: 0.8em;
 
 			@include phone {
-				width: calc( 50% - 1em );
+				width: calc( 50% - .75em );
 			}
 
 			& > a {
 				display: flex;
 				flex-direction: column;
-				flex-basis: calc(25% - 1em);
+				flex-basis: calc(25% - .75em);
 				text-decoration: none;
 				height: 100%;
 				background-color: #fff;
@@ -215,7 +291,7 @@ main.search {
 				border-radius: .3em;
 				box-shadow:
 					0 0 1px 0 rgba(0,0,0,0),
-					0 0 1em rgba(0, 0, 0, 0.14);
+					0 .05em 1em rgba(0, 0, 0, 0.14);
 				overflow: hidden;
 
 				&:focus {
