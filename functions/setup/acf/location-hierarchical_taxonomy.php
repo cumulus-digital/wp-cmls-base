@@ -9,40 +9,42 @@ use ACF_Location;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
-class ACF_HierarchicalTaxLocation extends ACF_Location {
+if ( \class_exists( 'ACF_Location' ) ) {
+	class ACF_HierarchicalTaxLocation extends ACF_Location {
 
-	public function initialize() {
-		$this->name        = 'hierarchical_taxonomy';
-		$this->label       = 'Hierarchical Taxonomy';
-		$this->category    = 'forms';
-		$this->object_type = 'term';
-	}
-
-	public static function get_operators( $rule ) {
-		return [
-			'==' => 'is equal to',
-			'!=' => 'is not equal to',
-		];
-	}
-
-	public function get_values( $rule ) {
-		return [
-			'true'  => 'True',
-			'false' => 'False',
-		];
-	}
-
-	public function match( $rule, $screen, $field ) {
-		if ( isset( $screen['taxonomy'] ) ) {
-			return \is_taxonomy_hierarchical( $screen['taxonomy'] );
+		public function initialize() {
+			$this->name        = 'hierarchical_taxonomy';
+			$this->label       = 'Hierarchical Taxonomy';
+			$this->category    = 'forms';
+			$this->object_type = 'term';
 		}
 
-		return false;
-	}
-}
+		public static function get_operators( $rule ) {
+			return [
+				'==' => 'is equal to',
+				'!=' => 'is not equal to',
+			];
+		}
 
-\add_action( 'acf/init', function () {
-	if ( \function_exists( 'acf_register_location_type' ) ) {
-		\acf_register_location_rule( ns( 'ACF_HierarchicalTaxLocation' ) );
+		public function get_values( $rule ) {
+			return [
+				'true'  => 'True',
+				'false' => 'False',
+			];
+		}
+
+		public function match( $rule, $screen, $field ) {
+			if ( isset( $screen['taxonomy'] ) ) {
+				return \is_taxonomy_hierarchical( $screen['taxonomy'] );
+			}
+
+			return false;
+		}
 	}
-} );
+
+	\add_action( 'acf/init', function () {
+		if ( \function_exists( 'acf_register_location_type' ) ) {
+			\acf_register_location_rule( ns( 'ACF_HierarchicalTaxLocation' ) );
+		}
+	} );
+}
