@@ -60,9 +60,16 @@ namespace CMLS_Base\Setup\Security;
  * Remove comment references in admin
  */
 \add_action( 'admin_init', function () {
-	// Remove admin nav items
+	// Remove Comments from dashboard at a glance
 	\remove_meta_box( 'dashboard_recent_comments', 'dashboard', 'normal' );
-	\remove_menu_page( 'edit-comments.php' );
+
+	// Remove admin nav items
+	// Core WP doesn't check if this is an array first!
+	global $menu;
+
+	if ( \is_array( $menu ) ) {
+		\remove_menu_page( 'edit-comments.php' );
+	}
 
 	// Disable comment support for all post types
 	$post_types = \get_post_types();
