@@ -9,10 +9,11 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 $thumbnail_size = isset( $args['thumbnail_size'] ) ? $args['thumbnail_size'] : 'full';
+$force_image    = isset( $args['force_featured_image'] ) && $args['force_featured_image'] == true;
 ?>
 
 <?php // By default, only show featured image here in cat/tag lists?>
-<?php if ( ! \is_singular() && \has_post_thumbnail() ): ?>
+<?php if ( ( ! \is_singular() || $force_image ) && \has_post_thumbnail() ): ?>
 
     <style>
         .post-<?php \the_ID(); ?> {

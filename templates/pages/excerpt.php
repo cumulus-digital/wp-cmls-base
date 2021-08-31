@@ -26,6 +26,9 @@ $display_args = resolve_post_display_args( $args );
 	<?php endif; ?>
 
 		<?php if ( $display_args['show_image'] ): ?>
+			<?php if ( $display_args['display_format'] !== 'cards' ): ?>
+				<a href="<?php \the_permalink(); ?>" title="<?php echo \esc_attr( \get_the_title() ); ?>">
+			<?php endif; ?>
 			<?php
 cmls_get_template_part(
 	'templates/pages/featured_image',
@@ -35,6 +38,9 @@ cmls_get_template_part(
 	]
 );
 			?>
+			<?php if ( $display_args['display_format'] !== 'cards' ): ?>
+				</a>
+			<?php endif; ?>
 		<?php endif; ?>
 
 		<?php if ( $display_args['show_title'] || $display_args['show_date'] || $display_args['show_author'] || $display_args['show_excerpt'] ): ?>
