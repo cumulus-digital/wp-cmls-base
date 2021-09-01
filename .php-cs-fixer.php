@@ -50,6 +50,6 @@ return $config
 	) )
 	->setFinder(
 		PhpCsFixer\Finder::create()
-			->exclude( 'vendor' )
+			->exclude( ['.git', 'vendor'] )
 			->in( __DIR__ )
 	);

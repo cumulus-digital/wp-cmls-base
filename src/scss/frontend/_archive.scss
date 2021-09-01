@@ -63,6 +63,7 @@ main.search {
 			align-items: center;
 			justify-content: center;
 			gap: .5em;
+			flex-wrap: wrap;
 		}
 		li, a {
 			display: inline-block;
