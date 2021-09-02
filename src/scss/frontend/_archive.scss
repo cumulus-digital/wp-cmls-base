@@ -281,6 +281,7 @@ main.search {
 				flex-direction: column;
 				flex-basis: calc(25% - .75em);
 				text-decoration: none;
+				word-break: break-word;
 				height: 100%;
 				background-color: #fff;
 				color: inherit;
