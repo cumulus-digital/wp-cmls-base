@@ -30,9 +30,11 @@ if ( \is_object( $this_term ) && \property_exists( $this_term, 'taxonomy' ) && \
 
 <main role="main" class="<?php echo \is_singular() ? 'single' : 'archive'; ?>">
 
-	<?php if ( ! \is_singular() ): ?>
+	<?php if ( ! \is_singular() && ! \is_home() ): ?>
 		<?php cmls_get_template_part( 'templates/pages/archive-header', make_post_class(), \array_merge( $display_args, [ 'term_children' => $term_children ] ) ); ?>
 	<?php endif; ?>
+
+	<?php cmls_get_template_part( 'templates/pages/archive-blog_page_content' ); ?>
 
 	<?php if ( \have_posts() ): ?>
 

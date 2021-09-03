@@ -8,13 +8,15 @@
 namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
+?>
 
-if (
-	not_empty( $args, 'header-background_color', true )
-	|| not_empty( $args, 'header-background_image', true )
-	|| not_empty( $args, 'header-text_color', true )
-):
-	?>
+<?php if ( ! \is_home() ): ?>
+
+	<?php if (
+		not_empty( $args, 'header-background_color', true )
+		|| not_empty( $args, 'header-background_image', true )
+		|| not_empty( $args, 'header-text_color', true )
+	): ?>
 		<style>
 			main.archive {
 				--archive_header-background_color: <?php echo $args['header-background_color']; ?>;
@@ -22,78 +24,86 @@ if (
 				--archive_header-text_color: <?php echo $args['header-text_color']; ?>;
 			}
 		</style>
-	<?php
-endif;
-?>
-<header class="row page_title <?php
-	if (
-		not_empty( $args, 'header-background_color', true )
-		|| not_empty( $args, 'header-background_image', true )
-	) {
-		echo 'has_background';
-	}
-?>">
+	<?php endif; ?>
 
-	<div class="row-container">
+	<header
+		class="row page_title
+		<?php
+			if (
+				not_empty( $args, 'header-background_color', true )
+				|| not_empty( $args, 'header-background_image', true )
+			) {
+				echo 'has_background';
+			}
+		?>"
+	>
 
-		<?php if ( \is_category() || \is_tax() ): $this_term = \get_queried_object(); ?>
+		<div class="row-container">
 
-			<?php if ( \property_exists( $this_term, 'parent' ) && $this_term->parent ): ?>
+			<?php if ( \is_category() || \is_tax() ): $this_term = \get_queried_object(); ?>
 
-				<div class="category_parents">
+				<?php if ( \property_exists( $this_term, 'parent' ) && $this_term->parent ): ?>
 
-					<?php
-echo \untrailingslashit( \get_term_parents_list(
-	$this_term->term_id,
-	$this_term->taxonomy,
-	[ 'inclusive' => false ]
-) );
-					?>
+					<div class="category_parents">
 
-				</div>
-			<?php endif; ?>
+						<?php
+		echo \untrailingslashit( \get_term_parents_list(
+			$this_term->term_id,
+			$this_term->taxonomy,
+			[ 'inclusive' => false ]
+		) );
+						?>
 
-		<?php endif; ?>
-
-		<h1>
-
-			<?php if ( \is_tag() ): ?>
-
-				<span class="prepend">Tag: </span>
-				<?php echo \esc_html( \single_term_title() ); ?>
-
-			<?php elseif ( \is_category() || \is_tax() ): ?>
-
-				<?php echo \esc_html( \single_term_title() ); ?>
-
-			<?php else: ?>
-
-				<?php echo \post_type_archive_title(); ?>
+					</div>
+				<?php endif; ?>
 
 			<?php endif; ?>
 
-		</h1>
+			<h1>
 
-	</div>
+				<?php if ( \is_tag() ): ?>
 
-</header>
+					<span class="prepend">Tag: </span>
+					<?php echo \esc_html( \single_term_title() ); ?>
 
-<?php if ( $args['term_children'] ): ?>
+				<?php elseif ( \is_category() || \is_tax() ): ?>
 
-	<div class="row">
-		<div class="row-container tax-children-nav">
-			<nav>
-				<ul>
-				<?php foreach ( $args['term_children'] as $child_term ): ?>
-					<li class="tax-<?php echo $child_term->slug; ?>">
-						<a href="<?php echo \get_term_link( $child_term ); ?>">
-							<?php echo $child_term->name; ?>
-						</a>
-					</li>
-				<?php endforeach; ?>
-				</ul>
-			</nav>
+					<?php echo \esc_html( \single_term_title() ); ?>
+
+				<?php elseif ( \is_home() ): ?>
+
+					<?php echo \get_the_title( \get_option( 'page_for_posts', true ) ); ?>
+
+				<?php else: ?>
+
+					<?php echo \post_type_archive_title(); ?>
+
+				<?php endif; ?>
+
+			</h1>
+
 		</div>
-	</div>
+
+	</header>
+
+	<?php if ( $args['term_children'] ): ?>
+
+		<div class="row">
+			<div class="row-container tax-children-nav">
+				<nav>
+					<ul>
+					<?php foreach ( $args['term_children'] as $child_term ): ?>
+						<li class="tax-<?php echo $child_term->slug; ?>">
+							<a href="<?php echo \get_term_link( $child_term ); ?>">
+								<?php echo $child_term->name; ?>
+							</a>
+						</li>
+					<?php endforeach; ?>
+					</ul>
+				</nav>
+			</div>
+		</div>
+
+	<?php endif; ?>
 
 <?php endif; ?>
