@@ -1,0 +1,69 @@
+.cards,
+&.cards {
+	@include cards;
+
+	--card-gap: .75rem;
+	--card-width: 25%;
+
+	@include phone {
+		--card-width: 50%;
+	}
+
+	figure.featured-image {
+		display: block;
+		width: 100%;
+
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+			position: relative;
+			z-index: 1;
+		}
+
+	}
+
+	&>article {
+		@include card;
+
+		font-size: 0.8em;
+
+		&>a {
+			display: flex;
+			flex-direction: column;
+			flex-basis: calc(var(--card-width) - var(--card-gap));
+			text-decoration: none;
+			word-break: break-word;
+			height: 100%;
+			background-color: #fff;
+			color: inherit;
+
+		}
+
+		header {
+			padding: .5em 1em;
+
+			.post_title {
+				line-height: 1.15;
+				margin-bottom: 0;
+			}
+
+			.meta {
+				font-size: 0.8em;
+			}
+		}
+
+		.body {
+			padding: 0 1em 1em;
+		}
+	}
+
+	&.small {
+		--card-width: 16.66666667%;
+		font-size: 0.75em;
+
+		@include phone {
+			--card-width: 33.3333333333%;
+		}
+	}
+}

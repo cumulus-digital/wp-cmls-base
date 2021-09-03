@@ -1,0 +1,57 @@
+header.page_title {
+	background-color: var(--archive_header-background_color);
+	background-image: var(--archive_header-background_image);
+	background-position: center center;
+	background-size: cover;
+	color: var(--archive_header-text_color);
+	padding-bottom: .5em;
+	margin-bottom: 1rem;
+	line-height: 1.15;
+	word-break: break-word;
+
+	&.has_background {
+		padding-bottom: 1.5rem;
+	}
+
+	h1,
+	h2 {
+		margin: 0;
+
+		.prepend {
+			font-weight: 100;
+		}
+	}
+
+	@include phone {
+		font-size: .9rem;
+	}
+}
+
+.category_parents {
+	color: inherit;
+	font-size: 1em;
+	line-height: 1.25;
+
+	a {
+		display: inline-block;
+		color: inherit;
+		background-color: rgba(0, 0, 0, 0);
+		border-radius: .25em;
+		padding: .25em .5em;
+		margin: 0 .25em;
+		line-height: 1.2;
+		text-decoration: none;
+		white-space: nowrap;
+		word-break: break-word;
+		transition: background-color .15s, color .15s;
+
+		@include hover {
+			background-color: var(--#{$PREFIX}-color-brand);
+			color: #fff;
+		}
+	}
+
+	@include phone {
+		font-size: 1.5em;
+	}
+}

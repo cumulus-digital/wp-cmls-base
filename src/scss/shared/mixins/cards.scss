@@ -1,0 +1,39 @@
+@mixin cards {
+	--card-gap: .75rem;
+	--card-width: 25%;
+	--focus-outline: 2px solid var(--#{$PREFIX}-color-brand);
+	--hover-outline-color: var(--#{$PREFIX}-color-brand);
+
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: stretch;
+	flex-wrap: wrap;
+	gap: var(--card-gap);
+}
+@mixin card {
+	display: block;
+	width: calc(var(--card-width) - var(--card-gap)) !important;
+	margin: 0;
+
+	transition: transform 0.1s,
+	box-shadow 0.1s;
+	position: relative;
+	z-index: 1;
+
+	border-radius: .3em;
+	box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0),
+	0 .05em 1em rgba(0, 0, 0, 0.14);
+	overflow: hidden;
+
+	&:focus {
+		outline: var(--focus-outline);
+	}
+
+	@include hover {
+		transform: scale(1.03);
+		box-shadow: 0 0 1px 0 var(--hover-outline-color),
+		0 0 1.5em rgba(0, 0, 0, 0.14);
+		z-index: 2;
+	}
+}

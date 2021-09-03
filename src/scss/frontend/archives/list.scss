@@ -1,0 +1,146 @@
+.list,
+&.list {
+	display: block;
+
+	figure.featured-image {
+		display: block;
+		line-height: 0;
+		margin: 0;
+		max-width: 100%;
+
+		@include phone {
+			float: none;
+			max-width: 100%;
+			margin: 0 0 .5em;
+		}
+
+		img {
+			display: inline-block;
+			width: 100%;
+			height: auto;
+		}
+	}
+
+	&>article {
+		--flex-gap: 1.5em;
+		--featured-image-width: 250px;
+		display: flex;
+		flex-direction: row;
+		gap: var(--flex-gap);
+		flex-wrap: wrap;
+		color: inherit;
+		text-decoration: none;
+		clear: both;
+		margin: 0 0 1.5em;
+		overflow: hidden;
+
+		@include phone {
+			display: block;
+		}
+
+		&::after {
+			display: block;
+			content: '';
+			height: 1px;
+			width: 100%;
+			border-bottom: 1px solid var(--#{$PREFIX}-color-content-foreground);
+			opacity: 0.1;
+			//margin: 1em 0 0;
+			//margin: 0 0 1em;
+		}
+
+		&:last-child::after {
+			display: none;
+		}
+
+		a.featured-image {
+			flex-basis: var(--featured-image-width);
+		}
+
+		.body-container {
+			flex-basis: calc(100% - var(--featured-image-width) - var(--flex-gap));
+		}
+
+		header {
+			text-align: left;
+		}
+
+		.post_category {
+			font-size: 0.6em;
+
+			.sep {
+				opacity: 0.5;
+			}
+
+			a {
+				color: inherit;
+				text-decoration: none;
+
+				@include hover {
+					color: var(--#{$PREFIX}-color-brand);
+					text-decoration: underline;
+				}
+			}
+		}
+
+		.post_title {
+			text-align: left;
+			font-size: 1.15rem;
+			margin-bottom: 0.15em;
+
+			a {
+				color: inherit;
+				text-decoration: none;
+
+				@include hover {
+					color: var(--#{$PREFIX}-color-brand);
+				}
+			}
+		}
+
+		.meta {
+			font-size: 0.65em;
+			text-align: left;
+
+			>*::after {
+				content: " | ";
+				//color: var(--#{$PREFIX}-color-content-foreground);
+				margin: 0 .25em;
+				opacity: 0.5;
+			}
+
+			>*:last-child::after {
+				content: '';
+				display: none;
+			}
+
+			.author {
+				a {
+					color: inherit;
+					text-decoration: none;
+
+					@include hover {
+						color: var(--#{$PREFIX}-color-brand);
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+
+		.featured-image~header {
+			margin-top: .25em;
+		}
+
+		header~.body {
+			margin-top: .5em;
+		}
+
+		.body {
+			font-size: 0.85rem;
+
+			@include phone {
+				font-size: 0.9rem;
+			}
+		}
+	}
+}
