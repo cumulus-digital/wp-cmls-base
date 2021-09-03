@@ -15,8 +15,15 @@ $display_args = get_tax_display_args();
 $this_term     = \get_queried_object();
 $term_children = null;
 
-if ( \property_exists( $this_term, 'taxonomy' ) && \is_taxonomy_hierarchical( $this_term->taxonomy ) ) {
-	$term_children = \get_terms( [ 'taxonomy' => $this_term->taxonomy, 'parent' => $this_term->term_id, 'hide_empty' => true ] );
+if ( \is_object( $this_term ) && \property_exists( $this_term, 'taxonomy' ) && \is_taxonomy_hierarchical( $this_term->taxonomy ) ) {
+	// Necessary to go back to the DB because PublishPress Permissions may break the cache...
+	$term_children_ids = \get_term_children( $this_term->term_id, $this_term->taxonomy );
+	$term_children     = \get_terms( [
+		'taxonomy'   => $this_term->taxonomy,
+		'include'    => $term_children_ids,
+		'parent'     => $this_term->term_id,
+		'hide_empty' => true,
+	] );
 }
 
 \get_header();
@@ -24,7 +31,7 @@ if ( \property_exists( $this_term, 'taxonomy' ) && \is_taxonomy_hierarchical( $t
 
 <main role="main" class="archive">
 
-	<?php cmls_get_template_part( 'templates/pages/archive-header', null, \array_merge( $display_args, [ 'term_children' => $term_children ] ) ); ?>
+	<?php cmls_get_template_part( 'templates/pages/archive-header', make_post_class(), \array_merge( $display_args, [ 'term_children' => $term_children ] ) ); ?>
 
 	<?php \do_action( 'cmls_template-archive-before_content' ); ?>
 
@@ -38,7 +45,7 @@ if ( \property_exists( $this_term, 'taxonomy' ) && \is_taxonomy_hierarchical( $t
 			<?php cmls_get_template_part( 'templates/pages/pagination' ); ?>
 		<?php endif; ?>
 
-	<?php else: ?>
+	<?php elseif ( ! $term_children ): ?>
 
 		<article class="row">
 			<div class="row-container">
