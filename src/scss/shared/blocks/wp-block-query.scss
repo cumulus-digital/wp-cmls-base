@@ -1,0 +1,122 @@
+:root .wp-block-query {
+
+	&>ul>li {
+		overflow: auto;
+		margin-bottom: 1.5em;
+	}
+
+	.wp-block-post-featured-image {
+
+		a, img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+
+	}
+		.wp-block-post-featured-image.alignleft,
+		.wp-block-post-featured-image.alignright,
+		.wp-block[data-align=left]>.wp-block-post-featured-image,
+		.wp-block[data-align=right]>.wp-block-post-featured-image {
+			display: inline;
+			width: 350px;
+
+			@include phone {
+				float: none;
+				width: 100%;
+				margin: 0 0 .75em;
+			}
+		}
+
+		.wp-block-post-featured-image.alignleft,
+		.wp-block[data-align="left"]>.wp-block-post-featured-image {
+			margin: 0 1em .75em 0
+		}
+
+		.wp-block-post-featured-image.alignright,
+		.wp-block[data-align="right"]>.wp-block-post-featured-image {
+			margin: 0 0 1em .75em;
+		}
+
+
+	.wp-block-post-title {
+		display: flex;
+		word-break: break-word;
+
+		a {
+			text-decoration: none;
+			color: inherit;
+
+			@include hover {
+				text-decoration: underline;
+				color: var(--#{$PREFIX}-color-highlight);
+			}
+		}
+	}
+
+	.wp-block-separator {
+		clear: both;
+		margin: 0 auto;
+		&::before {
+			display: block;
+			content: '';
+			clear: both;
+			height: 1.5em;
+		}
+	}
+	&>ul>li:last-child .wp-block-separator {
+		display: none;
+	}
+
+	.is-flex-container {
+		@include cards;
+		//font-size: 1rem;
+
+		@include phone {
+			--card-width: 50%;
+		}
+
+		&>li {
+			@include card;
+			box-sizing: border-box;
+
+			@include hover {
+				transform: none;
+			}
+
+			margin: 0;
+			padding: 1em;
+
+			.wp-block-post-featured-image {
+				float: none !important;
+				width: calc(100% + 2em) !important;
+				max-width: calc(100% + 2em) ! important;
+				margin: -1em -1em .75em !important;
+				padding: 0 !important;
+			}
+
+			.wp-block-separator {
+				display: none;
+			}
+
+		}
+
+		&.columns-2 {
+			--card-width: 50%;
+		}
+		&.columns-3 {
+			--card-width: 33.3333333333%;
+		}
+		&.columns-4 {
+			--card-width: 25%;
+		}
+		&.columns-5 {
+			--card-width: 20%;
+		}
+		&.columns-6 {
+			--card-width: 16.6666666667%;
+		}
+
+	}
+
+}
