@@ -22,6 +22,7 @@ function init_theme_support() {
 	\add_theme_support( 'responsive-embeds' );
 	\add_theme_support( 'post-thumbnails' );
 	//\add_theme_support( 'post-formats', [ ] );
+	\remove_theme_support( 'post-formats' );
 
 	\add_post_type_support( 'page', 'excerpt' );
 }
