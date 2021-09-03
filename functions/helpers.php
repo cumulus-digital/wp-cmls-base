@@ -464,21 +464,21 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 */
 	function resolve_post_display_args( $args = [] ) {
 		$default = [
-			'display_format'          => \is_author() || \is_search() ? 'list' : 'cards',
-			'show_image'              => true,
-			'show_title'              => true,
-			'show_date'               => check_query_post_type_hierarchical() ? false : true,
-			'show_author'             => \has_category( 'blog' ) ? true : false,
-			'show_category'           => \is_category() ? false : true,
-			'show_source'             => true,
-			'show_excerpt'            => true,
+			'display_format'          => \apply_filters( 'display-archive-display_format', null ),
+			'show_image'              => \apply_filters( 'display-archive-show_image', null ),
+			'show_title'              => \apply_filters( 'display-archive-show_title', null ),
+			'show_date'               => \apply_filters( 'display-archive-show_date', null ),
+			'show_author'             => \apply_filters( 'display-archive-show_author', null ),
+			'show_category'           => \apply_filters( 'display-archive-shoow_category', null ),
+			'show_source'             => \apply_filters( 'display-archive-show_source', null ),
+			'show_excerpt'            => \apply_filters( 'display-archive-show_excerpt', null ),
 			'thumbnail_size'          => 'large',
 			'header-background_color' => null,
 			'header-background_image' => null,
 			'header-text_color'       => null,
 		];
 
-		return \array_merge( $default, (array) $args );
+		return \apply_filters( 'display-archive-all', \array_merge( $default, (array) $args ) );
 	}
 
 	/**
