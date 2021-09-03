@@ -11,6 +11,7 @@ function init_nav_support() {
 	\register_nav_menus( [
 		'header-menu' => \__( 'Header Menu' ),
 		'footer-menu' => \__( 'Footer Menu' ),
+		'social-menu' => \__( 'Footer Social' ),
 	] );
 }
 \add_action( 'after_setup_theme', ns( 'init_nav_support' ) );
@@ -41,7 +42,6 @@ function makeMenu( $location, $options = [] ) {
 function header_menu() {
 	makeMenu( 'header-menu' );
 }
-
 function has_header_menu() {
 	return \has_nav_menu( 'header-menu' );
 }
@@ -49,7 +49,13 @@ function has_header_menu() {
 function footer_menu() {
 	makeMenu( 'footer-menu' );
 }
-
 function has_footer_menu() {
-	return \has_nav_menu( 'footer-menu' );
+	return \has_nav_menu( 'footer-menu', [ 'show_description' => false ] );
+}
+
+function social_menu() {
+	makeMenu( 'social-menu', [ 'link_before' => '<i>', 'link_after' => '</i>', 'show_description' => false ] );
+}
+function has_social_menu() {
+	return \has_nav_menu( 'social-menu' );
 }

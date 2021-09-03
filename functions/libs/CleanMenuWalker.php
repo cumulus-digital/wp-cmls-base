@@ -11,10 +11,8 @@ use Walker_Nav_Menu;
 
 class CleanMenuWalker extends Walker_Nav_Menu {
 
-public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
+	public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
 		$indent = ( $depth ) ? \str_repeat( "\t", $depth ) : '';
-
-		$class_names = $value = '';
 
 		$classes = empty( $item->classes ) ? [] : (array) $item->classes;
 
@@ -26,30 +24,54 @@ public function start_el( &$output, $item, $depth = 0, $args = [], $id = 0 ) {
 				$item
 			)
 		);
-		$class_names = ' class="' . \esc_attr( $class_names ) . '"';
+		$class_names = \esc_attr( $class_names );
 
-		$output .= $indent . '<li itemprop="name" id="menu-item-' . $item->ID . '"' . $value . $class_names . '>';
+		$filtered_title = \apply_filters( 'the_title', $item->title, $item->ID );
 
-		$attributes = ! empty( $item->attr_title ) ?
-			' title="' . \esc_attr( $item->attr_title ) . '"' : '';
-		$attributes .= ! empty( $item->target ) ?
-			' target="' . \esc_attr( $item->target ) . '"' : '';
-		$attributes .= ! empty( $item->xfn ) ?
-			' rel="' . \esc_attr( $item->xfn ) . '"' : '';
-		$attributes .= ! empty( $item->url ) ?
-			' href="' . \esc_attr( $item->url ) . '"' : '';
-		$attributes .= ' itemprop="url"';
+		$output .= "{$indent}<li itemprop='name' id='menu-item-{$item->ID}' class='{$class_names}'>";
+
+		$attributes = ['itemprop' => 'url'];
+
+		if ( ! empty( $item->attr_title ) ) {
+			$attributes['title'] = $item->attr_title;
+		} else {
+			$attributes['aria-label'] = $filtered_title;
+		}
+
+		if ( ! empty( $item->target ) ) {
+			$attributes['target'] = $item->target;
+		}
+
+		if ( ! empty( $item->xfn ) ) {
+			$attributes['rel'] = $item->xfn;
+		}
+
+		if ( ! empty( $item->url ) ) {
+			$attributes['href'] = $item->url;
+		}
+
+		$attribute_string = \implode( ' ', \array_map( function ( $val, $key ) {
+			$key = \esc_attr( $key );
+			$val = \esc_attr( $val );
+
+			return "{$key}='{$val}'";
+		}, $attributes, \array_keys( $attributes ) ) );
 
 		if ( \is_array( $args ) ) {
+			if ( ! \array_key_exists( 'show_description', $args ) ) {
+				$args['show_description'] = false;
+			}
 			$args = (object) $args;
 		}
-		$item_output = $args->before;
-		$item_output .= '<a' . $attributes . '>';
-		$item_output .= $args->link_before . \apply_filters( 'the_title', $item->title, $item->ID );
-		$item_output .= $args->link_after;
-		$item_output .= ! empty( $item->description ) ? '<small>' . $item->description . '</small>' : '';
-		$item_output .= '</a>';
-		$item_output .= $args->after;
+
+		$item_output = "{$args->before}<a {$attribute_string}>";
+		$item_output .= "{$args->link_before}{$filtered_title}{$args->link_after}";
+
+		if ( ! empty( $item->description ) && ! $args->show_description ) {
+			$item_output .= "<small>{\wpkses($item->description)}</small>";
+		}
+
+		$item_output .= "</a>{$args->after}";
 
 		$output .= \apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
 	}

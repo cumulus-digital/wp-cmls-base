@@ -1,0 +1,14 @@
+.social {
+	&>ul {
+		display: flex;
+		flex-direction: row;
+		gap: 1em;
+	}
+
+	i {
+		display: none;
+	}
+
+	--icon-color: var(--#{$PREFIX}-color-footer-foreground);
+
+}

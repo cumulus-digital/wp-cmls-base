@@ -14,6 +14,37 @@ for (let i in plugins) {
 }
 defaultConfig.plugins = plugins;
 
+// Fix issue with svgs in CSS url()'s throwing url.replace error
+let rules = defaultConfig.module.rules;
+for (let i in rules) {
+	if (
+		rules[i].test.toString().includes('.svg')
+		&& (
+			!rules[i].issuer
+			|| !rules[i].issuer.includes('jsx')
+		)
+	) {
+		rules[i].issuer = /\.jsx?$/;
+	}
+	// Don't inline svg
+	if (
+		rules[i].test.toString().includes('.svg')
+		&& rules[i].type == 'asset/inline'
+	) {
+		rules[i] = {};
+	}
+}
+// Refer svgs to build path
+rules.push({
+	test: /\.svg$/,
+	issuer: /\.(sc|sa|c)ss$/,
+	type: 'asset/resource',
+		generator: {
+			filename: 'images/[name].[hash:8][ext]',
+	},
+});
+defaultConfig.module.rules = rules;
+
 module.exports = {
 	...defaultConfig,
 	entry: {

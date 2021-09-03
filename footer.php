@@ -12,18 +12,25 @@ namespace CMLS_Base;
 
 	<div class="row-container">
 
+		<?php if ( gav( themeMods::getFiles(), 'file-footer-logo' ) ) : ?>
 		<div class="logo">
 			<a aria-label="Home" href="<?php echo \home_url(); ?>" title="Home">
-				<?php if ( gav( themeMods::getFiles(), 'file-footer-logo' ) ) : ?>
-					<img src="<?php echo gav( themeMods::getFiles(), 'file-footer-logo' ); ?>" alt="<?php echo \bloginfo( 'name' ); ?>">
-				<?php endif; ?>
+				<img src="<?php echo gav( themeMods::getFiles(), 'file-footer-logo' ); ?>" alt="<?php echo \bloginfo( 'name' ); ?>">
 			</a>
 		</div>
+		<?php endif; ?>
 
-
+		<?php if ( has_footer_menu() ): ?>
 		<div class="menu">
 			<?php footer_menu(); ?>
 		</div>
+		<?php endif; ?>
+
+		<?php if ( has_social_menu() ): ?>
+		<div class="social social-link-icons">
+			<?php social_menu(); ?>
+		</div>
+		<?php endif; ?>
 
 		<div class="copyright">
 			&copy;
