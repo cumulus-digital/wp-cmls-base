@@ -2,6 +2,20 @@
 	--icon-color: var(--#{$PREFIX}-color-content-foreground);
 	--icon-hover-color: var(--#{$PREFIX}-color-highlight);
 
+	&>ul {
+		display: flex;
+		flex-direction: row;
+		gap: 1em;
+
+		@include phone {
+			gap: 1.5em;
+		}
+	}
+
+	i {
+		display: none;
+	}
+
 	a {
 		--icon: '';
 		mask: var(--icon) no-repeat 50% 50%;
@@ -13,6 +27,11 @@
 
 		width: 2em;
 		height: 2em;
+
+		@include phone {
+			width: 2.5em;
+			height: 2.5em;
+		}
 
 		@include hover {
 			background-color: var(--icon-hover-color);
