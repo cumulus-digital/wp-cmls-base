@@ -1,21 +1,7 @@
-aside.pagination {
+.wp-block-query-pagination {
 	margin: 2em 0 1em;
 	text-align: center;
 	align-items: center;
-
-	ul, li {
-		display: inline-block;
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
-	.nav-links::before {
-		content: 'Pages: ';
-
-		@include phone() {
-			content: '';
-		}
-	}
 
 	.page-numbers {
 		display: inline-block;
@@ -23,17 +9,17 @@ aside.pagination {
 
 	span.page-numbers,
 	a.page-numbers {
-		background: rgba(0,0,0,0.1);
+		background: rgba(0, 0, 0, 0.1);
 		padding: .25em .5em;
 
 		&.current {
 			background: var(--#{$PREFIX}-color-brand);
 			color: var(--#{$PREFIX}-color-content-background);
 		}
-
 	}
+
 	a.page-numbers {
-		background: rgba(0,0,0,0.5);
+		background: rgba(0, 0, 0, 0.5);
 		color: #fff;
 		text-decoration: none;
 
@@ -41,6 +27,7 @@ aside.pagination {
 			background: #000;
 		}
 	}
+
 	span.dots {
 		background: none;
 	}
