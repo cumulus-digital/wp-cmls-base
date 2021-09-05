@@ -26,21 +26,16 @@ $display_args = resolve_post_display_args( $args );
 	<?php endif; ?>
 
 		<?php if ( $display_args['show_image'] ): ?>
-			<?php if ( $display_args['display_format'] !== 'cards' ): ?>
-				<a href="<?php \the_permalink(); ?>" title="<?php echo \esc_attr( \get_the_title() ); ?>" class="featured-image">
-			<?php endif; ?>
 			<?php
 cmls_get_template_part(
 	'templates/pages/featured_image',
 	make_post_class(),
-	[
-		'thumbnail_size' => $display_args['thumbnail_size'],
-	]
+	\array_merge(
+		$display_args,
+		[ 'thumbnail_size' => $display_args['thumbnail_size'] ]
+	)
 );
 			?>
-			<?php if ( $display_args['display_format'] !== 'cards' ): ?>
-				</a>
-			<?php endif; ?>
 		<?php endif; ?>
 
 		<?php if ( $display_args['show_title'] || $display_args['show_date'] || $display_args['show_author'] || $display_args['show_excerpt'] ): ?>
