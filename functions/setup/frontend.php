@@ -140,6 +140,10 @@ function letPagesOverrideArchives( &$query ) {
 
 // Allow restricting search results
 function searchOnlyPostTypes( $query ) {
+	if ( \is_admin() ) {
+		return $query;
+	}
+
 	if ( $query->is_main_query() && $query->is_search ) {
 		if ( ! empty( $_GET['t'] ) ) {
 			$request_type = \explode( ',', $_GET['t'] );
@@ -156,16 +160,17 @@ function searchOnlyPostTypes( $query ) {
 					}
 
 					if ( \mb_strtolower( $type ) === 'any' ) {
-						$type = 'page';
+						$types[] = 'page';
+						$types[] = 'post';
 					}
 					$types[] = \trim( $type );
 				} );
 				$query->set( 'post_type', $types );
 			}
 		}
-		$front_page = [\get_option( 'page_on_front' )];
+		$front_page = [\get_option( 'page_on_front', false )];
 
-		if ( \count( $front_page ) ) {
+		if ( $front_page ) {
 			$query->set( 'post__not_in', $front_page );
 		}
 		$query->set( 'post_status', 'publish' );

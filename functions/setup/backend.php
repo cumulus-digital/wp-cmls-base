@@ -25,6 +25,11 @@ function editorSetupStyles() {
 \add_action( 'after_setup_theme', ns( 'editorSetupStyles' ), 11 );
 
 function backendSetupScripts() {
+	global $pagenow;
+
+	if ( ! \is_admin() || 'widgets.php' === $pagenow ) {
+		return;
+	}
 	$assets = include theme_path() . '/build/backend.asset.php';
 	\wp_enqueue_script(
 		PREFIX . '-backend-script',

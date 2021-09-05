@@ -13,6 +13,77 @@ function registerMediaTaxonomy() {
 }
 \add_action( 'init', ns( 'registerMediaTaxonomy' ) );
 
+// Automatically add attachment media to category if possible
+function addAttachmentToPostCategory( $attachment_id ) {
+	$attachment = \get_post( $attachment_id );
+
+	if ( $attachment->post_parent ) {
+		$cats = \wp_get_post_categories( $attachment->post_parent, ['fields' => 'names'] );
+
+		if ( $cats && \is_array( $cats ) ) {
+			\wp_set_object_terms(
+				$attachment_id,
+				$cats,
+				'category',
+				true
+			);
+		}
+	}
+}
+\add_action( 'add_attachment', ns( 'addAttachmentToPostCategory' ), 10, 1 );
+
+// Sorting by category
+\add_filter( 'manage_upload_sortable_columns', function ( $columns ) {
+	$columns['categories'] = 'category';
+
+	return $columns;
+} );
+
+// Filtering by category
+\add_action( 'restrict_manage_posts', function () {
+	$screen = \get_current_screen();
+
+	if ( ! \is_admin() || $screen->base !== 'upload' ) {
+		return;
+	}
+
+	$tax = \filter_input( \INPUT_GET, 'taxonomy', \FILTER_SANITIZE_STRING );
+	$cat = \filter_input( \INPUT_GET, 'cat', \FILTER_SANITIZE_STRING );
+
+	$tax = $tax ? $tax : 'category';
+
+	$args = [
+		'show_option_none'  => 'All Post Categories',
+		'option_none_value' => null,
+		'name'              => 'cat',
+		'selected'          => $cat,
+		'value_field'       => 'term_id',
+		'taxonomy'          => $tax,
+		'hierarchical'      => true,
+	];
+	\wp_dropdown_categories( $args );
+} );
+
+// Filter by author
+\add_action( 'restrict_manage_posts', function () {
+	$screen = \get_current_screen();
+
+	if ( ! \is_admin() || $screen->base !== 'upload' ) {
+		return;
+	}
+
+	$author = \filter_input( \INPUT_GET, 'author', \FILTER_SANITIZE_STRING );
+
+	$args = [
+		'show_option_none'  => 'All Authors',
+		'option_none_value' => null,
+		'name'              => 'author',
+		'selected'          => $author,
+		'value_field'       => 'id',
+	];
+	\wp_dropdown_users( $args );
+} );
+
 // Allow WP AJAX calls to get images by category
 function getImagesByCategory() {
 	$category = \json_decode( $_POST['category'], true );
