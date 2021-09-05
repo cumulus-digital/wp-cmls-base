@@ -24,6 +24,10 @@ function init_theme_support() {
 	//\add_theme_support( 'post-formats', [ ] );
 	\remove_theme_support( 'post-formats' );
 
+	\remove_theme_support( 'core-block-patterns' );
+	\remove_theme_support( 'block-templates' );
+	\remove_theme_support( 'widgets-block-editor' );
+
 	\add_post_type_support( 'page', 'excerpt' );
 }
 \add_action( 'after_setup_theme', ns( 'init_theme_support' ), 10 );
