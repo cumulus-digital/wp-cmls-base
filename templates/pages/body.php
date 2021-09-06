@@ -14,6 +14,7 @@ namespace CMLS_Base;
     <?php if ( \is_singular() ): ?>
         <?php \the_content(); ?>
     <?php else: ?>
-        EXCERPT <?php \the_excerpt(); ?>
+        <!-- EXCERPT -->
+        <?php \the_excerpt(); ?>
     <?php endif; ?>
 </div>
