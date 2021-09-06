@@ -13,7 +13,7 @@
 }
 @mixin card {
 	display: block;
-	width: calc(var(--card-width) - var(--card-gap)) !important;
+	width: calc(var(--card-width) - var(--card-gap));
 	margin: 0;
 
 	transition: transform 0.1s,
