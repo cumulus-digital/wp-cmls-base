@@ -12,8 +12,6 @@ namespace CMLS_Base;
 	if (
 		\is_author()
 		|| \is_search()
-		|| \is_category( 'blog' )
-		|| \is_category( 'press' )
 	) {
 		return 'list';
 	}
