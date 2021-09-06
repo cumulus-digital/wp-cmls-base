@@ -12,7 +12,7 @@ $args = \array_merge(
 	[
 		'display_format'       => 'cards',
 		'thumbnail_size'       => 'full',
-		'force_featured_image' => false,
+		'force_featured_image' => \apply_filters( 'force_featured_image', false ),
 	],
 	$args
 );
