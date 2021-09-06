@@ -9,7 +9,7 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 // Defaults
-$display_args = get_tax_display_args();
+$display_args = get_tax_display_args( isset( $args ) ? $args : [] );
 
 // This term
 $this_term     = \get_queried_object();
@@ -31,42 +31,42 @@ if ( \is_object( $this_term ) && \property_exists( $this_term, 'taxonomy' ) && \
 
 <main role="main" class="archive">
 
-	<div class="row">
-		<div class="row-container <?php echo has_global_sidebar() ? 'has-global-sidebar' : ''; ?>">
+	<?php cmls_get_template_part( 'templates/pages/archive-header', make_post_class(), \array_merge( $display_args, [ 'term_children' => $term_children ] ) ); ?>
 
-		<?php if ( has_global_sidebar() ): ?>
+	<div class="row">
+		<div class="row-container <?php echo has_global_sidebar( $display_args['show_sidebar'] ) ? 'has-global-sidebar' : ''; ?>">
+
+		<?php if ( has_global_sidebar( $display_args['show_sidebar'] ) ): ?>
 			<?php \get_sidebar(); ?>
 		<?php endif; ?>
 
 		<div>
 
-	<?php cmls_get_template_part( 'templates/pages/archive-header', make_post_class(), \array_merge( $display_args, [ 'term_children' => $term_children ] ) ); ?>
+			<?php \do_action( 'cmls_template-archive-before_content' ); ?>
 
-	<?php \do_action( 'cmls_template-archive-before_content' ); ?>
+			<?php cmls_get_template_part( 'templates/pages/archive-blog_page_content' ); ?>
 
-	<?php cmls_get_template_part( 'templates/pages/archive-blog_page_content' ); ?>
+			<?php if ( \have_posts() ): ?>
 
-	<?php if ( \have_posts() ): ?>
+				<?php
+					cmls_get_template_part( 'templates/pages/archive-postlist', make_post_class(), $display_args );
+				?>
 
-		<?php
-			cmls_get_template_part( 'templates/pages/archive-postlist', make_post_class(), $display_args );
-		?>
+				<?php if ( is_paginated() ): ?>
+					<?php cmls_get_template_part( 'templates/pages/pagination' ); ?>
+				<?php endif; ?>
 
-		<?php if ( is_paginated() ): ?>
-			<?php cmls_get_template_part( 'templates/pages/pagination' ); ?>
-		<?php endif; ?>
+			<?php elseif ( ! $term_children ): ?>
 
-	<?php elseif ( ! $term_children ): ?>
+				<article class="row">
+					<div class="row-container">
+						<p>Sorry, nothing here.</p>
+					</div>
+				</article>
 
-		<article class="row">
-			<div class="row-container">
-				<p>Sorry, nothing here.</p>
-			</div>
-		</article>
+			<?php endif; ?>
 
-	<?php endif; ?>
-
-	<?php \do_action( 'cmls_template-archive-after_content' ); ?>
+			<?php \do_action( 'cmls_template-archive-after_content' ); ?>
 
 		</div>
 		</div>

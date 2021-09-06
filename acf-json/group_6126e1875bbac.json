@@ -3,8 +3,44 @@
     "title": "Archive Display Options",
     "fields": [
         {
+            "key": "field_6136407e88d70",
+            "label": "<h4>The below settings affect the display of <u>archives<\/u> of this taxonomy:<\/h4>",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_6136452e5eecb",
+            "label": "Subtitle",
+            "name": "cmls-tax-subtitle",
+            "type": "text",
+            "instructions": "Optionally add a subtitle to the header of archive displays for this taxonomy.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_612877c8d84d3",
-            "label": "Use Parent Display Settings",
+            "label": "Use Parent Archive Display Settings",
             "name": "cmls-tax-use_parent",
             "type": "true_false",
             "instructions": "Disregard display settings for this item and use settings from its parent. If no item in the hierarchy has settings, the defaults will be used.",
@@ -44,6 +80,25 @@
             },
             "layout": "block",
             "sub_fields": [
+                {
+                    "key": "field_61363bc6b6d2a",
+                    "label": "Show Sidebar",
+                    "name": "show_sidebar",
+                    "type": "true_false",
+                    "instructions": "Display the global sidebar (or overrides) on archives of this taxonomy, if sidebar is available and has widgets. Note: If sidebar is displayed, headers will not be full-width.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 1,
+                    "ui": 1,
+                    "ui_on_text": "Show",
+                    "ui_off_text": "Hide"
+                },
                 {
                     "key": "field_6128402cec0d6",
                     "label": "Header Background",
@@ -122,7 +177,7 @@
                 {
                     "key": "field_6126e26d1b976",
                     "label": "Display Format",
-                    "name": "format",
+                    "name": "display_format",
                     "type": "select",
                     "instructions": "Choose how archives for this taxonomy will be displayed.",
                     "required": 0,
@@ -269,12 +324,12 @@
         ]
     ],
     "menu_order": 0,
-    "position": "normal",
+    "position": "acf_after_title",
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "field",
     "hide_on_screen": "",
     "active": true,
-    "description": "Control how archives of this taxonomy will be displayed.",
-    "modified": 1630115715
+    "description": "Control how archives of a taxonomy will be displayed.",
+    "modified": 1630946850
 }

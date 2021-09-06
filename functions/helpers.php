@@ -427,7 +427,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 *
 	 * @param mixed  $val
 	 * @param string $key            (optional)
-	 * @param bool   $false_is_empty
+	 * @param bool   $false_is_empty (optional) If true, a falsy value will be treated as empty
 	 *
 	 * @return bool
 	 */
@@ -465,6 +465,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	function resolve_post_display_args( $args = [] ) {
 		$default = [
 			'display_format'          => \apply_filters( 'display-archive-display_format', null ),
+			'show_sidebar'            => \apply_filters( 'display-archive-show_sidebar', true ),
 			'show_image'              => \apply_filters( 'display-archive-show_image', null ),
 			'show_title'              => \apply_filters( 'display-archive-show_title', null ),
 			'show_date'               => \apply_filters( 'display-archive-show_date', null ),
@@ -485,10 +486,11 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 * Retrieve display args for a taxonomy archive
 	 *
 	 * @param WP_Term $term
+	 * @param array   $overrides Custom overrides
 	 *
 	 * @return array
 	 */
-	function get_tax_display_args( $term = null ) {
+	function get_tax_display_args( $term = null, $overrides = [] ) {
 		$return = [];
 
 		if ( \is_category() || \is_tag() || \is_tax() ) {
@@ -496,6 +498,9 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 			$fields = get_tax_acf( 'field_6128514db85a1', $term );
 
 			if ( $fields ) {
+				$return = \array_merge( [], remove_empty( $fields ) );
+
+				// Handle any existing values using the depricated 'format' key
 				if ( isset( $fields['format'] ) ) {
 					$return['display_format'] = $fields['format'];
 				}
@@ -509,6 +514,8 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 				}
 			}
 		}
+
+		$return = \array_merge( $return, $overrides );
 
 		return resolve_post_display_args( $return );
 	}
@@ -546,10 +553,12 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	/**
 	 * Determine if the screen has the global sidebar and it has widgets
 	 *
+	 * @param bool $force Force a return value
+	 *
 	 * @return bool
 	 */
-	function has_global_sidebar() {
-		return \is_active_sidebar( 'global' );
+	function has_global_sidebar( $force = null ) {
+		return \is_active_sidebar( 'global' ) && $force;
 	}
 
 	/**
