@@ -44,7 +44,7 @@ if ( \is_object( $this_term ) && \property_exists( $this_term, 'taxonomy' ) && \
 
 			<?php \do_action( 'cmls_template-archive-before_content' ); ?>
 
-			<?php cmls_get_template_part( 'templates/pages/archive-blog_page_content' ); ?>
+			<?php //cmls_get_template_part( 'templates/pages/archive-blog_page_content' );?>
 
 			<?php if ( \have_posts() ): ?>
 

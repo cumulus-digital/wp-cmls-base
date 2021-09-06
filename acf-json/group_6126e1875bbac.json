@@ -20,13 +20,42 @@
             "esc_html": 0
         },
         {
+            "key": "field_613693bd3df48",
+            "label": "Page as Header",
+            "name": "cmls-tax-insert_page",
+            "type": "post_object",
+            "instructions": "Insert page content instead of generated archive header. <strong>WARNING:<\/strong> Be careful not to set page slugs the same as a category slug, doing so will cause the page to take over the category archive.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "page"
+            ],
+            "taxonomy": "",
+            "allow_null": 1,
+            "multiple": 0,
+            "return_format": "object",
+            "ui": 1
+        },
+        {
             "key": "field_6136452e5eecb",
             "label": "Subtitle",
             "name": "cmls-tax-subtitle",
             "type": "text",
             "instructions": "Optionally add a subtitle to the header of archive displays for this taxonomy.",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_613693bd3df48",
+                        "operator": "==empty"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -106,7 +135,14 @@
                     "type": "group",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_613693bd3df48",
+                                "operator": "==empty"
+                            }
+                        ]
+                    ],
                     "wrapper": {
                         "width": "",
                         "class": "",
@@ -331,5 +367,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "Control how archives of a taxonomy will be displayed.",
-    "modified": 1630946850
+    "modified": 1630967041
 }

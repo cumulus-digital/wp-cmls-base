@@ -11,9 +11,54 @@ namespace CMLS_Base;
 
 $this_term = \get_queried_object();
 
+global $post, $wp_query;
+$old_post       = $post;
+$old_singular   = $wp_query->is_singular;
+$page_as_header = false;
+
+// Handler pre-archive page content
+if ( \is_home() ) {
+	$blog_page_q = new \WP_Query( [
+		//'post_type' => 'page',
+		'p'         => \get_option( 'page_for_posts' ),
+		'post_type' => 'page',
+	] );
+
+	if ( $blog_page_q->have_posts ) {
+		$page_as_header = $blog_page_q->the_post();
+	}
+} else {
+	$page_as_header = \get_field( 'field_613693bd3df48', $this_term );
+}
 ?>
 
-<?php if ( ! \is_home() ): ?>
+<?php if ( $page_as_header ): ?>
+
+	<?php
+		\setup_postdata( $page_as_header );
+		$post                  = $page_as_header;
+		$wp_query->is_singular = true;
+		generateBodyClasses( $post->ID );
+	?>
+
+	<div class="
+		row
+		<?php if ( ! \in_array( 'disable_bottom_padding', BodyClasses::get() ) ): ?>
+			archive-content-follows
+		<?php endif; ?>
+	">
+		<div class="row-container">
+			<?php cmls_get_template_part( 'templates/pages/base' ); ?>
+		</div>
+	</div>
+
+	<?php
+		$post                  = $old_post;
+		$wp_query->is_singular = $old_singular;
+		\wp_reset_postdata();
+	?>
+
+<?php else: ?>
 
 	<?php if (
 		not_empty( $args, 'header-background_color', true )
@@ -43,7 +88,7 @@ $this_term = \get_queried_object();
 
 		<div class="row-container">
 
-			<?php if ( \is_taxonomy_hierarchical( $this_term->taxonomy ) ): ?>
+			<?php if ( \is_object( $this_term ) && \is_taxonomy_hierarchical( $this_term->taxonomy ) ): ?>
 
 				<?php if ( \property_exists( $this_term, 'parent' ) && $this_term->parent ): ?>
 
@@ -97,24 +142,24 @@ $this_term = \get_queried_object();
 
 	</header>
 
-	<?php if ( $args['term_children'] ): ?>
+<?php endif; ?>
 
-		<div class="row">
-			<div class="row-container tax-children-nav">
-				<nav>
-					<ul>
-					<?php foreach ( $args['term_children'] as $child_term ): ?>
-						<li class="tax-<?php echo $child_term->slug; ?>">
-							<a href="<?php echo \get_term_link( $child_term ); ?>">
-								<?php echo $child_term->name; ?>
-							</a>
-						</li>
-					<?php endforeach; ?>
-					</ul>
-				</nav>
-			</div>
+<?php if ( $args['term_children'] ): ?>
+
+	<div class="row">
+		<div class="row-container tax-children-nav">
+			<nav>
+				<ul>
+				<?php foreach ( $args['term_children'] as $child_term ): ?>
+					<li class="tax-<?php echo $child_term->slug; ?>">
+						<a href="<?php echo \get_term_link( $child_term ); ?>">
+							<?php echo $child_term->name; ?>
+						</a>
+					</li>
+				<?php endforeach; ?>
+				</ul>
+			</nav>
 		</div>
-
-	<?php endif; ?>
+	</div>
 
 <?php endif; ?>
