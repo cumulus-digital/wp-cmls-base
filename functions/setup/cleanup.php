@@ -52,3 +52,33 @@ namespace CMLS_Base;
  * Remove Attachment page links in admin
  */
 \add_filter( 'attachment_link', '__return_false' );
+
+/*
+ * Remove align wide and full for blocks in widget editor
+ */
+\add_filter( 'block_type_metadata', function ( $metadata ) {
+	global $pagenow;
+
+	if ( $pagenow !== 'widgets.php' ) {
+		return $metadata;
+	}
+
+	if (
+		\array_key_exists( 'supports', $metadata )
+		&& \array_key_exists( 'align', $metadata['supports'] )
+	) {
+		if ( $metadata['supports']['align'] === true ) {
+			$metadata['supports']['align'] = ['left', 'center', 'right'];
+		} elseif ( \is_array( $metadata['supports']['align'] ) ) {
+			\array_filter( $metadata['supports']['align'], function ( $val ) {
+				if ( \in_array( $val, ['full', 'wide'] ) ) {
+					return false;
+				}
+
+				return $val;
+			} );
+		}
+	}
+
+	return $metadata;
+} );
