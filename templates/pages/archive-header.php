@@ -43,7 +43,6 @@ namespace CMLS_Base;
 			<?php if ( \is_category() || \is_tax() ): ?>
 				<?php
 					$this_term = \get_queried_object();
-					$subtitle  = \get_field( 'field_6136452e5eecb', $this_term );
 				?>
 
 				<?php if ( \property_exists( $this_term, 'parent' ) && $this_term->parent ): ?>
@@ -51,7 +50,7 @@ namespace CMLS_Base;
 					<div class="category_parents">
 
 						<?php
-		echo \untrailingslashit( \get_term_parents_list(
+				echo \untrailingslashit( \get_term_parents_list(
 					$this_term->term_id,
 					$this_term->taxonomy,
 					[ 'inclusive' => false ]
@@ -85,6 +84,11 @@ namespace CMLS_Base;
 				<?php endif; ?>
 
 			</h1>
+
+			<?php
+				$this_term = \get_queried_object();
+				$subtitle  = \get_field( 'field_6136452e5eecb', $this_term );
+			?>
 
 			<?php if ( $subtitle ): ?>
 				<h2><?php echo $subtitle; ?></h2>
