@@ -10,3 +10,4 @@ namespace CMLS_Base\Setup\PluginHacks;
 require __DIR__ . '/yoast.php';
 require __DIR__ . '/aioseo.php';
 require __DIR__ . '/kadence.php';
+require __DIR__ . '/extendify.php';
