@@ -88,7 +88,7 @@ if ( \is_home() ) {
 
 		<div class="row-container">
 
-			<?php if ( \is_object( $this_term ) && \is_taxonomy_hierarchical( $this_term->taxonomy ) ): ?>
+			<?php if ( \is_a( $this_term, 'WP_Taxonomy' ) && \is_taxonomy_hierarchical( $this_term->taxonomy ) ): ?>
 
 				<?php if ( \property_exists( $this_term, 'parent' ) && $this_term->parent ): ?>
 
