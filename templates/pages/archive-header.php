@@ -8,6 +8,9 @@
 namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
+
+$this_term = \get_queried_object();
+
 ?>
 
 <?php if ( ! \is_home() ): ?>
@@ -40,21 +43,18 @@ namespace CMLS_Base;
 
 		<div class="row-container">
 
-			<?php if ( \is_category() || \is_tax() ): ?>
-				<?php
-					$this_term = \get_queried_object();
-				?>
+			<?php if ( \is_taxonomy_hierarchical( $this_term->taxonomy ) ): ?>
 
 				<?php if ( \property_exists( $this_term, 'parent' ) && $this_term->parent ): ?>
 
 					<div class="category_parents">
 
 						<?php
-				echo \untrailingslashit( \get_term_parents_list(
-					$this_term->term_id,
-					$this_term->taxonomy,
-					[ 'inclusive' => false ]
-				) );
+		echo \untrailingslashit( \get_term_parents_list(
+			$this_term->term_id,
+			$this_term->taxonomy,
+			[ 'inclusive' => false ]
+		) );
 						?>
 
 					</div>
@@ -86,8 +86,7 @@ namespace CMLS_Base;
 			</h1>
 
 			<?php
-				$this_term = \get_queried_object();
-				$subtitle  = \get_field( 'field_6136452e5eecb', $this_term );
+				$subtitle = \get_field( 'field_6136452e5eecb', $this_term );
 			?>
 
 			<?php if ( $subtitle ): ?>
