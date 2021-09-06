@@ -31,6 +31,15 @@ if ( \is_object( $this_term ) && \property_exists( $this_term, 'taxonomy' ) && \
 
 <main role="main" class="archive">
 
+	<div class="row">
+		<div class="row-container <?php echo has_global_sidebar() ? 'has-global-sidebar' : ''; ?>">
+
+		<?php if ( has_global_sidebar() ): ?>
+			<?php \get_sidebar(); ?>
+		<?php endif; ?>
+
+		<div>
+
 	<?php cmls_get_template_part( 'templates/pages/archive-header', make_post_class(), \array_merge( $display_args, [ 'term_children' => $term_children ] ) ); ?>
 
 	<?php \do_action( 'cmls_template-archive-before_content' ); ?>
@@ -58,6 +67,10 @@ if ( \is_object( $this_term ) && \property_exists( $this_term, 'taxonomy' ) && \
 	<?php endif; ?>
 
 	<?php \do_action( 'cmls_template-archive-after_content' ); ?>
+
+		</div>
+		</div>
+	</div>
 
 </main>
 

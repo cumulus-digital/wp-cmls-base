@@ -145,11 +145,12 @@ function searchOnlyPostTypes( $query ) {
 	}
 
 	if ( $query->is_main_query() && $query->is_search ) {
+		$post_types = ['post', 'page'];
+
 		if ( ! empty( $_GET['t'] ) ) {
 			$request_type = \explode( ',', $_GET['t'] );
 
 			if ( \count( $request_type ) ) {
-				$types = [];
 				// do not allow searches for certain types
 				\array_walk( $request_type, function ( $type ) use ( &$types ) {
 					switch ( \mb_strtolower( $type ) ) {
@@ -160,14 +161,18 @@ function searchOnlyPostTypes( $query ) {
 					}
 
 					if ( \mb_strtolower( $type ) === 'any' ) {
-						$types[] = 'page';
-						$types[] = 'post';
+						$post_types[] = 'page';
+						$post_types[] = 'post';
 					}
-					$types[] = \trim( $type );
+					$post_types[] = \trim( $type );
 				} );
-				$query->set( 'post_type', $types );
 			}
 		}
+
+		$post_types = \apply_filters( 'search_post_types', $post_types );
+
+		$query->set( 'post_type', $post_types );
+
 		$front_page = [\get_option( 'page_on_front', false )];
 
 		if ( $front_page ) {
