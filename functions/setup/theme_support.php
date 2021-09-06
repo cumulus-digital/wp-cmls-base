@@ -26,7 +26,7 @@ function init_theme_support() {
 
 	\remove_theme_support( 'core-block-patterns' );
 	\remove_theme_support( 'block-templates' );
-	\remove_theme_support( 'widgets-block-editor' );
+	//\remove_theme_support( 'widgets-block-editor' );
 
 	\add_post_type_support( 'page', 'excerpt' );
 }
@@ -34,3 +34,6 @@ function init_theme_support() {
 
 global $content_width;
 $content_width = 1200;
+
+// Separate stylesheets for blocks
+\add_filter( 'should_load_separate_core_block_assets', '__return_true' );

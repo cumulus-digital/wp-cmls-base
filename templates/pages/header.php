@@ -18,7 +18,7 @@ if (
 ):
 ?>
 	<?php if ( ! \get_field( 'cmls-header_options-hide_header', \get_the_ID(), false ) ): ?>
-		<header class="row alignfull page_title">
+		<header class="row page_title">
 			<div class="row-container">
 				<h1 class="<?php echo \esc_attr( \get_field( 'cmls-header_options-custom_classes' ) ); ?>">
 					<?php \the_title(); ?>

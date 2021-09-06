@@ -13,21 +13,27 @@ namespace CMLS_Base;
 
 <main role="main" class="single">
 
-    <div class="row">
-        <div class="row-container">
+	<div class="row">
+		<div class="row-container <?php echo has_global_sidebar() ? 'has-global-sidebar' : ''; ?>">
 
-            <?php \do_action( 'cmls_template-singular-before_post' ); ?>
+			<?php \get_sidebar(); ?>
 
-            <?php while ( \have_posts() ): \the_post(); ?>
+			<div>
 
-                <?php cmls_get_template_part( 'templates/pages/base' ); ?>
+				<?php \do_action( 'cmls_template-singular-before_post' ); ?>
 
-            <?php endwhile; ?>
+				<?php while ( \have_posts() ): \the_post(); ?>
 
-            <?php \do_action( 'cmls_template-singular-after_post' ); ?>
+					<?php cmls_get_template_part( 'templates/pages/base' ); ?>
 
-        </div>
-    </div>
+				<?php endwhile; ?>
+
+				<?php \do_action( 'cmls_template-singular-after_post' ); ?>
+
+			</div>
+
+		</div>
+	</div>
 
 </main>
 

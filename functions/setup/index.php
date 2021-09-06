@@ -16,6 +16,7 @@ require __DIR__ . '/media.php';
 require __DIR__ . '/filters/index.php';
 require __DIR__ . '/backend.php';
 require __DIR__ . '/frontend.php';
+require __DIR__ . '/sidebars.php';
 require __DIR__ . '/cleanup.php';
 
 require __DIR__ . '/customizer/index.php';

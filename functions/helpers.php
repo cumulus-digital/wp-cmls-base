@@ -542,4 +542,22 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 
 		return false;
 	}
+
+	/**
+	 * Determine if the screen has the global sidebar and it has widgets
+	 *
+	 * @return bool
+	 */
+	function has_global_sidebar() {
+		return \is_active_sidebar( 'global' );
+	}
+
+	/**
+	 * Determine if the theme supports block editor for widgets
+	 *
+	 * @return bool
+	 */
+	function has_widget_block_editor() {
+		return (bool) \get_theme_support( 'widgets-block-editor' );
+	}
 }
