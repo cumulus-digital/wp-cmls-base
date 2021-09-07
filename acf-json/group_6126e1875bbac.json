@@ -4,7 +4,7 @@
     "fields": [
         {
             "key": "field_6136407e88d70",
-            "label": "<h4>The below settings affect the display of <u>archives<\/u> of this taxonomy:<\/h4>",
+            "label": "<h4>The below settings affect the display of <u>archives<\/u> of this term:<\/h4>",
             "name": "",
             "type": "message",
             "instructions": "",
@@ -46,7 +46,7 @@
             "label": "Subtitle",
             "name": "cmls-tax-subtitle",
             "type": "text",
-            "instructions": "Optionally add a subtitle to the header of archive displays for this taxonomy.",
+            "instructions": "Optionally add a subtitle to the header of archive displays for this term.",
             "required": 0,
             "conditional_logic": [
                 [
@@ -72,7 +72,7 @@
             "label": "Use Parent Archive Display Settings",
             "name": "cmls-tax-use_parent",
             "type": "true_false",
-            "instructions": "Disregard display settings for this item and use settings from its parent. If no item in the hierarchy has settings, the defaults will be used.",
+            "instructions": "Disregard display settings for this term and use settings from its parent. If no parent has display settings, the defaults will be used.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -114,7 +114,7 @@
                     "label": "Show Sidebar",
                     "name": "show_sidebar",
                     "type": "true_false",
-                    "instructions": "Display the global sidebar (or overrides) on archives of this taxonomy, if sidebar is available and has widgets. Note: If sidebar is displayed, headers will not be full-width.",
+                    "instructions": "Display the global sidebar (or overrides) on archives of this term, if sidebar is available and has widgets.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -215,7 +215,7 @@
                     "label": "Display Format",
                     "name": "display_format",
                     "type": "select",
-                    "instructions": "Choose how archives for this taxonomy will be displayed.",
+                    "instructions": "Choose how archives for this term will be displayed.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -366,6 +366,6 @@
     "instruction_placement": "field",
     "hide_on_screen": "",
     "active": true,
-    "description": "Control how archives of a taxonomy will be displayed.",
-    "modified": 1630967041
+    "description": "Control how archives of a term will be displayed.",
+    "modified": 1630976291
 }
