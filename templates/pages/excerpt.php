@@ -13,9 +13,9 @@ $title_tag = 'h2';
 
 // Defaults
 $display_args = resolve_post_display_args( $args );
-//echo '<pre>'; \var_dump( $display_args ); echo '</pre>';
 ?>
 
+<!-- templates/pages/excerpt -->
 <article
 	id="post-<?php \the_ID(); ?>"
 	<?php \post_class( 'archive excerpt' ); ?>
@@ -111,3 +111,4 @@ cmls_get_template_part(
 	<?php endif; ?>
 
 </article>
+<!-- /templates/pages/excerpt -->

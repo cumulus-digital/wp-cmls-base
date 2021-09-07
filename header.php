@@ -24,8 +24,9 @@ if ( \is_object( $qo ) && \property_exists( $qo, 'post_name' ) ) {
 }
 ?>
 <body <?php \body_class( $slug ); ?>>
-	<?php if ( \function_exists( 'gtm4wp_the_gtm_tag' ) ) {
-		\gtm4wp_the_gtm_tag();
-	} ?>
+
+<?php if ( \function_exists( 'gtm4wp_the_gtm_tag' ) ) {
+	\gtm4wp_the_gtm_tag();
+} ?>
 
 	<?php cmls_get_template_part( 'templates/masthead/base' ); ?>

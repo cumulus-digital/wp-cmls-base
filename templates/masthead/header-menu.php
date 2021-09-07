@@ -9,8 +9,9 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
-if ( has_header_menu() ):
-?>
+if ( has_header_menu() ): ?>
+
+<!-- templates/masthead/header-menu -->
 <nav class="menu-container">
     <button class="hamburger hamburger--spin" type="button"
             aria-label="Open menu" aria-controls="header_menu" aria-expanded="false">
@@ -25,5 +26,6 @@ if ( has_header_menu() ):
         <?php endif; ?>
     </div>
 </nav>
-<?php
-endif;
+<!-- /templates/masthead/header-menu -->
+
+<?php endif;

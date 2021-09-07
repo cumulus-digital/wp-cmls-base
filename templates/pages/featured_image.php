@@ -21,6 +21,7 @@ $args = \array_merge(
 <?php // By default, only show featured image here in cat/tag lists?>
 <?php if ( ( ! \is_singular() || $args['force_featured_image'] ) && \has_post_thumbnail() ): ?>
 
+	<!-- templates/pages/featured_image -->
 	<?php if ( $args['display_format'] !== 'cards' ): ?>
 		<a href="<?php \the_permalink(); ?>" title="<?php echo \esc_attr( \get_the_title() ); ?>" class="featured-image">
 	<?php endif; ?>
@@ -41,5 +42,6 @@ $args = \array_merge(
 	<?php if ( $args['display_format'] !== 'cards' ): ?>
 		</a>
 	<?php endif; ?>
+	<!-- /templates/pages/featured_image -->
 
 <?php endif; ?>

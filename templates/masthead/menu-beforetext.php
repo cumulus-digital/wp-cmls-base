@@ -10,6 +10,8 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 ?>
 <?php if ( themeMods::get( 'text-masthead-before_menu' ) ): ?>
+
+<!-- templates/masthead/menu-beforetext -->
 <div class="menu-beforetext">
     <?php if ( themeMods::get( 'text-masthead-before_menu-link' ) ): ?>
         <a
@@ -25,4 +27,6 @@ namespace CMLS_Base;
         </a>
     <?php endif; ?>
 </div>
+<!-- /templates/masthead/menu-beforetext -->
+
 <?php endif; ?>

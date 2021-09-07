@@ -12,6 +12,7 @@ namespace CMLS_Base;
 global $customizer_files;
 $customizer_files = getCustomizerFiles();
 ?>
+<!-- templates/masthead/base -->
 <header class="row masthead">
 
 	<div class="row-container">
@@ -25,3 +26,4 @@ $customizer_files = getCustomizerFiles();
 	</div>
 
 </header>
+<!-- /templates/masthead/base -->

@@ -11,6 +11,7 @@ namespace CMLS_Base;
 \get_header();
 ?>
 
+<!-- 404 -->
 <main role="main" class="single">
 
     <div class="row">
@@ -32,6 +33,7 @@ namespace CMLS_Base;
     </div>
 
 </main>
+<!-- /404 -->
 
 <?php
 \get_footer();

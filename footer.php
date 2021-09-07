@@ -8,6 +8,8 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 ?>
+
+<!-- footer -->
 <footer class="row" role="contentinfo">
 
 	<div class="row-container">

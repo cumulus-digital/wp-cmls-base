@@ -11,6 +11,8 @@ namespace CMLS_Base;
 
 \get_header();
 ?>
+
+<!-- search -->
 <main role="main" class="search">
 
 	<header class="row page_title">
@@ -53,5 +55,7 @@ cmls_get_template_part(
 	<?php endif; ?>
 
 </main>
+<!-- /search -->
+
 <?php
 \get_footer();

@@ -9,6 +9,7 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 ?>
+<!-- templates/masthead/logo -->
 <div class="logo">
     <a aria-label="Home" href="<?php echo \home_url(); ?>" title="Home">
         <?php if ( gav( themeMods::getFiles(), 'file-masthead-logo', false ) ): ?>
@@ -19,3 +20,4 @@ namespace CMLS_Base;
         <?php endif; ?>
     </a>
 </div>
+<!-- /templates/masthead/logo -->

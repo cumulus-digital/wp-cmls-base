@@ -10,6 +10,7 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 ?>
 
+<!-- templates/pages/header -->
 <?php
 if (
 	\is_singular()
@@ -38,3 +39,4 @@ if (
 		<h2><?php echo \the_title(); ?></h2>
 	</header>
 <?php endif; ?>
+<!-- /templates/pages/header -->

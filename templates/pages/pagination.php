@@ -10,6 +10,7 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 ?>
 
+<!-- templates/pages/pagination -->
 <aside class="pagination row">
     <?php
 	\the_posts_pagination( [
@@ -21,3 +22,4 @@ namespace CMLS_Base;
 	] );
 	?>
 </aside>
+<!-- /templates/pages/pagination -->

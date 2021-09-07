@@ -1,7 +1,7 @@
 <?php
 /**
  * CMLS Base Theme
- * Post archive template
+ * Archive / Post list
  */
 
 namespace CMLS_Base;
@@ -18,6 +18,7 @@ if ( ! isset( $args['row-class'] ) ) {
 }
 ?>
 
+<!-- templates/archives/post_list -->
 <div class="row <?php echo $args['row-class']; ?>">
 	<div class="row-container <?php echo $args['display_format']; ?>">
 
@@ -35,3 +36,4 @@ if ( ! isset( $args['row-class'] ) ) {
 
 	</div>
 </div>
+<!-- /templates/archives/post_list -->

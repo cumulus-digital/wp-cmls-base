@@ -10,6 +10,7 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 ?>
 
+<!-- templates/pages/base -->
 <article
 	id="post-<?php \the_ID(); ?>"
 	<?php \post_class( \is_singular() ? 'single' : 'archive' ); ?>
@@ -30,3 +31,4 @@ namespace CMLS_Base;
 	<?php endif; ?>
 
 </article>
+<!-- /templates/pages/base -->

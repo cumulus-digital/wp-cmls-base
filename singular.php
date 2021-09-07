@@ -15,6 +15,7 @@ $args = \array_merge( [
 \get_header();
 ?>
 
+<!-- singular -->
 <main role="main" class="single">
 
 	<div class="row">
@@ -42,6 +43,7 @@ $args = \array_merge( [
 	</div>
 
 </main>
+<!-- /singular -->
 
 <?php
 \get_footer();
