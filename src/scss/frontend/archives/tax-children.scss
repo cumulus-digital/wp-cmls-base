@@ -1,5 +1,6 @@
 .tax-children-nav {
 	margin: 1rem auto 2rem;
+	font-size: 0.85rem;
 
 	ul,
 	li {
@@ -22,7 +23,7 @@
 	}
 
 	a {
-		background-color: var(--#{$PREFIX}-color-brand);
+		background-color: var(--#{$PREFIX}-color-content-foreground);
 		color: var(--#{$PREFIX}-color-content-background);
 		border-radius: .2em;
 		white-space: nowrap;
@@ -31,11 +32,13 @@
 		padding: .75em 1.5em;
 		position: relative;
 		transition: all .05s;
+		opacity: 0.5;
 
 		@include hover {
-			background-color: var(--#{$PREFIX}-color-highlight);
+			background-color: var(--#{$PREFIX}-color-brand);
 			box-shadow: 0 .05em .25em rgba(0, 0, 0, 0.15);
 			text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.75);
+			opacity: 1;
 			transform: scale(1.03);
 		}
 	}

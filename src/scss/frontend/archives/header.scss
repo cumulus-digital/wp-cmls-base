@@ -37,6 +37,11 @@ header.page_title {
 	font-size: 1em;
 	line-height: 1.25;
 
+	.parent-back {
+		opacity: 0.3;
+		font-weight: bold;
+	}
+
 	a {
 		display: inline-block;
 		color: inherit;
