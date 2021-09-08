@@ -10,13 +10,18 @@ namespace CMLS_Base;
 
 // Defaults
 $display_args = get_tax_display_args( isset( $args ) ? $args : [] );
+$args         = isset( $args ) ? \array_merge( (array) $args, $display_args ) : $display_args;
 
 // This term
-$this_term     = \get_queried_object();
+$this_term     = isset( $args ) && \array_key_exists( 'this_term', $args ) ? $args['this_term'] : \get_queried_object();
 $term_children = null;
 
 if (
-	\is_object( $this_term ) && \property_exists( $this_term, 'taxonomy' ) && \is_taxonomy_hierarchical( $this_term->taxonomy ) ) {
+	! isset( $args['term_children'] )
+	&& (
+		\is_a( $this_term, 'WP_Term' ) && \is_taxonomy_hierarchical( $this_term->taxonomy )
+	)
+) {
 	// Necessary to go back to the DB because PublishPress Permissions may break the cache...
 	$term_children_ids = \get_term_children( $this_term->term_id, $this_term->taxonomy );
 	$term_children     = \get_terms( [
@@ -25,6 +30,7 @@ if (
 		'parent'     => $this_term->term_id,
 		'hide_empty' => true,
 	] );
+	$args['term_children'] = $term_children;
 }
 
 \get_header();
@@ -33,12 +39,12 @@ if (
 <!-- archive -->
 <main role="main" class="archive">
 
-	<?php cmls_get_template_part( 'templates/archives/header', make_post_class(), \array_merge( $display_args, [ 'term_children' => $term_children ] ) ); ?>
+	<?php cmls_get_template_part( 'templates/archives/header', make_post_class(), $args ); ?>
 
 	<div class="row">
-		<div class="row-container <?php echo has_global_sidebar( $display_args['show_sidebar'] ) ? 'has-global-sidebar' : ''; ?>">
+		<div class="row-container <?php echo has_global_sidebar( $args['show_sidebar'] ) ? 'has-global-sidebar' : ''; ?>">
 
-			<?php if ( has_global_sidebar( $display_args['show_sidebar'] ) ): ?>
+			<?php if ( has_global_sidebar( $args['show_sidebar'] ) ): ?>
 				<?php \get_sidebar(); ?>
 			<?php endif; ?>
 
@@ -49,14 +55,14 @@ if (
 				<?php if ( \have_posts() ): ?>
 
 					<?php
-						cmls_get_template_part( 'templates/archives/post_list', make_post_class(), $display_args );
+						cmls_get_template_part( 'templates/archives/post_list', make_post_class(), $args );
 					?>
 
 					<?php if ( is_paginated() ): ?>
 						<?php cmls_get_template_part( 'templates/pages/pagination' ); ?>
 					<?php endif; ?>
 
-				<?php elseif ( ! $term_children ): ?>
+				<?php elseif ( ! $args['term_children'] ): ?>
 
 					<p>Sorry, nothing here.</p>
 
