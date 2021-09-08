@@ -18,8 +18,6 @@ $customizer_files = getCustomizerFiles();
 	<div class="row-container">
 		<?php cmls_get_template_part( 'templates/masthead/logo' ); ?>
 
-		<span class="spacer"></span>
-
 		<?php cmls_get_template_part( 'templates/masthead/menu-beforetext' ); ?>
 
         <?php cmls_get_template_part( 'templates/masthead/header-menu' ); ?>

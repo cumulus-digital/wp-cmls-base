@@ -34,7 +34,7 @@ body > footer {
 
 	.logo {
 		height: 90px;
-		width: min-content;
+		width: max-content;
 
 		@include phone {
 			display: none;
@@ -71,6 +71,7 @@ body > footer {
 	.menu {
 
 		& > ul {
+			display: flex;
 			column-count: 4;
 			column-gap: .75em;
 			height: 100%;
@@ -99,9 +100,11 @@ body > footer {
 
 	.copyright {
 		text-align: right;
+		margin-left: auto;
 
 		@include phone {
 			text-align: center;
+			margin-right: auto;
 		}
 	}
 }

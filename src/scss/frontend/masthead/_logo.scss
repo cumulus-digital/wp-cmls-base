@@ -1,6 +1,7 @@
 .logo {
-	grid-area: head_logo;
+	width: max-content;
 	height: 100%;
+	margin-right: auto;
 	justify-items: start;
 	overflow: visible;
 
@@ -27,7 +28,7 @@
 			background-image: var(--#{$PREFIX}-logo-masthead-inside-cssurl);
 		}
 		*/
-	
+
 		@include hover {
 			img {
 				transform: scale(1.04);
@@ -37,17 +38,17 @@
 	}
 
 	body.home & {
-		img.logo-main { display: inline-block; }
+		img.logo-main { display: block; }
 	}
 	body.home.under-masthead & {
 		img.logo-main { display: none; }
-		img.logo-main-overlay { display: inline-block; }
+		img.logo-main-overlay { display: block; }
 	}
 	body:not(.home) & {
-		img.logo-inside { display: inline-block; }
+		img.logo-inside { display: block; }
 	}
 	body:not(.home).under-masthead & {
 		img.logo-inside { display: none; }
-		img.logo-inside-overlay { display: inline-block; }
+		img.logo-inside-overlay { display: block; }
 	}
 }
