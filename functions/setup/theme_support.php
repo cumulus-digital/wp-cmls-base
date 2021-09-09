@@ -29,6 +29,39 @@ function init_theme_support() {
 	//\remove_theme_support( 'widgets-block-editor' );
 
 	\add_post_type_support( 'page', 'excerpt' );
+
+	\add_theme_support( 'editor-font-sizes', [
+		[
+			'name' => 'Small',
+			'size' => '0.7em',
+			'slug' => 'small',
+		],
+		[
+			'name' => 'Medium',
+			'size' => '0.85em',
+			'slug' => 'medium',
+		],
+		[
+			'name' => 'Normal',
+			'size' => '1em',
+			'slug' => 'normal',
+		],
+		[
+			'name' => 'Bigger',
+			'size' => '1.25em',
+			'slug' => 'bigger',
+		],
+		[
+			'name' => 'Large',
+			'size' => '1.5em',
+			'slug' => 'large',
+		],
+		[
+			'name' => 'Huge',
+			'size' => '2em',
+			'slug' => 'huge',
+		],
+	] );
 }
 \add_action( 'after_setup_theme', ns( 'init_theme_support' ), 10 );
 
