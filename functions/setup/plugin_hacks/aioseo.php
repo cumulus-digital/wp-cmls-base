@@ -19,3 +19,14 @@ namespace CMLS_Base\Setup\PluginHacks;
 		}, 10, 1 );
 	}
 } );
+
+// Remove AIOSEO bug from admin bar
+\add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
+	$wp_admin_bar->remove_node( 'aioseo-main' );
+}, 9999 );
+
+// Remove AIOSEO crap from admin menu
+\add_action( 'admin_menu', function () {
+	// Redirects under Tools
+	\remove_submenu_page( 'tools.php', \admin_url( '/admin.php?page=aioseo-redirects' ) );
+}, 9999 );
