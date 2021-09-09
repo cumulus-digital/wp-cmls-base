@@ -105,9 +105,9 @@ function letPagesOverrideArchives( &$query ) {
 	}
 
 	if ( $query->is_archive() ) {
-		$currentQuery = \get_queried_object();
+		if ( isset( $query->queried_object ) ) {
+			$currentQuery = $query->queried_object;
 
-		if ( $currentQuery ) {
 			$slug = false;
 
 			if ( \property_exists( $currentQuery, 'slug' ) ) {
