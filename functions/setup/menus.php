@@ -9,9 +9,10 @@ namespace CMLS_Base;
 
 function init_nav_support() {
 	\register_nav_menus( [
-		'header-menu' => \__( 'Header Menu' ),
-		'footer-menu' => \__( 'Footer Menu' ),
-		'social-menu' => \__( 'Footer Social' ),
+		'header-menu'       => \__( 'Header Menu' ),
+		'extra-header-menu' => \__( 'Before-Hamburger Menu (Desktop only!)' ),
+		'footer-menu'       => \__( 'Footer Menu' ),
+		'social-menu'       => \__( 'Footer Social' ),
 	] );
 }
 \add_action( 'after_setup_theme', ns( 'init_nav_support' ) );
@@ -44,6 +45,14 @@ function header_menu() {
 }
 function has_header_menu() {
 	return \has_nav_menu( 'header-menu' );
+}
+
+function extra_header_menu() {
+	makeMenu( 'extra-header-menu' );
+}
+
+function has_extra_header_menu() {
+	return \has_nav_menu( 'extra-header-menu' );
 }
 
 function footer_menu() {

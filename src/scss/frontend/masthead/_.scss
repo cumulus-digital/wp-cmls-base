@@ -90,9 +90,38 @@
 			display: inline-block;
 			text-decoration: none;
 			color: inherit;
+			transition: all .2s;
 
 			@include hover {
 				color: var(--#{$PREFIX}-color-brand);
+			}
+		}
+
+		&.real-menu {
+
+			@include phone {
+				display: none;
+			}
+
+			ul, li {
+				display: inline-block;
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			a {
+				padding: .25em .5em;
+
+				@include hover {
+					color: var(--#{$PREFIX}-color-masthead-background);
+					background-color: var(--#{$PREFIX}-color-masthead-foreground);
+
+					@at-root body.under-masthead & {
+						color: var(--#{$PREFIX}-color-masthead-background-overlay);
+						background-color: var(--#{$PREFIX}-color-brand);
+					}
+				}
 			}
 		}
 	}
