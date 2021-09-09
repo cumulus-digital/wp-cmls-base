@@ -23,6 +23,7 @@ function acfDisableAdminInProd() {
 $ACF_JSON = new Vendors\vena\AcfJson\Loader( [
 	'group_5f467bc4cb553', // "Display Options"
 	'group_6126e1875bbac', // "Taxonomy Archive Options"
+	'group_613a6799d633a', // "Alt. Display Author"
 ], theme_path() );
 
 include __DIR__ . '/location-hierarchical_post.php';
