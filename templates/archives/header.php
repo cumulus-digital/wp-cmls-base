@@ -18,8 +18,9 @@ $page_as_header = null;
 if ( \is_home() ) {
 	$blog_page_q = new \WP_Query( [
 		//'post_type' => 'page',
-		'p'         => \get_option( 'page_for_posts' ),
-		'post_type' => 'page',
+		'p'           => \get_option( 'page_for_posts' ),
+		'post_type'   => 'page',
+		'post_status' => ['publish', 'private'],
 	] );
 
 	if ( $blog_page_q->have_posts ) {
