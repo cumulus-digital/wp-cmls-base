@@ -14,27 +14,30 @@ $args['this_term'] = $this_term;
 
 // Handler pre-archive page content
 $page_as_header = null;
+$header_page_id = null;
 
 if ( \is_home() ) {
-	$blog_page_q = new \WP_Query( [
-		//'post_type' => 'page',
-		'p'           => \get_option( 'page_for_posts' ),
-		'post_type'   => 'page',
-		'post_status' => ['publish', 'private'],
+	$header_page_id = \get_option( 'page_for_posts' );
+} else {
+	$header_page_id = \get_field( 'field_613693bd3df48', $this_term );
+}
+
+if ( $header_page_id && \is_int( $header_page_id ) ) {
+	$header_page = new \WP_Query( [
+		'p'         => $header_page_id,
+		'post_type' => 'page',
 	] );
 
-	if ( $blog_page_q->have_posts ) {
-		$page_as_header = $blog_page_q->the_post();
+	if ( $header_page->have_posts() ) {
+		$page_as_header = $header_page->post;
 	}
-} else {
-	$page_as_header = \get_field( 'field_613693bd3df48', $this_term );
 }
 ?>
 
 <!-- templates/archives/header -->
 <?php if ( $page_as_header ): ?>
 
-	<?php cmls_get_template_part( 'tempaltes/archives/header-post', make_post_class(), \array_merge( $args, ['post' => $page_as_header] ) ); ?>
+	<?php cmls_get_template_part( 'templates/archives/header-post', make_post_class(), \array_merge( $args, ['post' => $page_as_header] ) ); ?>
 
 <?php else: ?>
 
