@@ -68,7 +68,7 @@ cmls_get_template_part(
 						<span class="author">
 							By
 							<?php if ( $display_args['display_format'] === 'list' ): ?>
-								<?php \the_author_posts_link(); ?>
+								<?php \the_author(); //\the_author_posts_link();?>
 							<?php else: ?>
 								<?php \the_author(); ?>
 							<?php endif; ?>

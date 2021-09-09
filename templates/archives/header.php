@@ -39,6 +39,10 @@ if ( $header_page_id && \is_int( $header_page_id ) ) {
 
 	<?php cmls_get_template_part( 'templates/archives/header-post', make_post_class(), \array_merge( $args, ['post' => $page_as_header] ) ); ?>
 
+<?php elseif ( \is_author() ): ?>
+
+	<?php cmls_get_template_part( 'templates/archives/header-author', make_post_class(), $args ); ?>
+
 <?php else: ?>
 
 	<?php cmls_get_template_part( 'templates/archives/header-normal', make_post_class(), $args ); ?>
