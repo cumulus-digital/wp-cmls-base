@@ -31,7 +31,7 @@ function makeMenu( $location, $options = [] ) {
 		'after'           => '',
 		'link_before'     => '',
 		'link_after'      => '',
-		'items_wrap'      => '<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement">%3$s</ul>',
+		'items_wrap'      => '<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="%2$s">%3$s</ul>',
 		'depth'           => 0,
 		'walker'          => new CleanMenuWalker(),
 	];
@@ -53,8 +53,19 @@ function has_footer_menu() {
 	return \has_nav_menu( 'footer-menu', [ 'show_description' => false ] );
 }
 
-function social_menu() {
-	makeMenu( 'social-menu', [ 'link_before' => '<i>', 'link_after' => '</i>', 'show_description' => false ] );
+function social_menu( $options = [] ) {
+	makeMenu(
+		'social-menu',
+		\array_merge(
+			[
+				'menu_class'       => 'social social-link-icons',
+				'link_before'      => '<i>',
+				'link_after'       => '</i>',
+				'show_description' => false,
+			],
+			$options
+		)
+	);
 }
 function has_social_menu() {
 	return \has_nav_menu( 'social-menu' );
