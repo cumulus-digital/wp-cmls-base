@@ -4,10 +4,10 @@
     "fields": [
         {
             "key": "field_613a67efc94aa",
-            "label": "cmls-alt_author",
-            "name": "cmls-post-alt_author",
+            "label": "Alt. Author Name",
+            "name": "cmls-alt_author",
             "type": "text",
-            "instructions": "",
+            "instructions": "Note: Alt. display authors are never linked to an author archive.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -32,12 +32,12 @@
         ]
     ],
     "menu_order": 0,
-    "position": "normal",
+    "position": "side",
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
     "description": "Guest author? Enter their name here, and their name will be displayed on this post instead of yours.",
-    "modified": 1631217759
+    "modified": 1631218502
 }

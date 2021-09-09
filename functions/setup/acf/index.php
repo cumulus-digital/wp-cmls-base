@@ -29,5 +29,6 @@ $ACF_JSON = new Vendors\vena\AcfJson\Loader( [
 include __DIR__ . '/location-hierarchical_post.php';
 include __DIR__ . '/location-hierarchical_taxonomy.php';
 include __DIR__ . '/post_title.php';
+include __DIR__ . '/post_author.php';
 include __DIR__ . '/validation.php';
 include __DIR__ . '/color-picker-palette.php';
