@@ -5,6 +5,13 @@
 	max-width: $width-max;
 }
 */
+/*
+.is-root-container {
+	max-width: $width-max;
+	margin-left: auto;
+	margin-right: auto;
+}
+*/
 
 .editor-post-title__block .editor-post-title__input{
 	font-family: var(--#{$PREFIX}-font-family);
