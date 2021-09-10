@@ -41,33 +41,6 @@
             "ui_off_text": "Show"
         },
         {
-            "key": "field_5f4a8103a333e",
-            "label": "Custom title CSS classes",
-            "name": "cmls-header_options-custom_classes",
-            "type": "text",
-            "instructions": "Add custom CSS classes to the post title",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f467c3c135f3",
-                        "operator": "!=",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "acfvalidate-css_classes",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
             "key": "field_5f467c05135f2",
             "label": "Bleed post under masthead",
             "name": "cmls-header_options-begin_under_masthead",
@@ -118,7 +91,7 @@
             "label": "Disable bottom padding",
             "name": "cmls-footer_options-disable_bottom_padding",
             "type": "true_false",
-            "instructions": "",
+            "instructions": "By default, posts have spacing at the bottom as padding before the footer. Toggle this to have the footer flush with your page content.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -131,6 +104,33 @@
             "ui": 1,
             "ui_on_text": "",
             "ui_off_text": ""
+        },
+        {
+            "key": "field_5f4a8103a333e",
+            "label": "Custom title CSS classes",
+            "name": "cmls-header_options-custom_classes",
+            "type": "text",
+            "instructions": "Add custom CSS classes to the post title",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f467c3c135f3",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "acfvalidate-css_classes",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -150,5 +150,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1630976338
+    "modified": 1631301157
 }
