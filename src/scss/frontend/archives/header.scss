@@ -10,12 +10,11 @@ header.page_title {
 	word-break: break-word;
 
 	&.has_background {
-		margin-bottom: 1rem;
 		padding-bottom: 1.25rem;
 	}
 
-	&:not(.has_background) + .row.archive-content {
-		margin-top: 1.5rem;
+	& + .row.archive-content {
+		margin-top: 1.75rem;
 	}
 
 	h1,
