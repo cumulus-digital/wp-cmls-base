@@ -35,6 +35,9 @@ if ( $header_page_id && \is_int( $header_page_id ) ) {
 ?>
 
 <!-- templates/archives/header -->
+
+<?php \do_action( 'cmls_template-archive-before_header' ); ?>
+
 <?php if ( $page_as_header ): ?>
 
 	<?php cmls_get_template_part( 'templates/archives/header-post', make_post_class(), \array_merge( $args, ['post' => $page_as_header] ) ); ?>
@@ -54,4 +57,7 @@ if ( $header_page_id && \is_int( $header_page_id ) ) {
 	<?php cmls_get_template_part( 'templates/archives/header-term_children', make_post_class(), $args ); ?>
 
 <?php endif; ?>
+
+<?php \do_action( 'cmls_template-archive-after_header' ); ?>
+
 <!-- /templates/archives/header -->

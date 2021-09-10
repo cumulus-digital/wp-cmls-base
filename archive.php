@@ -41,7 +41,7 @@ if (
 
 	<?php cmls_get_template_part( 'templates/archives/header', make_post_class(), $args ); ?>
 
-	<div class="row">
+	<div class="row archive-content">
 		<div class="row-container <?php echo has_global_sidebar( $args['show_sidebar'] ) ? 'has-global-sidebar' : ''; ?>">
 
 			<?php if ( has_global_sidebar( $args['show_sidebar'] ) ): ?>

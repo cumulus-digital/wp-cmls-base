@@ -38,6 +38,9 @@ namespace CMLS_Base;
 >
 
 	<div class="row-container">
+
+		<?php \do_action( 'cmls_template-archive-inside_header-start' ); ?>
+
 		<?php if ( \is_a( $args['this_term'], 'WP_Term' ) && \is_taxonomy_hierarchical( $args['this_term']->taxonomy ) ): ?>
 
 			<?php if ( \property_exists( $args['this_term'], 'parent' ) && $args['this_term']->parent ): ?>
@@ -88,6 +91,8 @@ namespace CMLS_Base;
 		<?php if ( $subtitle ): ?>
 			<h2><?php echo $subtitle; ?></h2>
 		<?php endif; ?>
+
+		<?php \do_action( 'cmls_template-archive-inside_header-end' ); ?>
 
 	</div>
 

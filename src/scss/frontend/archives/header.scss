@@ -4,13 +4,18 @@ header.page_title {
 	background-position: center center;
 	background-size: cover;
 	color: var(--archive_header-text_color);
-	padding-bottom: .5em;
-	margin-bottom: 1rem;
+	padding-bottom: 0;
+	margin-bottom: .5rem;
 	line-height: 1.15;
 	word-break: break-word;
 
 	&.has_background {
+		margin-bottom: 1rem;
 		padding-bottom: 1.25rem;
+	}
+
+	&:not(.has_background) + .row.archive-content {
+		margin-top: 1.5rem;
 	}
 
 	h1,
