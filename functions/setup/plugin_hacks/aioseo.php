@@ -30,3 +30,25 @@ namespace CMLS_Base\Setup\PluginHacks;
 	// Redirects under Tools
 	\remove_submenu_page( 'tools.php', \admin_url( '/admin.php?page=aioseo-redirects' ) );
 }, 9999 );
+
+// Exclude specifically noindexed content from site search results
+\add_filter( 'pre_get_posts', function ( $query ) {
+	if ( \is_admin() ) {
+		return $query;
+	}
+
+	if ( \function_exists( 'aioseo' ) && $query->is_main_query() && $query->is_search ) {
+		global $wpdb;
+		$noIndex = $wpdb->get_col( "
+			SELECT post_id FROM {$wpdb->prefix}aioseo_posts WHERE robots_noindex = 1
+		" );
+
+		if ( $noIndex && \count( $noIndex ) ) {
+			$post_not_in = $query->get( 'post__not_in' );
+			$post_not_in = \array_merge( $post_not_in, $noIndex );
+			$query->set( 'post__not_in', $post_not_in );
+		}
+	}
+
+	return $query;
+} );
