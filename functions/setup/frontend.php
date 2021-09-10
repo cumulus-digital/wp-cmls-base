@@ -138,46 +138,65 @@ function letPagesOverrideArchives( &$query ) {
 }
 \add_action( 'pre_get_posts', ns( 'letPagesOverrideArchives' ) );
 
-// Allow restricting search results
+// Restrict search results, support "t" query var
 function searchOnlyPostTypes( $query ) {
 	if ( \is_admin() ) {
 		return $query;
 	}
 
 	if ( $query->is_main_query() && $query->is_search ) {
-		$post_types = ['post', 'page'];
+		// Excluded by default
+		$exclude_types = [
+			'nav_menu_item',
+			'attachment',
+			'revision',
+		];
+		$exclude_types = \apply_filters( 'exclude_type_from_search', $exclude_types );
+
+		// Search all public, searchable types by default
+		$public_types = (array) \get_post_types( [
+			'public'              => true,
+			'exclude_from_search' => false,
+		] );
+		$post_types = $public_types;
 
 		if ( ! empty( $_GET['t'] ) ) {
+			$post_types   = [];
 			$request_type = \explode( ',', $_GET['t'] );
 
 			if ( \count( $request_type ) ) {
 				// do not allow searches for certain types
-				\array_walk( $request_type, function ( $type ) use ( &$types ) {
-					switch ( \mb_strtolower( $type ) ) {
-						case 'nav_menu_item':
-						case 'attachment':
-						case 'revision':
+				\array_walk(
+					$request_type,
+					function ( $type ) use ( &$post_types, $exclude_types, $public_types ) {
+						if ( \in_array( \mb_strtolower( $type ), $exclude_types ) ) {
 							return;
-					}
+						}
 
-					if ( \mb_strtolower( $type ) === 'any' ) {
-						$post_types[] = 'page';
-						$post_types[] = 'post';
+						if ( \mb_strtolower( $type ) === 'any' ) {
+							$post_types = \array_merge( $post_types, $public_types );
+						} else {
+							$post_types[] = \trim( $type );
+						}
 					}
-					$post_types[] = \trim( $type );
-				} );
+				);
 			}
 		}
-
 		$post_types = \apply_filters( 'search_post_types', $post_types );
-
+		// Remove excluded types from final array
+		$post_types = \array_diff( $post_types, $exclude_types );
 		$query->set( 'post_type', $post_types );
 
-		$front_page = [\get_option( 'page_on_front', false )];
+		// Don't show front page in results
+		$front_page = \get_option( 'page_on_front', false );
 
 		if ( $front_page ) {
-			$query->set( 'post__not_in', $front_page );
+			$post_not_in   = $query->get( 'post__not_in' );
+			$post_not_in[] = $front_page;
+			$query->set( 'post__not_in', $post_not_in );
 		}
+
+		// Only return published posts
 		$query->set( 'post_status', 'publish' );
 	}
 
