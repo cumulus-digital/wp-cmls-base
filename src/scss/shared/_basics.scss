@@ -58,7 +58,7 @@ p {
 	margin-top: 0;
 
 	&:last-child,
-	&:only-child {
+	&:only-of-type {
 		margin-bottom: 0;
 	}
 }
