@@ -19,6 +19,11 @@ namespace CMLS_Base;
 	}
 );
 
+// Add Reusable Blocks to the admin
+\add_action( 'admin_menu', function () {
+	\add_menu_page( 'Reusable Blocks', 'Reusable Blocks', 'edit_pages', 'edit.php?post_type=wp_block', '', 'dashicons-block-default', 22 );
+} );
+
 function editorSetupStyles() {
 	\add_editor_style( 'build/backend.css' );
 }
