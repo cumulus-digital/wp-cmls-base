@@ -328,6 +328,43 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
+	 * Select tags used by posts in a specified category
+	 *
+	 * @param WP_Term $cat
+	 * @param string  $tag_type
+	 *
+	 * @return array
+	 */
+	function get_category_tags( $cat, $tag_type = 'post_tag' ) {
+		global $wpdb;
+
+		if ( ! $cat ) {
+			$cat = \get_queried_object();
+
+			if ( ! $cat ) {
+				return [];
+			}
+		}
+		$posts = $wpdb->get_col( $wpdb->prepare( "
+			SELECT ID FROM {$wpdb->posts}
+			LEFT JOIN {$wpdb->term_relationships} as t
+				ON ID = t.object_id
+			WHERE post_status = 'publish' AND t.term_taxonomy_id = %d
+		", $cat->term_id ) );
+
+		if ( \count( $posts ) ) {
+			$terms = \wp_get_object_terms( $posts, $tag_type );
+			\array_walk( $terms, function ( $term ) {
+				$term->link = \get_term_link( $term );
+			} );
+
+			return $terms;
+		}
+
+		return [];
+	}
+
+	/**
 	 * Determine if the current query is for a hierarchical post type
 	 *
 	 * @return bool
