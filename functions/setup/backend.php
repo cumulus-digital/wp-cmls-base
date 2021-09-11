@@ -60,7 +60,7 @@ function backendSetupScripts() {
 		}
 		#wpadminbar #wp-admin-bar-wp-logo {
 			background-color: <?php echo ThemeMods::get( 'color-brand' ); ?>;
-			background-image: url(<?php echo $logo; ?>) !important;
+			background-image: url(<?php echo \wp_make_link_relative( $logo ); ?>) !important;
 			background-position: center center !important;
 			background-repeat: no-repeat !important;
 			background-size: 70% !important;
@@ -89,7 +89,7 @@ function backendSetupScripts() {
 			background-color: <?php echo ThemeMods::get( 'color-masthead-background' ); ?> !important;
 		}
 		#login h1 a, .login h1 a {
-			background-image: url(<?php echo $logo->guid; ?>);
+			background-image: url(<?php echo \wp_make_link_relative( $logo->guid ); ?>);
 			background-size: contain;
 			background-position: center center;
 			background-repeat: no-repeat;
