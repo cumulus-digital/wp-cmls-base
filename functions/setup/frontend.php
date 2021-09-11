@@ -203,3 +203,12 @@ function searchOnlyPostTypes( $query ) {
 	return $query;
 }
 \add_filter( 'pre_get_posts', ns( 'searchOnlyPostTypes' ) );
+
+// Make the site icon URL relative
+\add_filter( 'get_site_icon_url', function ( $url ) {
+	if ( $url ) {
+		return \wp_make_link_relative( $url );
+	}
+
+	return $url;
+} );
