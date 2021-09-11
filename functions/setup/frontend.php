@@ -207,7 +207,7 @@ function searchOnlyPostTypes( $query ) {
 // Make the site icon URL relative
 \add_filter( 'get_site_icon_url', function ( $url ) {
 	if ( $url ) {
-		return \wp_make_link_relative( $url );
+		return \preg_replace( 'https?:\/\/', '//', $url );
 	}
 
 	return $url;
