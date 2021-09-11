@@ -7,7 +7,7 @@
 	background-repeat: var(--#{$PREFIX}--setting-main_menu-background-repeat);
 
 	background-color: var(--#{$PREFIX}-color-main_menu-background);
-	
+
 	color: var(--#{$PREFIX}-color-main_menu-foreground);
 
 	font-size: var(--#{$PREFIX}-font-base_size);
@@ -56,7 +56,7 @@
 		}
 
 	body.menu-active & {
-		max-height: 100vh;
+		max-height: var(--vh);
 		transition-delay: 0s;
 
 		&.is-open {
