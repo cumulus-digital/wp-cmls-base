@@ -61,8 +61,9 @@ function backendSetupScripts() {
 		#wpadminbar #wp-admin-bar-wp-logo {
 			background-color: <?php echo ThemeMods::get( 'color-brand' ); ?>;
 			background-image: url(<?php echo $logo; ?>) !important;
-			background-size: contain !important;
 			background-position: center center !important;
+			background-repeat: no-repeat !important;
+			background-size: 70% !important;
 		}
 		#wpadminbar #wp-admin-bar-wp-logo:hover {
 			background-color: <?php echo ThemeMods::get( 'color-highlight' ); ?>;
