@@ -24,6 +24,7 @@ namespace CMLS_Base;
 	\add_menu_page( 'Reusable Blocks', 'Reusable Blocks', 'edit_pages', 'edit.php?post_type=wp_block', '', 'dashicons-block-default', 22 );
 } );
 
+// Block editor styles
 function editorSetupStyles() {
 	\add_editor_style( 'build/backend.css' );
 }
@@ -45,3 +46,64 @@ function backendSetupScripts() {
 	);
 }
 \add_action( 'enqueue_block_editor_assets', ns( 'backendSetupScripts' ) );
+
+// Brand the admin bar
+\add_action( 'wp_before_admin_bar_render', function () {
+	$logo = \get_site_icon_url();
+
+	if ( ! $logo ) {
+		return;
+	} ?>
+	<style>
+		#wpadminbar #wp-admin-bar-wp-logo a {
+			background: transparent !important;
+		}
+		#wpadminbar #wp-admin-bar-wp-logo {
+			background-color: <?php echo ThemeMods::get( 'color-brand' ); ?>;
+			background-image: url(<?php echo $logo; ?>) !important;
+			background-size: contain !important;
+			background-position: center center !important;
+		}
+		#wpadminbar #wp-admin-bar-wp-logo:hover {
+			background-color: <?php echo ThemeMods::get( 'color-highlight' ); ?>;
+			background-image: url(<?php echo $logo; ?>) !important;
+		}
+		#wpadminbar #wp-admin-bar-wp-logo > .ab-item .ab-icon:before {
+			content: '' !important;
+		}
+	</style>
+	<?php
+} );
+
+// Brand the login page
+\add_action( 'login_enqueue_scripts', function () {
+	$logo_id = ThemeMods::get( 'file-masthead-logo' );
+	$logo = \get_post( $logo_id );
+
+	if ( ! $logo ) {
+		return;
+	} ?>
+	<style>
+		body {
+			background-color: <?php echo ThemeMods::get( 'color-masthead-background' ); ?> !important;
+		}
+		#login h1 a, .login h1 a {
+			background-image: url(<?php echo $logo->guid; ?>);
+			background-size: contain;
+			background-position: center center;
+			background-repeat: no-repeat;
+			width: 150px;
+			height: 150px;
+		}
+		#loginform {
+			border-radius: .5em;
+		}
+		#wp-submit {
+			background-color: <?php echo ThemeMods::get( 'color-brand' ); ?> !important;
+		}
+	</style>
+	<?php
+} );
+\add_action( 'login_headerurl', function () {
+	return \home_url();
+} );
