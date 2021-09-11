@@ -58,7 +58,8 @@ function backendSetupScripts() {
 		#wpadminbar #wp-admin-bar-wp-logo a {
 			background: transparent !important;
 		}
-		#wpadminbar #wp-admin-bar-wp-logo {
+		#wpadminbar #wp-admin-bar-wp-logo,
+		#editor .edit-post-header .edit-post-fullscreen-mode-close.has-icon {
 			background-color: <?php echo ThemeMods::get( 'color-brand' ); ?>;
 			background-image: url(<?php echo \wp_make_link_relative( $logo ); ?>) !important;
 			background-position: center center !important;
@@ -71,6 +72,12 @@ function backendSetupScripts() {
 		}
 		#wpadminbar #wp-admin-bar-wp-logo > .ab-item .ab-icon:before {
 			content: '' !important;
+		}
+		.edit-post-fullscreen-mode-close.has-icon::before {
+			box-shadow: none;
+		}
+		#editor .edit-post-header .edit-post-fullscreen-mode-close.has-icon svg {
+			display: none;
 		}
 	</style>
 	<?php
