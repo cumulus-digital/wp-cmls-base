@@ -8,6 +8,11 @@ html {
 }
 */
 
+:root {
+	--vh: 1vh;
+	--vh100: calc(var(--vh) * 100);
+}
+
 html,body {
 	background-color: var(--#{$PREFIX}-color-site-background);
 	color: var(--#{$PREFIX}-color-content-foreground);

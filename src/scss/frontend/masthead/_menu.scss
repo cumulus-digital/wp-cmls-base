@@ -56,7 +56,7 @@
 		}
 
 	body.menu-active & {
-		max-height: var(--vh);
+		max-height: var(--vh100);
 		transition-delay: 0s;
 
 		&.is-open {
