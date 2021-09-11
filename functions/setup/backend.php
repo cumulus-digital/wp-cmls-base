@@ -102,6 +102,12 @@ function backendSetupScripts() {
 		#wp-submit {
 			background-color: <?php echo ThemeMods::get( 'color-brand' ); ?> !important;
 		}
+		.login #backtoblog a, .login #nav a {
+			color: <?php echo ThemeMods::get( 'color-masthead-foreground' ); ?> !important;
+		}
+		.login #backtoblog a:hover, .login #nav a:hover {
+			color: <?php echo ThemeMods::get( 'color-highlight' ); ?> !important;
+		}
 	</style>
 	<?php
 } );
