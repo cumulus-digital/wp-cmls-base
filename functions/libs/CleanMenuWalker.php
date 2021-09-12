@@ -32,6 +32,10 @@ class CleanMenuWalker extends Walker_Nav_Menu {
 
 		$attributes = ['itemprop' => 'url'];
 
+		if ( ! empty( $item->url ) ) {
+			$attributes['href'] = $item->url;
+		}
+
 		if ( ! empty( $item->attr_title ) ) {
 			$attributes['title'] = $item->attr_title;
 		} else {
@@ -40,14 +44,14 @@ class CleanMenuWalker extends Walker_Nav_Menu {
 
 		if ( ! empty( $item->target ) ) {
 			$attributes['target'] = $item->target;
+
+			if ( $item->target === '_blank' && empty( $item->xfn ) ) {
+				$item->xfn = 'noopener';
+			}
 		}
 
 		if ( ! empty( $item->xfn ) ) {
 			$attributes['rel'] = $item->xfn;
-		}
-
-		if ( ! empty( $item->url ) ) {
-			$attributes['href'] = $item->url;
 		}
 
 		$attribute_string = \implode( ' ', \array_map( function ( $val, $key ) {
