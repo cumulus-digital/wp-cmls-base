@@ -39,6 +39,22 @@ body.disable_bottom_padding > main {
 .page_title {
 	padding-top: 1em;
 	text-align: center;
+
+	&.has-header-background {
+		padding-top: 3em;
+		padding-bottom: 2em;
+		margin-bottom: var(--page_title-margin_below_header);
+	}
+	background-color: var(--page_title-background_color);
+	background-image: var(--page_title-background_image);
+	background-position: var(--page_title-background_position);
+	background-repeat: var(--page_title-background_repeat);
+	background-size: var(--page_title-background_size);
+
+	h1 {
+		color: var(--page_title-title_color);
+		text-shadow: 0.05em 0.05em 0.15em rgba(0, 0, 0, var(--page_title-title-shadow-opacity));
+	}
 }
 
 article {

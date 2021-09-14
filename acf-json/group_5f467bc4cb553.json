@@ -41,6 +41,207 @@
             "ui_off_text": "Show"
         },
         {
+            "key": "field_6140e29b2c51a",
+            "label": "Header Display Options",
+            "name": "cmls-header_options-display",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f467c3c135f3",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_6140e2cb5b633",
+                    "label": "Background Color",
+                    "name": "background_color",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "enable_opacity": 1,
+                    "return_format": "string"
+                },
+                {
+                    "key": "field_6140e2ef5b634",
+                    "label": "Background Image",
+                    "name": "background_image",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "url",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": ""
+                },
+                {
+                    "key": "field_6140e31c5b635",
+                    "label": "Background Size",
+                    "name": "background_size",
+                    "type": "text",
+                    "instructions": "<small><a href=\"https:\/\/developer.mozilla.org\/en-US\/docs\/Web\/CSS\/background-size\">MDN<\/a><\/small>",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6140e2ef5b634",
+                                "operator": "!=empty"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "cover",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_6140e3455b636",
+                    "label": "Background Position",
+                    "name": "background_position",
+                    "type": "text",
+                    "instructions": "<small><a href=\"https:\/\/developer.mozilla.org\/en-US\/docs\/Web\/CSS\/background-position\">MDN<\/a><\/small>",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6140e2ef5b634",
+                                "operator": "!=empty"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "center center",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_6140e38b5b637",
+                    "label": "Background Repeat",
+                    "name": "background_repeat",
+                    "type": "text",
+                    "instructions": "<small><a href=\"https:\/\/developer.mozilla.org\/en-US\/docs\/Web\/CSS\/background-repeat\">MDN<\/a><\/small>",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6140e2ef5b634",
+                                "operator": "!=empty"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "repeat",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_6140e3aa5b638",
+                    "label": "Title Color",
+                    "name": "title_color",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "#000000",
+                    "enable_opacity": 1,
+                    "return_format": "string"
+                },
+                {
+                    "key": "field_6140e3d15b639",
+                    "label": "Title Shadow Opacity",
+                    "name": "title_shadow_opacity",
+                    "type": "range",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 0,
+                    "min": "",
+                    "max": 1,
+                    "step": "0.05",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_6140e95fd3f2a",
+                    "label": "Margin Below Header",
+                    "name": "margin_below_header",
+                    "type": "range",
+                    "instructions": "Margin below header before content begins, specified in em units.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "1.5",
+                    "min": "",
+                    "max": 5,
+                    "step": "0.5",
+                    "prepend": "",
+                    "append": ""
+                }
+            ]
+        },
+        {
             "key": "field_5f467c05135f2",
             "label": "Bleed post under masthead",
             "name": "cmls-header_options-begin_under_masthead",
@@ -150,5 +351,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1631301157
+    "modified": 1631644217
 }
