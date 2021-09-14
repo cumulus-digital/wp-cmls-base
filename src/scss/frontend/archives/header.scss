@@ -31,6 +31,20 @@ header.page_title {
 		font-size: 1.15rem;
 	}
 
+	.term-description {
+		margin-top: .35em;
+		font-size: .85rem;
+
+		p {
+			margin-bottom: .65em;
+
+			&:last-child,
+			&:only-of-type {
+				margin-bottom: 0;
+			}
+		}
+	}
+
 	@include phone {
 		font-size: .9rem;
 	}

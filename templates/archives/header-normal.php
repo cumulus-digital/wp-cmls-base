@@ -92,6 +92,12 @@ namespace CMLS_Base;
 			<h2><?php echo $subtitle; ?></h2>
 		<?php endif; ?>
 
+		<?php if ( $args['show_description'] && \mb_strlen( \term_description() ) ): ?>
+			<div class="term-description">
+				<?php echo \term_description(); ?>
+			</div>
+		<?php endif; ?>
+
 		<?php \do_action( 'cmls_template-archive-inside_header-end' ); ?>
 
 	</div>

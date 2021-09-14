@@ -110,6 +110,25 @@
             "layout": "block",
             "sub_fields": [
                 {
+                    "key": "field_61412fb814a14",
+                    "label": "Show Description",
+                    "name": "show_description",
+                    "type": "true_false",
+                    "instructions": "Display this term's description in the header.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 1,
+                    "ui": 1,
+                    "ui_on_text": "Show",
+                    "ui_off_text": "Hide"
+                },
+                {
                     "key": "field_61363bc6b6d2a",
                     "label": "Show Sidebar",
                     "name": "show_sidebar",
@@ -367,5 +386,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "Control how archives of a term will be displayed.",
-    "modified": 1631150077
+    "modified": 1631662125
 }

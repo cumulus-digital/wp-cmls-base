@@ -502,6 +502,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	function resolve_post_display_args( $args = [] ) {
 		$default = [
 			'display_format'          => \apply_filters( 'display-archive-display_format', null ),
+			'show_description'        => \apply_filters( 'display-archive-show_description', true ),
 			'show_sidebar'            => \apply_filters( 'display-archive-show_sidebar', true ),
 			'show_image'              => \apply_filters( 'display-archive-show_image', null ),
 			'show_title'              => \apply_filters( 'display-archive-show_title', null ),
