@@ -12,3 +12,4 @@ require __DIR__ . '/aioseo.php';
 require __DIR__ . '/kadence.php';
 require __DIR__ . '/extendify.php';
 require __DIR__ . '/publishpress-permissions.php';
+require __DIR__ . '/jc-submenu.php';
