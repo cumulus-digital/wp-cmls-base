@@ -51,13 +51,36 @@ header.page_title {
 }
 
 .category_parents {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
 	color: inherit;
-	font-size: 1em;
+	font-size: 0.9em;
 	line-height: 1.25;
 
 	.parent-back {
-		opacity: 0.3;
+		opacity: 0.4;
 		font-weight: bold;
+		line-height: 0.5;
+	}
+
+	* {
+		vertical-align: center;
+		line-height: 1;
+	}
+
+	i {
+		opacity: 0.4;
+		font-size: 0.75em;
+
+		&::after {
+			content: '/';
+			font-weight: bold;
+		}
+		&:last-child::after {
+			display: none;
+		}
 	}
 
 	a {
@@ -80,6 +103,10 @@ header.page_title {
 	}
 
 	@include phone {
-		font-size: 1.5em;
+		font-size: 1.25em;
+
+		.parent-back {
+			display: none;
+		}
 	}
 }

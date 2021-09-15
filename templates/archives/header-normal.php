@@ -49,11 +49,14 @@ namespace CMLS_Base;
 
 					<span class="parent-back">&lsaquo;</span>
 					<?php
-	echo \untrailingslashit( \get_term_parents_list(
+	echo \get_term_parents_list(
 		$args['this_term']->term_id,
 		$args['this_term']->taxonomy,
-		[ 'inclusive' => false ]
-	) );
+		[
+			'inclusive' => false,
+			'separator' => '<i></i>',
+		]
+	);
 					?>
 
 				</div>
