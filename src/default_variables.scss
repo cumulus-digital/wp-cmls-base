@@ -1,6 +1,6 @@
 @import 'global.scss';
 
-:root {
+:root,::after,::before {
 	--#{$PREFIX}-color-site-background: transparent;
 
 	--#{$PREFIX}-color-masthead-background: #00598e;

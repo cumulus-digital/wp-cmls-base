@@ -53,7 +53,7 @@ function generateCustomCSS() {
 		$text,
 		$settings
 	);
-	$css = ":root {\n";
+	$css = ":root,::after,::before {\n";
 
 	foreach ( $vars as $key => $val ) {
 		$val = \wp_strip_all_tags( $val );
