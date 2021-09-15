@@ -71,8 +71,9 @@ class CleanMenuWalker extends Walker_Nav_Menu {
 		$item_output = "{$args->before}<a {$attribute_string}>";
 		$item_output .= "{$args->link_before}{$filtered_title}{$args->link_after}";
 
-		if ( ! empty( $item->description ) && ! $args->show_description ) {
-			$item_output .= "<small>{\wpkses($item->description)}</small>";
+		if ( ! empty( $item->description ) && $args->show_description ) {
+			$desc = \wp_kses( $item->description, ['em', 'i', 'strong', 'b', 'small', 'u'] );
+			$item_output .= "<small>{$desc}</small>";
 		}
 
 		$item_output .= "</a>{$args->after}";
