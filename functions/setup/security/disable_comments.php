@@ -84,6 +84,10 @@ namespace CMLS_Base\Setup\Security;
 \add_action( 'admin_bar_menu', function ( $menu ) {
 	$menu->remove_node( 'comments' );
 } );
+\add_action( 'wp_before_admin_bar_render', function () {
+	global $wp_admin_bar;
+	$wp_admin_bar->remove_menu( 'comments' );
+} );
 
 // Remove comments links from admin bar
 \add_action( 'init', function () {
