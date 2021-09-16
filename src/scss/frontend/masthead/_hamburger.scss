@@ -30,7 +30,7 @@ $hamburger-types: ( spin );
 	&::after {
 		display: block;
 		content: '';
-		background-color: #000;
+		background-color: var(--#{$PREFIX}-color-main_menu-background);
 		width: 100%;
 		height: 0%;
 		position: absolute;
@@ -52,6 +52,13 @@ $hamburger-types: ( spin );
 		z-index: 3;
 		background-color: var(--#{$PREFIX}-color-masthead-foreground);
 	}
+		&.is-active {
+			.hamburger-inner,
+			.hamburger-inner::before,
+			.hamburger-inner::after {
+				background-color: var(--#{$PREFIX}-color-main_menu-foreground);
+			}
+		}
 	body.under-masthead &:not(.is-active) {
 		.hamburger-inner,
 		.hamburger-inner::before,
