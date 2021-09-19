@@ -106,10 +106,10 @@
                 },
                 {
                     "key": "field_6140e31c5b635",
-                    "label": "Background Size",
+                    "label": "Background Size <small>(<a href=\"https:\/\/developer.mozilla.org\/en-US\/docs\/Web\/CSS\/background-size\" title=\"CSS Spec\" target=\"_blank\" rel=\"noopener\">MDN<\/a>)<\/small>",
                     "name": "background_size",
                     "type": "text",
-                    "instructions": "<small><a href=\"https:\/\/developer.mozilla.org\/en-US\/docs\/Web\/CSS\/background-size\">MDN<\/a><\/small>",
+                    "instructions": "",
                     "required": 0,
                     "conditional_logic": [
                         [
@@ -132,10 +132,10 @@
                 },
                 {
                     "key": "field_6140e3455b636",
-                    "label": "Background Position",
+                    "label": "Background Position <small>(<a href=\"https:\/\/developer.mozilla.org\/en-US\/docs\/Web\/CSS\/background-position\" title=\"CSS Spec\" target=\"_blank\" rel=\"noopener\">MDN<\/a>)<\/small>",
                     "name": "background_position",
                     "type": "text",
-                    "instructions": "<small><a href=\"https:\/\/developer.mozilla.org\/en-US\/docs\/Web\/CSS\/background-position\">MDN<\/a><\/small>",
+                    "instructions": "",
                     "required": 0,
                     "conditional_logic": [
                         [
@@ -158,10 +158,10 @@
                 },
                 {
                     "key": "field_6140e38b5b637",
-                    "label": "Background Repeat",
+                    "label": "Background Repeat <small>(<a href=\"https:\/\/developer.mozilla.org\/en-US\/docs\/Web\/CSS\/background-repeat\" title=\"CSS Spec\" target=\"_blank\" rel=\"noopener\">MDN<\/a>)<\/small>",
                     "name": "background_repeat",
                     "type": "text",
-                    "instructions": "<small><a href=\"https:\/\/developer.mozilla.org\/en-US\/docs\/Web\/CSS\/background-repeat\">MDN<\/a><\/small>",
+                    "instructions": "",
                     "required": 0,
                     "conditional_logic": [
                         [
@@ -223,7 +223,7 @@
                     "key": "field_6140e95fd3f2a",
                     "label": "Margin Below Header",
                     "name": "margin_below_header",
-                    "type": "range",
+                    "type": "number",
                     "instructions": "Margin below header before content begins, specified in em units.",
                     "required": 0,
                     "conditional_logic": 0,
@@ -233,11 +233,12 @@
                         "id": ""
                     },
                     "default_value": 1,
-                    "min": "",
-                    "max": 5,
-                    "step": "0.5",
+                    "placeholder": "",
                     "prepend": "",
-                    "append": ""
+                    "append": "em",
+                    "min": 0,
+                    "max": 20,
+                    "step": 1
                 }
             ]
         },
@@ -345,11 +346,11 @@
     ],
     "menu_order": 99,
     "position": "side",
-    "style": "default",
+    "style": "seamless",
     "label_placement": "top",
     "instruction_placement": "field",
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1631647439
+    "modified": 1631938505
 }
