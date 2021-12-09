@@ -10,7 +10,7 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 ?>
 <!-- templates/masthead/logo -->
-<div class="logo">
+<h1 class="logo">
     <a aria-label="Home" href="<?php echo \home_url(); ?>" title="Home">
         <?php if ( gav( themeMods::getFiles(), 'file-masthead-logo', false ) ): ?>
             <img src="<?php echo gav( themeMods::getFiles(), 'file-masthead-logo' ); ?>" alt="<?php echo \bloginfo( 'name' ); ?>" class="logo-main">
@@ -19,5 +19,5 @@ namespace CMLS_Base;
             <img src="<?php echo gav( themeMods::getFiles(), 'file-masthead-logo-inside-overlay' ); ?>" alt="<?php echo \bloginfo( 'name' ); ?>" class="logo-inside-overlay">
         <?php endif; ?>
     </a>
-</div>
+</h1>
 <!-- /templates/masthead/logo -->

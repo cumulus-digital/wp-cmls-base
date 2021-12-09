@@ -75,7 +75,7 @@
 
 		& > * {
 			align-self: center;
-			padding: calc(var(--#{$PREFIX}-masthead-height) * 0.15) 1em;
+			padding: calc(var(--#{$PREFIX}-masthead-height) * 0.15) 1rem;
 		}
 	}
 
