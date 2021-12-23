@@ -95,8 +95,11 @@ img {
 	height: auto;
 	object-fit: cover;
 	image-rendering: -webkit-optimize-contrast;
+
+	&:not([src]) { visibility: hidden; }
+	// SVGs default to contain
+	&[src*=".svg"] { object-fit: contain }
 }
-img:not([src]) { visibility: hidden; }
 
 table,
 .wp-block-table {
