@@ -32,14 +32,19 @@ let $j = jQuery.noConflict();
 
     // Detect when content goes under masthead
     function detectBodyUnderMasthead() {
-        var main = document.querySelector('body > main'),
+        let buffer = 10,
+            main = document.querySelector('body > main'),
             masthead = document.querySelector('body > .masthead'),
             mainPos = main.getBoundingClientRect(),
             mastheadPos = masthead.getBoundingClientRect(),
-            hasClass = document.body.classList.contains('under-masthead');
-        if (mainPos.top + mastheadPos.bottom + 10 < mastheadPos.top + mastheadPos.bottom) {
-            if (!hasClass) document.body.classList.add('under-masthead');
-        } else if (hasClass) {
+            hasBeginUnderMastheadClass = document.body.classList.contains('begin_under_masthead'),
+            hasUnderMastheadClass = document.body.classList.contains('under-masthead');
+        if (hasBeginUnderMastheadClass) {
+            buffer = mastheadPos.bottom * 2;
+        }
+        if (mainPos.top + mastheadPos.bottom + buffer < mastheadPos.top + mastheadPos.bottom) {
+            if (!hasUnderMastheadClass) document.body.classList.add('under-masthead');
+        } else if (hasUnderMastheadClass) {
             document.body.classList.remove('under-masthead');
         }
     }
@@ -58,7 +63,7 @@ let $j = jQuery.noConflict();
     // Prevent masthead from getting too large or too small
     var originalMastheadHeight;
     function recalculateMastheadHeight() {
-        var root = document.documentElement,
+        let root = document.documentElement,
             masthead = document.querySelector('body > .masthead'),
             mastheadPos = masthead.getBoundingClientRect(),
             vh = window.innerHeight / 100;

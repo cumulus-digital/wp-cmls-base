@@ -10,6 +10,7 @@
 	background-image: var(--#{$PREFIX}-file-masthead-background-cssurl);
 	background-position: top left;
 	background-size: cover;
+	backdrop-filter: blur(1rem);
 	color: var(--#{$PREFIX}-color-masthead-foreground);
 	box-shadow: 0 0 0 RGBA(0,0,0,0);
 	position: fixed;
@@ -19,11 +20,15 @@
 	width: 100%;
 	height: var(--#{$PREFIX}-masthead-height);
 	overflow: visible;
-	transition-property: box-shadow, background-color, color;
+	transition-property: box-shadow, background-color, backdrop-filter, color;
 	transition-duration: 0.3s;
 	transition-timing-function: ease-in;
 
 	user-select: none;
+
+	body.begin_under_masthead & {
+		backdrop-filter: blur(0);
+	}
 
 	body.transparent_masthead & {
 		background-color: transparent
@@ -32,6 +37,7 @@
 	body.under-masthead &  {
 		background-color: var(--#{$PREFIX}-color-masthead-background-overlay);
 		background-image: var(--#{$PREFIX}-file-masthead-background-overlay-cssurl);
+		backdrop-filter: blur(1rem);
 		color: var(--#{$PREFIX}-color-masthead-foreground-overlay);
 		box-shadow: 0 0 1.5vh RGBA(0,0,0,0.25);
 	}
