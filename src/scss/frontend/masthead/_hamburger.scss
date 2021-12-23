@@ -48,7 +48,8 @@ $hamburger-types: ( spin );
 	.hamburger-inner,
 	.hamburger-inner::before,
 	.hamburger-inner::after {
-		transition: all 0.2s;
+		transition-property: all, background-color;
+		transition-duration: 0.2s, 0.3s;
 		z-index: 3;
 		background-color: var(--#{$PREFIX}-color-masthead-foreground);
 	}

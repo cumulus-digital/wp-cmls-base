@@ -36,7 +36,7 @@
 
 	a, span, .search {
 		display: block;
-		color: inherit;
+		color: var(--#{$PREFIX}-color-main_menu-foreground);
 		text-decoration: none;
 		text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
 		padding: .5em 0.75em;
@@ -44,6 +44,8 @@
 		z-index: 2;
 	}
 		a {
+			background-color: transparent;
+
 			@include hover {
 				color: var(--#{$PREFIX}-color-main_menu-foreground-hover_foreground);
 				background-color: var(--#{$PREFIX}-color-main_menu-foreground-hover_background);
