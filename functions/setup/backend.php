@@ -49,7 +49,11 @@ function backendSetupScripts() {
 
 // Brand the admin bar
 \add_action( 'wp_before_admin_bar_render', function () {
-	$logo = \get_site_icon_url();
+	$logo = \preg_replace(
+		'#https?://#i',
+		'',
+		\get_site_icon_url()
+	);
 
 	if ( ! $logo ) {
 		return;
@@ -61,7 +65,7 @@ function backendSetupScripts() {
 		#wpadminbar #wp-admin-bar-wp-logo,
 		#editor .edit-post-header .edit-post-fullscreen-mode-close.has-icon {
 			background-color: <?php echo ThemeMods::get( 'color-brand' ); ?>;
-			background-image: url(<?php echo \wp_make_link_relative( $logo ); ?>) !important;
+			background-image: url(<?php echo $logo; ?>) !important;
 			background-position: center center !important;
 			background-repeat: no-repeat !important;
 			background-size: 70% !important;
