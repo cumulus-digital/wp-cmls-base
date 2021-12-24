@@ -156,5 +156,26 @@ function themeCustomizerNav( $wpc ) {
 			]
 		)
 	);
+
+	$wpc->add_setting( 'setting-main_menu-background-attachment', [
+		'default'              => themeMods::getDefault( 'setting-main_menu-background-attachment' ),
+		'sanitize_callback'    => ns( 'themeCustomizer_sanitizeBackgroundAttachment' ),
+		'sanitize_js_callback' => ns( 'themeCustomizer_sanitizeBackgroundAttachment' ),
+	] );
+	$wpc->add_control(
+		new WP_Customize_Control(
+			$wpc,
+			'setting-main_menu-background-attachment',
+			[
+				'label'   => 'Background Image Attachment',
+				'section' => 'cmls-main_menu-style',
+				'type'    => 'select',
+				'choices' => [
+					'fixed'  => 'Fixed',
+					'scroll' => 'Scroll',
+				],
+			]
+		)
+	);
 }
 \add_action( 'customize_register', ns( 'themeCustomizerNav' ) );

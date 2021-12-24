@@ -31,6 +31,16 @@ function themeCustomizer_sanitizeBackgroundPosition( $value ) {
 	return new WP_Error( 'invalid_value', 'Received an invalid background position!' );
 }
 
+function themeCustomizer_sanitizeBackgroundAttachment( $value ) {
+	switch ( $value ) {
+		case 'fixed':
+		case 'scroll':
+			return $value;
+	}
+
+	return new WP_Error( 'invalid_value', 'Received an unexpected background attachment value!' );
+}
+
 function themeCustomizer_sanitizeBackgroundSize( $value ) {
 	switch ( $value ) {
 		case 'cover':

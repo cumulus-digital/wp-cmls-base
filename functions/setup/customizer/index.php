@@ -70,6 +70,7 @@ class themeMods {
 		'color-main_menu-foreground-hover_foreground' => '#ffffff',
 		'color-main_menu-foreground-hover_background' => '#00598e',
 		'file-main_menu-background'                   => null,
+		'setting-main_menu-background-attachment'     => 'fixed',
 		'setting-main_menu-background-position'       => 'top left',
 		'setting-main_menu-background-size'           => 'cover',
 		'setting-main_menu-background-repeat'         => 'no-repeat',
