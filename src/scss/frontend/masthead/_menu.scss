@@ -17,7 +17,7 @@
 	top: 100%;
 	right: 0;
 	width: auto;
-	height: 0;
+	height: auto;
 	max-width: 500px;
 	max-height: 0;
 	overflow: hidden;
@@ -58,7 +58,6 @@
 		}
 
 	body.menu-active & {
-		height: auto;
 		max-height: calc(var(--vh100) - var(--#{$PREFIX}-masthead-height) - var(--wp_admin_bar_height));
 		transition-delay: 0s;
 		visibility: visible;
