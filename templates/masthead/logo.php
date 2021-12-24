@@ -11,13 +11,14 @@ namespace CMLS_Base;
 ?>
 <!-- templates/masthead/logo -->
 <h1 class="logo">
-    <a aria-label="Home" href="<?php echo \home_url(); ?>" title="Home">
+    <a aria-label="Home" href="<?php echo \home_url(); ?>">
         <?php if ( gav( themeMods::getFiles(), 'file-masthead-logo', false ) ): ?>
-            <img src="<?php echo gav( themeMods::getFiles(), 'file-masthead-logo' ); ?>" alt="<?php echo \bloginfo( 'name' ); ?>" class="logo-main">
-            <img src="<?php echo gav( themeMods::getFiles(), 'file-masthead-logo-inside' ); ?>" alt="<?php echo \bloginfo( 'name' ); ?>" class="logo-inside">
-            <img src="<?php echo gav( themeMods::getFiles(), 'file-masthead-logo-overlay' ); ?>" alt="<?php echo \bloginfo( 'name' ); ?>" class="logo-main-overlay">
-            <img src="<?php echo gav( themeMods::getFiles(), 'file-masthead-logo-inside-overlay' ); ?>" alt="<?php echo \bloginfo( 'name' ); ?>" class="logo-inside-overlay">
+            <img src="<?php echo gav( themeMods::getFiles(), 'file-masthead-logo' ); ?>" alt="" class="logo-main">
+            <img src="<?php echo gav( themeMods::getFiles(), 'file-masthead-logo-inside' ); ?>" alt="" class="logo-inside">
+            <img src="<?php echo gav( themeMods::getFiles(), 'file-masthead-logo-overlay' ); ?>" alt="" class="logo-main-overlay">
+            <img src="<?php echo gav( themeMods::getFiles(), 'file-masthead-logo-inside-overlay' ); ?>" alt="" class="logo-inside-overlay">
         <?php endif; ?>
+        <span><?php echo \bloginfo( 'name' ); ?></span>
     </a>
 </h1>
 <!-- /templates/masthead/logo -->

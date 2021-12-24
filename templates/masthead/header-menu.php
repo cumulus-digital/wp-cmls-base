@@ -19,7 +19,7 @@ if ( has_header_menu() ): ?>
         <span class="hamburger-inner"></span>
         </span>
     </button>
-    <div class="menu" id="header_menu" aria-hidden="true">
+    <div class="menu" id="header_menu">
         <?php header_menu(); ?>
         <?php if ( themeMods::get( 'setting-main_menu-include_search' ) ): ?>
             <?php cmls_get_template_part( 'templates/masthead/search' ); ?>

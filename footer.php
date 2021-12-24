@@ -16,7 +16,7 @@ namespace CMLS_Base;
 
 		<?php if ( gav( themeMods::getFiles(), 'file-footer-logo' ) ) : ?>
 		<div class="logo">
-			<a aria-label="Home" href="<?php echo \home_url(); ?>" title="Home">
+			<a aria-label="Home" href="<?php echo \home_url(); ?>">
 				<img src="<?php echo gav( themeMods::getFiles(), 'file-footer-logo' ); ?>" alt="<?php echo \bloginfo( 'name' ); ?>">
 			</a>
 		</div>

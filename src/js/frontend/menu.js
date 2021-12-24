@@ -27,7 +27,7 @@ let $j = jQuery.noConflict();
 
 	function menuOpen() {
 		$('#header_menu').one(transitionEnd, function(e) {
-			$(this).addClass('is-open').attr('aria-hidden', false);
+			$(this).addClass('is-open');
 		});
 		$('body').addClass('menu-active');
 		$('body > header .hamburger')
@@ -39,7 +39,7 @@ let $j = jQuery.noConflict();
 		menuIsOpen = true;
 	}
 	function menuClose() {
-		$('#header_menu').removeClass('is-open').attr('aria-hidden', true);
+		$('#header_menu').removeClass('is-open');
 		$('body').removeClass('menu-active');
 		$('body > header .hamburger')
 			.removeClass('is-active')
