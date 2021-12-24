@@ -1,22 +1,23 @@
 .menu {
 	display: block;
 
-	background-color: var(--#{$PREFIX}-color-main_menu-background);
+	background-color: var(--#{$PREFIX}-color-main_menu-background, #000);
 
-	background-image: var(--#{$PREFIX}-file-main_menu-background-cssurl);
-	background-position: var(--#{$PREFIX}-setting-main_menu-background_position);
-	background-size: var(--#{$PREFIX}--setting-main_menu-background-size);
-	background-repeat: var(--#{$PREFIX}--setting-main_menu-background-repeat);
+	background-image: var(--#{$PREFIX}-file-main_menu-background-cssurl, none);
+	background-position: var(--#{$PREFIX}-setting-main_menu-background-position top);
+	background-size: var(--#{$PREFIX}-setting-main_menu-background-size, cover);
+	background-repeat: var(--#{$PREFIX}-setting-main_menu-background-repeat, no-repeat);
+	background-attachment: var(--#{$PREFIX}--#{$PREFIX}-setting-main_menu-background-attachment, fixed);
+	color: var(--#{$PREFIX}-color-main_menu-foreground, #fff);
 
-	color: var(--#{$PREFIX}-color-main_menu-foreground);
-
-	font-size: var(--#{$PREFIX}-font-base_size);
+	font-size: var(--#{$PREFIX}-font-base_size, 1em);
 
 	position: absolute;
 	z-index: 3;
 	top: 100%;
 	right: 0;
 	width: auto;
+	height: 0;
 	max-width: 500px;
 	max-height: 0;
 	overflow: hidden;
@@ -26,7 +27,7 @@
 		width: 100%;
 	}
 
-	transition: max-height 0.2s ease-in;
+	transition: max-height 0.16s ease-in;
 	transition-delay: 0.05s;
 
 	ul, li {
@@ -37,7 +38,7 @@
 
 	a, span, .search {
 		display: block;
-		color: var(--#{$PREFIX}-color-main_menu-foreground);
+		color: inherit;
 		text-decoration: none;
 		text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
 		padding: .5em 0.75em;
@@ -45,11 +46,9 @@
 		z-index: 2;
 	}
 		a {
-			background-color: transparent;
-
 			@include hover {
-				color: var(--#{$PREFIX}-color-main_menu-foreground-hover_foreground);
-				background-color: var(--#{$PREFIX}-color-main_menu-foreground-hover_background);
+				color: var(--#{$PREFIX}-color-main_menu-foreground-hover_foreground, #fff);
+				background-color: var(--#{$PREFIX}-color-main_menu-foreground-hover_background, #000);
 			}
 			small {
 				display: block;
@@ -59,7 +58,8 @@
 		}
 
 	body.menu-active & {
-		max-height: var(--vh100);
+		height: auto;
+		max-height: calc(var(--vh100) - var(--#{$PREFIX}-masthead-height) - var(--wp_admin_bar_height));
 		transition-delay: 0s;
 		visibility: visible;
 		opacity: 1;
@@ -67,6 +67,7 @@
 		&.is-open {
 			overflow-y: auto;
 		}
+
 	}
 
 	.search {
