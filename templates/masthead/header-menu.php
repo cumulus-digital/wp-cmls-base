@@ -14,7 +14,7 @@ if ( has_header_menu() ): ?>
 <!-- templates/masthead/header-menu -->
 <nav class="menu-container">
     <button class="hamburger hamburger--spin" type="button"
-            aria-label="Open menu" aria-controls="header_menu" aria-expanded="false">
+            aria-label="Display main menu" aria-controls="header_menu" aria-expanded="false">
         <span class="hamburger-box">
         <span class="hamburger-inner"></span>
         </span>

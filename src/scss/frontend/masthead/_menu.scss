@@ -1,12 +1,12 @@
 .menu {
 	display: block;
 
+	background-color: var(--#{$PREFIX}-color-main_menu-background);
+
 	background-image: var(--#{$PREFIX}-file-main_menu-background-cssurl);
 	background-position: var(--#{$PREFIX}-setting-main_menu-background_position);
 	background-size: var(--#{$PREFIX}--setting-main_menu-background-size);
 	background-repeat: var(--#{$PREFIX}--setting-main_menu-background-repeat);
-
-	background-color: var(--#{$PREFIX}-color-main_menu-background);
 
 	color: var(--#{$PREFIX}-color-main_menu-foreground);
 
@@ -20,8 +20,7 @@
 	max-width: 500px;
 	max-height: 0;
 	overflow: hidden;
-
-	visibility: hidden;
+	opacity: 0;
 
 	@include phone() {
 		width: 100%;
@@ -63,6 +62,7 @@
 		max-height: var(--vh100);
 		transition-delay: 0s;
 		visibility: visible;
+		opacity: 1;
 
 		&.is-open {
 			overflow-y: auto;
