@@ -4,7 +4,7 @@
 	background-color: var(--#{$PREFIX}-color-main_menu-background, #000);
 
 	background-image: var(--#{$PREFIX}-file-main_menu-background-cssurl, none);
-	background-position: var(--#{$PREFIX}-setting-main_menu-background-position top);
+	background-position: var(--#{$PREFIX}-setting-main_menu-background-position, center bottom);
 	background-size: var(--#{$PREFIX}-setting-main_menu-background-size, cover);
 	background-repeat: var(--#{$PREFIX}-setting-main_menu-background-repeat, no-repeat);
 	background-attachment: var(--#{$PREFIX}--#{$PREFIX}-setting-main_menu-background-attachment, fixed);
