@@ -32,7 +32,7 @@ function makeMenu( $location, $options = [] ) {
 		'after'           => '',
 		'link_before'     => '',
 		'link_after'      => '',
-		'items_wrap'      => '<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="%2$s">%3$s</ul>',
+		'items_wrap'      => '<ul itemscope itemtype="http://www.schema.org/SiteNavigationElement" class="%2$s" role="menu">%3$s</ul>',
 		'depth'           => 0,
 		'walker'          => new CleanMenuWalker(),
 	];

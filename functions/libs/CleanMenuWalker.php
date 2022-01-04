@@ -30,7 +30,11 @@ class CleanMenuWalker extends Walker_Nav_Menu {
 
 		$output .= "{$indent}<li itemprop='name' id='menu-item-{$item->ID}' class='{$class_names}'>";
 
-		$attributes = ['itemprop' => 'url'];
+		$attributes = [
+			'itemprop' => ! empty( $item->itemprop ) ? \esc_html( $item->itemprop ) : 'url',
+			'role'     => ! empty( $item->role ) ? \esc_html( $item->role ) : 'menuitem',
+			'tabindex' => ! empty( $item->tabindex ) ? \esc_html( $item->tabindex ) : '0',
+		];
 
 		if ( ! empty( $item->url ) ) {
 			$attributes['href'] = $item->url;
