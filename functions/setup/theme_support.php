@@ -62,6 +62,11 @@ function init_theme_support() {
 			'slug' => 'huge',
 		],
 	] );
+
+	// Disable custom font sizes for all but admin
+	if ( ! \current_user_can( 'administrator' ) ) {
+		\add_theme_support( 'disable-custom-font-sizes' );
+	}
 }
 \add_action( 'after_setup_theme', ns( 'init_theme_support' ), 10 );
 
