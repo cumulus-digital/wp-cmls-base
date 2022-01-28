@@ -46,10 +46,10 @@ let $j = jQuery.noConflict();
 					background-size: var(--page_title-background_size);
 					margin-bottom: var(--page_title-margin_below_header);
 					margin-top: 0;
+					padding-top: 3em;
+					padding-bottom: 3em;
 				}
 					.has-header-background .edit-post-visual-editor__post-title-wrapper .editor-post-title__input {
-						padding-top: 2em;
-						padding-bottom: 2em;
 						text-shadow: 0.05em 0.05em 0.15em rgba(0, 0, 0, var(--page_title-title_shadow_opacity));
 					}
 				.has-alt-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input::before {
