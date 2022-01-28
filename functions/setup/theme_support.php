@@ -10,7 +10,7 @@ namespace CMLS_Base;
 function init_theme_support() {
 	\add_theme_support( 'menus' );
 	\add_theme_support( 'editor-styles' );
-//		\add_editor_style('build/backend.css');
+	//\add_editor_style('build/backend.css');
 	\add_theme_support( 'html5' );
 
 	\add_theme_support( 'align-wide' );
@@ -30,6 +30,7 @@ function init_theme_support() {
 
 	\add_post_type_support( 'page', 'excerpt' );
 
+	/*
 	\add_theme_support( 'editor-font-sizes', [
 		[
 			'name' => 'Small',
@@ -62,6 +63,7 @@ function init_theme_support() {
 			'slug' => 'huge',
 		],
 	] );
+	*/
 
 	// Disable custom font sizes for all but admin
 	if ( ! \current_user_can( 'administrator' ) ) {

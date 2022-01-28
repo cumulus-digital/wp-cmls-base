@@ -1,0 +1,67 @@
+{
+	"version": 2,
+	"settings": {
+		"appearanceTools": true,
+		"color": {
+			"link": true,
+			"custom": true,
+			"customDuotone": true,
+			"customGradient": true
+		},
+		"layout": {
+            "contentSize": "calc(1200px - 2rem)",
+            "wideSize": "calc(1200px + 2rem)"
+        },
+		"spacing": {
+			"units": [
+				"em",
+				"rem",
+				"%",
+				"px",
+				"vh",
+				"vw"
+			]
+		},
+		"typography": {
+			"dropCap": false,
+			"fontStyle": true,
+			"fontWeight": true,
+			"letterSpacing": true,
+			"lineHeight": true,
+			"textDecoration": true,
+			"textTransform": true,
+			"fontSizes": [
+				{
+					"name": "Small",
+					"size": "0.7em",
+					"slug": "small"
+				},
+				{
+					"name": "Medium",
+					"size": "0.85em",
+					"slug": "medium"
+				},
+				{
+					"name": "Normal",
+					"size": "1em",
+					"slug": "normal"
+				},
+				{
+					"name": "Bigger",
+					"size": "1.25em",
+					"slug": "bigger"
+				},
+				{
+					"name": "Large",
+					"size": "1.5em",
+					"slug": "large"
+				},
+				{
+					"name": "Huge",
+					"size": "2em",
+					"slug": "huge"
+				}
+			]
+		}
+	}
+}
