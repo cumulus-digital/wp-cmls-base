@@ -45,41 +45,45 @@ let $j = jQuery.noConflict();
 					background-repeat: var(--page_title-background_repeat);
 					background-size: var(--page_title-background_size);
 					margin-bottom: var(--page_title-margin_below_header);
+					margin-top: 0;
 				}
-					.has-header-background .edit-post-visual-editor__post-title-wrapper .editor-post-title__block {
+					.has-header-background .edit-post-visual-editor__post-title-wrapper .editor-post-title__input {
 						padding-top: 2em;
 						padding-bottom: 2em;
-					}
-					.has-header-background .edit-post-visual-editor__post-title-wrapper textarea {
 						text-shadow: 0.05em 0.05em 0.15em rgba(0, 0, 0, var(--page_title-title_shadow_opacity));
 					}
-				.has-alt-title .edit-post-visual-editor__post-title-wrapper::before {
+				.has-alt-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input::before {
 					background: rgba(255, 255, 0, 0.6);
 					color: #000;
 					content: '🥸 ALT TITLE';
+					font-size: 0.6rem;
+					position: absolute;
+					left: 0;
+					bottom: 100%;
 				}
-				.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper {
+				.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input {
 					background-color: rgba(0,0,0,0.05);
 					position: relative;
 					opacity: 0.5;
 				}
-					.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper:hover,
-					.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper:focus,
-					.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper:focus-within {
+					.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input:hover,
+					.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input:focus,
+					.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input:focus-within {
 						opacity: 1;
 					}
-				.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper::before {
+				.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input::before {
+					display: inline-block;
 					content: '🤫 TITLE HIDDEN';
 					background: rgba(0, 0, 0, 0.75);
 					color: #fff;
-					font-size: 0.6em;
+					font-size: 0.6rem;
 					line-height: 1;
 					text-shadow: 1px 1px 1px #000;
-					padding: .5em;
-					position: absolute;
-					top: 0;
-					left: 0;
+					padding: .5rem;
 					opacity: 1;
+					position: absolute;
+					left: 0;
+					bottom: 100%;
 				}
 			</style>
 		`).appendTo('body');
