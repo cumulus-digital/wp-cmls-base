@@ -39,13 +39,14 @@
 			color: inherit;
 		}
 		&.no-post-thumbnail>a {
-			padding: 1.5em 1em;
+			padding: 1.25em .75em;
 			background-color: var(--background-color, var(--#{$PREFIX}-color-brand));
 			color: var(--title-color, var(--#{$PREFIX}-color-content-background));
 			justify-content: center;
 			align-content: center;
 			align-items: center;
 			text-align: center;
+			font-size: 0.95em;
 		}
 
 		header {
