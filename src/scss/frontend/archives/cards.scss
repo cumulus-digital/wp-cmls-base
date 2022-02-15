@@ -42,6 +42,10 @@
 			padding: 1.5em 1em;
 			background-color: var(--background-color, var(--#{$PREFIX}-color-brand));
 			color: var(--title-color, var(--#{$PREFIX}-color-content-background));
+			justify-content: center;
+			align-content: center;
+			align-items: center;
+			text-align: center;
 		}
 
 		header {
