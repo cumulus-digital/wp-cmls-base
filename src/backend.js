@@ -20,73 +20,85 @@ let $j = jQuery.noConflict();
 			$('#sticky-span').hide();
 		});
 
+		// Inject styles for post title alterations
+		function injectACFStyles($CONTEXT) {
+			$(`
+				<style id="cmls-acf_post_title">
+					#sticky-span { display: none !important; }
+					.edit-post-visual-editor__post-title-wrapper {
+						transition-property: opacity;
+						transition-duration: .5s;
+						opacity: 1;
+						position: relative;
+						color: var(--page_title-title_color);
+					}
+					.has-header-background .edit-post-visual-editor__post-title-wrapper {
+						background-image: var(--page_title-background_image);
+						background-color: var(--page_title-background_color);
+						background-position: var(--page_title-background_position);
+						background-repeat: var(--page_title-background_repeat);
+						background-size: var(--page_title-background_size);
+						margin-bottom: var(--page_title-margin_below_header);
+						margin-top: 0;
+						padding-top: 3em;
+						padding-bottom: 3em;
+					}
+						.has-header-background .edit-post-visual-editor__post-title-wrapper .editor-post-title__input {
+							text-shadow: 0.05em 0.05em 0.15em rgba(0, 0, 0, var(--page_title-title_shadow_opacity));
+						}
+					.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper::before,
+					.has-alt-title .edit-post-visual-editor__post-title-wrapper::before {
+						display: inline-block;
+						/*background: rgba(0, 0, 0, 0.75);*/
+						color: #fff;
+						font-size: 1em;
+						line-height: 1;
+						/*text-shadow: 1px 1px 1px #000;*/
+						padding: .5rem;
+						opacity: 1;
+						position: absolute;
+						left: 0;
+						top: 0;
+					}
+					.has-alt-title .edit-post-visual-editor__post-title-wrapper::before {
+						content: '🥸';
+					}
+					.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper::before {
+						content: '🤫';
+					}
+					.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input,
+					.has-alt-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input {
+						background-color: rgba(0,0,0,0.07);
+						position: relative;
+						opacity: 0.5;
+					}
+						.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input:hover,
+						.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input:focus,
+						.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input:focus-within,
+						.has-alt-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input:hover,
+						.has-alt-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input:focus,
+						.has-alt-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input:focus-within {
+							opacity: 1;
+						}
+				</style>
+			`).appendTo($CONTEXT);
+		}
+
+		function getContext(BOTH) {
+			let $CONTEXT = $(window.document.body).add($('iframe[name="editor-canvas"]').contents().find('body'));
+			let $has_styles = $CONTEXT.find('#CMLS-acf_actions');
+			if (!$has_styles.length) {
+				injectACFStyles($CONTEXT);
+			}
+			return $CONTEXT;
+		}
+
 		const $wrapper = $('body');
 		const $acfGroup = $('#acf-group_5f467bc4cb553');
 
 		if (!$acfGroup.length) {
 			return;
 		}
-
-		// Inject styles for post title alterations
-		$(`
-			<style id="cmls-acf_post_title">
-				#sticky-span { display: none !important; }
-				.edit-post-visual-editor__post-title-wrapper {
-					transition-property: opacity;
-					transition-duration: .5s;
-					opacity: 1;
-					position: relative;
-					color: var(--page_title-title_color);
-				}
-				.has-header-background .edit-post-visual-editor__post-title-wrapper {
-					background-image: var(--page_title-background_image);
-					background-color: var(--page_title-background_color);
-					background-position: var(--page_title-background_position);
-					background-repeat: var(--page_title-background_repeat);
-					background-size: var(--page_title-background_size);
-					margin-bottom: var(--page_title-margin_below_header);
-					margin-top: 0;
-					padding-top: 3em;
-					padding-bottom: 3em;
-				}
-					.has-header-background .edit-post-visual-editor__post-title-wrapper .editor-post-title__input {
-						text-shadow: 0.05em 0.05em 0.15em rgba(0, 0, 0, var(--page_title-title_shadow_opacity));
-					}
-				.has-alt-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input::before {
-					background: rgba(255, 255, 0, 0.6);
-					color: #000;
-					content: '🥸 ALT TITLE';
-					font-size: 0.6rem;
-					position: absolute;
-					left: 0;
-					bottom: 100%;
-				}
-				.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input {
-					background-color: rgba(0,0,0,0.05);
-					position: relative;
-					opacity: 0.5;
-				}
-					.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input:hover,
-					.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input:focus,
-					.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input:focus-within {
-						opacity: 1;
-					}
-				.has-hidden-post-title .edit-post-visual-editor__post-title-wrapper .editor-post-title__input::before {
-					display: inline-block;
-					content: '🤫 TITLE HIDDEN';
-					background: rgba(0, 0, 0, 0.75);
-					color: #fff;
-					font-size: 0.6rem;
-					line-height: 1;
-					text-shadow: 1px 1px 1px #000;
-					padding: .5rem;
-					opacity: 1;
-					position: absolute;
-					left: 0;
-					bottom: 100%;
-				}
-			</style>
-		`).appendTo('body');
 
 		// ACF fields to actions
 		const header_display_options = {
@@ -96,10 +108,19 @@ let $j = jQuery.noConflict();
 				'acf': '#acf-field_5f467c3c135f3',
 				'action': (checked) => {
 					if (checked) {
-						$wrapper.addClass('has-hidden-post-title');
+						getContext(true).addClass('has-hidden-post-title');
+						window.wp.data.dispatch('core/notices').createNotice(
+							'info',
+							"🤫 This post's title is hidden",
+							{
+								isDismissible: false,
+								id: 'has-hidden-post-title'
+							}
+						)
 						return;
 					}
-					$wrapper.removeClass('has-hidden-post-title');
+					window.wp.data.dispatch('core/notices').removeNotice('has-hidden-post-title');
+					getContext(true).removeClass('has-hidden-post-title');
 				}
 			},
 			'#acf-field_5f46f4d6962ca': {
@@ -108,6 +129,7 @@ let $j = jQuery.noConflict();
 				'acf': '#acf-field_5f46f4d6962ca',
 				'action': (val) => {
 					if (val && val.toString().length) {
+						getContext(true).addClass('has-alt-title');
 						window.wp.data.dispatch('core/notices').createNotice(
 							'info',
 							'🥸 This post uses an alternate display title',
@@ -119,6 +141,7 @@ let $j = jQuery.noConflict();
 						return;
 					}
 					window.wp.data.dispatch('core/notices').removeNotice('has-alt-title');
+					getContext(true).removeClass('has-alt-title');
 				}
 			},
 			'acf[field_6140e29b2c51a][field_6140e2cb5b633]': {
@@ -234,9 +257,9 @@ let $j = jQuery.noConflict();
 				}
 			});
 			if (triggersBackground.length) {
-				$wrapper.addClass('has-header-background');
+				getContext().addClass('has-header-background');
 			} else {
-				$wrapper.removeClass('has-header-background');
+				getContext().removeClass('has-header-background');
 			}
 
 			var styles = {};
@@ -246,7 +269,7 @@ let $j = jQuery.noConflict();
 				}
 			});
 			if (Object.keys(styles).length) {
-				$wrapper.css(styles);
+				getContext().css(styles);
 			}
 		}
 

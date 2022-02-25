@@ -26,6 +26,7 @@ namespace CMLS_Base;
 
 // Block editor styles
 function editorSetupStyles() {
+	\add_editor_style( 'build/default_variables.css' );
 	\add_editor_style( 'build/backend.css' );
 }
 \add_action( 'after_setup_theme', ns( 'editorSetupStyles' ), 11 );

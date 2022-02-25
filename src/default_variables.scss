@@ -1,6 +1,7 @@
 @import 'global.scss';
 
 :root,::after,::before {
+	--#{$PREFIX}-default_variables: 1;
 	--#{$PREFIX}-color-site-background: transparent;
 
 	--#{$PREFIX}-color-masthead-background: #00598e;

@@ -53,6 +53,7 @@ function generateCustomCSS() {
 		$text,
 		$settings
 	);
+
 	$css = ":root,::after,::before {\n";
 
 	foreach ( $vars as $key => $val ) {
@@ -68,10 +69,42 @@ function generateCustomCSS() {
 	return $css;
 }
 
+/**
+ * Inject customizer var styles into editor.
+ * We're using a trick here because add_editor_style does not yet support
+ * inline stylesheets. The request for the remove file will get intercepted
+ * in overrideInternalStyleRequest() and overrideExternalStyleRequest()
+ **/
 function enqueueOutputCustomCSS() {
-	\wp_add_inline_style( PREFIX . '_customizer_vars', generateCustomCSS() );
+	\add_editor_style( theme_url() . '/cmls-block-editor-customizer-styles' );
 }
-\add_action( 'enqueue_block_editor_assets', ns( 'enqueueOutputCustomCSS' ) );
+\add_action( 'after_setup_theme', ns( 'enqueueOutputCustomCSS' ), 12 );
+
+// Override  request to inject customizer vars
+function overrideInternalStyleRequest( $response, $parsed_args, $url ) {
+	if ( \mb_strstr( $url, '/cmls-block-editor-customizer-styles' ) ) {
+		$response = [
+			'body'     => generateCustomCSS(),
+			'headers'  => new \Requests_Utility_CaseInsensitiveDictionary(),
+			'response' => [
+				'code'    => 200,
+				'message' => 'OK',
+			],
+			'cookies'  => [],
+			'filename' => null,
+		];
+	}
+
+	return $response;
+}
+\add_filter( 'pre_http_request', ns( 'overrideInternalStyleRequest' ), 10, 3 );
+function overrideExternalStyleRequest() {
+	if ( \mb_strstr( $_SERVER['REQUEST_URI'], '/cmls-block-editor-customizer-styles' ) ) {
+		echo generateCustomCSS();
+		exit();
+	}
+}
+\add_filter( 'parse_request', ns( 'overrideExternalStyleRequest' ), 10, 1 );
 
 // Output customizations as CSS vars
 function directOutputCustomCSS() {
