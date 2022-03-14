@@ -29,7 +29,7 @@
 		gap: var(--flex-gap);
 		flex-wrap: wrap;
 		color: inherit;
-		text-decoration: none;
+		text-decoration-line: none;
 		clear: both;
 		margin: 0 0 var(--flex-gap);
 		overflow: hidden;
@@ -80,11 +80,11 @@
 
 			a {
 				color: inherit;
-				text-decoration: none;
+				text-decoration-line: none;
 
 				@include hover {
 					color: var(--#{$PREFIX}-color-brand);
-					text-decoration: underline;
+					text-decoration-line: underline;
 				}
 			}
 		}
@@ -96,7 +96,7 @@
 
 			a {
 				color: inherit;
-				text-decoration: none;
+				text-decoration-line: none;
 
 				@include hover {
 					color: var(--#{$PREFIX}-color-brand);
@@ -123,11 +123,11 @@
 			.author {
 				a {
 					color: inherit;
-					text-decoration: none;
+					text-decoration-line: none;
 
 					@include hover {
 						color: var(--#{$PREFIX}-color-brand);
-						text-decoration: underline;
+						text-decoration-line: underline;
 					}
 				}
 			}

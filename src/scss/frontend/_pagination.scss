@@ -35,7 +35,7 @@ aside.pagination {
 	a.page-numbers {
 		background: rgba(0,0,0,0.5);
 		color: #fff;
-		text-decoration: none;
+		text-decoration-line: none;
 
 		@include hover {
 			background: #000;

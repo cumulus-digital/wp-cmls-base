@@ -44,11 +44,11 @@
 		word-break: break-word;
 
 		a {
-			text-decoration: none;
+			text-decoration-line: none;
 			color: inherit;
 
 			@include hover {
-				text-decoration: underline;
+				text-decoration-line: underline;
 				color: var(--#{$PREFIX}-color-highlight);
 			}
 		}
