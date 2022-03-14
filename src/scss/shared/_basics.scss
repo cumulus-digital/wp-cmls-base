@@ -77,6 +77,8 @@ p {
 
 a {
 	color: var(--#{$PREFIX}-color-brand);
+	text-decoration-thickness: from-font;
+	text-underline-position: from-font;
 	outline: 0;
 
 	@include hover{
