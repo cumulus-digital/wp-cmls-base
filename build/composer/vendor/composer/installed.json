@@ -112,17 +112,17 @@
         },
         {
             "name": "wptrt\/control-color-alpha",
-            "version": "v1.1.4",
-            "version_normalized": "1.1.4.0",
+            "version": "v1.1.5",
+            "version_normalized": "1.1.5.0",
             "source": {
                 "type": "git",
                 "url": "https:\/\/github.com\/WPTT\/control-color-alpha.git",
-                "reference": "c6ddf43b78430c8217c9822620aa40399a81d641"
+                "reference": "b287235b4398c1935d4cf2182c21b5e049738d03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https:\/\/api.github.com\/repos\/WPTT\/control-color-alpha\/zipball\/c6ddf43b78430c8217c9822620aa40399a81d641",
-                "reference": "c6ddf43b78430c8217c9822620aa40399a81d641",
+                "url": "https:\/\/api.github.com\/repos\/WPTT\/control-color-alpha\/zipball\/b287235b4398c1935d4cf2182c21b5e049738d03",
+                "reference": "b287235b4398c1935d4cf2182c21b5e049738d03",
                 "shasum": ""
             },
             "require": {
@@ -134,7 +134,7 @@
                 "wp-coding-standards\/wpcs": "*",
                 "wptrt\/wpthemereview": "*"
             },
-            "time": "2020-07-24T12:32:40+00:00",
+            "time": "2021-09-15T06:44:44+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -161,7 +161,7 @@
             ],
             "support": {
                 "issues": "https:\/\/github.com\/WPTRT\/control-color-alpha\/issues",
-                "source": "https:\/\/github.com\/WPTT\/control-color-alpha\/tree\/master"
+                "source": "https:\/\/github.com\/WPTT\/control-color-alpha\/tree\/v1.1.5"
             },
             "install-path": "..\/wptrt\/control-color-alpha"
         }

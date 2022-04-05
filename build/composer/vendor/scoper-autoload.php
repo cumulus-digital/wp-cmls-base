@@ -4,8 +4,8 @@
 
 $loader = require_once __DIR__.'/autoload.php';
 
-// Aliases for the whitelisted classes. For more information see:
-// https://github.com/humbug/php-scoper/blob/master/README.md#class-whitelisting
+// Exposed classes. For more information see:
+// https://github.com/humbug/php-scoper/blob/master/docs/configuration.md#exposing-classes
 if (!class_exists('TGM_Plugin_Activation', false) && !interface_exists('TGM_Plugin_Activation', false) && !trait_exists('TGM_Plugin_Activation', false)) {
     spl_autoload_call('CMLS_Base\Vendors\TGM_Plugin_Activation');
 }
@@ -29,34 +29,6 @@ if (!class_exists('TGMPA_Utils', false) && !interface_exists('TGMPA_Utils', fals
 }
 if (!class_exists('ComposerAutoloaderInit68c41a34ef5606a729efc05054394373', false) && !interface_exists('ComposerAutoloaderInit68c41a34ef5606a729efc05054394373', false) && !trait_exists('ComposerAutoloaderInit68c41a34ef5606a729efc05054394373', false)) {
     spl_autoload_call('CMLS_Base\Vendors\ComposerAutoloaderInit68c41a34ef5606a729efc05054394373');
-}
-
-// Functions whitelisting. For more information see:
-// https://github.com/humbug/php-scoper/blob/master/README.md#functions-whitelisting
-if (!function_exists('load_tgm_plugin_activation')) {
-    function load_tgm_plugin_activation() {
-        return \CMLS_Base\Vendors\load_tgm_plugin_activation(...func_get_args());
-    }
-}
-if (!function_exists('tgmpa')) {
-    function tgmpa() {
-        return \CMLS_Base\Vendors\tgmpa(...func_get_args());
-    }
-}
-if (!function_exists('tgmpa_load_bulk_installer')) {
-    function tgmpa_load_bulk_installer() {
-        return \CMLS_Base\Vendors\tgmpa_load_bulk_installer(...func_get_args());
-    }
-}
-if (!function_exists('my_theme_register_required_plugins')) {
-    function my_theme_register_required_plugins() {
-        return \CMLS_Base\Vendors\my_theme_register_required_plugins(...func_get_args());
-    }
-}
-if (!function_exists('composerRequire68c41a34ef5606a729efc05054394373')) {
-    function composerRequire68c41a34ef5606a729efc05054394373() {
-        return \CMLS_Base\Vendors\composerRequire68c41a34ef5606a729efc05054394373(...func_get_args());
-    }
 }
 
 return $loader;

@@ -9,6 +9,8 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
+require_once theme_path() . '/build/composer/vendor/tgmpa/tgm-plugin-activation/class-tgm-plugin-activation.php';
+
 function registerRequiredPlugins() {
 	$plugins = [
 		[
@@ -61,6 +63,6 @@ function registerRequiredPlugins() {
 		'strings' => [],
 	];
 
-	\tgmpa( $plugins, $config );
+	\CMLS_Base\Vendors\tgmpa( $plugins, $config );
 }
 \add_action( 'tgmpa_register', ns( 'registerRequiredPlugins' ) );

@@ -680,7 +680,7 @@ if (!\class_exists('CMLS_Base\\Vendors\\TGM_Plugin_Activation')) {
         public function install_plugins_page()
         {
             // Store new instance of plugin table in object.
-            $plugin_table = new TGMPA_List_Table();
+            $plugin_table = new \CMLS_Base\Vendors\TGMPA_List_Table();
             // Return early if processing a plugin installation action.
             if (('tgmpa-bulk-install' === $plugin_table->current_action() || 'tgmpa-bulk-update' === $plugin_table->current_action()) && $plugin_table->process_bulk_actions() || $this->do_plugin_install()) {
                 return;
@@ -1070,7 +1070,7 @@ if (!\class_exists('CMLS_Base\\Vendors\\TGM_Plugin_Activation')) {
                         }
                         unset($plugin_slug);
                         $count = \count($plugin_group);
-                        $linked_plugins = \array_map(array('CMLS_Base\Vendors\TGMPA_Utils', 'wrap_in_em'), $linked_plugins);
+                        $linked_plugins = \array_map(array('\CMLS_Base\Vendors\TGMPA_Utils', 'wrap_in_em'), $linked_plugins);
                         $last_plugin = \array_pop($linked_plugins);
                         // Pop off last name to prep for readability.
                         $imploded = empty($linked_plugins) ? $last_plugin : \implode(', ', $linked_plugins) . ' ' . \esc_html_x('and', 'plugin A *and* plugin B', 'tgmpa') . ' ' . $last_plugin;
@@ -1223,9 +1223,9 @@ if (!\class_exists('CMLS_Base\\Vendors\\TGM_Plugin_Activation')) {
             // Forgive users for using string versions of booleans or floats for version number.
             $plugin['version'] = (string) $plugin['version'];
             $plugin['source'] = empty($plugin['source']) ? 'repo' : $plugin['source'];
-            $plugin['required'] = TGMPA_Utils::validate_bool($plugin['required']);
-            $plugin['force_activation'] = TGMPA_Utils::validate_bool($plugin['force_activation']);
-            $plugin['force_deactivation'] = TGMPA_Utils::validate_bool($plugin['force_deactivation']);
+            $plugin['required'] = \CMLS_Base\Vendors\TGMPA_Utils::validate_bool($plugin['required']);
+            $plugin['force_activation'] = \CMLS_Base\Vendors\TGMPA_Utils::validate_bool($plugin['force_activation']);
+            $plugin['force_deactivation'] = \CMLS_Base\Vendors\TGMPA_Utils::validate_bool($plugin['force_deactivation']);
             // Enrich the received data.
             $plugin['file_path'] = $this->_get_plugin_basename_from_slug($plugin['slug']);
             $plugin['source_type'] = $this->get_plugin_source_type($plugin['source']);
@@ -1842,7 +1842,7 @@ if (!\class_exists('CMLS_Base\\Vendors\\TGM_Plugin_Activation')) {
             return self::$instance;
         }
     }
-    if (!\function_exists('CMLS_Base\\Vendors\\load_tgm_plugin_activation')) {
+    if (!\function_exists('load_tgm_plugin_activation')) {
         /**
          * Ensure only one instance of the class is ever invoked.
          *
@@ -1850,16 +1850,16 @@ if (!\class_exists('CMLS_Base\\Vendors\\TGM_Plugin_Activation')) {
          */
         function load_tgm_plugin_activation()
         {
-            $GLOBALS['tgmpa'] = TGM_Plugin_Activation::get_instance();
+            $GLOBALS['tgmpa'] = \CMLS_Base\Vendors\TGM_Plugin_Activation::get_instance();
         }
     }
     if (\did_action('plugins_loaded')) {
-        load_tgm_plugin_activation();
+        \CMLS_Base\Vendors\load_tgm_plugin_activation();
     } else {
-        \add_action('plugins_loaded', 'load_tgm_plugin_activation');
+        \add_action( 'plugins_loaded', '\CMLS_Base\Vendors\load_tgm_plugin_activation');
     }
 }
-if (!\function_exists('CMLS_Base\\Vendors\\tgmpa')) {
+if (!\function_exists('tgmpa')) {
     /**
      * Helper function to register a collection of required plugins.
      *
@@ -2568,7 +2568,7 @@ if (!\class_exists('CMLS_Base\\Vendors\\TGMPA_List_Table')) {
                 }
                 unset($slug, $name, $source);
                 // Create a new instance of TGMPA_Bulk_Installer.
-                $installer = new TGMPA_Bulk_Installer(new TGMPA_Bulk_Installer_Skin(array('url' => \esc_url_raw($this->tgmpa->get_tgmpa_url()), 'nonce' => 'bulk-' . $this->_args['plural'], 'names' => $names, 'install_type' => $install_type)));
+                $installer = new \CMLS_Base\Vendors\TGMPA_Bulk_Installer(new \CMLS_Base\Vendors\TGMPA_Bulk_Installer_Skin(array('url' => \esc_url_raw($this->tgmpa->get_tgmpa_url()), 'nonce' => 'bulk-' . $this->_args['plural'], 'names' => $names, 'install_type' => $install_type)));
                 // Wrap the install process with the appropriate HTML.
                 echo '<div class="tgmpa">', '<h2 style="font-size: 23px; font-weight: 400; line-height: 29px; margin: 0; padding: 9px 15px 4px 0;">', \esc_html(\get_admin_page_title()), '</h2>
 					<div class="update-php" style="width: 100%; height: 98%; min-height: 850px; padding-top: 1px;">';
@@ -2621,7 +2621,7 @@ if (!\class_exists('CMLS_Base\\Vendors\\TGMPA_List_Table')) {
                 } else {
                     $count = \count($plugin_names);
                     // Count so we can use _n function.
-                    $plugin_names = \array_map(array('CMLS_Base\Vendors\TGMPA_Utils', 'wrap_in_strong'), $plugin_names);
+                    $plugin_names = \array_map(array('\CMLS_Base\Vendors\TGMPA_Utils', 'wrap_in_strong'), $plugin_names);
                     $last_plugin = \array_pop($plugin_names);
                     // Pop off last name to prep for readability.
                     $imploded = empty($plugin_names) ? $last_plugin : \implode(', ', $plugin_names) . ' ' . \esc_html_x('and', 'plugin A *and* plugin B', 'tgmpa') . ' ' . $last_plugin;
@@ -2725,8 +2725,8 @@ if (!\class_exists('CMLS_Base\\Vendors\\TGM_Bulk_Installer_Skin')) {
  *
  * @since 2.2.0
  */
-\add_action('admin_init', 'tgmpa_load_bulk_installer');
-if (!\function_exists('CMLS_Base\\Vendors\\tgmpa_load_bulk_installer')) {
+\add_action( 'admin_init', '\CMLS_Base\Vendors\tgmpa_load_bulk_installer');
+if (!\function_exists('tgmpa_load_bulk_installer')) {
     /**
      * Load bulk installer
      */

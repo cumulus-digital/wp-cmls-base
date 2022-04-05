@@ -37,7 +37,7 @@ class ColorAlpha extends WP_Customize_Color_Control
      */
     public function enqueue()
     {
-        $control_root_url = \str_replace(\wp_normalize_path(\untrailingslashit(WP_CONTENT_DIR)), \untrailingslashit(\content_url()), \dirname(__DIR__));
+        $control_root_url = \str_replace(\wp_normalize_path(\untrailingslashit(\WP_CONTENT_DIR)), \untrailingslashit(\content_url()), \dirname(__DIR__));
         /**
          * Filters the URL for the scripts.
          *
