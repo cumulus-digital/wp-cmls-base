@@ -52,6 +52,9 @@ return [
 		//'src/a-whitelisted-file.php',
 	],
 	*/
+	'exclude-files' => [
+		'vendor/tgmpa/tgm-plugin-activation/class-tgm-plugin-activation.php',
+	],
 
 	// When scoping PHP files, there will be scenarios where some of the code being scoped indirectly references the
 	// original namespace. These will include, for example, strings or string manipulations. PHP-Scoper has limited
@@ -65,6 +68,7 @@ return [
 
 			// Fix TGMPA calls
 			if ( $filePath === __DIR__ . '/vendor/tgmpa/tgm-plugin-activation/class-tgm-plugin-activation.php' ) {
+				/*
 				$contents = \str_replace(
 					"array('TGMPA_Utils',",
 					"array('\\{$prefix}\\TGMPA_Utils',",
@@ -80,6 +84,7 @@ return [
 					"add_action( '$1', '\\{$prefix}\\",
 					$contents
 				);
+				//*/
 			}
 
 			return $contents;

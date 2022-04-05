@@ -63,6 +63,6 @@ function registerRequiredPlugins() {
 		'strings' => [],
 	];
 
-	\CMLS_Base\Vendors\tgmpa( $plugins, $config );
+	tgmpa( $plugins, $config );
 }
 \add_action( 'tgmpa_register', ns( 'registerRequiredPlugins' ) );
