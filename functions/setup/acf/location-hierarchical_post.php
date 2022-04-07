@@ -1,6 +1,6 @@
 <?php
 /**
- * ACF custom location to match hierarchical post types
+ * ACF custom location rule to match hierarchical post types
  */
 
 namespace CMLS_Base;
