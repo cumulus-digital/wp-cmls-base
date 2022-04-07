@@ -10,19 +10,54 @@ let $j = jQuery.noConflict();
 	if (typeof window.wp === 'undefined' || typeof window.wp.blocks === 'undefined') {
 		return;
 	}
-	$(function () {
+	function setupEditor() {
 
-		// Hide sticky toggle
-		$(window).on(`load.${window.THEME_PREFIX}`, function () {
-			// For Gutenberg
-			$('.edit-post-post-status .components-panel__row:contains("Stick to")').hide();
-			// For classic editor
-			$('#sticky-span').hide();
-		});
+		function getContext(BOTH) {
+			return $(window.document.body).add($('iframe[name="editor-canvas"]').contents().find('body'));
+		}
 
-		// Inject styles for post title alterations
-		function injectACFStyles($CONTEXT) {
-			$(`
+		function waitForElm(selector) {
+			return new Promise(resolve => {
+				let $t = $(selector);
+				if ($t.length) {
+					resolve($t);
+					return;
+				}
+
+				const observer = new MutationObserver(mutations => {
+					mutations.forEach((mutation) => {
+						if (mutation.addedNodes) {
+							const found = $(mutation.addedNodes).find(selector);
+							if (found.length) {
+								resolve(found);
+								observer.disconnect();
+							}
+						}
+					});
+				});
+
+				observer.observe(document.body, {
+					childList: true,
+					subtree: true
+				});
+
+				// Disconnect observer after 2 minutes
+				setTimeout(function () {
+					observer.disconnect();
+				}, 120000);
+
+			});
+		}
+
+		// Hide the ability to sticky
+		waitForElm('.edit-post-post-status .components-panel__row:contains("Stick to")').then((el) => $(el).hide());
+
+		// Setup for our custom display options in ACF
+		const $acfGroup = $('#acf-group_5f467bc4cb553');
+		if ($acfGroup.length) {
+
+			// ACF display option styles
+			getContext().append(`
 				<style id="cmls-acf_post_title">
 					#sticky-span { display: none !important; }
 					.edit-post-visual-editor__post-title-wrapper {
@@ -81,208 +116,199 @@ let $j = jQuery.noConflict();
 							opacity: 1;
 						}
 				</style>
-			`).appendTo($CONTEXT);
-		}
+			`);
 
-		function getContext(BOTH) {
-			let $CONTEXT = $(window.document.body).add($('iframe[name="editor-canvas"]').contents().find('body'));
-			let $has_styles = $CONTEXT.find('#CMLS-acf_actions');
-			if (!$has_styles.length) {
-				injectACFStyles($CONTEXT);
-			}
-			return $CONTEXT;
-		}
-
-		const $wrapper = $('body');
-		const $acfGroup = $('#acf-group_5f467bc4cb553');
-
-		if (!$acfGroup.length) {
-			return;
-		}
-
-		// ACF fields to actions
-		const header_display_options = {
-			'#acf-field_5f467c3c135f3': {
-				'key': 'title-hidden',
-				'type': 'checkbox',
-				'acf': '#acf-field_5f467c3c135f3',
-				'action': (checked) => {
-					if (checked) {
-						getContext(true).addClass('has-hidden-post-title');
-						window.wp.data.dispatch('core/notices').createNotice(
-							'info',
-							"🤫 This post's title is hidden",
-							{
-								isDismissible: false,
-								id: 'has-hidden-post-title'
-							}
-						)
-						return;
-					}
-					window.wp.data.dispatch('core/notices').removeNotice('has-hidden-post-title');
-					getContext(true).removeClass('has-hidden-post-title');
-				}
-			},
-			'#acf-field_5f46f4d6962ca': {
-				'key': 'title-alt',
-				'type': 'string',
-				'acf': '#acf-field_5f46f4d6962ca',
-				'action': (val) => {
-					if (val && val.toString().length) {
-						getContext(true).addClass('has-alt-title');
-						window.wp.data.dispatch('core/notices').createNotice(
-							'info',
-							'🥸 This post uses an alternate display title',
-							{
-								isDismissible: false,
-								id: 'has-alt-title'
-							}
-						)
-						return;
-					}
-					window.wp.data.dispatch('core/notices').removeNotice('has-alt-title');
-					getContext(true).removeClass('has-alt-title');
-				}
-			},
-			'acf[field_6140e29b2c51a][field_6140e2cb5b633]': {
-				'key': 'background_color',
-				'type': 'string',
-				'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e2cb5b633]"]',
-				'action': 'setCssVar',
-				'triggersHasBackground': true,
-			},
-			'acf[field_6140e29b2c51a][field_6140e3aa5b638]': {
-				'key': 'title_color',
-				'type': 'string',
-				'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e3aa5b638]"]',
-				'action': 'setCssVar',
-			},
-			'acf[field_6140e29b2c51a][field_6140e95fd3f2a]': {
-				'key': 'margin_below_header',
-				'type': 'em',
-				'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e95fd3f2a]"]',
-				'action': 'setCssVar',
-			},
-			'acf[field_6140e29b2c51a][field_6140e3d15b639]': {
-				'key': 'title_shadow_opacity',
-				'type': 'float',
-				'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e3d15b639]"]',
-				'action': 'setCssVar',
-			},
-			'acf[field_6140e29b2c51a][field_6140e2ef5b634]': {
-				'key': 'background_image',
-				'type': 'file',
-				'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e2ef5b634]"]',
-				'action': 'setCssVar',
-				'triggersHasBackground': true
-			},
-			'acf[field_6140e29b2c51a][field_6140e31c5b635]': {
-				'key': 'background_size',
-				'type': 'string',
-				'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e31c5b635]"]',
-				'action': 'setCssVar',
-			},
-			'acf[field_6140e29b2c51a][field_6140e3455b636]': {
-				'key': 'background_position',
-				'type': 'string',
-				'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e3455b636]"]',
-				'action': 'setCssVar',
-			},
-			'acf[field_6140e29b2c51a][field_6140e38b5b637]': {
-				'key': 'background_repeat',
-				'type': 'string',
-				'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e38b5b637]"]',
-				'action': 'setCssVar',
-			}
-		};
-
-		function sanitizeDisplayOption(opt) {
-			switch (opt.type) {
-				case 'checkbox':
-					opt.val = $(opt.acf).is(':checked');
-					break;
-				case 'em':
-					opt.val = parseFloat(opt.val) + 'em';
-					break;
-				case 'string':
-					opt.val = $('<div>').text(opt.val).html();
-					break;
-				case 'integer':
-				case 'int':
-					opt.val = parseInt(opt.val);
-					break;
-				case 'float':
-					opt.val = parseFloat(opt.val);
-					break;
-				case 'file':
-					if (wp.api?.models?.Media && opt.val && opt.val.toString().length) {
-						var media = new wp.api.models.Media({ id: opt.val });
-						opt.val = media.fetch();
-						return new Promise(resolve => {
-							media.fetch().then(media => {
-								if (media.media_details?.sizes?.full?.source_url) {
-									opt.val = `url("${media.media_details.sizes.full.source_url}")`;
+			// ACF fields to actions
+			const header_display_options = {
+				'#acf-field_5f467c3c135f3': {
+					'key': 'title-hidden',
+					'type': 'checkbox',
+					'acf': '#acf-field_5f467c3c135f3',
+					'action': (checked) => {
+						if (checked) {
+							getContext().addClass('has-hidden-post-title');
+							window.wp.data.dispatch('core/notices').createNotice(
+								'info',
+								"🤫 This post's title is hidden",
+								{
+									isDismissible: false,
+									id: 'has-hidden-post-title'
 								}
-								resolve(opt);
-							});
-						});
+							)
+							return;
+						}
+						window.wp.data.dispatch('core/notices').removeNotice('has-hidden-post-title');
+						getContext().removeClass('has-hidden-post-title');
 					}
-					break;
+				},
+				'#acf-field_5f46f4d6962ca': {
+					'key': 'title-alt',
+					'type': 'string',
+					'acf': '#acf-field_5f46f4d6962ca',
+					'action': (val) => {
+						if (val && val.toString().length) {
+							getContext().addClass('has-alt-title');
+							window.wp.data.dispatch('core/notices').createNotice(
+								'info',
+								'🥸 This post uses an alternate display title',
+								{
+									isDismissible: false,
+									id: 'has-alt-title'
+								}
+							)
+							return;
+						}
+						window.wp.data.dispatch('core/notices').removeNotice('has-alt-title');
+						getContext().removeClass('has-alt-title');
+					}
+				},
+				'acf[field_6140e29b2c51a][field_6140e2cb5b633]': {
+					'key': 'background_color',
+					'type': 'string',
+					'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e2cb5b633]"]',
+					'action': 'setCssVar',
+					'triggersHasBackground': true,
+				},
+				'acf[field_6140e29b2c51a][field_6140e3aa5b638]': {
+					'key': 'title_color',
+					'type': 'string',
+					'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e3aa5b638]"]',
+					'action': 'setCssVar',
+				},
+				'acf[field_6140e29b2c51a][field_6140e95fd3f2a]': {
+					'key': 'margin_below_header',
+					'type': 'em',
+					'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e95fd3f2a]"]',
+					'action': 'setCssVar',
+				},
+				'acf[field_6140e29b2c51a][field_6140e3d15b639]': {
+					'key': 'title_shadow_opacity',
+					'type': 'float',
+					'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e3d15b639]"]',
+					'action': 'setCssVar',
+				},
+				'acf[field_6140e29b2c51a][field_6140e2ef5b634]': {
+					'key': 'background_image',
+					'type': 'file',
+					'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e2ef5b634]"]',
+					'action': 'setCssVar',
+					'triggersHasBackground': true
+				},
+				'acf[field_6140e29b2c51a][field_6140e31c5b635]': {
+					'key': 'background_size',
+					'type': 'string',
+					'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e31c5b635]"]',
+					'action': 'setCssVar',
+				},
+				'acf[field_6140e29b2c51a][field_6140e3455b636]': {
+					'key': 'background_position',
+					'type': 'string',
+					'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e3455b636]"]',
+					'action': 'setCssVar',
+				},
+				'acf[field_6140e29b2c51a][field_6140e38b5b637]': {
+					'key': 'background_repeat',
+					'type': 'string',
+					'acf': 'input[name="acf[field_6140e29b2c51a][field_6140e38b5b637]"]',
+					'action': 'setCssVar',
+				}
+			};
+
+			function sanitizeDisplayOption(opt) {
+				switch (opt.type) {
+					case 'checkbox':
+						opt.val = $(opt.acf).is(':checked');
+						break;
+					case 'em':
+						opt.val = parseFloat(opt.val) + 'em';
+						break;
+					case 'string':
+						opt.val = $('<div>').text(opt.val).html();
+						break;
+					case 'integer':
+					case 'int':
+						opt.val = parseInt(opt.val);
+						break;
+					case 'float':
+						opt.val = parseFloat(opt.val);
+						break;
+					case 'file':
+						if (wp.api?.models?.Media && opt.val && opt.val.toString().length) {
+							var media = new wp.api.models.Media({ id: opt.val });
+							opt.val = media.fetch();
+							return new Promise(resolve => {
+								media.fetch().then(media => {
+									if (media.media_details?.sizes?.full?.source_url) {
+										opt.val = `url("${media.media_details.sizes.full.source_url}")`;
+									}
+									resolve(opt);
+								});
+							});
+						}
+						break;
+				}
+
+				return new Promise(resolve => {
+					resolve(opt);
+				});
 			}
 
-			return new Promise(resolve => {
-				resolve(opt);
-			});
+			async function updateHeaderDisplay() {
+				var opts = {};
+				for (var i in header_display_options) {
+					let opt = header_display_options[i];
+					let $input = $(opt.acf);
+					opt.val = $input.val();
+
+					opt = await sanitizeDisplayOption(opt);
+
+					if (typeof opt.action === 'function') {
+						opt.action(opt.val);
+						continue;
+					}
+					opts[i] = opt;
+				}
+
+				var triggersBackground = filter(opts, (opt) => {
+					if (opt.triggersHasBackground && opt.val && opt.val.toString().length) {
+						return opt;
+					}
+				});
+				if (triggersBackground.length) {
+					getContext().addClass('has-header-background');
+				} else {
+					getContext().removeClass('has-header-background');
+				}
+
+				var styles = {};
+				map(opts, (opt) => {
+					if (opt.action === 'setCssVar') {
+						styles[`--page_title-${opt.key}`] = opt.val.toString();
+					}
+				});
+				if (Object.keys(styles).length) {
+					getContext().css(styles);
+				}
+			}
+
+			$acfGroup.on(
+				`change.${window.THEME_PREFIX} keyup.${window.THEME_PREFIX}`,
+				map(header_display_options, 'acf').join(','),
+				debounce(updateHeaderDisplay, 200, { trailing: true })
+			);
+			updateHeaderDisplay();
+			$(window).on('load', updateHeaderDisplay);
+
 		}
 
-		async function updateHeaderDisplay() {
-			var opts = {};
-			for (var i in header_display_options) {
-				let opt = header_display_options[i];
-				let $input = $(opt.acf);
-				opt.val = $input.val();
+	}
 
-				opt = await sanitizeDisplayOption(opt);
+	if (window._wpLoadBlockEditor) {
+		window._wpLoadBlockEditor.then(setupEditor);
+	} else {
+		$(setupEditor);
+	}
 
-				if (typeof opt.action === 'function') {
-					opt.action(opt.val);
-					continue;
-				}
-				opts[i] = opt;
-			}
-
-			var triggersBackground = filter(opts, (opt) => {
-				if (opt.triggersHasBackground && opt.val && opt.val.toString().length) {
-					return opt;
-				}
-			});
-			if (triggersBackground.length) {
-				getContext().addClass('has-header-background');
-			} else {
-				getContext().removeClass('has-header-background');
-			}
-
-			var styles = {};
-			map(opts, (opt) => {
-				if (opt.action === 'setCssVar') {
-					styles[`--page_title-${opt.key}`] = opt.val.toString();
-				}
-			});
-			if (Object.keys(styles).length) {
-				getContext().css(styles);
-			}
-		}
-
-		$acfGroup.on(
-			`change.${window.THEME_PREFIX} keyup.${window.THEME_PREFIX}`,
-			map(header_display_options, 'acf').join(','),
-			debounce(updateHeaderDisplay, 200, { trailing: true })
-		);
-		updateHeaderDisplay();
-		$(window).on('load', updateHeaderDisplay);
-
-
-	});
 }($j, window.self));
 
 import './backend/blocks/index.js';
