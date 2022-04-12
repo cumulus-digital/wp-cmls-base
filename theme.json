@@ -2,6 +2,12 @@
 	"version": 2,
 	"settings": {
 		"appearanceTools": true,
+		"border": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		},
 		"color": {
 			"link": true,
 			"custom": true,
