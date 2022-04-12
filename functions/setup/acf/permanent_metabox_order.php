@@ -6,30 +6,32 @@
 namespace CMLS_Base;
 
 function acfRestoreOrder( $group, $order ) {
-	$mbox = $group;
+	if ( \is_array( $order ) ) {
+		$mbox = $group;
 
-	if ( ! \mb_strstr( $group, 'acf-' ) ) {
-		$mbox = 'acf-' . $group;
-	}
+		if ( ! \mb_strstr( $group, 'acf-' ) ) {
+			$mbox = 'acf-' . $group;
+		}
 
-	$field_group = \acf_get_field_group( $group );
+		$field_group = \acf_get_field_group( $group );
 
-	if ( ! $field_group ) {
-		return $order;
-	}
-	$position   = $field_group['position'];
-	$menu_order = $field_group['menu_order'];
+		if ( ! $field_group ) {
+			return $order;
+		}
+		$position   = $field_group['position'];
+		$menu_order = $field_group['menu_order'];
 
-	\array_walk( $order, function ( &$pos ) use ( $mbox ) {
-		$pos = \str_replace( $mbox, '', $pos );
-		//$order = \str_replace( ',,', '', $order );
-		$pos = \preg_replace( '/(^,|,,+|,$)/', '', $pos );
-	} );
+		\array_walk( $order, function ( &$pos ) use ( $mbox ) {
+			$pos = \str_replace( $mbox, '', $pos );
+			//$order = \str_replace( ',,', '', $order );
+			$pos = \preg_replace( '/(^,|,,+|,$)/', '', $pos );
+		} );
 
-	if ( \array_key_exists( $position, $order ) ) {
-		$ppos = \explode( ',', $order[$position] );
-		\array_splice( $ppos, $menu_order, 0, $mbox );
-		$order[$position] = \implode( ',', \array_filter( $ppos ) );
+		if ( \array_key_exists( $position, $order ) ) {
+			$ppos = \explode( ',', $order[$position] );
+			\array_splice( $ppos, $menu_order, 0, $mbox );
+			$order[$position] = \implode( ',', \array_filter( $ppos ) );
+		}
 	}
 
 	return $order;
