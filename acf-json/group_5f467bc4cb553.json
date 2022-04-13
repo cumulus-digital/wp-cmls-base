@@ -232,7 +232,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": 1,
+                    "default_value": "1.5",
                     "placeholder": "",
                     "prepend": "",
                     "append": "em",
@@ -352,5 +352,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1631938505
+    "show_in_rest": 0,
+    "modified": 1649893664
 }
