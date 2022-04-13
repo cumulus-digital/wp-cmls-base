@@ -1,0 +1,6 @@
+// Add gap when blocks are stacked on mobile
+@media (max-width: 599px) {
+	.wp-block-columns:not(.is-not-stacked-on-mobile) {
+		gap: var(--wp--style--block-gap,2em);
+	}
+}
