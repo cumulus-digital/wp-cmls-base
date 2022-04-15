@@ -28,11 +28,12 @@ class CleanMenuWalker extends Walker_Nav_Menu {
 
 		$filtered_title = \apply_filters( 'the_title', $item->title, $item->ID );
 
-		$output .= "{$indent}<li itemprop='name' id='menu-item-{$item->ID}' class='{$class_names}'>";
+		$role = ! empty( $item->role ) ? \esc_html( $item->rol ) : 'menuitem';
+
+		$output .= "{$indent}<li itemprop='name' id='menu-item-{$item->ID}' role='{$role}' class='{$class_names}'>";
 
 		$attributes = [
 			'itemprop' => ! empty( $item->itemprop ) ? \esc_html( $item->itemprop ) : 'url',
-			'role'     => ! empty( $item->role ) ? \esc_html( $item->role ) : 'menuitem',
 			'tabindex' => ! empty( $item->tabindex ) ? \esc_html( $item->tabindex ) : '0',
 		];
 
