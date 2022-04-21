@@ -37,7 +37,8 @@
     "classlist-polyfill": "^1.2.0",
     "hamburgers": "^1.1.3",
     "jquery": "^3.5.1",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "prettier": "npm:wp-prettier@latest"
   },
   "browserslist": [
     "last 3 versions or > 1%"
