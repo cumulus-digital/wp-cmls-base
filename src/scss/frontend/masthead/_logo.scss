@@ -6,7 +6,9 @@
 	justify-items: start;
 	overflow: visible;
 
-	span { display: none; }
+	span {
+		display: none;
+	}
 
 	img {
 		display: none;
@@ -35,23 +37,35 @@
 		@include hover {
 			img {
 				transform: scale(1.04);
-				filter: drop-shadow(0 0 .5em rgba(0,0,0,0.6));
+				filter: drop-shadow(0 0 0.5em rgba(0, 0, 0, 0.6));
 			}
 		}
 	}
 
 	body.home & {
-		img.logo-main { display: block; }
+		img.logo-main {
+			display: block;
+		}
 	}
 	body.home.under-masthead & {
-		img.logo-main { display: none; }
-		img.logo-main-overlay { display: block; }
+		img.logo-main {
+			display: none;
+		}
+		img.logo-main-overlay {
+			display: block;
+		}
 	}
 	body:not(.home) & {
-		img.logo-inside { display: block; }
+		img.logo-inside {
+			display: block;
+		}
 	}
 	body:not(.home).under-masthead & {
-		img.logo-inside { display: none; }
-		img.logo-inside-overlay { display: block; }
+		img.logo-inside {
+			display: none;
+		}
+		img.logo-inside-overlay {
+			display: block;
+		}
 	}
 }

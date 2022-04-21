@@ -1,5 +1,9 @@
-#wpadminbar { position: fixed !important; }
-html { position: relative; }
+#wpadminbar {
+	position: fixed !important;
+}
+html {
+	position: relative;
+}
 
 :root {
 	--wp_admin_bar_height: 0.1px;

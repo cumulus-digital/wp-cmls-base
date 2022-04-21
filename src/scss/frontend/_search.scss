@@ -8,10 +8,11 @@ main.search {
 		margin-bottom: 1em;
 		h1 {
 			font-size: 1.75em;
-			margin-bottom: .25em;
+			margin-bottom: 0.25em;
 		}
 
-		.search, .search li {
+		.search,
+		.search li {
 			list-style: none;
 			margin: 0;
 			padding: 0;
@@ -19,13 +20,13 @@ main.search {
 		.search {
 			input {
 				display: inline-block;
-				background: rgba(0,0,0,0.15);
+				background: rgba(0, 0, 0, 0.15);
 				font-size: 1em;
 				line-height: 1;
-				padding: .25em .5em;
+				padding: 0.25em 0.5em;
 				border: 0;
-				border-radius: .15em;
-				transition: all .15s;
+				border-radius: 0.15em;
+				transition: all 0.15s;
 
 				&[type="submit"] {
 					border: 1px solid transparent;
@@ -39,5 +40,4 @@ main.search {
 			}
 		}
 	}
-
 }

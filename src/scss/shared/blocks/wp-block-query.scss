@@ -1,43 +1,40 @@
 :root .wp-block-query {
-
-	&>ul>li {
+	& > ul > li {
 		overflow: auto;
 		margin-bottom: 1.5em;
 	}
 
 	.wp-block-post-featured-image {
-
-		a, img {
+		a,
+		img {
 			display: block;
 			width: 100%;
 			height: auto;
 		}
-
 	}
-		.wp-block-post-featured-image.alignleft,
-		.wp-block-post-featured-image.alignright,
-		.wp-block[data-align=left]>.wp-block-post-featured-image,
-		.wp-block[data-align=right]>.wp-block-post-featured-image {
-			display: inline;
-			width: 350px;
+	.wp-block-post-featured-image.alignleft,
+	.wp-block-post-featured-image.alignright,
+	.wp-block[data-align="left"] > .wp-block-post-featured-image,
+	.wp-block[data-align="right"] > .wp-block-post-featured-image {
+		display: inline;
+		width: 350px;
 
-			@include phone {
-				float: none;
-				width: 100%;
-				margin: 0 0 .75em;
-			}
+		@include phone {
+			float: none;
+			width: 100%;
+			margin: 0 0 0.75em;
 		}
+	}
 
-		.wp-block-post-featured-image.alignleft,
-		.wp-block[data-align="left"]>.wp-block-post-featured-image {
-			margin: 0 1em .75em 0
-		}
+	.wp-block-post-featured-image.alignleft,
+	.wp-block[data-align="left"] > .wp-block-post-featured-image {
+		margin: 0 1em 0.75em 0;
+	}
 
-		.wp-block-post-featured-image.alignright,
-		.wp-block[data-align="right"]>.wp-block-post-featured-image {
-			margin: 0 0 1em .75em;
-		}
-
+	.wp-block-post-featured-image.alignright,
+	.wp-block[data-align="right"] > .wp-block-post-featured-image {
+		margin: 0 0 1em 0.75em;
+	}
 
 	.wp-block-post-title {
 		display: flex;
@@ -55,10 +52,10 @@
 	}
 
 	.wp-block-post-date + * {
-		margin-top: .5em;
+		margin-top: 0.5em;
 	}
 
-	&>ul>li:last-child .wp-block-separator {
+	& > ul > li:last-child .wp-block-separator {
 		display: none;
 	}
 
@@ -70,7 +67,7 @@
 			--card-width: 50%;
 		}
 
-		&>li {
+		& > li {
 			@include card;
 			box-sizing: border-box;
 
@@ -94,7 +91,6 @@
 			.wp-block-separator {
 				display: none;
 			}
-
 		}
 
 		&.columns-2 {
@@ -114,7 +110,5 @@
 			--card-width: 16.6666666667%;
 			font-size: 0.75em;
 		}
-
 	}
-
 }

@@ -4,10 +4,19 @@
 	background-color: var(--#{$PREFIX}-color-main_menu-background, #000);
 
 	background-image: var(--#{$PREFIX}-file-main_menu-background-cssurl, none);
-	background-position: var(--#{$PREFIX}-setting-main_menu-background-position, center bottom);
+	background-position: var(
+		--#{$PREFIX}-setting-main_menu-background-position,
+		center bottom
+	);
 	background-size: var(--#{$PREFIX}-setting-main_menu-background-size, cover);
-	background-repeat: var(--#{$PREFIX}-setting-main_menu-background-repeat, no-repeat);
-	background-attachment: var(--#{$PREFIX}-#{$PREFIX}-setting-main_menu-background-attachment, fixed);
+	background-repeat: var(
+		--#{$PREFIX}-setting-main_menu-background-repeat,
+		no-repeat
+	);
+	background-attachment: var(
+		--#{$PREFIX}-#{$PREFIX}-setting-main_menu-background-attachment,
+		fixed
+	);
 	color: var(--#{$PREFIX}-color-main_menu-foreground, #fff);
 
 	font-size: var(--#{$PREFIX}-font-base_size, 1em);
@@ -31,35 +40,47 @@
 	transition: max-height 0.16s ease-in;
 	transition-delay: 0.05s;
 
-	ul, li {
+	ul,
+	li {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
 
-	a, span, .search {
+	a,
+	span,
+	.search {
 		display: block;
 		color: inherit;
 		text-decoration-line: none;
-		text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
-		padding: .5em 0.75em;
+		text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+		padding: 0.5em 0.75em;
 		position: relative;
 		z-index: 2;
 	}
-		a {
-			@include hover {
-				color: var(--#{$PREFIX}-color-main_menu-foreground-hover_foreground, #fff);
-				background-color: var(--#{$PREFIX}-color-main_menu-foreground-hover_background, #000);
-			}
-			small {
-				display: block;
-				font-size: .6em;
-				opacity: 0.8;
-			}
+	a {
+		@include hover {
+			color: var(
+				--#{$PREFIX}-color-main_menu-foreground-hover_foreground,
+				#fff
+			);
+			background-color: var(
+				--#{$PREFIX}-color-main_menu-foreground-hover_background,
+				#000
+			);
 		}
+		small {
+			display: block;
+			font-size: 0.6em;
+			opacity: 0.8;
+		}
+	}
 
 	body.menu-active & {
-		max-height: calc(var(--vh100) - var(--#{$PREFIX}-masthead-height) - var(--wp_admin_bar_height));
+		max-height: calc(
+			var(--vh100) - var(--#{$PREFIX}-masthead-height) -
+				var(--wp_admin_bar_height)
+		);
 		transition-delay: 0s;
 		visibility: visible;
 		opacity: 1;
@@ -67,11 +88,10 @@
 		&.is-open {
 			overflow-y: auto;
 		}
-
 	}
 
 	.search {
-		padding-bottom: .75em;
+		padding-bottom: 0.75em;
 		form {
 			margin: 0;
 			padding: 0;
@@ -81,11 +101,11 @@
 			border: 1px solid var(--#{$PREFIX}-color-main_menu-foreground);
 			background-color: var(--#{$PREFIX}-color-main_menu-background);
 			color: var(--#{$PREFIX}-color-main_menu-foreground);
-			padding: .25em .35em;
+			padding: 0.25em 0.35em;
 
 			&[name="s"] {
-				width: calc(100% - 5em - .5em);
-				margin-right: .5em;
+				width: calc(100% - 5em - 0.5em);
+				margin-right: 0.5em;
 			}
 			&[type="submit"] {
 				background-color: var(--#{$PREFIX}-color-main_menu-foreground);

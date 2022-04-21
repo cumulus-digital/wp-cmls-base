@@ -1,6 +1,8 @@
-@import '../shared/_';
+@import "../shared/_";
 
-#bitnami-banner { display: none !important; }
+#bitnami-banner {
+	display: none !important;
+}
 
 *,
 *:before,
@@ -8,7 +10,8 @@
 	box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
 	margin: 0;
 	padding: 0;
 }
@@ -53,7 +56,8 @@ body.disable_bottom_padding > main {
 
 	h1 {
 		color: var(--page_title-title_color);
-		text-shadow: 0.05em 0.05em 0.15em rgba(0, 0, 0, var(--page_title-title_shadow_opacity));
+		text-shadow: 0.05em 0.05em 0.15em
+			rgba(0, 0, 0, var(--page_title-title_shadow_opacity));
 	}
 }
 
@@ -73,26 +77,26 @@ article {
 		h3 {
 			font-size: 1.25em;
 		}
-		h4, h5 {
+		h4,
+		h5 {
 			font-size: 1em;
 		}
 		h6 {
-			font-size: .75em;
+			font-size: 0.75em;
 		}
 	}
-
 }
 
 .cmls-anchor {
 	display: block;
 	position: relative;
-	top: calc( (var(--#{$PREFIX}-masthead-height) * -1) - 1em );
+	top: calc((var(--#{$PREFIX}-masthead-height) * -1) - 1em);
 	visibility: hidden;
 }
 
-@import '_wpadminbar';
-@import './masthead/_';
-@import './footer/_';
-@import '_pagination';
-@import './archives/_';
-@import '_search';
+@import "_wpadminbar";
+@import "./masthead/_";
+@import "./footer/_";
+@import "_pagination";
+@import "./archives/_";
+@import "_search";

@@ -12,7 +12,7 @@
 	background-size: cover;
 	backdrop-filter: blur(1rem);
 	color: var(--#{$PREFIX}-color-masthead-foreground);
-	box-shadow: 0 0 0 RGBA(0,0,0,0);
+	box-shadow: 0 0 0 RGBA(0, 0, 0, 0);
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -31,15 +31,17 @@
 	}
 
 	body.transparent_masthead & {
-		background-color: transparent
+		background-color: transparent;
 	}
 
-	body.under-masthead &  {
+	body.under-masthead & {
 		background-color: var(--#{$PREFIX}-color-masthead-background-overlay);
-		background-image: var(--#{$PREFIX}-file-masthead-background-overlay-cssurl);
+		background-image: var(
+			--#{$PREFIX}-file-masthead-background-overlay-cssurl
+		);
 		backdrop-filter: blur(1rem);
 		color: var(--#{$PREFIX}-color-masthead-foreground-overlay);
-		box-shadow: 0 0 1.5vh RGBA(0,0,0,0.25);
+		box-shadow: 0 0 1.5vh RGBA(0, 0, 0, 0.25);
 	}
 
 	// Gradiants don't transition nicely, so we use a false background
@@ -68,7 +70,6 @@
 	}
 	*/
 
-
 	.row-container {
 		display: flex;
 		justify-content: space-between;
@@ -85,18 +86,18 @@
 		}
 	}
 
-	@import '_logo';
+	@import "_logo";
 
 	.menu-beforetext {
 		font-size: 0.75em;
-		padding: .5em;
+		padding: 0.5em;
 		color: inherit;
 
 		a {
 			display: inline-block;
 			text-decoration-line: none;
 			color: inherit;
-			transition: all .2s;
+			transition: all 0.2s;
 
 			@include hover {
 				color: var(--#{$PREFIX}-color-brand);
@@ -104,12 +105,12 @@
 		}
 
 		&.real-menu {
-
 			@include phone {
 				display: none;
 			}
 
-			ul, li {
+			ul,
+			li {
 				display: inline-block;
 				list-style: none;
 				margin: 0;
@@ -117,14 +118,18 @@
 			}
 
 			a {
-				padding: .25em .5em;
+				padding: 0.25em 0.5em;
 
 				@include hover {
 					color: var(--#{$PREFIX}-color-masthead-background);
-					background-color: var(--#{$PREFIX}-color-masthead-foreground);
+					background-color: var(
+						--#{$PREFIX}-color-masthead-foreground
+					);
 
 					@at-root body.under-masthead & {
-						color: var(--#{$PREFIX}-color-masthead-background-overlay);
+						color: var(
+							--#{$PREFIX}-color-masthead-background-overlay
+						);
 						background-color: var(--#{$PREFIX}-color-brand);
 					}
 				}
@@ -141,7 +146,7 @@
 		width: var(--#{$PREFIX}-masthead-height);
 		//position: relative;
 
-		@import '_hamburger';
-		@import '_menu';
+		@import "_hamburger";
+		@import "_menu";
 	}
 }

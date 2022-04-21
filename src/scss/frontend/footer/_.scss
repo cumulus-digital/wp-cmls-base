@@ -62,23 +62,23 @@ body > footer {
 		}
 	}
 
-	ul, li {
+	ul,
+	li {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
 
 	.menu {
-
 		& > ul {
 			display: flex;
 			column-count: 4;
-			column-gap: .75em;
+			column-gap: 0.75em;
 			height: 100%;
 
 			li {
 				display: block;
-				margin: 0 1em .25em 0;
+				margin: 0 1em 0.25em 0;
 			}
 
 			@include phone {
@@ -86,17 +86,17 @@ body > footer {
 				column-count: 1;
 				font-size: 0.9rem;
 				text-align: center;
-				margin-top: .5em;
+				margin-top: 0.5em;
 
 				li {
 					display: inline-block;
-					margin: 0 .5em .5em;
+					margin: 0 0.5em 0.5em;
 				}
 			}
 		}
 	}
 
-	@import './_social_menu.scss';
+	@import "./_social_menu.scss";
 
 	.copyright {
 		text-align: right;

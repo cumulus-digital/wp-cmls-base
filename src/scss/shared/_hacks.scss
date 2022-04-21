@@ -7,7 +7,7 @@
 .wp-block-image img,
 .wp-block-media-text__media img,
 .wp-block-media-text__media video {
-    height: auto;
+	height: auto;
 }
 
 // Only child figures should be inline-block
@@ -41,7 +41,7 @@
 }
 // Remove absurd margin on UGB Buttons
 .ugb-button-wrapper {
-	margin: 0 -.5em;
+	margin: 0 -0.5em;
 }
 
 // remove underline on kadence block link wrappers
@@ -78,12 +78,12 @@
 
 // Kadence tabs should align bottom
 .kt-tabs-title-list {
-    align-items: flex-end;
+	align-items: flex-end;
 }
 
 // Faster transitions for kadance advanced buttons
 :root .kt-btn-wrap .kt-button {
-	transition-duration: .15s;
+	transition-duration: 0.15s;
 }
 
 // Remove uneditable padding on kadence carousel
@@ -118,9 +118,9 @@
 	}
 
 	.nav-links {
-		border-top: 1px solid RGBA(0,0,0,0.2);
-		padding-top: .5em;
-		margin-top: .5em;
+		border-top: 1px solid RGBA(0, 0, 0, 0.2);
+		padding-top: 0.5em;
+		margin-top: 0.5em;
 
 		> * {
 			display: inline-block;

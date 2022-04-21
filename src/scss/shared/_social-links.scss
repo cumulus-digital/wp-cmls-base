@@ -2,7 +2,7 @@
 	--icon-color: var(--#{$PREFIX}-color-content-foreground);
 	--icon-hover-color: var(--#{$PREFIX}-color-highlight);
 
-	&>ul {
+	& > ul {
 		display: flex;
 		flex-direction: row;
 		gap: 1em;
@@ -17,12 +17,12 @@
 	}
 
 	a {
-		--icon: '';
+		--icon: "";
 		mask: var(--icon) no-repeat 50% 50%;
 		background-color: var(--icon-color);
 		background-position: center center;
 		background-size: contain;
-		transition: all .15s;
+		transition: all 0.15s;
 
 		display: block;
 
@@ -41,57 +41,57 @@
 		&[href*="amazon.com"i],
 		&[aria-label*="amazon"i],
 		&[aria-label*="alexa"i] {
-			--icon: url('images/amazonalexa.svg');
+			--icon: url("images/amazonalexa.svg");
 		}
 
 		&[href*="apple.com"i],
 		&[aria-label*="apple"i] {
-			--icon: url('images/apple.svg');
+			--icon: url("images/apple.svg");
 		}
 
 		&[href*="facebook.com"i],
 		&[href*="fb.me"i],
 		&[aria-label*="facebook"i] {
-			--icon: url('images/facebook.svg');
+			--icon: url("images/facebook.svg");
 		}
 
 		&[href*="githim.com"i],
 		&[aria-label*="github"i] {
-			--icon: url('images/github.svg');
+			--icon: url("images/github.svg");
 		}
 
 		&[href*="instagram.com"i],
 		&[href*="instagr.am"i],
 		&[href*="instagr.com"i],
 		&[aria-label*="instagram"i] {
-			--icon: url('images/instagram.svg');
+			--icon: url("images/instagram.svg");
 		}
 
 		&[href*="linkedin.com"i],
 		&[aria-label*="linkedin"i] {
-			--icon: url('images/linkedin.svg');
+			--icon: url("images/linkedin.svg");
 		}
 
 		&[href*="twitch.com"i],
 		&[aria-label*="twitch"i] {
-			--icon: url('images/twitch.svg');
+			--icon: url("images/twitch.svg");
 		}
 
 		&[href*="twitter.com"i],
 		&[href*="t.co"i],
 		&[aria-label*="twitter"i] {
-			--icon: url('images/twitter.svg');
+			--icon: url("images/twitter.svg");
 		}
 
 		&[href*="vimeo.com"i],
 		&[aria-label*="vimeo"i] {
-			--icon: url('images/vimeo.svg');
+			--icon: url("images/vimeo.svg");
 		}
 
 		&[href*="youtube.com"i],
 		&[href*="youtu.be"i],
 		&[aria-label*="youtube"i] {
-			--icon: url('images/youtube.svg');
+			--icon: url("images/youtube.svg");
 		}
 	}
 }

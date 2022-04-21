@@ -1,5 +1,5 @@
 @mixin cards {
-	--card-gap: .75rem;
+	--card-gap: 0.75rem;
 	--card-width: 25%;
 	--focus-outline: 2px solid var(--#{$PREFIX}-color-brand);
 	--hover-outline-color: var(--#{$PREFIX}-color-brand);
@@ -16,25 +16,25 @@
 	width: calc(var(--card-width) - var(--card-gap));
 	margin: 0;
 
-	transition: transform 0.1s,
-	box-shadow 0.1s;
+	transition: transform 0.1s, box-shadow 0.1s;
 	position: relative;
 	z-index: 1;
 
-	border-radius: .3em;
-	box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0),
-	0 .05em 1em rgba(0, 0, 0, 0.14);
+	border-radius: 0.3em;
+	box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0), 0 0.05em 1em rgba(0, 0, 0, 0.14);
 	overflow: hidden;
 
-	&:focus-within, & > a:focus-within {
+	&:focus-within,
+	& > a:focus-within {
 		outline: var(--focus-outline);
 	}
 
-	&, & > a {
+	&,
+	& > a {
 		@include hover {
 			transform: scale(1.03);
 			box-shadow: 0 0 1px 0 var(--hover-outline-color),
-			0 0 1.5em rgba(0, 0, 0, 0.14);
+				0 0 1.5em rgba(0, 0, 0, 0.14);
 			z-index: 2;
 		}
 	}

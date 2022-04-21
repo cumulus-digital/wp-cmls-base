@@ -10,7 +10,7 @@
 	span.page-numbers,
 	a.page-numbers {
 		background: rgba(0, 0, 0, 0.1);
-		padding: .25em .5em;
+		padding: 0.25em 0.5em;
 
 		&.current {
 			background: var(--#{$PREFIX}-color-brand);
@@ -31,5 +31,4 @@
 	span.dots {
 		background: none;
 	}
-
 }

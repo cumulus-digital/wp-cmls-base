@@ -1,4 +1,4 @@
-@import '../shared/_';
+@import "../shared/_";
 
 .edit-post-visual-editor__post-title-wrapper {
 	margin-bottom: 0;
@@ -8,7 +8,12 @@
 	font-family: var(--#{$PREFIX}-font-family);
 	text-align: center;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	font-family: inherit;
 }
 body {

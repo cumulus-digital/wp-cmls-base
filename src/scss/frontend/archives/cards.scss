@@ -2,7 +2,7 @@
 &.cards {
 	@include cards;
 
-	--card-gap: .75rem;
+	--card-gap: 0.75rem;
 	--card-width: 25%;
 
 	@include phone {
@@ -20,15 +20,14 @@
 			position: relative;
 			z-index: 1;
 		}
-
 	}
 
-	&>article {
+	& > article {
 		@include card;
 
 		font-size: 0.8em;
 
-		&>a {
+		& > a {
 			display: flex;
 			flex-direction: column;
 			flex-basis: calc(var(--card-width) - var(--card-gap));
@@ -38,10 +37,16 @@
 			background-color: #fff;
 			color: inherit;
 		}
-		&.no-post-thumbnail>a {
-			padding: 1.25em .75em;
-			background-color: var(--background-color, var(--#{$PREFIX}-color-brand));
-			color: var(--title-color, var(--#{$PREFIX}-color-content-background));
+		&.no-post-thumbnail > a {
+			padding: 1.25em 0.75em;
+			background-color: var(
+				--background-color,
+				var(--#{$PREFIX}-color-brand)
+			);
+			color: var(
+				--title-color,
+				var(--#{$PREFIX}-color-content-background)
+			);
 			justify-content: center;
 			align-content: center;
 			align-items: center;
@@ -50,7 +55,7 @@
 		}
 
 		header {
-			padding: .5em 1em;
+			padding: 0.5em 1em;
 
 			.post_title {
 				line-height: 1.15;

@@ -1,6 +1,8 @@
-@import 'global.scss';
+@import "global.scss";
 
-:root,::after,::before {
+:root,
+::after,
+::before {
 	--#{$PREFIX}-default_variables: 1;
 	--#{$PREFIX}-color-site-background: transparent;
 
@@ -23,7 +25,7 @@
 
 	--#{$PREFIX}-color-main_menu-background: #000000;
 	--#{$PREFIX}-color-main_menu-foreground: #ffffff;
-	--#{$PREFIX}-color-main_menu-foreground-hover_foreground: #FFFFFF;
+	--#{$PREFIX}-color-main_menu-foreground-hover_foreground: #ffffff;
 	--#{$PREFIX}-color-main_menu-foreground-hover_background: #00598e;
 	--#{$PREFIX}-file-main_menu-background: none;
 	--#{$PREFIX}-file-main_menu-background-cssurl: none;
@@ -46,7 +48,7 @@
 	--#{$PREFIX}-color-favicon-mstile: #00598e;
 	--#{$PREFIX}-color-favicon-chrome: #00598e;
 
-	--#{$PREFIX}-font-font_family: 'Montserrat', Helvetica, Arial, sans-serif;
+	--#{$PREFIX}-font-font_family: "Montserrat", Helvetica, Arial, sans-serif;
 	--#{$PREFIX}-font-header_family: inherit;
 	--#{$PREFIX}-font-base_size: 19px;
 	--#{$PREFIX}-font-base_lineheight: 1.6;

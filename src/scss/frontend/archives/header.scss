@@ -5,7 +5,7 @@ header.page_title {
 	background-size: cover;
 	color: var(--archive_header-text_color);
 	padding-bottom: 0;
-	margin-bottom: .5rem;
+	margin-bottom: 0.5rem;
 	line-height: 1.15;
 	word-break: break-word;
 
@@ -27,16 +27,16 @@ header.page_title {
 	}
 
 	h2 {
-		margin-top: .5em;
+		margin-top: 0.5em;
 		font-size: 1.15rem;
 	}
 
 	.term-description {
-		margin-top: .35em;
-		font-size: .85rem;
+		margin-top: 0.35em;
+		font-size: 0.85rem;
 
 		p {
-			margin-bottom: .65em;
+			margin-bottom: 0.65em;
 
 			&:last-child,
 			&:only-of-type {
@@ -46,7 +46,7 @@ header.page_title {
 	}
 
 	@include phone {
-		font-size: .9rem;
+		font-size: 0.9rem;
 	}
 }
 
@@ -75,7 +75,7 @@ header.page_title {
 		font-size: 0.75em;
 
 		&::after {
-			content: '/';
+			content: "/";
 			font-weight: bold;
 		}
 		&:last-child::after {
@@ -87,14 +87,14 @@ header.page_title {
 		display: inline-block;
 		color: inherit;
 		background-color: rgba(0, 0, 0, 0);
-		border-radius: .25em;
-		padding: .25em .5em;
-		margin: 0 .25em;
+		border-radius: 0.25em;
+		padding: 0.25em 0.5em;
+		margin: 0 0.25em;
 		line-height: 1.2;
 		text-decoration-line: none;
 		white-space: nowrap;
 		word-break: break-word;
-		transition: background-color .15s, color .15s;
+		transition: background-color 0.15s, color 0.15s;
 
 		@include hover {
 			background-color: var(--#{$PREFIX}-color-brand);

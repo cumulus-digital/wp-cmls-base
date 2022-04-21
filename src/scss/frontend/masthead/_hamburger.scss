@@ -1,22 +1,22 @@
-$hamburger-padding-x           : 0;
-$hamburger-padding-y           : 0;
-$hamburger-layer-width         : 2em;
-$hamburger-layer-height        : 5px;
-$hamburger-layer-spacing       : 6px;
-$hamburger-layer-color         : #000;
-$hamburger-layer-border-radius : 1em;
-$hamburger-hover-opacity       : 1;
-$hamburger-active-layer-color  : #fff;
+$hamburger-padding-x: 0;
+$hamburger-padding-y: 0;
+$hamburger-layer-width: 2em;
+$hamburger-layer-height: 5px;
+$hamburger-layer-spacing: 6px;
+$hamburger-layer-color: #000;
+$hamburger-layer-border-radius: 1em;
+$hamburger-hover-opacity: 1;
+$hamburger-active-layer-color: #fff;
 $hamburger-active-hover-opacity: $hamburger-hover-opacity;
 
 // To use CSS filters as the hover effect instead of opacity,
 // set $hamburger-hover-use-filter as true and
 // change the value of $hamburger-hover-filter accordingly.
-$hamburger-hover-use-filter   : false;
-$hamburger-hover-filter       : opacity(50%);
+$hamburger-hover-use-filter: false;
+$hamburger-hover-filter: opacity(50%);
 $hamburger-active-hover-filter: $hamburger-hover-filter;
 
-$hamburger-types: ( spin );
+$hamburger-types: (spin);
 
 @import "hamburgers/_sass/hamburgers/hamburgers.scss";
 
@@ -29,7 +29,7 @@ $hamburger-types: ( spin );
 
 	&::after {
 		display: block;
-		content: '';
+		content: "";
 		background-color: var(--#{$PREFIX}-color-main_menu-background);
 		width: 100%;
 		height: 0%;
@@ -53,18 +53,20 @@ $hamburger-types: ( spin );
 		z-index: 3;
 		background-color: var(--#{$PREFIX}-color-masthead-foreground);
 	}
-		&.is-active {
-			.hamburger-inner,
-			.hamburger-inner::before,
-			.hamburger-inner::after {
-				background-color: var(--#{$PREFIX}-color-main_menu-foreground);
-			}
+	&.is-active {
+		.hamburger-inner,
+		.hamburger-inner::before,
+		.hamburger-inner::after {
+			background-color: var(--#{$PREFIX}-color-main_menu-foreground);
 		}
+	}
 	body.under-masthead &:not(.is-active) {
 		.hamburger-inner,
 		.hamburger-inner::before,
 		.hamburger-inner::after {
-			background-color: var(--#{$PREFIX}-color-masthead-foreground-overlay);
+			background-color: var(
+				--#{$PREFIX}-color-masthead-foreground-overlay
+			);
 		}
 	}
 

@@ -2,10 +2,10 @@
 .flexcard-inline {
 	display: inline-flex;
 	flex: 0 1 auto;
-	box-shadow: 0 0 0.5em rgba(0,0,0,0.25);
+	box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.25);
 	border-radius: 0.5em;
 	padding: 1em;
-	margin: 0 .5em .5em;
+	margin: 0 0.5em 0.5em;
 	max-width: calc(50% - 1.2em);
 	vertical-align: top;
 
@@ -14,7 +14,7 @@
 	}
 
 	.flexcard-cover {
-		margin: -1em -1em .75em;
+		margin: -1em -1em 0.75em;
 		width: calc(100% + 2em);
 
 		img {
@@ -34,22 +34,20 @@
 	&.max25 {
 		max-width: calc(25% - 1.2em);
 	}
-		@include tablet {
-			&.max20,
-			&.max25 {
-				max-width: calc(50% - 1.15em);
-			}
+	@include tablet {
+		&.max20,
+		&.max25 {
+			max-width: calc(50% - 1.15em);
 		}
-		@include phone {
-			&.max20,
-			&.max25,
-			&.max30 {
-				max-width: 100%;
-			}
+	}
+	@include phone {
+		&.max20,
+		&.max25,
+		&.max30 {
+			max-width: 100%;
 		}
+	}
 	&.max30 {
 		max-width: calc(30% - 1.15em);
 	}
 }
-
-

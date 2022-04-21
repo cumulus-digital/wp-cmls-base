@@ -1,21 +1,19 @@
 main.archive,
 .inline-archive,
 main.search {
+	@import "./header";
 
-	@import './header';
+	@import "./list";
 
-	@import './list';
+	@import "./cards";
 
-	@import './cards';
-
-	@import './tax-children';
+	@import "./tax-children";
 
 	/**
 	 * On the blog posts page, page content may be displayed before the archive.
 	 * This definition makes a space between that page content and the archive.
 	 */
-	.archive-content-follows+.row {
+	.archive-content-follows + .row {
 		margin-top: 1.5em;
 	}
-
 }
