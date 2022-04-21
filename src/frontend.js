@@ -1,6 +1,6 @@
 import "./frontend.scss";
 
-//import throttle from "lodash/throttle";
+import throttle from "lodash/throttle";
 
 document.querySelector("html").className.replace("no-js", "js");
 const setVh = () => {
