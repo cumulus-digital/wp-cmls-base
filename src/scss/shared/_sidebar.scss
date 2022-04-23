@@ -16,6 +16,7 @@
 		flex-basis: 250px;
 		font-size: 0.85rem;
 		margin-top: 1.5em;
+		position: relative;
 
 		// Sidebars in rows that follow a header don't need a top margin (archive pages)
 		@at-root header.page_title + .row & {
