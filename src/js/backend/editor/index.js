@@ -44,6 +44,7 @@ require('./acf-title.js');
 		stickyControl.style.display = 'none';
 		if (isSticky) {
 			wp.data.dispatch('core/editor').editPost({ sticky: false });
+			wp.data.dispatch('core/editor').savePost();
 		}
 	});
 })();

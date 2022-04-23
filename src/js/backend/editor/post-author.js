@@ -45,8 +45,8 @@
 			return (
 				<PluginPostStatusInfo>
 					<TextControl
-						label="Alt. Display Author Name"
-						help="Set an alternate name for the author of this post, e.g. for guest blogs, without creating an account."
+						label="Alt. Author Display Name"
+						help="Set an alternate name for the author of this post to display publicaly instead of the real author, e.g. for guest blogs."
 						value={acfMeta['cmls-alt_author']}
 						onChange={onChange}
 					/>
