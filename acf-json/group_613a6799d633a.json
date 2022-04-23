@@ -7,7 +7,7 @@
             "label": "Alt. Author Name",
             "name": "cmls-alt_author",
             "type": "text",
-            "instructions": "Note: Alt. display authors are never linked to an author archive.",
+            "instructions": "Set an alternate name for the author of this post, e.g. for guest blogs, without creating an account.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -33,11 +33,12 @@
     ],
     "menu_order": 0,
     "position": "side",
-    "style": "default",
+    "style": "seamless",
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
     "description": "Guest author? Enter their name here, and their name will be displayed on this post instead of yours.",
-    "modified": 1631218502
+    "show_in_rest": 1,
+    "modified": 1650748413
 }

@@ -1,3 +1,4 @@
+require('./post-author.js');
 require('./acf-title.js');
 
 (() => {
