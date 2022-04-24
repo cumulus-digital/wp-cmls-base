@@ -183,6 +183,40 @@
                     "maxlength": ""
                 },
                 {
+                    "key": "field_62648f5f80441",
+                    "label": "Inside Padding",
+                    "name": "padding",
+                    "type": "number",
+                    "instructions": "Padding above and below the title.",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_6140e2cb5b633",
+                                "operator": "!=empty"
+                            }
+                        ],
+                        [
+                            {
+                                "field": "field_6140e2ef5b634",
+                                "operator": "!=empty"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 2,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "rem",
+                    "min": "",
+                    "max": "",
+                    "step": ""
+                },
+                {
                     "key": "field_6140e3aa5b638",
                     "label": "Title Color",
                     "name": "title_color",
@@ -224,7 +258,7 @@
                     "label": "Margin Below Header",
                     "name": "margin_below_header",
                     "type": "number",
-                    "instructions": "Margin below header before content begins, specified in em units.",
+                    "instructions": "Before content begins, specified in em units.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -238,7 +272,7 @@
                     "append": "em",
                     "min": 0,
                     "max": 20,
-                    "step": 1
+                    "step": ".5"
                 }
             ]
         },
@@ -346,12 +380,12 @@
     ],
     "menu_order": 99,
     "position": "side",
-    "style": "seamless",
+    "style": "default",
     "label_placement": "top",
     "instruction_placement": "field",
     "hide_on_screen": "",
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1649893664
+    "modified": 1650763845
 }

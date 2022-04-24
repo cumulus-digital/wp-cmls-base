@@ -44,9 +44,18 @@ body.disable_bottom_padding > main {
 	text-align: center;
 
 	&.has-header-background {
-		padding-top: 3rem;
-		padding-bottom: 2rem;
+		padding-top: var(--page_title-padding, 2rem);
+		padding-bottom: var(--page_title-padding, 2rem);
 		margin-bottom: var(--page_title-margin_below_header);
+
+		@include tablet {
+			padding-top: calc(var(--page_title-padding, 2rem) * 0.75);
+			padding-bottom: calc(var(--page_title-padding, 2rem) * 0.75);
+		}
+
+		h1:only-child {
+			margin-bottom: 0;
+		}
 	}
 	background-color: var(--page_title-background_color);
 	background-image: var(--page_title-background_image);

@@ -34,6 +34,8 @@ if (
 					--page_title-<?php echo $d_key; ?>: url('<?php echo \esc_attr( $d_arg ); ?>');
 				<?php elseif ( \mb_strstr( $d_key, 'margin' ) ): ?>
 					--page_title-<?php echo $d_key; ?>: <?php echo \esc_attr( $d_arg ); ?>em;
+				<?php elseif ( \mb_strstr( $d_key, 'padding' ) ): ?>
+					--page_title-<?php echo $d_key; ?>: <?php echo \esc_attr( $d_arg ); ?>rem;
 				<?php else: ?>
 					--page_title-<?php echo $d_key; ?>: <?php echo \esc_attr( $d_arg ); ?>;
 				<?php endif; ?>

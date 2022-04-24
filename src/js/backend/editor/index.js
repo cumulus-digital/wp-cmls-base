@@ -8,20 +8,21 @@ require('./acf-title.js');
 	}
 
 	// Determine if we're in the main window or gutenberg's mobile iframe is active
-	function getContext(BOTH) {
+	function getEditorContexts(BOTH) {
+		const context = [document.body];
 		const iframe = document.querySelector('iframe[name="editor-canvas"]');
 		const iframeContent =
-			iframe.contentDocument || iframe.contentWindow.document;
-		if (iframeContent && iframeCoontent.body) {
-			return iframeContent.bodu;
+			iframe?.contentDocument || iframe?.contentWindow?.document;
+		if (iframeContent && iframeContent.body) {
+			context.push(iframeContent.body);
 		}
-		return document.body;
+		return context;
 	}
 
 	// Hide the sticky option, force it false
 	const styles = document.createElement('style');
 	styles.innerHTML = '#sticky-span { display: none !important; }';
-	document.body.appendChild(styles);
+	getEditorContexts().forEach((body) => body.appendChild(styles));
 	let isSticky = null;
 	const { select, subscribe } = wp.data;
 	const waitForEditor = subscribe(() => {

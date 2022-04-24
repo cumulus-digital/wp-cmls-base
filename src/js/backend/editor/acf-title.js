@@ -3,55 +3,23 @@
  */
 
 import jQuery from 'jquery';
-import { map, filter, debounce } from 'lodash';
+import { debounce } from 'lodash';
+import { colord, extend } from 'colord';
+import a11yPlugin from 'colord/plugins/a11y';
 
-let $j = jQuery.noConflict();
-
-// Only act on block editor
 (function ($, window, undefined) {
-	if (
-		typeof window.wp === 'undefined' ||
-		typeof window.wp.blocks === 'undefined'
-	) {
+	// Only operate in the editor
+	if (!window?.wp?.blocks) {
 		return;
 	}
+
+	extend([a11yPlugin]);
+
 	function setupEditor() {
 		function getContext(BOTH) {
 			return $(window.document.body).add(
 				$('iframe[name="editor-canvas"]').contents().find('body')
 			);
-		}
-
-		function waitForElm(selector) {
-			return new Promise((resolve) => {
-				let $t = $(selector);
-				if ($t.length) {
-					resolve($t);
-					return;
-				}
-
-				const observer = new MutationObserver((mutations) => {
-					mutations.forEach((mutation) => {
-						if (mutation.addedNodes) {
-							const found = $(mutation.addedNodes).find(selector);
-							if (found.length) {
-								resolve(found);
-								observer.disconnect();
-							}
-						}
-					});
-				});
-
-				observer.observe(document.body, {
-					childList: true,
-					subtree: true,
-				});
-
-				// Disconnect observer after 2 minutes
-				setTimeout(function () {
-					observer.disconnect();
-				}, 120000);
-			});
 		}
 
 		// Setup for our custom display options in ACF
@@ -75,8 +43,8 @@ let $j = jQuery.noConflict();
 						background-size: var(--page_title-background_size);
 						margin-bottom: var(--page_title-margin_below_header);
 						margin-top: 0;
-						padding-top: 3em;
-						padding-bottom: 3em;
+						padding-top: calc(var(--page_title-padding, 2rem) + .25em);
+						padding-bottom: calc(var(--page_title-padding, 2rem) + .25em);
 					}
 						.has-header-background .edit-post-visual-editor__post-title-wrapper .editor-post-title__input {
 							text-shadow: 0.05em 0.05em 0.15em rgba(0, 0, 0, var(--page_title-title_shadow_opacity));
@@ -176,12 +144,14 @@ let $j = jQuery.noConflict();
 					acf: 'input[name="acf[field_6140e29b2c51a][field_6140e2cb5b633]"]',
 					action: 'setCssVar',
 					triggersHasBackground: true,
+					triggersContextCheck: true,
 				},
 				'acf[field_6140e29b2c51a][field_6140e3aa5b638]': {
 					key: 'title_color',
 					type: 'string',
 					acf: 'input[name="acf[field_6140e29b2c51a][field_6140e3aa5b638]"]',
 					action: 'setCssVar',
+					triggersContextCheck: true,
 				},
 				'acf[field_6140e29b2c51a][field_6140e95fd3f2a]': {
 					key: 'margin_below_header',
@@ -220,6 +190,12 @@ let $j = jQuery.noConflict();
 					acf: 'input[name="acf[field_6140e29b2c51a][field_6140e38b5b637]"]',
 					action: 'setCssVar',
 				},
+				'acf[field_6140e29b2c51a][field_62648f5f80441]': {
+					key: 'padding',
+					type: 'rem',
+					acf: 'input[name="acf[field_6140e29b2c51a][field_62648f5f80441]"]',
+					action: 'setCssVar',
+				},
 			};
 
 			function sanitizeDisplayOption(opt) {
@@ -229,6 +205,9 @@ let $j = jQuery.noConflict();
 						break;
 					case 'em':
 						opt.val = parseFloat(opt.val) + 'em';
+						break;
+					case 'rem':
+						opt.val = parseFloat(opt.val) + 'rem';
 						break;
 					case 'string':
 						opt.val = $('<div>').text(opt.val).html();
@@ -286,27 +265,56 @@ let $j = jQuery.noConflict();
 					opts[i] = opt;
 				}
 
-				var triggersBackground = filter(opts, (opt) => {
-					if (
-						opt.triggersHasBackground &&
-						opt.val &&
-						opt.val.toString().length
-					) {
-						return opt;
+				const triggersBackground = [];
+				const triggersContrastCheck = [];
+				const styles = {};
+				Object.values(opts).forEach((opt) => {
+					if (opt.val && opt.val.toString().length) {
+						if (opt.triggersHasBackground) {
+							triggersBackground.push(opt);
+						}
+						if (opt.triggersContextCheck) {
+							triggersContrastCheck.push(opt);
+						}
+					}
+					if (opt.action === 'setCssVar') {
+						styles[`--page_title-${opt.key}`] = opt.val.toString();
 					}
 				});
+
 				if (triggersBackground.length) {
 					getContext().addClass('has-header-background');
 				} else {
 					getContext().removeClass('has-header-background');
 				}
 
-				var styles = {};
-				map(opts, (opt) => {
-					if (opt.action === 'setCssVar') {
-						styles[`--page_title-${opt.key}`] = opt.val.toString();
+				if (triggersContrastCheck.length) {
+					const textColor =
+						opts['acf[field_6140e29b2c51a][field_6140e3aa5b638]'];
+					const bgColor =
+						opts['acf[field_6140e29b2c51a][field_6140e2cb5b633]'];
+					const isReadable = colord(textColor.val).isReadable(
+						bgColor.val,
+						{ level: 'AA', size: 'large' }
+					);
+					if (!isReadable) {
+						console.log('trigger notice');
+						wp.data
+							.dispatch('core/notices')
+							.createWarningNotice(
+								"This header's color combination may be difficult to read!",
+								{
+									id: 'cmls-a11y-warning',
+									isDismissible: false,
+								}
+							);
+					} else {
+						wp.data
+							.dispatch('core/notices')
+							.removeNotice('cmls-a11y-warning');
 					}
-				});
+				}
+
 				if (Object.keys(styles).length) {
 					getContext().css(styles);
 				}
@@ -314,7 +322,9 @@ let $j = jQuery.noConflict();
 
 			$acfGroup.on(
 				`change.${window.THEME_PREFIX} keyup.${window.THEME_PREFIX}`,
-				map(header_display_options, 'acf').join(','),
+				Object.values(header_display_options)
+					.map((opt) => opt.acf)
+					.join(','),
 				debounce(updateHeaderDisplay, 200, { trailing: true })
 			);
 			updateHeaderDisplay();
@@ -327,4 +337,4 @@ let $j = jQuery.noConflict();
 	} else {
 		$(setupEditor);
 	}
-})($j, window.self);
+})(jQuery.noConflict(), window.self);
