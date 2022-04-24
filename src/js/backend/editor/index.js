@@ -1,5 +1,5 @@
-require('./post-author.js');
-require('./acf-title.js');
+import './post-author.js';
+import './acf-title.js';
 
 (() => {
 	// Only operate in the editor
@@ -7,22 +7,10 @@ require('./acf-title.js');
 		return;
 	}
 
-	// Determine if we're in the main window or gutenberg's mobile iframe is active
-	function getEditorContexts(BOTH) {
-		const context = [document.body];
-		const iframe = document.querySelector('iframe[name="editor-canvas"]');
-		const iframeContent =
-			iframe?.contentDocument || iframe?.contentWindow?.document;
-		if (iframeContent && iframeContent.body) {
-			context.push(iframeContent.body);
-		}
-		return context;
-	}
-
 	// Hide the sticky option, force it false
 	const styles = document.createElement('style');
 	styles.innerHTML = '#sticky-span { display: none !important; }';
-	getEditorContexts().forEach((body) => body.appendChild(styles));
+	document.body.appendChild(styles);
 	let isSticky = null;
 	const { select, subscribe } = wp.data;
 	const waitForEditor = subscribe(() => {

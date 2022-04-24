@@ -1,0 +1,25 @@
+@at-root main.search {
+	header.page_title {
+		.row-container {
+			display: flex;
+			flex-direction: row;
+			gap: 1.5rem;
+			justify-content: space-between;
+			text-align: left;
+
+			@include phone {
+				flex-direction: column;
+				gap: 1rem;
+			}
+
+			.prepend {
+				display: block;
+				font-size: 1rem;
+			}
+		}
+	}
+
+	.global-sidebar .wp-block-search {
+		display: none;
+	}
+}

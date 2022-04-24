@@ -1,1 +1,1 @@
-require('./editor/index.js');
+import './editor/index.js';

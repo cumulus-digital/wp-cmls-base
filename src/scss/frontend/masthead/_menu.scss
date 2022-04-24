@@ -49,7 +49,7 @@
 
 	a,
 	span,
-	.search {
+	.search-form {
 		display: block;
 		color: inherit;
 		text-decoration-line: none;
@@ -90,27 +90,33 @@
 		}
 	}
 
-	.search {
+	.search-form {
 		padding-bottom: 0.75em;
-		form {
-			margin: 0;
-			padding: 0;
-			display: flex;
-		}
-		input {
-			border: 1px solid var(--#{$PREFIX}-color-main_menu-foreground);
-			background-color: var(--#{$PREFIX}-color-main_menu-background);
-			color: var(--#{$PREFIX}-color-main_menu-foreground);
-			padding: 0.25em 0.35em;
 
-			&[name="s"] {
-				width: calc(100% - 5em - 0.5em);
-				margin-right: 0.5em;
+		.search-inside_wrapper {
+			background: #fff;
+			border: 1px solid rgba(255, 255, 255, 0.4);
+			opacity: 0.6;
+			transition: opacity 0.15s;
+
+			min-width: 100%;
+			width: 10em;
+
+			&:focus-within {
+				opacity: 1;
 			}
-			&[type="submit"] {
-				background-color: var(--#{$PREFIX}-color-main_menu-foreground);
-				color: var(--#{$PREFIX}-color-main_menu-background);
-				width: 5em;
+		}
+		input[type="search"] {
+			background: transparent;
+			border: 0;
+			color: #000;
+		}
+		button {
+			background: var(--#{$PREFIX}-color-brand, #000);
+			color: #fff;
+
+			@include hover {
+				background: var(--#{$PREFIX}-color-highlight);
 			}
 		}
 	}

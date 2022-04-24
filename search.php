@@ -9,46 +9,79 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
+// Defaults
+//$display_args = get_tax_display_args( isset( $args ) ? $args : [] );
+
+$display_args = [
+	'display_format'          => 'list',
+	'show_description'        => true,
+	'show_sidebar'            => false,
+	'show_image'              => true,
+	'show_title'              => true,
+	'show_date'               => false,
+	'show_author'             => false,
+	'show_category'           => false,
+	'show_source'             => false,
+	'show_excerpt'            => true,
+	'thumbnail_size'          => 'large',
+	'header-background_color' => false,
+	'header-background_image' => false,
+	'header-text_color'       => false,
+];
+$args = isset( $args ) ? \array_merge( (array) $args, $display_args ) : $display_args;
+
 \get_header();
 ?>
 
 <!-- search -->
-<main role="main" class="search">
+<main role="main" class="search archive">
 
-	<header class="row page_title">
-		<div class="row-container">
-			<h1>Search Results</h1>
-			<?php cmls_get_template_part( 'templates/masthead/search' ); ?>
-		</div>
-	</header>
+	<?php cmls_get_template_part( 'templates/pages/search-header' ); ?>
 
 	<?php if ( \have_posts() ): ?>
 
-		<div class="row">
-			<div class="row-container list">
-			<?php while ( \have_posts() ): \the_post(); ?>
+		<div class="row archive-content">
 
-				<?php
-cmls_get_template_part(
-	'templates/pages/excerpt',
-	make_post_class(),
-	[ 'display_format' => 'list' ]
-);
-				?>
+			<div class="row-container <?php echo has_global_sidebar( $args['show_sidebar'] ) ? 'has-global-sidebar' : ''; ?>">
 
-			<?php endwhile; ?>
+				<?php if ( has_global_sidebar( $args['show_sidebar'] ) ): ?>
+					<?php \get_sidebar(); ?>
+				<?php endif; ?>
+
+				<div>
+
+					<?php \do_action( 'cmls_template-search-before_content' ); ?>
+
+					<?php
+						cmls_get_template_part( 'templates/archives/post_list', make_post_class(), $args );
+					?>
+
+					<?php if ( is_paginated() ): ?>
+						<?php cmls_get_template_part( 'templates/pages/pagination' ); ?>
+					<?php endif; ?>
+
+					<?php \do_action( 'cmls_template-search-after_content' ); ?>
+
+				</div>
 			</div>
-		</div>
 
-		<?php if ( is_paginated() ): ?>
-			<?php cmls_get_template_part( 'templates/pages/pagination' ); ?>
-		<?php endif; ?>
+		</div>
 
 	<?php else: ?>
 
 		<article class="row">
-			<div class="row-container">
-				<p>Sorry, nothing found.</p>
+			<div class="row-container <?php echo has_global_sidebar( $args['show_sidebar'] ) ? 'has-global-sidebar' : ''; ?>">
+
+				<?php if ( has_global_sidebar( $args['show_sidebar'] ) ): ?>
+					<?php \get_sidebar(); ?>
+				<?php endif; ?>
+
+				<div>
+					<div class="body">
+						<p>Sorry, nothing found.</p>
+					</div>
+				</div>
+
 			</div>
 		</article>
 

@@ -9,7 +9,7 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 $args = \array_merge( [
-	'show_sidebar' => true,
+	'show_sidebar' => null,
 ], isset( $args ) ? $args : [] );
 
 \get_header();

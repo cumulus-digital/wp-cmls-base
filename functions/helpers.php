@@ -236,7 +236,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		$qo        = \get_queried_object();
 
 		if ( \is_search() ) {
-			$arch_type = 'search';
+			return 'search';
 		}
 
 		if ( \is_post_type_archive() ) {
@@ -255,7 +255,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 			$arch_type = 'tax';
 			$post_type = $qo->taxonomy . '-' . $qo->slug;
 		}
-		//var_dump($arch_type); var_dump($post_type);
+
 		return \sanitize_html_class( $arch_type . '-' . $post_type );
 	}
 
@@ -596,7 +596,11 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 * @return bool
 	 */
 	function has_global_sidebar( $force = null ) {
-		return \is_active_sidebar( 'global' ) && $force;
+		if ( $force ) {
+			return $force;
+		}
+
+		return \is_active_sidebar( 'global' );
 	}
 
 	/**

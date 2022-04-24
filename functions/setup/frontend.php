@@ -145,13 +145,17 @@ function searchOnlyPostTypes( $query ) {
 	}
 
 	if ( $query->is_main_query() && $query->is_search ) {
-		// Excluded by default
+		// Excluded post types by default
 		$exclude_types = [
 			'nav_menu_item',
 			'attachment',
 			'revision',
 		];
 		$exclude_types = \apply_filters( 'exclude_type_from_search', $exclude_types );
+
+		// Excluded taxonoomies by default
+		$exclude_taxonomies = [];
+		$exclude_taxonomies = \apply_filters( 'exclude_taxonomy_from_search', $exclude_taxonomies );
 
 		// Search all public, searchable types by default
 		$public_types = (array) \get_post_types( [
@@ -160,6 +164,7 @@ function searchOnlyPostTypes( $query ) {
 		] );
 		$post_types = $public_types;
 
+		// Allow restricting search to a post type
 		if ( ! empty( $_GET['t'] ) ) {
 			$post_types   = [];
 			$request_type = \explode( ',', $_GET['t'] );
@@ -186,6 +191,33 @@ function searchOnlyPostTypes( $query ) {
 		// Remove excluded types from final array
 		$post_types = \array_diff( $post_types, $exclude_types );
 		$query->set( 'post_type', $post_types );
+
+		// Allow restricting search to taxonomies
+		if ( \count( $post_types ) ) {
+			$tax_query         = [];
+			$public_taxonomies = \get_taxonomies( [
+				'public'             => true,
+				'publicly_queryable' => true,
+				'object_type'        => $post_types,
+			], 'names' );
+
+			foreach ( $public_taxonomies as $public_tax ) {
+				if ( \array_key_exists( $public_tax, $_GET ) ) {
+					$ids = \array_filter( $_GET[$public_tax], function ( $id ) {
+						return \is_numeric( $id );
+					} );
+					$tax_query[] = [
+						'taxonomy' => $public_tax,
+						'field'    => 'id',
+						'terms'    => $ids,
+					];
+				}
+			}
+
+			if ( \count( $tax_query ) ) {
+				$query->set( 'tax_query', $tax_query );
+			}
+		}
 
 		// Don't show front page in results
 		$front_page = \get_option( 'page_on_front', false );
