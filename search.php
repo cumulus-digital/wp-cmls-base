@@ -15,7 +15,7 @@ namespace CMLS_Base;
 $display_args = [
 	'display_format'          => 'list',
 	'show_description'        => true,
-	'show_sidebar'            => false,
+	'show_sidebar'            => true,
 	'show_image'              => true,
 	'show_title'              => true,
 	'show_date'               => false,

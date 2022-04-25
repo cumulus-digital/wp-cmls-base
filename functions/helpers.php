@@ -596,8 +596,8 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 * @return bool
 	 */
 	function has_global_sidebar( $force = null ) {
-		if ( $force ) {
-			return $force;
+		if ( ! \is_null( $force ) ) {
+			return \is_active_sidebar( 'global' ) && $force;
 		}
 
 		return \is_active_sidebar( 'global' );
