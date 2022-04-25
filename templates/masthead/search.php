@@ -8,13 +8,17 @@
 namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
+
+$searchable_post_types = \apply_filters( 'search_field_post_types-masthead', \apply_filters( 'search_field_post_types', 'all' ) );
 ?>
 
 <!-- templates/masthead/search -->
 <div class="search-form">
 
 	<form role="search" method="get" action="<?php echo \home_url( '/' ); ?>" class="search">
-		<input type="hidden" name="t" value="<?php echo \apply_filters( 'search_field_post_types-masthead', \apply_filters( 'search_field_post_types', 'all' ) ); ?>">
+		<?php if ( $searchable_post_types && $searchable_post_types !== 'all' ): ?>
+			<input type="hidden" name="post_type" value="<?php echo $searchable_post_types; ?>">
+		<?php endif; ?>
 		<label for="search" class="screen-reader-text">Search</label>
 		<div class="search-inside_wrapper">
 			<input type="search" name="s" id="search" value="<?php \the_search_query(); ?>" aria-label="Search">

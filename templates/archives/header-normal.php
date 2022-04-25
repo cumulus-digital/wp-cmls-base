@@ -105,5 +105,9 @@ namespace CMLS_Base;
 
 	</div>
 
+	<?php if ( \is_search() ): ?>
+		<?php cmls_get_template_part( 'templates/pages/search-header', make_post_class(), ['include_header_tag' => false, 'title_tag' => 'h2'] ); ?>
+	<?php endif; ?>
+
 </header>
 <!-- /templates/archive/header-normal -->

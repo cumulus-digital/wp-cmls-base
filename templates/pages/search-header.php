@@ -2,12 +2,17 @@
 /**
  * CMLS Base Theme
  * Template
- * In-coontent Search Form
+ * In-content Search Form
  */
 
 namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
+
+$args = \array_merge( [
+	'include_header_tag' => true,
+	'title_tag'          => 'h1',
+], $args );
 
 $action  = \home_url( '/' );
 $subhead = false;
@@ -22,23 +27,32 @@ if ( \is_category() ) {
 		$subhead = 'Searching Category';
 	}
 }
+
+if ( \is_post_type_archive() ) {
+	$post_type = \get_queried_object();
+	$action    = \get_post_type_archive_link( $post_type->name );
+}
 ?>
 
 <!-- templates/pages/search -->
+
+	<?php if ( $args['include_header_tag'] ): ?>
 	<header class="row page_title">
-		<div class="row-container">
-			<h1>
+	<?php endif; ?>
+
+		<div class="row-container search-header">
+			<<?php echo $args['title_tag']; ?>>
 				<?php if ( $subhead ): ?>
 					<span class="prepend">
 						<?php echo \apply_filters( 'page_search_subhead', \esc_html( $subhead ) ); ?>
 					</span>
 				<?php endif; ?>
 				<?php echo \apply_filters( 'page_search_heading', \esc_html( $context ) ); ?>
-			</h1>
+			</<?php echo $args['title_tag']; ?>>
 			<div class="search-form">
 
 				<form role="search" method="get" action="<?php echo \esc_attr( $action ); ?>" class="search">
-					<input type="hidden" name="t" value="<?php echo \apply_filters( 'search_field_post_types-search_page', \apply_filters( 'search_field_post_types', 'all' ) ); ?>">
+					<input type="hidden" name="post_type" value="<?php echo \apply_filters( 'search_field_post_types-search_page', \apply_filters( 'search_field_post_types', 'all' ) ); ?>">
 					<label for="search" class="screen-reader-text">Search</label>
 					<div class="search-inside_wrapper">
 						<input type="search" name="s" id="search" value="<?php \the_search_query(); ?>" aria-label="Search">
@@ -52,6 +66,9 @@ if ( \is_category() ) {
 
 			</div>
 		</div>
+
+	<?php if ( $args['include_header_tag'] ): ?>
 	</header>
+	<?php endif; ?>
 
 <!-- /templates/pages/search -->

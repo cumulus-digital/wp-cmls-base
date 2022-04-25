@@ -113,7 +113,7 @@ function letPagesOverrideArchives( &$query ) {
 			if ( \property_exists( $currentQuery, 'slug' ) ) {
 				$slug = $currentQuery->slug;
 			} elseif ( \property_exists( $currentQuery, 'rewrite' ) ) {
-				if ( \array_key_exists( 'slug', $currentQuery->rewrite ) ) {
+				if ( \is_array( $currentQuery->rewrite ) && \array_key_exists( 'slug', $currentQuery->rewrite ) ) {
 					$slug = $currentQuery->rewrite['slug'];
 				}
 			}
@@ -140,12 +140,12 @@ function letPagesOverrideArchives( &$query ) {
 
 // Restrict search results, support "t" query var
 function searchOnlyPostTypes( $query ) {
-	if ( \is_admin() ) {
+	if ( \is_admin() || ! $query->is_main_query() ) {
 		return $query;
 	}
 
-	if ( $query->is_main_query() && $query->is_search ) {
-		// Excluded post types by default
+	if ( $query->is_search() ) {
+		// Default excluded post types
 		$exclude_types = [
 			'nav_menu_item',
 			'attachment',
@@ -153,16 +153,25 @@ function searchOnlyPostTypes( $query ) {
 		];
 		$exclude_types = \apply_filters( 'exclude_type_from_search', $exclude_types );
 
-		// Excluded taxonoomies by default
+		// Default excluded taxonomies
 		$exclude_taxonomies = [];
 		$exclude_taxonomies = \apply_filters( 'exclude_taxonomy_from_search', $exclude_taxonomies );
 
-		// Search all public, searchable types by default
+		// If query is not for a particular post type, search all searchable
+		// post types by default
+		$post_types   = [];
 		$public_types = (array) \get_post_types( [
 			'public'              => true,
 			'exclude_from_search' => false,
 		] );
 		$post_types = $public_types;
+
+		// If the request is for a single post type, limit it
+		if ( \array_key_exists( 'post_type', $query->query ) ) {
+			$post_types = \array_filter( (array) $query->query['post_type'], function ( $type ) use ( $public_types ) {
+				return \in_array( $type, $public_types );
+			} );
+		}
 
 		// Allow restricting search to a post type
 		if ( ! empty( $_GET['t'] ) ) {
@@ -190,7 +199,10 @@ function searchOnlyPostTypes( $query ) {
 		$post_types = \apply_filters( 'search_post_types', $post_types );
 		// Remove excluded types from final array
 		$post_types = \array_diff( $post_types, $exclude_types );
-		$query->set( 'post_type', $post_types );
+
+		if ( \count( $post_types ) ) {
+			$query->set( 'post_type', $post_types );
+		}
 
 		// Allow restricting search to taxonomies
 		if ( \count( $post_types ) ) {
@@ -234,12 +246,12 @@ function searchOnlyPostTypes( $query ) {
 
 	return $query;
 }
-\add_filter( 'pre_get_posts', ns( 'searchOnlyPostTypes' ) );
+\add_filter( 'pre_get_posts', ns( 'searchOnlyPostTypes' ), 1, 1 );
 
 // Make the site icon URL relative
 \add_filter( 'get_site_icon_url', function ( $url ) {
 	if ( $url ) {
-		return \preg_replace( '#^https?://#i', '//', $url );
+		return \wp_make_link_relative( $url );
 	}
 
 	return $url;
