@@ -110,7 +110,7 @@ function themeCustomizerSanitizeFile( $id, $setting, $mimes, $message = 'Invalid
 		return $setting->default;
 	}
 
-	if ( \is_int( $id ) ) {
+	if ( \is_numeric( $id ) ) {
 		$filepost = \get_post( $id );
 
 		if (
