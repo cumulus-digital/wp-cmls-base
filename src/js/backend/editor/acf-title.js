@@ -1,7 +1,6 @@
 /**
  * Dynamically represent changes to the post title in ACF options
  */
-
 import jQuery from 'jquery';
 import { debounce } from 'lodash';
 import { colord, extend } from 'colord';
@@ -144,14 +143,14 @@ import a11yPlugin from 'colord/plugins/a11y';
 					acf: 'input[name="acf[field_6140e29b2c51a][field_6140e2cb5b633]"]',
 					action: 'setCssVar',
 					triggersHasBackground: true,
-					triggersContextCheck: true,
+					triggersContrastCheck: true,
 				},
 				'acf[field_6140e29b2c51a][field_6140e3aa5b638]': {
 					key: 'title_color',
 					type: 'string',
 					acf: 'input[name="acf[field_6140e29b2c51a][field_6140e3aa5b638]"]',
 					action: 'setCssVar',
-					triggersContextCheck: true,
+					triggersContrastCheck: true,
 				},
 				'acf[field_6140e29b2c51a][field_6140e95fd3f2a]': {
 					key: 'margin_below_header',
@@ -269,11 +268,11 @@ import a11yPlugin from 'colord/plugins/a11y';
 				const triggersContrastCheck = [];
 				const styles = {};
 				Object.values(opts).forEach((opt) => {
-					if (opt.val && opt.val.toString().length) {
+					if (!opt.oldVal || (opt.oldVal && opt.val !== opt.oldVal)) {
 						if (opt.triggersHasBackground) {
 							triggersBackground.push(opt);
 						}
-						if (opt.triggersContextCheck) {
+						if (opt.triggersContrastCheck) {
 							triggersContrastCheck.push(opt);
 						}
 					}
@@ -289,29 +288,88 @@ import a11yPlugin from 'colord/plugins/a11y';
 				}
 
 				if (triggersContrastCheck.length) {
-					const textColor =
-						opts['acf[field_6140e29b2c51a][field_6140e3aa5b638]'];
-					const bgColor =
-						opts['acf[field_6140e29b2c51a][field_6140e2cb5b633]'];
-					const isReadable = colord(textColor.val).isReadable(
-						bgColor.val,
-						{ level: 'AA', size: 'large' }
-					);
-					if (!isReadable) {
-						console.log('trigger notice');
-						wp.data
-							.dispatch('core/notices')
-							.createWarningNotice(
-								"This header's color combination may be difficult to read!",
-								{
-									id: 'cmls-a11y-warning',
-									isDismissible: false,
+					// We must wait for window load to do this
+					let contrastTimeout = null;
+					const checkContrast = () => {
+						let textColor =
+							opts[
+								'acf[field_6140e29b2c51a][field_6140e3aa5b638]'
+							].val;
+						let bgColor =
+							opts[
+								'acf[field_6140e29b2c51a][field_6140e2cb5b633]'
+							].val;
+
+						// Background can be inherited
+						if (!bgColor) {
+							const bgEl = getContext()
+								.find('.editor-styles-wrapper')
+								.get(0);
+							if (!bgEl) {
+								if (contrastTimeout) {
+									clearTimeout(contrastTimeout);
 								}
-							);
+								contrastTimeout = setTimeout(
+									checkContrast,
+									1000
+								);
+								return;
+							}
+							const docStyles = getComputedStyle(bgEl);
+							bgColor = docStyles.backgroundColor;
+						}
+
+						// Header color can be inherited
+						if (!textColor) {
+							const hEl = getContext()
+								.find(
+									'.edit-post-visual-editor__post-title-wrapper'
+								)
+								.get(0);
+							if (!hEl) {
+								if (contrastTimeout) {
+									clearTimeout(contrastTimeout);
+								}
+								contrastTimeout = setTimeout(
+									checkContrast,
+									1000
+								);
+								return;
+							}
+							const hStyle = getComputedStyle(hEl);
+							textColor = hStyle.backgroundColor;
+						}
+
+						const isReadable = colord(textColor).isReadable(
+							bgColor,
+							{ level: 'AA', size: 'large' }
+						);
+						if (!isReadable) {
+							console.log('trigger notice');
+							wp.data
+								.dispatch('core/notices')
+								.createWarningNotice(
+									"<span style='font-size:1.15em'>🚨 This page's header may be difficult to read!</span>",
+									{
+										id: 'cmls-a11y-warning',
+										isDismissible: false,
+										speak: true,
+										__unstableHTML: true,
+									}
+								);
+						} else {
+							wp.data
+								.dispatch('core/notices')
+								.removeNotice('cmls-a11y-warning');
+						}
+					};
+					if (
+						document.readyState === 'complete' ||
+						document.readyState === 'interactive'
+					) {
+						checkContrast();
 					} else {
-						wp.data
-							.dispatch('core/notices')
-							.removeNotice('cmls-a11y-warning');
+						$(window).on('load', checkContrast);
 					}
 				}
 
@@ -332,9 +390,11 @@ import a11yPlugin from 'colord/plugins/a11y';
 		}
 	}
 
-	if (window._wpLoadBlockEditor) {
-		window._wpLoadBlockEditor.then(setupEditor);
-	} else {
-		$(setupEditor);
-	}
+	$(() => {
+		if (window._wpLoadBlockEditor) {
+			window._wpLoadBlockEditor.then(setupEditor);
+		} else {
+			$(window).on('load', setupEditor);
+		}
+	});
 })(jQuery.noConflict(), window.self);
