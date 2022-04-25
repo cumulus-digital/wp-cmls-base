@@ -9,10 +9,14 @@ namespace CMLS_Base\Setup\Security;
 
 \add_action( 'init', function () {
 	// Disable user registration
-	\update_option( 'users_can_register', false );
+	if ( \get_option( 'users_can_register' ) ) {
+		\update_option( 'users_can_register', false );
+	}
 
 	// Remove sticky posts
-	\update_option( 'sticky_posts', [] );
+	if ( \get_option( 'sticky_posts' ) ) {
+		\update_option( 'sticky_posts', [] );
+	}
 } );
 
 /*

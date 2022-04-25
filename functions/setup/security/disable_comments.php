@@ -22,7 +22,9 @@ namespace CMLS_Base\Setup\Security;
 	];
 
 	foreach ( $disable_options as $key => $value ) {
-		\update_option( $key, $value );
+		if ( \get_option( $key ) !== $value ) {
+			\update_option( $key, $value );
+		}
 	}
 } );
 
@@ -32,7 +34,7 @@ namespace CMLS_Base\Setup\Security;
 \add_filter( 'wp_insert_post_data', function ( $data ) {
 	if ( $data['post_type'] === 'attachment' ) {
 		$data['comment_status'] = 'closed';
-		$data['ping_status'] = 'closed';
+		$data['ping_status']    = 'closed';
 	}
 
 	return $data;
