@@ -102,6 +102,9 @@
 			min-width: 100%;
 			width: 10em;
 
+			@include hover {
+				opacity: 1;
+			}
 			&:focus-within {
 				opacity: 1;
 			}

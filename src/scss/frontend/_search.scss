@@ -13,6 +13,7 @@
 		max-width: 100%;
 		padding: 0.15em;
 		border: 1px solid rgba(0, 0, 0, 0.15);
+		border-radius: 1px;
 		background: transparent;
 		transition: background 0.15s;
 	}
@@ -39,6 +40,7 @@
 		line-height: 1;
 		background: rgba(0, 0, 0, 0.15);
 		border: 1px solid rgba(0, 0, 0, 0.15);
+		border-radius: 1px;
 		color: #32373c;
 		margin-left: 0.5em;
 		word-break: normal;
