@@ -7,6 +7,7 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
+require __DIR__ . '/cache.php';
 require __DIR__ . '/security/index.php';
 require __DIR__ . '/global.php';
 require __DIR__ . '/theme_support.php';

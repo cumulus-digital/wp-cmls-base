@@ -173,11 +173,11 @@ class themeMods {
 	}
 
 	public static function getFiles() {
-		/*
-		if (array_key_exists('files', self::$cache)) {
-			return self::$cache['files'];
+		$cache_key = 'getFiles';
+
+		if ( $cache = CMLS_Cache::get( $cache_key, 'CMLS_Base::themeMods' ) ) {
+			return $cache;
 		}
-		*/
 		$keys     = self::getFilteredKeys( 'file' );
 		$files    = [];
 		$post_ids = [];
@@ -212,7 +212,8 @@ class themeMods {
 		}
 
 		if ( \count( $files ) ) {
-			//self::$cache['files'] = $files;
+			CMLS_Cache::set( $cache_key, $files, 'CMLS_Base::themeMods' );
+
 			return $files;
 		}
 
@@ -279,6 +280,13 @@ function themeCustomizerScripts() {
 }
 \add_action('customize_controls_enqueue_scripts', ns('themeCustomizerScripts'));
 */
+
+/*
+ * Flush the themeMods cache when customizer is saved
+ */
+\add_action( 'customize_save_after', function () {
+	CMLS_Cache::flushGroup( 'CMLS_Base::themeMods' );
+} );
 
 require __DIR__ . '/sanitizers.php';
 require __DIR__ . '/identity.php';

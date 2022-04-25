@@ -36,8 +36,24 @@ function makeMenu( $location, $options = [] ) {
 		'depth'           => 0,
 		'walker'          => new CleanMenuWalker(),
 	];
-	$resolved = \array_merge( $defaults, $options );
-	\wp_nav_menu( $resolved );
+	$args      = \array_merge( $defaults, $options );
+	$cache_key = \serialize( [$location, $args] );
+
+	$should_echo = $args['echo'];
+
+	if ( ! $menu = CMLS_Cache::get( $cache_key, 'CMLS_Base::makeMenu' ) ) {
+		$args['echo'] = false;
+		$menu         = \wp_nav_menu( $args );
+		CMLS_Cache::set( $cache_key, $menu, 'CMLS_Base::makeMenu', 30 * 60 );
+	}
+
+	if ( $should_echo ) {
+		echo $menu;
+
+		return;
+	}
+
+	return $menu;
 }
 
 function header_menu() {
@@ -79,3 +95,10 @@ function social_menu( $options = [] ) {
 function has_social_menu() {
 	return \has_nav_menu( 'social-menu' );
 }
+
+/*
+ * Flush menu cache after menu updated
+ */
+\add_action( 'wp_update_nav_menu', function () {
+	CMLS_Cache::flushGroup( 'CMLS_Base::makeMenu' );
+} );
