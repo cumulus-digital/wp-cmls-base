@@ -2,12 +2,17 @@
 
 .edit-post-visual-editor__post-title-wrapper {
 	margin-bottom: 0;
+
+	body.has-header-background & h1 {
+		margin-bottom: 0;
+	}
 }
 .editor-post-title__block .editor-post-title__input,
 .edit-post-visual-editor__post-title-wrapper .editor-post-title__input {
 	font-family: var(--#{$PREFIX}-font-family);
 	text-align: center;
 }
+
 h1,
 h2,
 h3,
