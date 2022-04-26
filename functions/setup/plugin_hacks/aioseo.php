@@ -5,6 +5,8 @@
 
 namespace CMLS_Base\Setup\PluginHacks;
 
+use CMLS_Base\CMLS_Cache;
+
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 // Collapse the AIOSEO editor metabox by default
@@ -38,10 +40,18 @@ namespace CMLS_Base\Setup\PluginHacks;
 	}
 
 	if ( \function_exists( 'aioseo' ) && $query->is_main_query() && $query->is_search ) {
-		global $wpdb;
-		$noIndex = $wpdb->get_col( "
-			SELECT post_id FROM {$wpdb->prefix}aioseo_posts WHERE robots_noindex = 1
-		" );
+		$cache_key   = 'aioseo_posts_noindex';
+		$cache_group = 'CMLS_Base::aioseoPostsNoindex';
+
+		if ( $cached = CMLS_Cache::get( $cache_key, $cache_group ) ) {
+			$noIndex = $cached;
+		} else {
+			global $wpdb;
+			$noIndex = $wpdb->get_col( "
+				SELECT post_id FROM {$wpdb->prefix}aioseo_posts WHERE robots_noindex = 1
+			" );
+			CMLS_Cache::set( $cache_key, $noIndex, $cache_group );
+		}
 
 		if ( $noIndex && \count( $noIndex ) ) {
 			$post_not_in = $query->get( 'post__not_in' );
@@ -51,4 +61,8 @@ namespace CMLS_Base\Setup\PluginHacks;
 	}
 
 	return $query;
+} );
+// Clear the noindex cache on post save
+\add_filter( 'post_save', function () {
+	CMLS_Cache::delete( 'aioseo_posts_noindex', 'CMLS_Base::aioseoPostsNoindex' );
 } );
