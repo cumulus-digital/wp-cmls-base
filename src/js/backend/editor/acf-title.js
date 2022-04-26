@@ -276,12 +276,23 @@ window.acfWatchChanges = function (config) {
 								wp.data
 									.dispatch('core/notices')
 									.createWarningNotice(
-										"<span style='font-size:1.15em'>🚨 This page's header may be difficult to read!</span>",
+										"<span style='font-size:1.15em'>🚨This page's header may be difficult to read!</span>",
 										{
 											id: 'cmls-a11y-warning',
 											isDismissible: false,
 											speak: true,
 											__unstableHTML: true,
+											actions: [
+												{
+													onClick: () => {
+														window.open(
+															'https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html',
+															'_blank'
+														);
+													},
+													label: 'WCAG 2.0 accessibility Guidelines, Level AA',
+												},
+											],
 										}
 									);
 							} else {
