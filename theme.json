@@ -1,4 +1,5 @@
 {
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
 	"version": 2,
 	"settings": {
 		"appearanceTools": true,
@@ -10,15 +11,22 @@
 		},
 		"color": {
 			"link": true,
+			"background": true,
 			"custom": true,
 			"customDuotone": true,
-			"customGradient": true
+			"customGradient": true,
+			"defaultDuotone": true,
+			"defaultGradients": true,
+			"text": true
 		},
 		"layout": {
             "contentSize": "calc(1200px - 2rem)",
             "wideSize": "calc(1200px + 2rem)"
         },
 		"spacing": {
+            "blockGap": true,
+            "margin": true,
+            "padding": true,
 			"units": [
 				"em",
 				"rem",
