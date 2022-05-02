@@ -9,3 +9,4 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 require __DIR__ . '/archives.php';
+require __DIR__ . '/post-password.php';
