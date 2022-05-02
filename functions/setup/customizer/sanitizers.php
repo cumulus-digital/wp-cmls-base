@@ -168,7 +168,9 @@ function themeCustomizer_sanitizeSimpleHTML( $input ) {
 		'br' => [
 			'clear' => [],
 		],
-		'em'     => [],
+		'em' => [
+			'class' => [],
+		],
 		'strong' => [],
 		'small'  => [],
 	];

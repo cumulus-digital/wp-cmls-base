@@ -103,6 +103,18 @@ article {
 	visibility: hidden;
 }
 
+.mobile-linebreak {
+	display: inline-block;
+	line-height: 0;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+
+	@include phone() {
+		display: block;
+	}
+}
+
 @import "_wpadminbar";
 @import "_search";
 @import "./masthead/_";
