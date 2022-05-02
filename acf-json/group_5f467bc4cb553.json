@@ -258,7 +258,7 @@
                     "label": "Margin Below Header",
                     "name": "margin_below_header",
                     "type": "number",
-                    "instructions": "Before content begins, specified in em units.",
+                    "instructions": "Before content begins, specified in rem units.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -269,7 +269,7 @@
                     "default_value": "1.5",
                     "placeholder": "",
                     "prepend": "",
-                    "append": "em",
+                    "append": "rem",
                     "min": 0,
                     "max": 20,
                     "step": ".5"

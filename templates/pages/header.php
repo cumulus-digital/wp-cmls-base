@@ -33,7 +33,7 @@ if (
 				<?php if ( \mb_strstr( $d_key, 'image' ) ): ?>
 					--page_title-<?php echo $d_key; ?>: url('<?php echo \esc_attr( $d_arg ); ?>');
 				<?php elseif ( \mb_strstr( $d_key, 'margin' ) ): ?>
-					--page_title-<?php echo $d_key; ?>: <?php echo \esc_attr( $d_arg ); ?>em;
+					--page_title-<?php echo $d_key; ?>: <?php echo \esc_attr( $d_arg ); ?>rem;
 				<?php elseif ( \mb_strstr( $d_key, 'padding' ) ): ?>
 					--page_title-<?php echo $d_key; ?>: <?php echo \esc_attr( $d_arg ); ?>rem;
 				<?php else: ?>

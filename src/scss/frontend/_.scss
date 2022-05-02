@@ -48,7 +48,7 @@ body.disable_bottom_padding > main {
 	&.has-header-background {
 		padding-top: var(--page_title-padding, 2rem);
 		padding-bottom: var(--page_title-padding, 2rem);
-		margin-bottom: var(--page_title-margin_below_header);
+		margin-bottom: var(--page_title-margin_below_header, 1.5rem);
 
 		@include tablet {
 			padding-top: calc(var(--page_title-padding, 2rem) * 0.75);
