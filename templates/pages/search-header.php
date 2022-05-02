@@ -49,12 +49,12 @@ if ( \is_post_type_archive() ) {
 				<?php endif; ?>
 				<?php echo \apply_filters( 'page_search_heading', \esc_html( $context ) ); ?>
 			</<?php echo $args['title_tag']; ?>>
-			<div class="search-form">
+			<div class="compact-form">
 
 				<form role="search" method="get" action="<?php echo \esc_attr( $action ); ?>" class="search">
 					<input type="hidden" name="post_type" value="<?php echo \apply_filters( 'search_field_post_types-search_page', \apply_filters( 'search_field_post_types', 'all' ) ); ?>">
 					<label for="search" class="screen-reader-text">Search</label>
-					<div class="search-inside_wrapper">
+					<div class="compact-form--inside_wrapper">
 						<input type="search" name="s" id="search" value="<?php \the_search_query(); ?>" aria-label="Search">
 						<button type="submit" class="has-icon" aria-label="Search">
 							<svg id="search-icon" class="search-icon" viewBox="0 0 24 24" width="24" height="24">

@@ -17,7 +17,7 @@ $searchable_post_types = \apply_filters( 'search_field_post_types-masthead', \ap
 	<?php if ( $args['role'] ): ?>
 		role="<?php echo $args['role']; ?>"
 	<?php endif; ?>
-	class="search-form"
+	class="compact-form"
 >
 
 	<form role="search" method="get" action="<?php echo \home_url( '/' ); ?>" class="search">
@@ -25,7 +25,7 @@ $searchable_post_types = \apply_filters( 'search_field_post_types-masthead', \ap
 			<input type="hidden" name="post_type" value="<?php echo $searchable_post_types; ?>">
 		<?php endif; ?>
 		<label for="search-input" class="screen-reader-text">Search</label>
-		<div class="search-inside_wrapper">
+		<div class="compact-form--inside_wrapper">
 			<input type="search" name="s" id="search-input" value="<?php \the_search_query(); ?>" aria-label="Search" spellcheck="false">
 			<button type="submit" class="has-icon" aria-label="Search">
 				<svg id="search-icon" class="search-icon" viewBox="0 0 24 24" width="24" height="24">

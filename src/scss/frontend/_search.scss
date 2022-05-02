@@ -1,4 +1,4 @@
-.search-form {
+.compact-form {
 	font-size: 1rem;
 
 	form {
@@ -6,7 +6,7 @@
 		padding: 0;
 	}
 
-	.search-inside_wrapper {
+	.compact-form--inside_wrapper {
 		display: flex;
 		flex: auto;
 		flex-wrap: nowrap;
@@ -14,10 +14,9 @@
 		padding: 0.15em;
 		border: 1px solid rgba(0, 0, 0, 0.15);
 		border-radius: 2px;
-		background: transparent;
-		transition: background 0.15s;
+		background: var(--#{$PREFIX}-color-content-background);
 	}
-	input[type="search"] {
+	input {
 		background: transparent;
 		border-radius: 0;
 		border: none;
