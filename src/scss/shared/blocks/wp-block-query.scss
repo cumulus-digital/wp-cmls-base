@@ -63,10 +63,6 @@
 		@include cards;
 		//font-size: 1rem;
 
-		@include phone {
-			--card-width: 50%;
-		}
-
 		& > li {
 			@include card;
 			box-sizing: border-box;
@@ -109,6 +105,17 @@
 		&.columns-6 {
 			--card-width: 16.6666666667%;
 			font-size: 0.75em;
+		}
+	}
+
+	@include phone() {
+		&.collapse-1 .is-flex-container,
+		& .is-flex-container.collapse-1 {
+			--card-width: 100%;
+		}
+		&.collapse-2 .is-flex-container,
+		& .is-flex-container.collapse-2 {
+			--card-width: 50%;
 		}
 	}
 }
