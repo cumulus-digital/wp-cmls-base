@@ -22,7 +22,7 @@ if ( has_header_menu() ): ?>
     <div class="menu" id="header_menu">
         <?php header_menu(); ?>
         <?php if ( themeMods::get( 'setting-main_menu-include_search' ) ): ?>
-            <?php cmls_get_template_part( 'templates/masthead/search' ); ?>
+            <?php cmls_get_template_part( 'templates/masthead/search', null, [ 'role' => 'menuitem' ] ); ?>
         <?php endif; ?>
     </div>
 </nav>
