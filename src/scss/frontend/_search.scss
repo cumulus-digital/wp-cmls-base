@@ -19,12 +19,14 @@
 	&.compact-password-form {
 		display: flex;
 		justify-content: center;
+		padding: 0 0.5rem;
 
 		form {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			max-width: 480px;
+			width: 480px;
+			max-width: 100%;
 			text-align: center;
 			border: 8px solid rgba(0, 0, 0, 0.15);
 			border-radius: 2px;
