@@ -248,10 +248,35 @@ function searchOnlyPostTypes( $query ) {
 }
 \add_filter( 'pre_get_posts', ns( 'searchOnlyPostTypes' ), 1, 1 );
 
-// Make the site icon URL relative
+// Remove protocol from favicon URL
 \add_filter( 'get_site_icon_url', function ( $url ) {
 	if ( $url ) {
-		return \wp_make_link_relative( $url );
+		$parts = \array_merge( [
+			'host'     => null,
+			'port'     => null,
+			'path'     => null,
+			'query'    => null,
+			'fragment' => null,
+		], \wp_parse_url( $url ) );
+
+		$newurl = '//' . $parts['host'];
+
+		if ( $parts['port'] ) {
+			$newurl .= ':' . $parts['port'];
+		}
+
+		$newurl .= $parts['path'];
+
+		if ( $parts['query'] ) {
+			$newurl .= '?' . $parts['query'];
+		}
+
+		if ( $parts['fragment'] ) {
+			$newurl .= '#' . $parts['fragment'];
+		}
+
+		return $newurl;
+		//return \wp_make_link_relative( $url );
 	}
 
 	return $url;
