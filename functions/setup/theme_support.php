@@ -8,6 +8,7 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 function init_theme_support() {
+	\add_theme_support( 'custom-logo' );
 	\add_theme_support( 'menus' );
 	\add_theme_support( 'editor-styles' );
 	//\add_editor_style('build/backend.css');
