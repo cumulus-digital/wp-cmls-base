@@ -16,10 +16,6 @@ class CleanMenuWalker extends Walker_Nav_Menu {
 
 		$classes = empty( $item->classes ) ? [] : (array) $item->classes;
 
-		if (!empty($item->post_password)) {
-			$classes[] = 'menu-item-protected';
-		}
-
 		$class_names = \join(
 			' ',
 			\apply_filters(

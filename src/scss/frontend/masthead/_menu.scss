@@ -74,7 +74,17 @@
 			font-size: 0.6em;
 			opacity: 0.8;
 		}
+
 	}
+
+	.password-protected > a::before {
+		display: inline-block;
+		content: '\1F512\00FE0E';
+		color: transparent;
+		text-shadow: 0 0 1px var(--#{$PREFIX}-color-main_menu-foreground);
+		margin-right: .5em;
+	}
+
 
 	body.menu-active & {
 		max-height: calc(
@@ -87,15 +97,6 @@
 
 		&.is-open {
 			overflow-y: auto;
-		}
-	}
-
-	.menu-item-protected {
-		&::after {
-			content: '\1F512\00FE0E';
-			color: transparent;
-			text-shadow: 0 0 1px var(--#{$PREFIX}-color-main_menu-foreground);
-			margin-right: .5em;
 		}
 	}
 
