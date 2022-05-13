@@ -90,6 +90,15 @@
 		}
 	}
 
+	.menu-item-protected {
+		&::after {
+			content: '\1F512\00FE0E';
+			color: transparent;
+			text-shadow: 0 0 1px var(--#{$PREFIX}-color-main_menu-foreground);
+			margin-right: .5em;
+		}
+	}
+
 	.search-form {
 		padding-bottom: 0.75em;
 
