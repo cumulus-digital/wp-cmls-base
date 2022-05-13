@@ -1,7 +1,7 @@
 @mixin cards {
 	--card-gap: 0.75rem;
 	--card-width: 25%;
-	--focus-outline: 2px solid var(--#{$PREFIX}-color-brand);
+	--focus-outline: 5px solid var(--#{$PREFIX}-color-highlight);
 	--hover-outline-color: var(--#{$PREFIX}-color-brand);
 
 	display: flex;
@@ -34,7 +34,7 @@
 		@include hover {
 			transform: scale(1.03);
 			box-shadow: 0 0 1px 0 var(--hover-outline-color),
-				0 0 1.5em rgba(0, 0, 0, 0.14);
+				0 0 1.5em rgba(0, 0, 0, 0.2);
 			z-index: 2;
 		}
 	}
