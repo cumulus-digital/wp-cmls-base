@@ -16,7 +16,7 @@ $hamburger-hover-use-filter: false;
 $hamburger-hover-filter: opacity(50%);
 $hamburger-active-hover-filter: $hamburger-hover-filter;
 
-$hamburger-types: (spin);
+$hamburger-types: (spin) !default;
 
 @import "hamburgers/_sass/hamburgers/hamburgers.scss";
 
@@ -48,8 +48,8 @@ $hamburger-types: (spin);
 	.hamburger-inner,
 	.hamburger-inner::before,
 	.hamburger-inner::after {
-		transition-property: all, background-color;
-		transition-duration: 0.2s, 0.3s;
+		//transition-property: all, background-color;
+		//transition-duration: 0.2s, 0.3s;
 		z-index: 3;
 		background-color: var(--#{$PREFIX}-color-masthead-foreground);
 	}
@@ -70,7 +70,7 @@ $hamburger-types: (spin);
 		}
 	}
 
-	&.is-active:focus {
+	&.is-active:focus-within {
 		outline: 0;
 	}
 	/*
