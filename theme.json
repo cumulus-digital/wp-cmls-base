@@ -77,5 +77,10 @@
 				}
 			]
 		}
+	},
+	"styles": {
+		"spacing": {
+			"blockGap": ".75rem"
+		}
 	}
 }
