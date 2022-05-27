@@ -142,3 +142,8 @@
 .wp-block-embed-jotform iframe {
 	border: 0;
 }
+
+// Don't let Kadence images which are SVGs break flex
+.is-layout-flex .wp-block-kadence-image.image-is-svg {
+	width: auto;
+}

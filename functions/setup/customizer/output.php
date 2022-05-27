@@ -147,19 +147,9 @@ function registerCustomEditorColors() {
 			'color' => \esc_html( themeMods::get( 'color-accent' ) ),
 		],
 		[
-			'name'  => 'Black',
-			'slug'  => 'black',
-			'color' => '#000',
-		],
-		[
-			'name'  => 'Dark Grey',
-			'slug'  => 'darkgrey',
-			'color' => '#333',
-		],
-		[
-			'name'  => 'Grey',
-			'slug'  => 'grey',
-			'color' => '#888',
+			'name'  => 'White',
+			'slug'  => 'white',
+			'color' => '#ffffff',
 		],
 		[
 			'name'  => 'Light Grey',
@@ -167,9 +157,19 @@ function registerCustomEditorColors() {
 			'color' => '#d6d6d6',
 		],
 		[
-			'name'  => 'White',
-			'slug'  => 'white',
-			'color' => '#fff',
+			'name'  => 'Grey',
+			'slug'  => 'grey',
+			'color' => '#888888',
+		],
+		[
+			'name'  => 'Dark Grey',
+			'slug'  => 'darkgrey',
+			'color' => '#333333',
+		],
+		[
+			'name'  => 'Black',
+			'slug'  => 'black',
+			'color' => '#000000',
 		],
 	] );
 }
