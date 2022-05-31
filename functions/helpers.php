@@ -179,14 +179,20 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	function is_paginated() {
 		global $wp_query;
 
+		// allow for paging to be disabled
+		if ( $wp_query->get( 'nopaging' ) ) {
+			return false;
+		}
+
 		$posts_per_page         = $wp_query->get( 'posts_per_page' );
 		$posts_per_archive_page = $wp_query->get( 'posts_per_archive_page' );
 
-		// allow for infinite pages
+		// allow for infinite pages where nopaging is not properly set
 		if ( $posts_per_page === -1 || ( \is_archive() && $posts_per_archive_page === -1 ) ) {
 			return false;
 		}
 
+		// Otherwise use max_num_pages
 		return $wp_query->max_num_pages > 1;
 	}
 
