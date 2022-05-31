@@ -69,11 +69,11 @@ namespace CMLS_Base;
 			<?php if ( \is_tag() ): ?>
 
 				<span class="prepend">Tag: </span>
-				<?php echo \esc_html( \single_term_title() ); ?>
+				<?php echo \wp_kses_post( \apply_filters( 'single_term_title', \single_term_title( null, false ) ) ); ?>
 
 			<?php elseif ( \is_category() || \is_tax() ): ?>
 
-				<?php echo \esc_html( \single_term_title() ); ?>
+				<?php echo \wp_kses_post( \apply_filters( 'single_term_title', \single_term_title( null, false ) ) ); ?>
 
 			<?php elseif ( \is_home() ): ?>
 
@@ -97,7 +97,7 @@ namespace CMLS_Base;
 
 		<?php if ( $args['show_description'] && \mb_strlen( \term_description() ) ): ?>
 			<div class="term-description">
-				<?php echo \term_description(); ?>
+				<?php echo \apply_filters( 'single_term_title', \term_description() ); ?>
 			</div>
 		<?php endif; ?>
 

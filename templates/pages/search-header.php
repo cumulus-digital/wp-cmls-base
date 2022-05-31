@@ -23,7 +23,7 @@ if ( \is_category() ) {
 
 	if ( $cat ) {
 		$action  = \get_category_link( $cat );
-		$context = $cat->name;
+		$context = \apply_filters( 'single_term_title', $cat->name );
 		$subhead = 'Searching Category';
 	}
 }

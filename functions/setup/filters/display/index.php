@@ -10,3 +10,4 @@ namespace CMLS_Base;
 
 require __DIR__ . '/archives.php';
 require __DIR__ . '/post-password.php';
+require __DIR__ . '/title-registration-marks.php';
