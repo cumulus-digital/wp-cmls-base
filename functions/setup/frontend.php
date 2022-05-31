@@ -34,16 +34,16 @@ function frontendScriptsAndStyles() {
 }
 \add_action( 'wp_enqueue_scripts', ns( 'frontendScriptsAndStyles' ) );
 
-// Basic post queries are limited to 12
-function setQueryLimitToTwelve( $query ) {
+// Basic post queries are limited to 16
+function setQueryLimitToSixteen( $query ) {
 	if ( \is_admin() || ! $query->is_main_query() ) {
 		return;
 	}
-	$query->set( 'posts_per_page', 12 );
+	$query->set( 'posts_per_page', 16 );
 
 	return $query;
 }
-\add_action( 'pre_get_posts', ns( 'setQueryLimitToTwelve' ) );
+\add_action( 'pre_get_posts', ns( 'setQueryLimitToSixteen' ) );
 
 // remove title on homepage
 function removePageTitleOnHomepage( $title ) {
