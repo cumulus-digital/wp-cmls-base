@@ -74,7 +74,7 @@ function dbReplaceFoundRows( $clauses, WP_Query $query ) {
 
 	$max_num_pages = \ceil( $query->found_posts / $posts_per_page );
 
-	CMLS_Cache::set( $count_query, $found_posts, $cache_group, 30 * 60 );
+	CMLS_Cache::set( $count_query, $query->found_posts, $cache_group, 30 * 60 );
 	$query->max_num_pages = $max_num_pages;
 
 	// Return the $clauses so the main query can run.

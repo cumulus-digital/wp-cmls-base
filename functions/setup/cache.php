@@ -29,6 +29,12 @@ class CMLS_Cache {
 		return \wp_cache_get( $key, $group );
 	}
 
+	/**
+	 * @param string $key
+	 * @param mixed  $value
+	 * @param string $group
+	 * @param mixed  $expires False or a time in seconds
+	 */
 	public static function set( $key, $value, $group, $expires = false ) {
 		$cache = self::getInstance();
 
