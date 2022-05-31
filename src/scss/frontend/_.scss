@@ -51,6 +51,11 @@ body.disable_bottom_padding > main {
 	padding-right: 0.5rem;
 	text-align: center;
 
+	@include phone {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
 	&.has-header-background {
 		padding-top: var(--page_title-padding, 2rem);
 		padding-bottom: var(--page_title-padding, 2rem);
