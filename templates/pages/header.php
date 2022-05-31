@@ -44,9 +44,11 @@ if (
 		</style>
 		<header class="row page_title <?php echo $has_header_bg ? 'has-header-background full-width' : ''; ?>">
 			<div class="row-container">
+				<?php \do_action( 'cmls_template-post-before_title' ); ?>
 				<h1 class="<?php echo \esc_attr( \get_field( 'cmls-header_options-custom_classes' ) ); ?>">
 					<?php \the_title(); ?>
 				</h1>
+				<?php \do_action( 'cmls_template-post-after_title' ); ?>
 			</div>
 		</header>
 	<?php endif; ?>

@@ -12,11 +12,15 @@ namespace CMLS_Base;
 
 <!-- templates/pages/body -->
 <div class="body">
+    <?php \do_action( 'cmls_template-post-before_body' ); ?>
+
     <?php if ( \is_singular() ): ?>
         <?php \the_content(); ?>
     <?php else: ?>
         <!-- EXCERPT -->
         <?php \the_excerpt(); ?>
     <?php endif; ?>
+
+    <?php \do_action( 'cmls_template-post-after_body' ); ?>
 </div>
 <!-- /templates/pages/body -->
