@@ -77,19 +77,44 @@ h6 {
 	}
 	h1,
 	.edit-post-visual-editor__post-title-wrapper > h1 {
-		font-size: 2.1em;
+		font-size: 2em;
 	}
 	h2 {
-		font-size: 1.85em;
+		font-size: 1.75em;
 	}
 	h3 {
 		font-size: 1.5em;
 	}
 	h4 {
-		font-size: 1.15em;
+		font-size: 1em;
 	}
 	h6 {
 		font-size: 1em;
+	}
+}
+
+// Different page title size for posts
+.single-post .page_title {
+	h1 {
+		font-size: 1.75em;
+	}
+	h2 {
+		font-size: 1.5em;
+	}
+	h3 {
+		font-size: 1.25em;
+	}
+
+	@include phone {
+		h1 {
+			font-size: 1.5em;
+		}
+		h2 {
+			font-size: 1.25em;
+		}
+		h3 {
+			font-size: 1.15em;
+		}
 	}
 }
 
