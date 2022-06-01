@@ -119,6 +119,14 @@ function directOutputCustomCSS() {
 \add_action( 'wp_head', ns( 'directOutputCustomCSS' ), 100 );
 
 function enqueueCustomFontURL( $url, $key ) {
+	if ( \mb_substr_count( $url, 'fonts.googleapis.com' ) ) {
+		\add_action( 'wp_head', function () {
+			?>
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<?php
+		} );
+	}
 	\wp_enqueue_style(
 		'custom-webfont-url-' . $key,
 		\esc_url( $url ),

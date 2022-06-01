@@ -90,7 +90,7 @@ class themeMods {
 		'color-favicon-mstile'  => '#00598e',
 		'color-favicon-chrome'  => '#00598e',
 
-		'font-webfont_url'        => 'https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap',
+		'font-webfont_url'        => 'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,500;0,600;0,700;0,800;0,900;1,100;1,300;1,500;1,600;1,700;1,800;1,900&display=swap',
 		'font-font_family'        => "'Montserrat', Helvetica, Arial, sans-serif",
 		'font-header_webfont_url' => null,
 		'font-header_family'      => 'inherit',
