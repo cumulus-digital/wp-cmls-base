@@ -20,6 +20,8 @@ body {
 
 	font-family: var(--#{$PREFIX}-font-font_family);
 	font-size: var(--#{$PREFIX}-font-base_size);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 
 	@include tablet {
 		font-size: calc(var(--#{$PREFIX}-font-base_size) * 0.95);
