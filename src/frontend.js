@@ -30,5 +30,4 @@ addEventListener('load', () => {
 	}
 });
 
-import './js/frontend/masthead.js';
-import './js/frontend/menu.js';
+import './js/frontend/index.js';
