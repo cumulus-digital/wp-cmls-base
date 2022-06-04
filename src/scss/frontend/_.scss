@@ -13,7 +13,7 @@
 *[id],
 a[name],
 .wp-block-query {
-	scroll-margin-top: calc(var(--cmls_base-masthead-height, 8vh) + 1rem);
+	scroll-margin-top: calc(var(--cmls_base-masthead-height, 8vh) + 1rem + var(--cmls_base-extra-scroll-margin-top, 0));
 }
 
 html,
