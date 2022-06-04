@@ -37,3 +37,12 @@ function superscriptRegistrationMarks( $str ) {
 \add_filter( 'wp_nav_menu_items', function ( $items ) {
 	return superscriptRegistrationMarks( $items );
 }, 9999999, 1 );
+
+\add_filter( 'get_term', function ( $term ) {
+	if ( \is_admin() ) {
+		return $term;
+	}
+	$term->name = superscriptRegistrationMarks( $term->name );
+
+	return $term;
+} );
