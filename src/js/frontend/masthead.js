@@ -45,8 +45,10 @@ let $j = jQuery.noConflict();
 			buffer = mastheadPos.bottom * 2;
 		}
 		if (
-			mainPos.top + mastheadPos.bottom + buffer <
-			mastheadPos.top + mastheadPos.bottom
+			//mainPos.top + mastheadPos.bottom + buffer <
+			//mastheadPos.top + mastheadPos.bottom
+			mainPos.y + buffer <
+			mastheadPos.bottom
 		) {
 			if (!hasUnderMastheadClass)
 				document.body.classList.add('under-masthead');
@@ -56,7 +58,7 @@ let $j = jQuery.noConflict();
 	}
 	windowListeners(
 		[
-			{ event: 'scroll', throttleTime: 100 },
+			{ event: 'scroll', throttleTime: 200 },
 			{ event: 'resize', throttleTime: 1000 },
 			{ event: 'DOMContentLoaded' },
 			{ event: 'load' },

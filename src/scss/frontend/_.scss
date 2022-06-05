@@ -32,7 +32,8 @@ body > main {
 	z-index: 2;
 	overflow: visible;
 
-	padding: var(--#{$PREFIX}-masthead-height) 0 2em;
+	padding: 0 0 2em;
+	top: var(--cmls_base-masthead-height);
 
 	.row-container {
 		padding: 0 1em;
