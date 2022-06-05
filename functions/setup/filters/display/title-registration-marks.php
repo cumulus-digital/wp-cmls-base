@@ -39,6 +39,10 @@ function superscriptRegistrationMarks( $str ) {
 }, 9999999, 1 );
 
 \add_filter( 'get_term', function ( $term ) {
+	if ( \is_admin() ) {
+		return $term;
+	}
+
 	$term->name = superscriptRegistrationMarks( $term->name );
 
 	return $term;
