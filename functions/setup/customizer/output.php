@@ -118,6 +118,7 @@ function directOutputCustomCSS() {
 }
 \add_action( 'wp_head', ns( 'directOutputCustomCSS' ), 100 );
 
+/*
 function addGoogleFontPreconnect() {
 	$googlefont_url = 'fonts.googleapis.com';
 	$webfont_url = themeMods::get( 'font-webfont_url' );
@@ -135,6 +136,7 @@ function addGoogleFontPreconnect() {
 	}
 }
 \add_action('wp_head', ns('addGoogleFontPreconnect'), 1);
+*/
 
 function enqueueCustomFontURL( $url, $key ) {
 	\wp_enqueue_style(
