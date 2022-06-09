@@ -80,7 +80,7 @@ function enqueueOutputCustomCSS() {
 }
 \add_action( 'after_setup_theme', ns( 'enqueueOutputCustomCSS' ), 12 );
 
-// Override  request to inject customizer vars
+// Override request to inject customizer vars
 function overrideInternalStyleRequest( $response, $parsed_args, $url ) {
 	if ( \mb_strstr( $url, '/cmls-block-editor-customizer-styles' ) ) {
 		$response = [
@@ -118,15 +118,25 @@ function directOutputCustomCSS() {
 }
 \add_action( 'wp_head', ns( 'directOutputCustomCSS' ), 100 );
 
-function enqueueCustomFontURL( $url, $key ) {
-	if ( \mb_substr_count( $url, 'fonts.googleapis.com' ) ) {
-		\add_action( 'wp_head', function () {
-			?>
-			<link rel="preconnect" href="https://fonts.googleapis.com">
-			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-			<?php
-		} );
+function addGoogleFontPreconnect() {
+	$googlefont_url = 'fonts.googleapis.com';
+	$webfont_url = themeMods::get( 'font-webfont_url' );
+	$headerfont_url = themeMods::get( 'font-header_webfont_url' );
+	if (
+		substr_count($webfont_url, $googlefont_url) ||
+		substr_count($headerfont_url, $googlefont_url)
+	) {
+		?>
+			<link rel="dns-prefetch" href="//fonts.googleapis.com">
+			<link rel="dns-prefeetch" href="//fonts.gstatic.com">
+			<link rel="preconnect" href="//fonts.googleapis.com">
+			<link rel="preconnect" href="//fonts.gstatic.com" crossorigin>
+		<?
 	}
+}
+\add_action('wp_head', ns('addGoogleFontPreconnect'), 1);
+
+function enqueueCustomFontURL( $url, $key ) {
 	\wp_enqueue_style(
 		'custom-webfont-url-' . $key,
 		\esc_url( $url ),
