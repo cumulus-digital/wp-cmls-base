@@ -25,7 +25,7 @@ function init_theme_support() {
 	//\add_theme_support( 'post-formats', [ ] );
 	\remove_theme_support( 'post-formats' );
 
-	\remove_theme_support( 'core-block-patterns' );
+	///\remove_theme_support( 'core-block-patterns' );
 	\remove_theme_support( 'block-templates' );
 	//\remove_theme_support( 'widgets-block-editor' );
 
