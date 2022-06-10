@@ -32,7 +32,7 @@ function frontendScriptsAndStyles() {
 		\wp_enqueue_style( PREFIX . '_style' );
 	}
 }
-\add_action( 'wp_enqueue_scripts', ns( 'frontendScriptsAndStyles' ) );
+\add_action( 'wp_enqueue_scripts', ns( 'frontendScriptsAndStyles' ), 1 );
 
 // Basic post queries are limited to 16
 function setQueryLimitToSixteen( $query ) {
