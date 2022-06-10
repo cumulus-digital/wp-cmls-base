@@ -19,7 +19,13 @@ if ( has_header_menu() ): ?>
         <span class="hamburger-inner"></span>
         </span>
     </button>
-    <div class="menu" id="header_menu">
+    <div
+        class="menu"
+        id="header_menu"
+        <?php if ( themeMods::get( 'setting-main_menu-include_search' ) ): ?>
+            role="menu"
+        <?php endif; ?>
+    >
         <?php header_menu(); ?>
         <?php if ( themeMods::get( 'setting-main_menu-include_search' ) ): ?>
             <?php cmls_get_template_part( 'templates/masthead/search', null, [ 'role' => 'menuitem' ] ); ?>
