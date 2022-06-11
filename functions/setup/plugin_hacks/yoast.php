@@ -28,7 +28,7 @@ use Yoast_Notification_Center;
 
 			// ok, let us remove the love letter.
 			\remove_action( 'wpseo_head', [ $instance, 'debug_mark' ], 2 );
-		}, 9999 );
+		}, \PHP_INT_MAX );
 
 		// Move Yoast post box to bottom
 		\add_filter( 'wpseo_metabox_prio', function () {
