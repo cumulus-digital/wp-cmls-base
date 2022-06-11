@@ -99,6 +99,9 @@ function replaceExcerptMore( $more ) {
 }
 \add_filter( 'excerpt_more', ns( 'replaceExcerptMore' ) );
 
+/**
+ * A page with the same slug as a tax term can override its archive
+ */
 function letPagesOverrideArchives( &$query ) {
 	if ( \is_admin() || ! $query->is_main_query() ) {
 		return $query;
@@ -120,9 +123,11 @@ function letPagesOverrideArchives( &$query ) {
 
 			if ( $slug ) {
 				global $wpdb;
-				$check = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(post_title) FROM {$wpdb->posts} WHERE post_name=%s AND post_type='page' LIMIT 1", $slug ) );
+				$check = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(post_title) FROM {$wpdb->posts} WHERE post_name=%s AND post_type='page' AND post_status='publish' LIMIT 1", $slug ) );
 
 				if ( $check ) {
+					\do_action( 'qm/debug', 'The requested tax archive has been overridden by a post with the same slug.' );
+
 					$query->init();
 					$query->set( 'post_type', 'page' );
 					$query->set( 'name', $slug );
@@ -136,9 +141,12 @@ function letPagesOverrideArchives( &$query ) {
 
 	return $query;
 }
-\add_action( 'pre_get_posts', ns( 'letPagesOverrideArchives' ) );
+\add_action( 'pre_get_posts', ns( 'letPagesOverrideArchives' ), 1 );
 
-// Restrict search results, support "t" query var
+/**
+ * Provides filters and default exclusions for what may be discovered in
+ * public search.
+ */
 function searchOnlyPostTypes( $query ) {
 	if ( \is_admin() || ! $query->is_main_query() ) {
 		return $query;
