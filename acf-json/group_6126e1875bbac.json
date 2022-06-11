@@ -24,7 +24,7 @@
             "label": "Page as Header",
             "name": "cmls-tax-insert_page",
             "type": "post_object",
-            "instructions": "Insert page content instead of generated archive header. <strong>WARNING:<\/strong> Be careful not to set page slugs the same as a category slug, doing so will cause the page to take over the category archive.",
+            "instructions": "Insert page content instead of generated archive header.<br><strong><em>WARNING:<\/em><\/strong> Be careful not to set page slugs the same as a category slug, doing so will cause the page to take over the category archive.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -72,7 +72,7 @@
             "label": "Use Parent Archive Display Settings",
             "name": "cmls-tax-use_parent",
             "type": "true_false",
-            "instructions": "Disregard display settings for this term and use settings from its parent. If no parent has display settings, the defaults will be used.",
+            "instructions": "Disregard display settings for this term and use settings from its parent. If this term has no parent, or no parent has display settings, the defaults will be used.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
