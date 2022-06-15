@@ -228,7 +228,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 * @return void
 	 */
 	function generateBodyClasses( $id = null ) {
-		$page_custom_fields = \get_fields( $id );
+		$page_custom_fields = \get_fields( $id, false );
 
 		if ( gav( $page_custom_fields, 'cmls-header_options-begin_under_masthead' ) ) {
 			BodyClasses::add( 'begin_under_masthead' );
