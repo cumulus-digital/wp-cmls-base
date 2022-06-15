@@ -282,7 +282,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 */
 	function cmls_get_template_part( $slug, $name = null, $args = [] ) {
 
-		// Try to fill $name if not filled
+		// Try to fill $name with current post type if not already filled
 		if ( $name === null && \in_the_loop() ) {
 			$name = \get_post_type();
 		}
@@ -326,7 +326,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 			}
 
 			foreach ( $paths as $path ) {
-				if ( \file_exists( $path . '/' . $template_name ) ) {
+				if ( \is_file( $path . '/' . $template_name ) ) {
 					$located = $path . '/' . $template_name;
 
 					break 2;
