@@ -176,9 +176,12 @@ class themeMods {
 		$cache_key   = 'getFiles';
 		$cache_group = 'CMLS_Base::themeMods';
 
-		if ( $cache = CMLS_Cache::get( $cache_key, $cache_group ) ) {
+		$cache = CMLS_Cache::get( $cache_key, $cache_group );
+
+		if ( $cache !== false ) {
 			return $cache;
 		}
+
 		$keys     = self::getFilteredKeys( 'file' );
 		$files    = [];
 		$post_ids = [];

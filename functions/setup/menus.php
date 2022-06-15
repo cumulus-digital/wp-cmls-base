@@ -42,7 +42,9 @@ function makeMenu( $location, $options = [] ) {
 
 	$should_echo = $args['echo'];
 
-	if ( ! $menu = CMLS_Cache::get( $cache_key, $cache_group ) ) {
+	$menu = CMLS_Cache::get( $cache_key, $cache_group );
+
+	if ( $menu === false ) {
 		$args['echo'] = false;
 		$menu         = \wp_nav_menu( $args );
 		CMLS_Cache::set( $cache_key, $menu, $cache_group, 30 * 60 );

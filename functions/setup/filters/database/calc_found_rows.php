@@ -65,7 +65,9 @@ function dbReplaceFoundRows( $clauses, WP_Query $query ) {
 		$count_query = "SELECT COUNT(*) FROM (SELECT {$distinct} {$fields} FROM `{$wpdb->posts}` {$join} WHERE 1=1 {$where} {$groupby}) AS OQ";
 	}
 
-	if ( $found_posts = CMLS_Cache::get( $count_query, $cache_group ) ) {
+	$found_posts = CMLS_Cache::get( $count_query, $cache_group );
+
+	if ( $found_posts !== false ) {
 		$query->found_posts = $found_posts;
 	} else {
 		// Fetch and calculate max_num_pages

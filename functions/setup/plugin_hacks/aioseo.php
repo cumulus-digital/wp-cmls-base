@@ -27,13 +27,13 @@ if ( \function_exists( 'aioseo' ) ) {
 	// Remove AIOSEO bug from admin bar
 	\add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
 		$wp_admin_bar->remove_node( 'aioseo-main' );
-	}, PHP_INT_MAX );
+	}, \PHP_INT_MAX );
 
 	// Remove AIOSEO crap from admin menu
 	\add_action( 'admin_menu', function () {
 		// Redirects under Tools
 		\remove_submenu_page( 'tools.php', \admin_url( '/admin.php?page=aioseo-redirects' ) );
-	}, PHP_INT_MAX );
+	}, \PHP_INT_MAX );
 
 	// Exclude specifically noindexed content from site search results
 	\add_filter( 'pre_get_posts', function ( $query ) {
@@ -45,7 +45,9 @@ if ( \function_exists( 'aioseo' ) ) {
 			$cache_key   = 'aioseo_posts_noindex';
 			$cache_group = 'CMLS_Base::aioseoPostsNoindex';
 
-			if ( $cached = CMLS_Cache::get( $cache_key, $cache_group ) ) {
+			$cached = CMLS_Cache::get( $cache_key, $cache_group );
+
+			if ( $cached !== false ) {
 				$noIndex = $cached;
 			} else {
 				global $wpdb;
