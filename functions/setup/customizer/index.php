@@ -173,9 +173,10 @@ class themeMods {
 	}
 
 	public static function getFiles() {
-		$cache_key = 'getFiles';
+		$cache_key   = 'getFiles';
+		$cache_group = 'CMLS_Base::themeMods';
 
-		if ( $cache = CMLS_Cache::get( $cache_key, 'CMLS_Base::themeMods' ) ) {
+		if ( $cache = CMLS_Cache::get( $cache_key, $cache_group ) ) {
 			return $cache;
 		}
 		$keys     = self::getFilteredKeys( 'file' );
@@ -212,7 +213,7 @@ class themeMods {
 		}
 
 		if ( \count( $files ) ) {
-			CMLS_Cache::set( $cache_key, $files, 'CMLS_Base::themeMods' );
+			CMLS_Cache::set( $cache_key, $files, $cache_group );
 
 			return $files;
 		}
