@@ -116,7 +116,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		$post = \get_post( $post );
 		$id   = isset( $post->ID ) ? $post->ID : 0;
 
-		$alt_title = \get_field( 'cmls-alt_title', $id, null );
+		$alt_title = \get_field( 'cmls-alt_title', $id, false );
 
 		if ( $alt_title ) {
 			return \apply_filters( 'the_title', $alt_title, $id );
