@@ -36,15 +36,16 @@ function makeMenu( $location, $options = [] ) {
 		'depth'           => 0,
 		'walker'          => new CleanMenuWalker(),
 	];
-	$args      = \array_merge( $defaults, $options );
-	$cache_key = \serialize( [$location, $args] );
+	$args        = \array_merge( $defaults, $options );
+	$cache_key   = \serialize( [$location, $args] );
+	$cache_group = 'CMLS_Base::makeMenu';
 
 	$should_echo = $args['echo'];
 
-	if ( ! $menu = CMLS_Cache::get( $cache_key, 'CMLS_Base::makeMenu' ) ) {
+	if ( ! $menu = CMLS_Cache::get( $cache_key, $cache_group ) ) {
 		$args['echo'] = false;
 		$menu         = \wp_nav_menu( $args );
-		CMLS_Cache::set( $cache_key, $menu, 'CMLS_Base::makeMenu', 30 * 60 );
+		CMLS_Cache::set( $cache_key, $menu, $cache_group, 30 * 60 );
 	}
 
 	if ( $should_echo ) {
