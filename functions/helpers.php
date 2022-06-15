@@ -211,7 +211,6 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 				$filepost
 				&& \property_exists( $filepost, 'guid' )
 			) {
-				//var_dump($filepost);
 				return \wp_make_link_relative( $filepost->guid );
 			}
 		}
@@ -432,29 +431,60 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 * @return string|array
 	 */
 	function get_tax_acf( $selector, $term ) {
+		$cache_group = 'CMLS_Base::get_tax_acf';
+		$cache_key   = $term->term_id;
+
+		$cached = CMLS_Cache::get( $cache_key, $cache_group );
+
+		if ( $cached !== false ) {
+			return $cached;
+		}
+
 		$fieldObj  = \get_field_object( $selector, $term, true, true );
 		$useParent = \get_field( 'field_612877c8d84d3', $term );
 
 		if ( $useParent ) {
-			$parents   = \get_ancestors( $term->term_id, $term->taxonomy );
+			// If term has useParent, but it has no parent, we use defaults
+			if ( \property_exists( $term, 'parent' ) && $term->parent === 0 ) {
+				return [];
+			}
+
 			$gotParent = false;
+			$parents   = \get_ancestors( $term->term_id, $term->taxonomy );
+			$meta_key  = $fieldObj['name'];
 
-			foreach ( $parents as $parent ) {
-				$pTerm     = \get_term( $parent );
-				$useParent = \get_field( 'field_612877c8d84d3', $pTerm );
+			if ( $parents ) {
+				global $wpdb;
+				$placeholders = \implode( ',', \array_fill( 0, \count( $parents ), '%d' ) );
+				$q            = $wpdb->prepare(
+					"SELECT term_id, meta_value FROM {$wpdb->termmeta} WHERE meta_key=%s AND term_id IN ({$placeholders})",
+					\array_merge(
+						[$meta_key],
+						$parents
+					)
+				);
+				$parentUseParent = $wpdb->get_results( $q, OBJECT_K );
 
-				if ( $useParent ) {
-					continue;
+				foreach ( $parents as $i => $parent ) {
+					if (
+							\array_key_exists( $parent, $parentUseParent )
+							&& $parentUseParent[$parent] === 0
+					) {
+						// Stop here, this is the parent to use
+						$fieldObj  = \get_field_object( $selector, $term, true, true );
+						$gotParent = true;
+
+						break;
+					}
 				}
-
-				$gotParent = true;
-				$fieldObj  = \get_field_object( $selector, $pTerm, true, true );
 			}
 
 			if ( ! $gotParent ) {
-				return [];
+				$fieldObj = ['value' => []];
 			}
 		}
+
+		CMLS_Cache::set( $cache_key, $fieldObj['value'], $cache_group );
 
 		return $fieldObj['value'];
 	}
