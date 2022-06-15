@@ -8,9 +8,11 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
-if ( ! isset( $args['the_posts'] ) ) {
+if ( isset( $args['the_posts'] ) ) {
+	$the_posts = $args['the_posts'];
+} else {
 	global $wp_query;
-	$args['the_posts'] = $wp_query;
+	$the_posts = $wp_query;
 }
 
 if ( ! isset( $args['row-class'] ) ) {
@@ -24,7 +26,7 @@ if ( ! isset( $args['row-class'] ) ) {
 
 	<?php \do_action( 'cmls_template-archive-before_posts' ); ?>
 
-	<?php while ( $args['the_posts']->have_posts() ): $args['the_posts']->the_post(); ?>
+	<?php while ( $the_posts->have_posts() ): $the_posts->the_post(); ?>
 
 		<?php
 			cmls_get_template_part( 'templates/pages/excerpt', make_post_class(), $args );
