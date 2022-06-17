@@ -59,6 +59,6 @@ function filterPostAuthorAvatarforAltAuthor( $avatar = null, $id = null, $args =
 		return $avatar;
 	}
 
-	return false;
+	return null;
 }
 \add_filter( 'pre_get_avatar', ns( 'filterPostAuthorAvatarforAltAuthor' ), 10, 3 );
