@@ -15,6 +15,7 @@ require __DIR__ . '/required.php';
 require __DIR__ . '/menus.php';
 require __DIR__ . '/media.php';
 require __DIR__ . '/filters/index.php';
+require __DIR__ . '/shortcodes/index.php';
 require __DIR__ . '/backend.php';
 require __DIR__ . '/frontend.php';
 require __DIR__ . '/sidebars.php';
