@@ -345,10 +345,11 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 *
 	 * @param WP_Term $cat
 	 * @param string  $tag_type
+	 * @param bool    $include_children
 	 *
 	 * @return array
 	 */
-	function get_category_tags( $cat, $tag_type = 'post_tag' ) {
+	function get_category_tags( $cat, $tag_type = 'post_tag', $include_children = false ) {
 		global $wpdb;
 
 		if ( ! $cat ) {
@@ -358,12 +359,29 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 				return [];
 			}
 		}
-		$posts = $wpdb->get_col( $wpdb->prepare( "
-			SELECT ID FROM {$wpdb->posts}
-			LEFT JOIN {$wpdb->term_relationships} as t
-				ON ID = t.object_id
-			WHERE post_status = 'publish' AND t.term_taxonomy_id = %d
-		", $cat->term_id ) );
+
+		if ( $include_children ) {
+			// get children of this tax
+			$children = \get_term_children( $cat->term_id, $cat->taxonomy );
+
+			$ids = \array_merge( [$cat->term_id], $children );
+
+			$placeholder = \implode( ',', \array_fill( 0, \count( $ids ), '%d' ) );
+
+			$posts = $wpdb->get_col( $wpdb->prepare( "
+				SELECT ID FROM {$wpdb->posts}
+				LEFT JOIN {$wpdb->term_relationships} as t
+					ON ID = t.object_id
+				WHERE post_status = 'publish' AND t.term_taxonomy_id IN ({$placeholder})
+			", $ids ) );
+		} else {
+			$posts = $wpdb->get_col( $wpdb->prepare( "
+				SELECT ID FROM {$wpdb->posts}
+				LEFT JOIN {$wpdb->term_relationships} as t
+					ON ID = t.object_id
+				WHERE post_status = 'publish' AND t.term_taxonomy_id = %d
+			", $cat->term_id ) );
+		}
 
 		if ( \count( $posts ) ) {
 			$terms = \wp_get_object_terms( $posts, $tag_type );
@@ -576,7 +594,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		$return = [];
 
 		if ( \is_category() || \is_tag() || \is_tax() ) {
-			$term   = $term ? $term : \get_queried_object();
+			$term = $term ? $term : \get_queried_object();
 			$fields = get_tax_acf( 'field_6128514db85a1', $term );
 
 			if ( $fields ) {
