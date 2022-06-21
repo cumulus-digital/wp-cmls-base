@@ -8,12 +8,13 @@ namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
+// This term
+$this_term = isset( $args ) && \array_key_exists( 'this_term', $args ) ? $args['this_term'] : \get_queried_object();
+
 // Defaults
-$display_args = get_tax_display_args( isset( $args ) ? $args : [] );
+$display_args = get_tax_display_args( $this_term, isset( $args ) ? $args : [] );
 $args         = isset( $args ) ? \array_merge( (array) $args, $display_args ) : $display_args;
 
-// This term
-$this_term     = isset( $args ) && \array_key_exists( 'this_term', $args ) ? $args['this_term'] : \get_queried_object();
 $term_children = null;
 
 if (
