@@ -74,6 +74,7 @@ let $j = jQuery.noConflict();
 	);
 
 	// Prevent masthead from getting too large or too small
+	/*
 	var originalMastheadHeight;
 	function recalculateMastheadHeight() {
 		let root = document.documentElement,
@@ -119,4 +120,5 @@ let $j = jQuery.noConflict();
 		true
 	);
 	setInterval( recalculateMastheadHeight, 3000 );
+	*/
 } )( $j, window );

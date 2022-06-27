@@ -53,5 +53,6 @@
 	--#{$PREFIX}-font-base_size: 19px;
 	--#{$PREFIX}-font-base_lineheight: 1.6;
 
-	--#{$PREFIX}-masthead-height: 8vh;
+	--#{$PREFIX}-masthead-height: 6.5vh;
+	--#{$PREFIX}-masthead-height: clamp(65px, 8vh, 80px);
 }
