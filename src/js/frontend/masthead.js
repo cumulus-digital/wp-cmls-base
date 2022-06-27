@@ -4,7 +4,7 @@ import jQuery from 'jquery';
 
 let $j = jQuery.noConflict();
 
-(function ($, window, undefined) {
+( function ( $, window, undefined ) {
 	/**
 	 * Add a bunch of events to the window object
 	 * @param {array|string} events Events to add to the window object
@@ -12,19 +12,24 @@ let $j = jQuery.noConflict();
 	 * @param {number} throttleTime Time to throttle if adding a single event
 	 * @param {boolean} immediateLaunch Immediately call callback function
 	 */
-	function windowListeners(events, callback, throttleTime, immediateLaunch) {
-		if (!Array.isArray(events)) {
-			events = [{ event: events, throttleTime: throttleTime }];
+	function windowListeners(
+		events,
+		callback,
+		throttleTime,
+		immediateLaunch
+	) {
+		if ( ! Array.isArray( events ) ) {
+			events = [ { event: events, throttleTime: throttleTime } ];
 		}
-		events.forEach(function (e) {
+		events.forEach( function ( e ) {
 			let cb = callback;
-			if (e.throttleTime) {
-				cb = throttle(callback, e.throttleTime);
+			if ( e.throttleTime ) {
+				cb = throttle( callback, e.throttleTime );
 			}
-			$(window).on(e.event + '.cmlsBase', cb);
+			$( window ).on( e.event + '.cmlsBase', cb );
 			//window.addEventListener(e.event, cb);
-		});
-		if (immediateLaunch) {
+		} );
+		if ( immediateLaunch ) {
 			callback();
 		}
 	}
@@ -32,16 +37,16 @@ let $j = jQuery.noConflict();
 	// Detect when content goes under masthead
 	function detectBodyUnderMasthead() {
 		let buffer = 10,
-			main = document.querySelector('body > main'),
-			masthead = document.querySelector('body > .masthead'),
+			main = document.querySelector( 'body > main' ),
+			masthead = document.querySelector( 'body > .masthead' ),
 			mainPos = main.getBoundingClientRect(),
 			mastheadPos = masthead.getBoundingClientRect(),
 			hasBeginUnderMastheadClass = document.body.classList.contains(
 				'begin_under_masthead'
 			),
 			hasUnderMastheadClass =
-				document.body.classList.contains('under-masthead');
-		if (hasBeginUnderMastheadClass) {
+				document.body.classList.contains( 'under-masthead' );
+		if ( hasBeginUnderMastheadClass ) {
 			buffer = mastheadPos.bottom * 2;
 		}
 		if (
@@ -50,10 +55,10 @@ let $j = jQuery.noConflict();
 			mainPos.y + buffer <
 			mastheadPos.bottom
 		) {
-			if (!hasUnderMastheadClass)
-				document.body.classList.add('under-masthead');
-		} else if (hasUnderMastheadClass) {
-			document.body.classList.remove('under-masthead');
+			if ( ! hasUnderMastheadClass )
+				document.body.classList.add( 'under-masthead' );
+		} else if ( hasUnderMastheadClass ) {
+			document.body.classList.remove( 'under-masthead' );
 		}
 	}
 	windowListeners(
@@ -72,24 +77,26 @@ let $j = jQuery.noConflict();
 	var originalMastheadHeight;
 	function recalculateMastheadHeight() {
 		let root = document.documentElement,
-			masthead = document.querySelector('body > .masthead'),
+			masthead = document.querySelector( 'body > .masthead' ),
 			mastheadPos = masthead.getBoundingClientRect(),
 			vh = window.innerHeight / 100;
 
-		if (!originalMastheadHeight) {
+		if ( ! originalMastheadHeight ) {
 			originalMastheadHeight = getComputedStyle(
 				document.documentElement
-			).getPropertyValue('--' + window.THEME_PREFIX + '-masthead-height');
+			).getPropertyValue(
+				'--' + window.THEME_PREFIX + '-masthead-height'
+			);
 		}
 
-		if (vh > 12) {
+		if ( vh > 12 ) {
 			root.style.setProperty(
 				'--' + window.THEME_PREFIX + '-masthead-height',
 				'90px'
 			);
 			return;
 		}
-		if (vh < 8.3) {
+		if ( vh < 8.3 ) {
 			root.style.setProperty(
 				'--' + window.THEME_PREFIX + '-masthead-height',
 				'65px'
@@ -111,5 +118,5 @@ let $j = jQuery.noConflict();
 		null,
 		true
 	);
-	setInterval(recalculateMastheadHeight, 3000);
-})($j, window);
+	setInterval( recalculateMastheadHeight, 3000 );
+} )( $j, window );

@@ -98,6 +98,11 @@
 	align-items: center;
 }
 
+// Remove transition on kadence columns
+:root .kt-inside-inner-col {
+	transition: none;
+}
+
 // Allow audio player to get smaller
 .wp-block-audio audio {
 	min-width: 150px;
