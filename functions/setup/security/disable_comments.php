@@ -12,17 +12,19 @@ namespace CMLS_Base\Setup\Security;
  */
 \add_action( 'init', function () {
 	$disable_options = [
-		'default_pingback_flag'        => false,
-		'default_ping_status'          => false,
-		'default_comment_status'       => false,
-		'close_comments_for_old_posts' => true,
-		'comments_notify'              => true,
-		'comment_moderation'           => true,
-		'comment_registration'         => true,
+		'default_pingback_flag'        => 0,
+		'default_ping_status'          => 'closed',
+		'default_comment_status'       => 'closed',
+		'close_comments_for_old_posts' => 1,
+		'comments_notify'              => 1,
+		'comment_moderation'           => 1,
+		'comment_registration'         => 1,
 	];
 
 	foreach ( $disable_options as $key => $value ) {
-		if ( \get_option( $key ) !== $value ) {
+		$opt = \get_option( $key );
+
+		if ( (string) $opt !== (string) $value ) {
 			\update_option( $key, $value );
 		}
 	}
