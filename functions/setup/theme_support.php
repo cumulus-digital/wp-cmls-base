@@ -79,4 +79,4 @@ $content_width = 1200;
 */
 
 // Separate stylesheets for blocks
-\add_filter( 'should_load_separate_core_block_assets', '__return_true' );
+\add_filter( 'should_load_separate_core_block_assets', '__return_false' );
