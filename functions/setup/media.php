@@ -13,6 +13,21 @@ function registerMediaTaxonomy() {
 }
 \add_action( 'init', ns( 'registerMediaTaxonomy' ) );
 
+// Custom uncropped thumbnail size
+\add_image_size( 'thumbnail-uncropped', 400, 400, false );
+
+// Only allow srcset to get up to 2.5x requested size
+function setMaxSrcsetSize( $max_size, $sizes ) {
+	if ( \is_array( $sizes ) ) {
+		$size = $sizes[0];
+
+		return $size * 2.5;
+	}
+
+	return $max_size;
+}
+\add_filter( 'max_srcset_image_width', ns( 'setMaxSrcsetSize' ), 10, 2 );
+
 // Automatically add attachment media to category if possible
 function addAttachmentToPostCategory( $attachment_id ) {
 	$attachment = \get_post( $attachment_id );

@@ -11,7 +11,7 @@ namespace CMLS_Base;
 $args = \array_merge(
 	[
 		'display_format'       => 'cards',
-		'thumbnail_size'       => 'large',
+		'thumbnail_size'       => 'thumbnail-uncropped',
 		'force_featured_image' => \apply_filters( 'force_featured_image', false ),
 	],
 	$args

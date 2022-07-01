@@ -119,7 +119,7 @@ function shortcode_post_cards( $attr ) {
 				'display_format'       => 'cards',
 				'show_image'           => true,
 				'force_featured_image' => true,
-				'thumbnail_size'       => 'medium',
+				'thumbnail_size'       => 'thumbnail-uncropped',
 				'show_title'           => false,
 				'show_date'            => false,
 				'show_author'          => false,

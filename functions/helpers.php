@@ -573,7 +573,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 			'show_category'           => \apply_filters( 'display-archive-shoow_category', null ),
 			'show_source'             => \apply_filters( 'display-archive-show_source', null ),
 			'show_excerpt'            => \apply_filters( 'display-archive-show_excerpt', null ),
-			'thumbnail_size'          => 'large',
+			'thumbnail_size'          => 'thumbnail-uncropped',
 			'header-background_color' => null,
 			'header-background_image' => null,
 			'header-text_color'       => null,
@@ -594,7 +594,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		$return = [];
 
 		if ( \is_category() || \is_tag() || \is_tax() ) {
-			$term = $term ? $term : \get_queried_object();
+			$term   = $term ? $term : \get_queried_object();
 			$fields = get_tax_acf( 'field_6128514db85a1', $term );
 
 			if ( $fields ) {

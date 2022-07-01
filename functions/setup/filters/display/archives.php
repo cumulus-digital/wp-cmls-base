@@ -21,7 +21,7 @@ namespace CMLS_Base;
 
 \add_filter( 'display-archive-show_image', '__return_true', 1, 1 );
 \add_filter( 'display-archive-thumbnail_size', function ( $thumbnail_size ) {
-	return 'large';
+	return 'thumbnail-uncropped';
 }, 1, 1 );
 
 \add_filter( 'display-archive-show_title', '__return_true', 1, 1 );
