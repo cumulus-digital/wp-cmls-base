@@ -46,7 +46,7 @@ let $j = jQuery.noConflict();
 	}
 
 	$('html').on(
-		`click.{window.THEME_PREFIX} focusin.{window.THEME_PREFIX}`,
+		`click.${window.THEME_PREFIX} focusin.${window.THEME_PREFIX}`,
 		debounce(
 			function (e) {
 				const context = {
