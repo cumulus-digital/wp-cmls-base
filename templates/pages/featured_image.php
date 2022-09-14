@@ -13,6 +13,7 @@ $args = \array_merge(
 		'display_format'       => 'cards',
 		'thumbnail_size'       => 'thumbnail-uncropped',
 		'force_featured_image' => \apply_filters( 'force_featured_image', false ),
+		'disable_lazyload'     => \apply_filters( 'featurediamge_disable_lazyload', false ),
 	],
 	$args
 );
@@ -34,8 +35,8 @@ $args = \array_merge(
 	<figure class="featured-image">
 
 		<?php
-			\the_post_thumbnail( $args['thumbnail_size'], [ 'alt' => \esc_attr( \get_the_title() ), 'loading' => 'lazy' ] );
-		?>
+			\the_post_thumbnail( $args['thumbnail_size'], [ 'alt' => \esc_attr( \get_the_title() ), 'loading' => $args['disable_lazyload'] ? 'eager' : 'lazy' ] );
+	?>
 
 	</figure>
 
