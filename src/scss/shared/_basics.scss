@@ -171,8 +171,8 @@ img {
 }
 
 sup {
-	font-size: 0.6em;
-	vertical-align: text-top;
+	font-size: clamp(6px, 0.6em, 12px);
+	vertical-align: super;
 }
 
 table,
