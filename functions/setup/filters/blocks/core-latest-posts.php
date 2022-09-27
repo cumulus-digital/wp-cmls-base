@@ -22,7 +22,7 @@ use Exception;
 		if ( \mb_strpos( $content, 'wp-block-latest-posts__post-date' ) && \mb_strpos( $content, 'wp-block-latest-posts__post-author' ) ) {
 			$use_errors = \libxml_use_internal_errors( true );
 			$dom        = new DOMDocument();
-			@$dom->loadHTML( $content );
+			@$dom->loadHTML( '<?xml encoding="utf-8" ?>' . $content );
 			$xpath = new DomXPath( $dom );
 
 			$posts = $xpath->query( '//ul/li' );
