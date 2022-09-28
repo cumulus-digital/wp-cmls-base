@@ -7,6 +7,7 @@
 namespace CMLS_Base\BlockFilters\CoreLatestPosts;
 
 use DOMDocument;
+use DOMProcessingInstruction;
 use DomXPath;
 use Exception;
 
@@ -21,8 +22,25 @@ use Exception;
 	try {
 		if ( \mb_strpos( $content, 'wp-block-latest-posts__post-date' ) && \mb_strpos( $content, 'wp-block-latest-posts__post-author' ) ) {
 			$use_errors = \libxml_use_internal_errors( true );
-			$dom        = new DOMDocument();
-			@$dom->loadHTML( '<?xml encoding="utf-8" ?>' . $content );
+			$dom        = new DOMDocument( '1.0', 'UTF-8' );
+
+			$raw_content = $content;
+
+			if ( \mb_stripos( $content, '<?xml' ) === false ) {
+				$raw_content = '<?xml encoding="utf-8" ?>' . $content;
+			}
+
+			@$dom->loadHTML( $raw_content );
+
+			foreach ( $dom->childNodes as $item ) {
+				if ( $item instanceof DOMProcessingInstruction ) {
+					$dom->removeChild( $item );
+
+					break;
+				}
+			}
+			$dom->encoding = 'UTF-8';
+
 			$xpath = new DomXPath( $dom );
 
 			$posts = $xpath->query( '//ul/li' );
