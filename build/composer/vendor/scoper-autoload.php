@@ -27,8 +27,8 @@ if (!class_exists('TGMPA_Bulk_Installer_Skin', false) && !interface_exists('TGMP
 if (!class_exists('TGMPA_Utils', false) && !interface_exists('TGMPA_Utils', false) && !trait_exists('TGMPA_Utils', false)) {
     spl_autoload_call('CMLS_Base\Vendors\TGMPA_Utils');
 }
-if (!class_exists('ComposerAutoloaderInit68c41a34ef5606a729efc05054394373', false) && !interface_exists('ComposerAutoloaderInit68c41a34ef5606a729efc05054394373', false) && !trait_exists('ComposerAutoloaderInit68c41a34ef5606a729efc05054394373', false)) {
-    spl_autoload_call('CMLS_Base\Vendors\ComposerAutoloaderInit68c41a34ef5606a729efc05054394373');
+if (!class_exists('ComposerAutoloaderInitf36efb58eb2999abb351b58024bf356c', false) && !interface_exists('ComposerAutoloaderInitf36efb58eb2999abb351b58024bf356c', false) && !trait_exists('ComposerAutoloaderInitf36efb58eb2999abb351b58024bf356c', false)) {
+    spl_autoload_call('CMLS_Base\Vendors\ComposerAutoloaderInitf36efb58eb2999abb351b58024bf356c');
 }
 
 return $loader;

@@ -11,46 +11,46 @@ const { select, subscribe } = wp.data;
 
 const $ = jQuery.noConflict();
 
-window.acfWatchChanges = function (config) {
+window.acfWatchChanges = function ( config ) {
 	const { group, acfFields, postTypeTest } = config;
 	let firstRun = true;
 
 	// Get editor-styles-wrapper in body and preview canvas
 	this.getBasicContext = () => {
-		return $('.editor-styles-wrapper').add(
-			$('iframe[name="editor-canvas"]')
+		return $( '.editor-styles-wrapper' ).add(
+			$( 'iframe[name="editor-canvas"]' )
 				.contents()
-				.find('.editor-styles-wrapper')
+				.find( '.editor-styles-wrapper' )
 		);
 	};
 
 	// Get a custom selector in top-level and preview convas
-	this.$inContext = (selector) => {
-		return $(selector).add(
-			$('iframe[name="editor-canvas"]').contents().find(selector)
+	this.$inContext = ( selector ) => {
+		return $( selector ).add(
+			$( 'iframe[name="editor-canvas"]' ).contents().find( selector )
 		);
 	};
 
-	function sanitizeDisplayOption(opt) {
-		switch (opt.type) {
+	function sanitizeDisplayOption( opt ) {
+		switch ( opt.type ) {
 			case 'checkbox':
-				opt.val = $(opt.acf).is(':checked');
+				opt.val = $( opt.acf ).is( ':checked' );
 				break;
 			case 'em':
-				opt.val = parseFloat(opt.val) + 'em';
+				opt.val = parseFloat( opt.val ) + 'em';
 				break;
 			case 'rem':
-				opt.val = parseFloat(opt.val) + 'rem';
+				opt.val = parseFloat( opt.val ) + 'rem';
 				break;
 			case 'string':
-				opt.val = $('<div>').text(opt.val).html();
+				opt.val = $( '<div>' ).text( opt.val ).html();
 				break;
 			case 'integer':
 			case 'int':
-				opt.val = parseInt(opt.val);
+				opt.val = parseInt( opt.val );
 				break;
 			case 'float':
-				opt.val = parseFloat(opt.val);
+				opt.val = parseFloat( opt.val );
 				break;
 			case 'file':
 				if (
@@ -58,175 +58,184 @@ window.acfWatchChanges = function (config) {
 					opt.val &&
 					opt.val.toString().length
 				) {
-					var media = new wp.api.models.Media({
+					var media = new wp.api.models.Media( {
 						id: opt.val,
-					});
+					} );
 					opt.val = media.fetch();
-					return new Promise((resolve) => {
-						media.fetch().then((media) => {
-							if (media.media_details?.sizes?.full?.source_url) {
-								opt.val = `url("${media.media_details.sizes.full.source_url}")`;
+					return new Promise( ( resolve ) => {
+						media.fetch().then( ( media ) => {
+							if (
+								media.media_details?.sizes?.full?.source_url
+							) {
+								opt.val = `url("${ media.media_details.sizes.full.source_url }")`;
 							}
-							resolve(opt);
-						});
-					});
+							resolve( opt );
+						} );
+					} );
 				}
 				break;
 		}
 
-		return new Promise((resolve) => {
-			resolve(opt);
-		});
+		return new Promise( ( resolve ) => {
+			resolve( opt );
+		} );
 	}
 
-	function waitForEl(selector, jQ = false) {
-		return new Promise((resolve) => {
+	function waitForEl( selector, jQ = false ) {
+		return new Promise( ( resolve ) => {
 			function check() {
-				const el = jQ ? $(selector) : document.querySelector(selector);
-				if ((jQ && el.length) || (!jQ && el)) {
+				const el = jQ
+					? $( selector )
+					: document.querySelector( selector );
+				if ( ( jQ && el.length ) || ( ! jQ && el ) ) {
 					return el;
 				}
 				return false;
 			}
 
 			const el = check();
-			if (el) return resolve(el);
+			if ( el ) return resolve( el );
 
-			const wait = subscribe(() => {
+			const wait = subscribe( () => {
 				const el = check();
-				if (!el) return;
-				resolve(el);
+				if ( ! el ) return;
+				resolve( el );
 				wait();
-			});
-		});
+			} );
+		} );
 	}
 
-	function waitForAllEls(selectors, $context) {
-		return new Promise((resolve) => {
+	function waitForAllEls( selectors, $context ) {
+		return new Promise( ( resolve ) => {
 			function check() {
-				if (!Array.isArray(selectors)) {
-					selectors = [selectors];
+				if ( ! Array.isArray( selectors ) ) {
+					selectors = [ selectors ];
 				}
-				const found = $context.find(selectors.join(','));
-				if (!found || found.length < selectors.length) {
+				const found = $context.find( selectors.join( ',' ) );
+				if ( ! found || found.length < selectors.length ) {
 					return false;
 				}
 				return true;
 			}
 
-			if (check()) return resolve();
+			if ( check() ) return resolve();
 
-			const wait = subscribe(() => {
-				if (!check) return;
+			const wait = subscribe( () => {
+				if ( ! check ) return;
 				resolve();
 				wait();
-			});
-		});
+			} );
+		} );
 	}
 
 	function setupWatch() {
 		// Wait for group
-		waitForEl(group, true).then(($acfGroup) => {
+		waitForEl( group, true ).then( ( $acfGroup ) => {
 			async function updateHeaderDisplay() {
 				await waitForAllEls(
-					Object.values(acfFields).map((field) => field.acf),
-					$(document.body)
+					Object.values( acfFields ).map( ( field ) => field.acf ),
+					$( document.body )
 				);
 
 				var opts = [];
-				for (const field of Object.values(acfFields)) {
+				for ( let field of Object.values( acfFields ) ) {
 					//const field = acfFields[i];
-					let $input = $(field.acf);
+					let $input = $( field.acf );
 					field.val = $input.val();
 
-					field = await sanitizeDisplayOption(field);
+					field = await sanitizeDisplayOption( field );
 
-					if (typeof field.action == 'function') {
-						field.action(field.val);
+					if ( typeof field.action == 'function' ) {
+						field.action( field.val );
 						continue;
 					}
-					if (field.callback && typeof field.callback == 'function') {
-						field.callback(field);
+					if (
+						field.callback &&
+						typeof field.callback == 'function'
+					) {
+						field.callback( field );
 					}
-					opts.push(field);
+					opts.push( field );
 				}
 
 				// Loop through each field and parse needs
 				const triggersBackground = [],
 					triggersContrastCheck = [],
 					styles = {};
-				opts.forEach((opt) => {
+				opts.forEach( ( opt ) => {
 					if (
-						(firstRun && opt.val) ||
-						(opt.hasOwnProperty('oldVal') && opt.val !== opt.oldVal)
+						( firstRun && opt.val ) ||
+						( opt.hasOwnProperty( 'oldVal' ) &&
+							opt.val !== opt.oldVal )
 					) {
-						if (opt.triggersHasBackground) {
-							triggersBackground.push(opt);
+						if ( opt.triggersHasBackground ) {
+							triggersBackground.push( opt );
 						}
-						if (opt.contrastCheck) {
-							triggersContrastCheck.push(opt);
+						if ( opt.contrastCheck ) {
+							triggersContrastCheck.push( opt );
 						}
 					}
-					if (opt.action === 'setCssVar') {
-						styles[`--page_title-${opt.key}`] = opt.val.toString();
+					if ( opt.action === 'setCssVar' ) {
+						styles[ `--page_title-${ opt.key }` ] =
+							opt.val.toString();
 					}
 					opt.oldVal = opt.val;
-				});
+				} );
 
 				firstRun = false;
 
-				if (Object.keys(styles).length) {
+				if ( Object.keys( styles ).length ) {
 					window.acfWatchChanges
-						.$inContext('.editor-styles-wrapper')
-						.css(styles);
+						.$inContext( '.editor-styles-wrapper' )
+						.css( styles );
 				}
 
 				// Handle any opts that trigger a header background
-				if (triggersBackground.length) {
+				if ( triggersBackground.length ) {
 					const hasBackground = triggersBackground.filter(
-						(opt) => opt.val
+						( opt ) => opt.val
 					);
-					if (hasBackground) {
+					if ( hasBackground ) {
 						window.acfWatchChanges
-							.$inContext('.editor-styles-wrapper')
-							.addClass('has-header-background');
+							.$inContext( '.editor-styles-wrapper' )
+							.addClass( 'has-header-background' );
 					} else {
 						window.acfWatchChanges
-							.$inContext('.editor-styles-wrapper')
-							.removeClass('has-header-background');
+							.$inContext( '.editor-styles-wrapper' )
+							.removeClass( 'has-header-background' );
 					}
 				}
 
 				// Handle contrast checks
-				if (triggersContrastCheck.length) {
-					function checkContrast(thisOpt) {
+				if ( triggersContrastCheck.length ) {
+					function checkContrast( thisOpt ) {
 						// Must have an option to check against!
 						const thatOpt =
-							acfFields?.[thisOpt.contrastCheck.against];
-						if (!thatOpt) return;
+							acfFields?.[ thisOpt.contrastCheck.against ];
+						if ( ! thatOpt ) return;
 
 						// we may need to compute styles, so let's wait until the
 						// computeFrom elements are available
 						waitForAllEls(
-							[thisOpt, thatOpt].map(
-								(opt) => opt.contrastCheck.computeFrom
+							[ thisOpt, thatOpt ].map(
+								( opt ) => opt.contrastCheck.computeFrom
 							),
-							window.acfWatchChanges.$inContext('body')
-						).then(() => {
+							window.acfWatchChanges.$inContext( 'body' )
+						).then( () => {
 							const colors = {
 								foreground: null,
 								background: null,
 							};
-							for (const opt of [thisOpt, thatOpt]) {
+							for ( const opt of [ thisOpt, thatOpt ] ) {
 								let color = opt.val;
-								if (!opt.val) {
+								if ( ! opt.val ) {
 									// computeFrom must always be in the editor
 									const el = window.acfWatchChanges
-										.$inContext('body')
-										.find(opt.contrastCheck.computeFrom)
-										.get(0);
+										.$inContext( 'body' )
+										.find( opt.contrastCheck.computeFrom )
+										.get( 0 );
 									color =
-										getComputedStyle(el)[
+										getComputedStyle( el )[
 											opt.contrastCheck.computeAttribute
 										];
 								}
@@ -235,7 +244,10 @@ window.acfWatchChanges = function (config) {
 								] = color;
 							}
 
-							if (!Object.values(colors).filter(Boolean).length) {
+							if (
+								! Object.values( colors ).filter( Boolean )
+									.length
+							) {
 								// we've done everything we can to get these colors...
 								return;
 							}
@@ -245,14 +257,14 @@ window.acfWatchChanges = function (config) {
 							// First get actual content bg
 							const contentBackground = window.acfWatchChanges
 								.getBasicContext()
-								.get(0);
+								.get( 0 );
 							const contentBgColor = colord(
-								getComputedStyle(contentBackground)
+								getComputedStyle( contentBackground )
 									.backgroundColor
 							);
 
-							colors.foreground = colord(colors.foreground);
-							colors.background = colord(colors.background);
+							colors.foreground = colord( colors.foreground );
+							colors.background = colord( colors.background );
 
 							// Mix each color with their background, weighted by
 							// the foreground's alpha, to determine the actual
@@ -267,14 +279,14 @@ window.acfWatchChanges = function (config) {
 							);
 
 							// Now we can test if it's readable.
-							const isReadable = colord(fgColor).isReadable(
+							const isReadable = colord( fgColor ).isReadable(
 								colors.background,
 								{ level: 'AA', size: 'large' }
 							);
 
-							if (!isReadable) {
+							if ( ! isReadable ) {
 								wp.data
-									.dispatch('core/notices')
+									.dispatch( 'core/notices' )
 									.createWarningNotice(
 										"<span style='font-size:1.15em'>🚨This page's header may be difficult to read!</span>",
 										{
@@ -297,100 +309,101 @@ window.acfWatchChanges = function (config) {
 									);
 							} else {
 								wp.data
-									.dispatch('core/notices')
-									.removeNotice('cmls-a11y-warning');
+									.dispatch( 'core/notices' )
+									.removeNotice( 'cmls-a11y-warning' );
 							}
-						});
+						} );
 					}
 
-					triggersContrastCheck.forEach(checkContrast);
+					triggersContrastCheck.forEach( checkContrast );
 				}
 			}
 
 			$acfGroup.on(
-				`change.${window.THEME_PREFIX} keyup.${window.THEME_PREFIX}`,
-				Object.values(acfFields)
-					.map((opt) => opt.acf)
-					.join(','),
-				debounce(updateHeaderDisplay, 200, { trailing: true })
+				`change.${ window.THEME_PREFIX } keyup.${ window.THEME_PREFIX }`,
+				Object.values( acfFields )
+					.map( ( opt ) => opt.acf )
+					.join( ',' ),
+				debounce( updateHeaderDisplay, 200, { trailing: true } )
 			);
 			updateHeaderDisplay();
-		});
+		} );
 	}
 
 	function init() {
 		// Only operate in the block editor
-		if (!window?.wp?.blocks) {
+		if ( ! window?.wp?.blocks ) {
 			return;
 		}
 
-		const waitForData = subscribe(() => {
-			if (!wp?.data?.select) return;
+		const waitForData = subscribe( () => {
+			if ( ! wp?.data?.select ) return;
 			const currentPostType = wp.data
-				.select('core/editor')
+				.select( 'core/editor' )
 				.getCurrentPostType();
-			if (!currentPostType) return;
+			if ( ! currentPostType ) return;
 			const postType = wp.data
-				.select('core')
-				.getPostType(currentPostType);
-			if (!postType) return;
+				.select( 'core' )
+				.getPostType( currentPostType );
+			if ( ! postType ) return;
 
-			if (postTypeTest(postType)) {
-				extend([a11yPlugin, mixPlugin]);
+			if ( postTypeTest( postType ) ) {
+				extend( [ a11yPlugin, mixPlugin ] );
 
 				// ACF display option styles
-				const editorCSS = require('./acf-title.css?raw');
-				if (!document.querySelector('#cmls-acf_post_title')) {
-					window.acfWatchChanges.$inContext('.editor-styles-wrapper')
-						.prepend(`
-					<style id="cmls-acf_post_title">${editorCSS}</style>
-				`);
+				const editorCSS = require( './acf-title.css?raw' );
+				if ( ! document.querySelector( '#cmls-acf_post_title' ) ) {
+					window.acfWatchChanges.$inContext(
+						'.editor-styles-wrapper'
+					).prepend( `
+					<style id="cmls-acf_post_title">${ editorCSS }</style>
+				` );
 				}
 
 				setupWatch();
 			}
 			waitForData();
-		});
+		} );
 	}
 
-	$(() => {
-		const waitForEditor = subscribe(() => {
-			if (!select('core/editor').__unstableIsEditorReady()) {
+	$( () => {
+		const waitForEditor = subscribe( () => {
+			if ( ! select( 'core/editor' ).__unstableIsEditorReady() ) {
 				return;
 			}
 			init();
 			waitForEditor();
-		});
-	});
+		} );
+	} );
 };
 window.acfWatchChanges.getBasicContext = () => {
-	return $('.editor-styles-wrapper').add(
-		$('iframe[name="editor-canvas"]')
+	return $( '.editor-styles-wrapper' ).add(
+		$( 'iframe[name="editor-canvas"]' )
 			.contents()
-			.find('.editor-styles-wrapper')
+			.find( '.editor-styles-wrapper' )
 	);
 };
-window.acfWatchChanges.$inContext = (selector) => {
-	return $(selector).add(
-		$('iframe[name="editor-canvas"]').contents().find(selector)
+window.acfWatchChanges.$inContext = ( selector ) => {
+	return $( selector ).add(
+		$( 'iframe[name="editor-canvas"]' ).contents().find( selector )
 	);
 };
 
-const CMLS_Base_ACF_Watcher = new acfWatchChanges({
-	postTypeTest: (postType) => postType.hierarchical,
+const CMLS_Base_ACF_Watcher = new acfWatchChanges( {
+	postTypeTest: ( postType ) => postType.hierarchical,
 	group: '#acf-group_5f467bc4cb553',
 	acfFields: {
 		'#acf-field_5f467c3c135f3': {
 			key: 'title-hidden',
 			type: 'checkbox',
 			acf: '#acf-field_5f467c3c135f3',
-			action: (checked) => {
-				if (checked) {
+			action: ( checked ) => {
+				if ( checked ) {
 					window.acfWatchChanges
 						.getBasicContext()
-						.addClass('has-hidden-post-title');
+						.addClass( 'has-hidden-post-title' );
 					window.wp.data
-						.dispatch('core/notices')
+						.dispatch( 'core/notices' )
 						.createNotice(
 							'info',
 							"🤫 This post's title is hidden",
@@ -402,24 +415,24 @@ const CMLS_Base_ACF_Watcher = new acfWatchChanges({
 					return;
 				}
 				window.wp.data
-					.dispatch('core/notices')
-					.removeNotice('has-hidden-post-title');
+					.dispatch( 'core/notices' )
+					.removeNotice( 'has-hidden-post-title' );
 				window.acfWatchChanges
 					.getBasicContext()
-					.removeClass('has-hidden-post-title');
+					.removeClass( 'has-hidden-post-title' );
 			},
 		},
 		'#acf-field_5f46f4d6962ca': {
 			key: 'title-alt',
 			type: 'string',
 			acf: '#acf-field_5f46f4d6962ca',
-			action: (val) => {
-				if (val && val.toString().length) {
+			action: ( val ) => {
+				if ( val && val.toString().length ) {
 					window.acfWatchChanges
 						.getBasicContext()
-						.addClass('has-alt-title');
+						.addClass( 'has-alt-title' );
 					window.wp.data
-						.dispatch('core/notices')
+						.dispatch( 'core/notices' )
 						.createNotice(
 							'info',
 							'🥸 This post uses an alternate display title',
@@ -431,11 +444,11 @@ const CMLS_Base_ACF_Watcher = new acfWatchChanges({
 					return;
 				}
 				window.wp.data
-					.dispatch('core/notices')
-					.removeNotice('has-alt-title');
+					.dispatch( 'core/notices' )
+					.removeNotice( 'has-alt-title' );
 				window.acfWatchChanges
 					.getBasicContext()
-					.removeClass('has-alt-title');
+					.removeClass( 'has-alt-title' );
 			},
 		},
 		'acf[field_6140e29b2c51a][field_6140e2cb5b633]': {
@@ -507,4 +520,4 @@ const CMLS_Base_ACF_Watcher = new acfWatchChanges({
 			action: 'setCssVar',
 		},
 	},
-});
+} );
