@@ -48,7 +48,7 @@ class themeMods {
 	private static $vars = [
 		'text-copyright'                              => 'Copyright $year',
 		'text-masthead-before_menu'                   => 'EXPLORE',
-		'text-masthead-before_menu-enabled'           => true,
+		'text-masthead-before_menu-enabled'           => false,
 		'text-masthead-before_menu-link'              => null,
 		'text-masthead-before_menu-link_newtab'       => false,
 		'text-masthead-before_menu-link_rel'          => null,
