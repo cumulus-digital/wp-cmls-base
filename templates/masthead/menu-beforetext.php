@@ -17,7 +17,7 @@ namespace CMLS_Base;
 	</div>
 	<!-- /templates/masthead/menu-beforetext -->
 
-<?php elseif ( themeMods::get( 'text-masthead-before_menu' ) ): ?>
+<?php elseif ( themeMods::get( 'text-masthead-before_menu-enabled' ) && themeMods::get( 'text-masthead-before_menu' ) ): ?>
 
 	<!-- templates/masthead/menu-beforetext -->
 	<div class="menu-beforetext">

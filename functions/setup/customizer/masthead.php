@@ -92,8 +92,8 @@ function themeCustomizerMasthead( $wpc ) {
 		'description' => 'Optionally use an image for the masthead background. Note: The masthead background color
              WILL be visible behind a transparent background image. Background position begins at the
              top left and is sized to cover.',
-		'panel'    => 'cmls-masthead',
-		'priority' => 31,
+		'panel'       => 'cmls-masthead',
+		'priority'    => 31,
 	] );
 	$wpc->add_setting( 'file-masthead-background', [
 		'default'              => themeMods::getDefault( 'file-masthead-background' ),
@@ -207,6 +207,16 @@ function themeCustomizerMasthead( $wpc ) {
 		'description' => 'Optionally add a text label or link next to the "hamburger" menu expander.',
 		'panel'       => 'cmls-masthead',
 		'priority'    => 32,
+	] );
+	$wpc->add_setting( 'text-masthead-before_menu-enabled', [
+		'default'              => themeMods::getDefault( 'text-masthead-before_menu-enabled' ),
+		'sanitize_callback'    => ns( 'themeCustomizer_sanitizeCheckbox' ),
+		'sanitize_js_callback' => ns( 'themeCustomizer_sanitizeCheckbox' ),
+	] );
+	$wpc->add_control( 'text-masthead-before_menu-enabled', [
+		'type'    => 'checkbox',
+		'section' => 'cmls-masthead-text_before_menu',
+		'label'   => 'Enable Hamburger Label',
 	] );
 	$wpc->add_setting( 'text-masthead-before_menu', [
 		'default'              => themeMods::getDefault( 'text-masthead-before_menu' ),
