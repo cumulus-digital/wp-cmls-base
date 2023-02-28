@@ -108,3 +108,24 @@ body > footer {
 		}
 	}
 }
+.container-choice-footer-msg {
+	background-color: var(--#{$PREFIX}-color-footer-background);
+	color: var(--#{$PREFIX}-color-footer-foreground);
+	font-size: 0.75rem;
+
+	.container-inside {
+		margin: 0 auto;
+		max-width: 800px;
+		padding: 0;
+		overflow-x: visible;
+		position: relative;
+
+		> div {
+			padding: 0.75em !important;
+		}
+
+		a {
+			color: var(--#{$PREFIX}-color-highlight);
+		}
+	}
+}

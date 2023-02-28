@@ -152,3 +152,8 @@
 .is-layout-flex .wp-block-kadence-image.image-is-svg {
 	width: auto;
 }
+
+// Remove underline from kadence buttons
+a.button {
+	text-decoration-line: none;
+}
