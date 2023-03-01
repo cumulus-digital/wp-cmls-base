@@ -11,6 +11,10 @@ html {
 :root {
 	--vh: 1vh;
 	--vh100: calc(var(--vh) * 100);
+
+	// WP 6.1.1 randomly forgets these in global inline styles
+	--wp--style--global--content-size: calc(#{$width-max} - 2rem);
+	--wp--style--global--wide-size: calc(#{$width-max} + 2rem);
 }
 
 html,
