@@ -54,4 +54,34 @@ namespace CMLS_Base\Setup\Security;
 		$csp[] = "script-src 'nonce-" . CMLS_SCRIPT_NONCE . "'";
 	}
 	//\header( 'Content-Security-Policy: ' . \implode( '; ', \array_filter( $csp ) ) );
+
+	// Modicrom of support for old IE
+	\header( 'X-UA-Compatible: IE=edge,chrome=1' );
+} );
+
+/*
+ * Last-modified header should reflect content
+ */
+\add_action( 'send_headers', function () {
+	/*
+	$current_headers = [];
+
+	foreach ( \headers_list() as $h ) {
+		\preg_match( '#^.+?(?=:)#', $h, $key );
+
+		if ( empty( $key ) ) {
+			continue;
+		}
+		$key                                     = \reset( $key );
+		$value                                   = \ltrim( $h, $key . ':' );
+		$current_headers[\mb_strtolower( $key )] = $value;
+	}
+	*/
+	if ( ! \is_admin() && \is_singular() ) {
+		$last_modified = \get_post_modified_time( 'D, d M Y H:i:s', true );
+
+		if ( $last_modified ) {
+			\header( 'Last-Modified: ' . $last_modified . ' GMT' );
+		}
+	}
 } );
