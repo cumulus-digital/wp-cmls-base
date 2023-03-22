@@ -82,3 +82,18 @@ namespace CMLS_Base;
 
 	return $metadata;
 } );
+
+/*
+ * Remove jQuery Migrate on frontend
+ */
+if ( ! \is_admin() && ! \is_user_logged_in() ) {
+	\add_action( 'wp_default_scripts', function ( $scripts ) {
+		if ( isset( $scripts->registered['jquery'] ) ) {
+			$script = $scripts->registered['jquery'];
+
+			if ( $script->deps ) {
+				$script->deps = \array_diff( $script->deps, [ 'jquery-migrate' ] );
+			}
+		}
+	} );
+}
