@@ -42,20 +42,13 @@ namespace CMLS_Base\Setup\Security;
 	\header( 'X-Content-Type-Options: nosniff' );
 
 	/*
-	 * Set script nonce in CSP
+	 * HSTS
 	 */
-	$csp = [
-		"manifest-src 'self'",
-		"font-src 'self' data: fonts.googleapis.com fonts.gstatic.com",
-		"img-src 'self' data:",
-	];
+	\header( 'Strict-Transport-Security "max-age=31536000; includeSubDomains"' );
 
-	if ( \defined( 'CMLS_ADD_SCRIPT_NONCE' ) ) {
-		$csp[] = "script-src 'nonce-" . CMLS_SCRIPT_NONCE . "'";
-	}
-	//\header( 'Content-Security-Policy: ' . \implode( '; ', \array_filter( $csp ) ) );
-
-	// Modicrom of support for old IE
+	/*
+	 * Modicrom of support for old IE
+	 */
 	\header( 'X-UA-Compatible: IE=edge,chrome=1' );
 } );
 
@@ -63,7 +56,23 @@ namespace CMLS_Base\Setup\Security;
  * Last-modified header should reflect content
  */
 \add_action( 'send_headers', function () {
-	/*
+	return;
+
+	if ( ! \is_admin() && \is_singular() ) {
+		$last_modified = \get_post_modified_time( 'D, d M Y H:i:s', true );
+
+		if ( $last_modified ) {
+			\header( 'Last-Modified: ' . $last_modified . ' GMT' );
+		}
+	}
+} );
+
+/**
+ * Get a key-value list of current HTTP headers. Keys are LOWER CASE.
+ *
+ * @return array
+ */
+function getCurrentHeaders() {
 	$current_headers = [];
 
 	foreach ( \headers_list() as $h ) {
@@ -76,12 +85,6 @@ namespace CMLS_Base\Setup\Security;
 		$value                                   = \ltrim( $h, $key . ':' );
 		$current_headers[\mb_strtolower( $key )] = $value;
 	}
-	*/
-	if ( ! \is_admin() && \is_singular() ) {
-		$last_modified = \get_post_modified_time( 'D, d M Y H:i:s', true );
 
-		if ( $last_modified ) {
-			\header( 'Last-Modified: ' . $last_modified . ' GMT' );
-		}
-	}
-} );
+	return $current_headers;
+}
