@@ -44,7 +44,7 @@ namespace CMLS_Base\Setup\Security;
 	/*
 	 * HSTS
 	 */
-	\header( 'Strict-Transport-Security "max-age=31536000; includeSubDomains"' );
+	//\header( 'Strict-Transport-Security "max-age=31536000; includeSubDomains"' );
 
 	/*
 	 * Modicrom of support for old IE
