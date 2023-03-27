@@ -56,13 +56,11 @@ namespace CMLS_Base\Setup\Security;
  * Last-modified header should reflect content
  */
 \add_action( 'send_headers', function () {
-	return;
-
 	if ( ! \is_admin() && \is_singular() ) {
 		$last_modified = \get_post_modified_time( 'D, d M Y H:i:s', true );
 
 		if ( $last_modified ) {
-			\header( 'Last-Modified: ' . $last_modified . ' GMT' );
+			//\header( 'Last-Modified: ' . $last_modified . ' GMT' );
 		}
 	}
 } );
