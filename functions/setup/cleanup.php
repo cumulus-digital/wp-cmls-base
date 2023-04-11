@@ -97,3 +97,16 @@ if ( ! \is_admin() && ! \is_user_logged_in() ) {
 		}
 	} );
 }
+
+/*
+ * Disable Openverse stock image library
+ */
+\add_filter(
+	'block_editor_settings_all',
+	function ( $settings ) {
+		$settings['enableOpenverseMediaCategory'] = false;
+
+		return $settings;
+	},
+	\PHP_INT_MAX
+);
