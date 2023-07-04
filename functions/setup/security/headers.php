@@ -13,9 +13,7 @@ namespace CMLS_Base\Setup\Security;
 		return;
 	}
 
-	/*
-	 * Remove X-Powered-By which may expose PHP version
-	 */
+	// Remove X-Powered-By which may expose PHP version
 	\header_remove( 'X-Powered-By' );
 
 	/*
@@ -31,30 +29,21 @@ namespace CMLS_Base\Setup\Security;
 	 */
 	\header( 'X-DNS-Prefetch-Control: on' );
 
-	/*
-	 * X-Frame-Options: SAMEORIGIN - Prevent web pages from being loaded inside iFrame
-	 */
+	// X-Frame-Options: SAMEORIGIN - Prevent web pages from being loaded inside iFrame
 	\header( 'X-Frame-Options: SAMEORIGIN' );
 
-	/*
-	 * X-Content-Type-Options: nosniff - Prevent MIME Type sniffing
-	 */
+	// X-Content-Type-Options: nosniff - Prevent MIME Type sniffing
 	\header( 'X-Content-Type-Options: nosniff' );
 
-	/*
-	 * HSTS
-	 */
-	//\header( 'Strict-Transport-Security "max-age=31536000; includeSubDomains"' );
+	// HSTS
+	// \header( 'Strict-Transport-Security "max-age=31536000; includeSubDomains"' );
 
-	/*
-	 * Modicrom of support for old IE
-	 */
+	// Modicrom of support for old IE
 	\header( 'X-UA-Compatible: IE=edge,chrome=1' );
 } );
 
+// Last-modified header should reflect content
 /*
- * Last-modified header should reflect content
- */
 \add_action( 'send_headers', function () {
 	if ( ! \is_admin() && \is_singular() ) {
 		$last_modified = \get_post_modified_time( 'D, d M Y H:i:s', true );
@@ -64,6 +53,7 @@ namespace CMLS_Base\Setup\Security;
 		}
 	}
 } );
+ */
 
 /**
  * Get a key-value list of current HTTP headers. Keys are LOWER CASE.
@@ -71,7 +61,7 @@ namespace CMLS_Base\Setup\Security;
  * @return array
  */
 function getCurrentHeaders() {
-	$current_headers = [];
+	$current_headers = array();
 
 	foreach ( \headers_list() as $h ) {
 		\preg_match( '#^.+?(?=:)#', $h, $key );
