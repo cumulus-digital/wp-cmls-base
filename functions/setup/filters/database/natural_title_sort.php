@@ -12,6 +12,18 @@ namespace CMLS_Base;
 	global $wpdb;
 
 	if ( \mb_strpos( $orderby, "{$wpdb->posts}.post_title" ) !== false ) {
+		return \sprintf(
+			"
+			CASE
+				WHEN SUBSTRING_INDEX( {$wpdb->posts}.post_title, ' ', 1 ) IN ( 'a', 'an', 'the' )
+				THEN SUBSTRING( {$wpdb->posts}.post_title, INSTR( {$wpdb->posts}.post_title, ' ' ) + 1 )
+				ELSE {$wpdb->posts}.post_title
+			END %s
+			",
+			'ASC' === \mb_strtoupper( $query->get( 'order' ) ) ? 'ASC' : 'DESC'
+		);
+
+		/*
 		$matches = 'A|An|The';
 
 		$orderby = \str_replace(
@@ -19,6 +31,7 @@ namespace CMLS_Base;
 			"REGEXP_REPLACE( {$wpdb->posts}.post_title, '^({$matches})[[:space:]]+', '' )",
 			$orderby
 		);
+		*/
 	}
 
 	return $orderby;
