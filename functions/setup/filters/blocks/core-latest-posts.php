@@ -1,7 +1,7 @@
 <?php
 /**
  * CMLS Base Theme
- * Filter the content of core/latest-posts block
+ * Filter the content of core/latest-posts block.
  */
 
 namespace CMLS_Base\BlockFilters\CoreLatestPosts;
@@ -14,7 +14,7 @@ use Exception;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 \add_filter( 'render_block', function ( $content, $block ) {
-	if ( $block['blockName'] !== 'core/latest-posts' ) {
+	if ( 'core/latest-posts' !== $block['blockName'] ) {
 		return $content;
 	}
 
@@ -26,11 +26,14 @@ use Exception;
 
 			$raw_content = $content;
 
-			if ( \mb_stripos( $content, '<?xml' ) === false ) {
+			if ( false === \mb_stripos( $content, '<?xml' ) ) {
 				$raw_content = '<?xml encoding="utf-8" ?>' . $content;
 			}
 
-			@$dom->loadHTML( $raw_content );
+			$dom->loadHTML(
+				$raw_content,
+				\LIBXML_SCHEMA_CREATE | \LIBXML_HTML_NOIMPLIED | \LIBXML_HTML_NODEFDTD
+			);
 
 			foreach ( $dom->childNodes as $item ) {
 				if ( $item instanceof DOMProcessingInstruction ) {
