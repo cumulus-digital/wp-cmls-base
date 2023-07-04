@@ -1,7 +1,5 @@
 <?php
-/*
- * Customizes the post password field
- */
+// Customizes the post password field
 
 namespace CMLS_Base;
 
@@ -9,7 +7,7 @@ namespace CMLS_Base;
 
 function outputPostPasswordForm( $output, $post ) {
 	$loginurl = \site_url() . '/wp-login.php?action=postpass';
-	$label    = 'pwbox-' . ( ! empty( $post->ID ) ? $post->ID : \rand() ); ?>
+	$label    = 'pwbox-' . ( ! empty( $post->ID ) ? $post->ID : \base64_encode( \random_bytes( 8 ) ) ); ?>
 	<div class="compact-form compact-password-form">
 		<form class="compact-form" method="POST" action="<?php echo $loginurl; ?>">
 			<p>
