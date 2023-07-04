@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin area scripts and styles
+ * Admin area scripts and styles.
  */
 
 namespace CMLS_Base;
@@ -49,31 +49,43 @@ function backendSetupScripts() {
 \add_action( 'enqueue_block_editor_assets', ns( 'backendSetupScripts' ) );
 
 // Brand the admin bar
-\add_action( 'wp_before_admin_bar_render', function () {
+\add_action( 'init', function () {
+	if ( ! \is_user_logged_in() ) {
+		return;
+	}
+
 	$logo = \preg_replace(
 		'#https?://#i',
 		'',
 		\get_site_icon_url()
 	);
-
 	if ( ! $logo ) {
 		return;
-	} ?>
-	<style>
+	}
+
+	$color_brand     = ThemeMods::get( 'color-brand' );
+	$color_highlight = ThemeMods::get( 'color-highlight' );
+
+	\wp_register_style( PREFIX . '-branded_logo', '' );
+	\wp_enqueue_style( PREFIX . '-branded_logo' );
+
+	\wp_add_inline_style(
+		PREFIX . '-branded_logo',
+		"
 		#wpadminbar #wp-admin-bar-wp-logo a {
 			background: transparent !important;
 		}
 		#wpadminbar #wp-admin-bar-wp-logo,
 		#editor .edit-post-header .edit-post-fullscreen-mode-close.has-icon {
-			background-color: <?php echo ThemeMods::get( 'color-brand' ); ?>;
-			background-image: url(<?php echo $logo; ?>) !important;
+			background-color: {$color_brand};
+			background-image: url({$logo}) !important;
 			background-position: center center !important;
 			background-repeat: no-repeat !important;
 			background-size: 70% !important;
 		}
 		#wpadminbar #wp-admin-bar-wp-logo:hover {
-			background-color: <?php echo ThemeMods::get( 'color-highlight' ); ?>;
-			background-image: url(<?php echo $logo; ?>) !important;
+			background-color: {$color_highlight};
+			background-image: url({$logo}) !important;
 		}
 		#wpadminbar #wp-admin-bar-wp-logo > .ab-item .ab-icon:before {
 			content: '' !important;
@@ -84,24 +96,34 @@ function backendSetupScripts() {
 		#editor .edit-post-header .edit-post-fullscreen-mode-close.has-icon svg {
 			display: none;
 		}
-	</style>
-	<?php
+		"
+	);
 } );
 
 // Brand the login page
 \add_action( 'login_enqueue_scripts', function () {
 	$logo_id = ThemeMods::get( 'file-masthead-logo' );
-	$logo = \get_post( $logo_id );
+	$logo    = \get_post( $logo_id );
 
 	if ( ! $logo ) {
 		return;
-	} ?>
-	<style>
+	}
+	$color_masthead_bg = ThemeMods::get( 'color-masthead-background' );
+	$color_masthead_fg = ThemeMods::get( 'color-masthead-foreground' );
+	$color_brand       = ThemeMods::get( 'color-brand' );
+	$color_highlight   = ThemeMods::get( 'color-highlight' );
+
+	\wp_register_style( PREFIX . '-branded_logo', '' );
+	\wp_enqueue_style( PREFIX . '-branded_logo' );
+
+	\wp_add_inline_style(
+		PREFIX . '-branded_logo',
+		"
 		body {
-			background-color: <?php echo ThemeMods::get( 'color-masthead-background' ); ?> !important;
+			background-color: {$color_masthead_bg} !important;
 		}
 		#login h1 a, .login h1 a {
-			background-image: url(<?php echo \wp_make_link_relative( $logo->guid ); ?>);
+			background-image: url({$logo->guid});
 			background-size: contain;
 			background-position: center center;
 			background-repeat: no-repeat;
@@ -112,16 +134,16 @@ function backendSetupScripts() {
 			border-radius: .5em;
 		}
 		#wp-submit {
-			background-color: <?php echo ThemeMods::get( 'color-brand' ); ?> !important;
+			background-color: {$color_brand} !important;
 		}
 		.login #backtoblog a, .login #nav a {
-			color: <?php echo ThemeMods::get( 'color-masthead-foreground' ); ?> !important;
+			color: {$color_masthead_fg} !important;
 		}
 		.login #backtoblog a:hover, .login #nav a:hover {
-			color: <?php echo ThemeMods::get( 'color-highlight' ); ?> !important;
+			color: {$color_highlight} !important;
 		}
-	</style>
-	<?php
+		"
+	);
 } );
 \add_action( 'login_headerurl', function () {
 	return \home_url();
