@@ -1,6 +1,6 @@
 <?php
 /**
- * Frontend scripts and styles
+ * Frontend scripts and styles.
  */
 
 namespace CMLS_Base;
@@ -9,7 +9,10 @@ namespace CMLS_Base;
 
 function frontendScriptsAndStyles() {
 	if (
-		$GLOBALS['pagenow'] != 'wp-login.php'
+		(
+			\array_key_exists( 'pagenow', $GLOBALS )
+			&& 'wp-login.php' != $GLOBALS['pagenow']
+		)
 		&& ! \is_admin()
 	) {
 		$assets = include theme_path() . '/build/frontend.asset.php';
@@ -25,7 +28,7 @@ function frontendScriptsAndStyles() {
 		\wp_register_style(
 			PREFIX . '_style',
 			theme_url() . '/build/frontend.css',
-			[], //array(PREFIX . '_customizer_vars'),
+			array(), // array(PREFIX . '_customizer_vars'),
 			null,
 			'all'
 		);
@@ -45,7 +48,7 @@ function setQueryLimitToSixteen( $query ) {
 }
 \add_action( 'pre_get_posts', ns( 'setQueryLimitToSixteen' ) );
 
-// remove title on homepage
+// remove post title on homepage
 function removePageTitleOnHomepage( $title ) {
 	if ( \is_home() || \is_front_page() ) {
 		return false;
@@ -82,14 +85,31 @@ function filterRemoveArchivePrepend( $title ) {
 }
 \add_filter( 'get_the_archive_title', ns( 'filterRemoveArchivePrepend' ) );
 
+/**
+ * Ensure generated excerpts end at a sentence boundary.
+ *
+ * @param string $excerpt
+ *
+ * @return string
+ */
 function endExcerptWithSentence( $excerpt ) {
 	// Return manually created excerpts immediately
 	if ( \has_excerpt() ) {
 		return $excerpt;
 	}
-	$excerpt = \explode( '(#~)', \str_replace( ['…', '? ', '! ', '. '], ['($/s$/)', '?(#~)', '!(#~)', '. (#~)'], \preg_replace( '!\s+!', ' ', \trim( $excerpt ) ) ) );
+	$excerpt = \explode(
+		'(#~)',
+		\str_replace(
+			array( '…', '? ', '! ', '. ' ),
+			array( '($/s$/)', '?(#~)', '!(#~)', '. (#~)' ),
+			\preg_replace( '!\s+!', ' ', \trim( $excerpt ) )
+		)
+	);
 
-	return ( ! \mb_strpos( \end( $excerpt ), '($/s$/)' ) ) ? \implode( ' ', $excerpt ) : \implode( ' ', \array_slice( $excerpt, 0, -1 ) );
+	return
+		( ! \mb_strpos( \end( $excerpt ), '($/s$/)' ) )
+			? \implode( ' ', $excerpt )
+			: \implode( ' ', \array_slice( $excerpt, 0, -1 ) );
 }
 \add_filter( 'get_the_excerpt', ns( 'endExcerptWithSentence' ) );
 
@@ -100,7 +120,9 @@ function replaceExcerptMore( $more ) {
 \add_filter( 'excerpt_more', ns( 'replaceExcerptMore' ) );
 
 /**
- * A page with the same slug as a tax term can override its archive
+ * A page with the same slug as a tax term can override its archive.
+ *
+ * @param mixed $query
  */
 function letPagesOverrideArchives( &$query ) {
 	if ( \is_admin() || ! $query->is_main_query() ) {
@@ -146,6 +168,8 @@ function letPagesOverrideArchives( &$query ) {
 /**
  * Provides filters and default exclusions for what may be discovered in
  * public search.
+ *
+ * @param mixed $query
  */
 function searchOnlyPostTypes( $query ) {
 	if ( \is_admin() || ! $query->is_main_query() ) {
@@ -154,24 +178,24 @@ function searchOnlyPostTypes( $query ) {
 
 	if ( $query->is_search() ) {
 		// Default excluded post types
-		$exclude_types = [
+		$exclude_types = array(
 			'nav_menu_item',
 			'attachment',
 			'revision',
-		];
+		);
 		$exclude_types = \apply_filters( 'exclude_type_from_search', $exclude_types );
 
 		// Default excluded taxonomies
-		$exclude_taxonomies = [];
+		$exclude_taxonomies = array();
 		$exclude_taxonomies = \apply_filters( 'exclude_taxonomy_from_search', $exclude_taxonomies );
 
 		// If query is not for a particular post type, search all searchable
 		// post types by default
-		$post_types   = [];
-		$public_types = (array) \get_post_types( [
+		$post_types   = array();
+		$public_types = (array) \get_post_types( array(
 			'public'              => true,
 			'exclude_from_search' => false,
-		] );
+		) );
 		$post_types = $public_types;
 
 		// If the request is for a single post type, limit it
@@ -183,7 +207,7 @@ function searchOnlyPostTypes( $query ) {
 
 		// Allow restricting search to a post type
 		if ( ! empty( $_GET['t'] ) ) {
-			$post_types   = [];
+			$post_types   = array();
 			$request_type = \explode( ',', $_GET['t'] );
 
 			if ( \count( $request_type ) ) {
@@ -195,7 +219,7 @@ function searchOnlyPostTypes( $query ) {
 							return;
 						}
 
-						if ( \mb_strtolower( $type ) === 'any' ) {
+						if ( 'any' === \mb_strtolower( $type ) ) {
 							$post_types = \array_merge( $post_types, $public_types );
 						} else {
 							$post_types[] = \trim( $type );
@@ -214,23 +238,23 @@ function searchOnlyPostTypes( $query ) {
 
 		// Allow restricting search to taxonomies
 		if ( \count( $post_types ) ) {
-			$tax_query         = [];
-			$public_taxonomies = \get_taxonomies( [
+			$tax_query         = array();
+			$public_taxonomies = \get_taxonomies( array(
 				'public'             => true,
 				'publicly_queryable' => true,
 				'object_type'        => $post_types,
-			], 'names' );
+			), 'names' );
 
 			foreach ( $public_taxonomies as $public_tax ) {
 				if ( \array_key_exists( $public_tax, $_GET ) ) {
 					$ids = \array_filter( $_GET[$public_tax], function ( $id ) {
 						return \is_numeric( $id );
 					} );
-					$tax_query[] = [
+					$tax_query[] = array(
 						'taxonomy' => $public_tax,
 						'field'    => 'id',
 						'terms'    => $ids,
-					];
+					);
 				}
 			}
 
@@ -259,13 +283,13 @@ function searchOnlyPostTypes( $query ) {
 // Remove protocol from favicon URL
 \add_filter( 'get_site_icon_url', function ( $url ) {
 	if ( $url ) {
-		$parts = \array_merge( [
+		$parts = \array_merge( array(
 			'host'     => null,
 			'port'     => null,
 			'path'     => null,
 			'query'    => null,
 			'fragment' => null,
-		], \wp_parse_url( $url ) );
+		), \wp_parse_url( $url ) );
 
 		$newurl = '//' . $parts['host'];
 
@@ -284,7 +308,7 @@ function searchOnlyPostTypes( $query ) {
 		}
 
 		return $newurl;
-		//return \wp_make_link_relative( $url );
+		// return \wp_make_link_relative( $url );
 	}
 
 	return $url;
