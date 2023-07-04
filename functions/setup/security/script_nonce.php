@@ -1,6 +1,6 @@
 <?php
 /**
- * Set a secure nonce for registered script includes
+ * Set a secure nonce for registered script includes.
  */
 
 namespace CMLS_Base\Setup\Security;
@@ -13,11 +13,13 @@ namespace CMLS_Base\Setup\Security;
 $script_nonce = \base64_encode( \random_bytes( 16 ) );
 \define( 'CMLS_SCRIPT_NONCE', $script_nonce );
 
-/*
- * Add nonce to scripts loaded through the wp_enqueue_script() or wp_add_inline_script()
- */
+// Add nonce to scripts loaded through the wp_enqueue_script() or wp_add_inline_script()
 if ( \defined( 'CMLS_ADD_SCRIPT_NONCE' ) ) {
 	\add_filter( 'script_loader_tag', function ( $tag ) {
+		if ( \mb_stripos( $tag, ' nonce=' ) ) {
+			return $tag;
+		}
+
 		return \preg_replace(
 			'/<script( )*/',
 			'<script nonce="' . CMLS_SCRIPT_NONCE . '"$1',
