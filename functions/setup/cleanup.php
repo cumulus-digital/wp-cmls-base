@@ -1,6 +1,6 @@
 <?php
 /**
- * Clean up various cruddy stuff
+ * Clean up various cruddy stuff.
  */
 
 namespace CMLS_Base;
@@ -37,25 +37,19 @@ namespace CMLS_Base;
 	\remove_action( 'wp_head', 'feed_links_extra', 3 );
 } );
 
-/*
- * Hide "uncategorized" taxonomies from sitemap
- */
+// Hide "uncategorized" taxonomies from sitemap
 \add_filter( 'wp_sitemaps_taxonomies_entry', function ( $entry, $term, $tax ) {
 	if ( \array_key_exists( 'loc', $entry ) && \mb_strstr( $entry['loc'], '/uncategorized/' ) ) {
-		return [];
+		return array();
 	}
 
 	return $entry;
 }, 99, 3 );
 
-/*
- * Remove Attachment page links in admin
- */
+// Remove Attachment page links in admin
 \add_filter( 'attachment_link', '__return_false' );
 
-/*
- * Remove align wide and full for blocks in widget editor
- */
+// Remove align wide and full for blocks in widget editor
 \add_filter( 'block_type_metadata', function ( $metadata ) {
 	global $pagenow;
 
@@ -68,10 +62,10 @@ namespace CMLS_Base;
 		&& \array_key_exists( 'align', $metadata['supports'] )
 	) {
 		if ( $metadata['supports']['align'] === true ) {
-			$metadata['supports']['align'] = ['left', 'center', 'right'];
+			$metadata['supports']['align'] = array( 'left', 'center', 'right' );
 		} elseif ( \is_array( $metadata['supports']['align'] ) ) {
 			\array_filter( $metadata['supports']['align'], function ( $val ) {
-				if ( \in_array( $val, ['full', 'wide'] ) ) {
+				if ( \in_array( $val, array( 'full', 'wide' ) ) ) {
 					return false;
 				}
 
@@ -83,24 +77,20 @@ namespace CMLS_Base;
 	return $metadata;
 } );
 
-/*
- * Remove jQuery Migrate on frontend
- */
+// Remove jQuery Migrate on frontend
 if ( ! \is_admin() && ! \is_user_logged_in() ) {
 	\add_action( 'wp_default_scripts', function ( $scripts ) {
 		if ( isset( $scripts->registered['jquery'] ) ) {
 			$script = $scripts->registered['jquery'];
 
 			if ( $script->deps ) {
-				$script->deps = \array_diff( $script->deps, [ 'jquery-migrate' ] );
+				$script->deps = \array_diff( $script->deps, array( 'jquery-migrate' ) );
 			}
 		}
 	} );
 }
 
-/*
- * Disable Openverse stock image library
- */
+// Disable Openverse stock image library
 \add_filter(
 	'block_editor_settings_all',
 	function ( $settings ) {
@@ -110,3 +100,9 @@ if ( ! \is_admin() && ! \is_user_logged_in() ) {
 	},
 	\PHP_INT_MAX
 );
+
+// Remove mediaelement.js and use native players
+\add_action( 'wp_enqueue_scripts', function () {
+	\wp_deregister_script( 'wp-mediaelement' );
+	\wp_deregister_style( 'wp-mediaelement' );
+}, \PHP_INT_MAX );
