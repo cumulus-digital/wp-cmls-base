@@ -1,7 +1,7 @@
 <?php
 /**
  * ACF setup continued
- * Give ACF color pickers our customizer palette
+ * Give ACF color pickers our customizer palette.
  */
 
 namespace CMLS_Base;
@@ -20,7 +20,7 @@ namespace CMLS_Base;
 			}
 			// Rgba
 			if ( \mb_substr( $color, 0, 3 ) === 'rgb' ) {
-				$rgba  = [];
+				$rgba  = array();
 				$regex = '#\((([^()]+|(?R))*)\)#';
 
 				if ( \preg_match_all( $regex, $color, $matches ) ) {
@@ -33,7 +33,7 @@ namespace CMLS_Base;
 				$gg = \dechex( $rgba['1'] );
 				$bb = \dechex( $rgba['2'] );
 
-				return \mb_strtoupper( "#$rr$gg$bb" );
+				return \mb_strtoupper( "#{$rr}{$gg}{$bb}" );
 			}
 		}
 
@@ -45,18 +45,14 @@ namespace CMLS_Base;
 
 	$colorString = "'" . \implode( "','", $colors ) . "'";
 
-	\do_action( 'qm/debug', ['adding colors2', $colorString] );
-
-	\wp_register_script( PREFIX . '-acf_colors', '', [], false, true );
+	\wp_register_script( PREFIX . '-acf_colors', '', array(), false, true );
 	\wp_enqueue_script( PREFIX . '-acf_colors' );
 	\wp_add_inline_script(
 		PREFIX . '-acf_colors',
 		"
 		if (window.acf) {
 			// Add customizer colors to ACF color picker
-			console.log('Adding customizer colors to ACF color picker');
 			acf.add_filter('color_picker_args', function(args, field) {
-				console.log('Added them!');
 				args.palettes = [{$colorString}];
 				return args;
 			});
