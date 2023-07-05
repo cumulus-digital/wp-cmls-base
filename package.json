@@ -15,7 +15,7 @@
     "lint:md:js": "wp-scripts lint-md-js",
     "lint:pkg-json": "wp-scripts lint-pkg-json",
     "packages-update": "wp-scripts packages-update",
-    "full-upgrade": "npm update; npm run packages-update; npm upgrade"
+    "full-upgrade": "npm update && npm run packages-update && npm upgrade; pushd ./.php-cs-fixer && ./refresh.sh && popd; composer update && composer upgrade && ./rescope.sh"
   },
   "repository": {
     "type": "git",
@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/cumulus-digital/wp-cmls-base#readme",
   "devDependencies": {
-    "@wordpress/scripts": "^26.2.0",
+    "@wordpress/scripts": "^26.7.0",
     "bourbon": "^7.0.0",
     "classlist-polyfill": "^1.2.0",
     "colord": "^2.9.2",
