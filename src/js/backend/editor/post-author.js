@@ -2,8 +2,14 @@
  * Injects an alt display author field near the post author in gutenberg
  */
 ( () => {
+	const acfFieldId = 'field_613a67efc94aa';
+
 	// Only operate in the editor
-	if ( ! window?.wp?.blocks ) {
+	if (
+		! window?.wp?.blocks ||
+		! window.acf ||
+		! window?.acf?.getField( acfFieldId )
+	) {
 		return;
 	}
 
@@ -13,8 +19,6 @@
 	const { useSelect, useDispatch } = wp.data;
 	const { useCallback, useState } = wp.element;
 	const { debounce } = wp.compose;
-
-	const acfFieldId = 'field_613a67efc94aa';
 
 	const altAuthorField = () => {
 		const { postType } = useSelect( ( select ) => {
