@@ -1,6 +1,6 @@
 <?php
 /**
- * Output customizations as CSS variables
+ * Output customizations as CSS variables.
  */
 
 namespace CMLS_Base;
@@ -8,10 +8,10 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 function initCustomFonts() {
-	$font_urls = [
+	$font_urls = array(
 		'font-webfont_url'        => themeMods::get( 'font-webfont_url' ),
 		'font-header_webfont_url' => themeMods::get( 'font-header_webfont_url' ),
-	];
+	);
 	$google_url = 'fonts.googleapis.com';
 	$has_google = false;
 
@@ -22,7 +22,7 @@ function initCustomFonts() {
 		\wp_enqueue_style(
 			'custom-webfont-url-' . $key,
 			\esc_url( $url ),
-			[],
+			array(),
 			null
 		);
 	}
@@ -44,24 +44,24 @@ function initCustomFonts() {
 function generateCustomCSS() {
 	$files  = themeMods::getFiles();
 	$colors = themeMods::getColors();
-	$fonts  = [
+	$fonts  = array(
 		'font-webfont_url'        => themeMods::get( 'font-webfont_url' ),
 		'font-font_family'        => themeMods::get( 'font-font_family' ),
 		'font-header_webfont_url' => themeMods::get( 'font-header_webfont_url' ),
 		'font-header_family'      => themeMods::get( 'font-header_family' ),
-	];
-	$text = [
+	);
+	$text = array(
 		'text-copyright'                 => themeMods::get( 'text-copyright' ),
 		'text-masthead-before_menu'      => themeMods::get( 'text-masthead-before_menu' ),
 		'text-masthead-before_menu-link' => themeMods::get( 'text-masthead-before_menu-link' ),
-	];
+	);
 	$settings = themeMods::getSettings();
 
 	// Generate CSS URL vars for files
 	foreach ( $files as $key => $val ) {
 		$val                     = \addslashes( $val );
-		$files[$key]             = "'${val}'";
-		$files[$key . '-cssurl'] = "url('${val}')";
+		$files[$key]             = "'{$val}'";
+		$files[$key . '-cssurl'] = "url('{$val}')";
 	}
 
 	// Sanitize text
@@ -99,8 +99,8 @@ function generateCustomCSS() {
  * Inject customizer var styles into editor.
  * We're using a trick here because add_editor_style does not yet support
  * inline stylesheets. The request for the remove file will get intercepted
- * in overrideInternalStyleRequest() and overrideExternalStyleRequest()
- **/
+ * in overrideInternalStyleRequest() and overrideExternalStyleRequest().
+ */
 function enqueueOutputCustomCSS() {
 	\add_editor_style( theme_url() . '/cmls-block-editor-customizer-styles' );
 }
@@ -109,16 +109,16 @@ function enqueueOutputCustomCSS() {
 // Override request to inject customizer vars
 function overrideInternalStyleRequest( $response, $parsed_args, $url ) {
 	if ( \mb_strstr( $url, '/cmls-block-editor-customizer-styles' ) ) {
-		$response = [
+		$response = array(
 			'body'     => generateCustomCSS(),
 			'headers'  => new \Requests_Utility_CaseInsensitiveDictionary(),
-			'response' => [
+			'response' => array(
 				'code'    => 200,
 				'message' => 'OK',
-			],
-			'cookies'  => [],
+			),
+			'cookies'  => array(),
 			'filename' => null,
-		];
+		);
 	}
 
 	return $response;
@@ -127,6 +127,7 @@ function overrideInternalStyleRequest( $response, $parsed_args, $url ) {
 function overrideExternalStyleRequest() {
 	if ( \mb_strstr( $_SERVER['REQUEST_URI'], '/cmls-block-editor-customizer-styles' ) ) {
 		echo generateCustomCSS();
+
 		exit();
 	}
 }
@@ -134,60 +135,59 @@ function overrideExternalStyleRequest() {
 
 // Output customizations as CSS vars
 function directOutputCustomCSS() {
-	?>
-	<!-- CUSTOMIZER VARS -->
-	<style id="cmls_base_customizer_vars-css">
-		<?php echo generateCustomCSS(); ?>
-	</style>
-	<!-- END CUSTOMIZER VARS -->
-	<?php
+	\wp_register_style( PREFIX . '-customizer_results', '', array( PREFIX . '_customizer_vars' ) );
+	\wp_enqueue_style( PREFIX . '-customizer_results', '', array( PREFIX . '_customizer_vars' ) );
+	\wp_add_inline_style(
+		PREFIX . '-customizer_results',
+		generateCustomCSS()
+	);
 }
-\add_action( 'wp_head', ns( 'directOutputCustomCSS' ), 100 );
+\add_action( 'init', ns( 'directOutputCustomCSS' ), 100 );
 
 // Register customizations as editor options
 function registerCustomEditorColors() {
 	$customizer_colors = getCustomizerColors();
-	\add_theme_support( 'editor-color-palette', [
-		[
+	\add_theme_support( 'editor-color-palette', array(
+		array(
 			'name'  => 'Brand',
 			'slug'  => 'brand',
 			'color' => \esc_html( themeMods::get( 'color-brand' ) ),
-		],
-		[
+		),
+		array(
 			'name'  => 'Highlight',
 			'slug'  => 'highlight',
 			'color' => \esc_html( themeMods::get( 'color-highlight' ) ),
-		],
-		[
+		),
+		array(
 			'name'  => 'Accent',
 			'slug'  => 'accent',
 			'color' => \esc_html( themeMods::get( 'color-accent' ) ),
-		],
-		[
+		),
+		array(
 			'name'  => 'White',
 			'slug'  => 'white',
 			'color' => '#ffffff',
-		],
-		[
+		),
+		array(
 			'name'  => 'Light Grey',
 			'slug'  => 'lightgrey',
 			'color' => '#d6d6d6',
-		],
-		[
+		),
+		array(
 			'name'  => 'Grey',
 			'slug'  => 'grey',
 			'color' => '#888888',
-		],
-		[
+		),
+		array(
 			'name'  => 'Dark Grey',
 			'slug'  => 'darkgrey',
 			'color' => '#333333',
-		],
-		[
+		),
+		array(
 			'name'  => 'Black',
 			'slug'  => 'black',
 			'color' => '#000000',
-		],
-	] );
+		),
+	) );
 }
 \add_action( 'after_setup_theme', ns( 'registerCustomEditorColors' ) );

@@ -1,7 +1,6 @@
 <?php
-/*
- * Don't allow changes to our metabox order
- */
+
+// Don't allow changes to our metabox order
 
 namespace CMLS_Base;
 
@@ -13,7 +12,7 @@ function acfRestoreOrder( $group, $order ) {
 			$mbox = 'acf-' . $group;
 		}
 
-		$field_group = \acf_get_field_group( $group );
+		$field_group = acf_get_field_group( $group );
 
 		if ( ! $field_group ) {
 			return $order;
@@ -23,7 +22,7 @@ function acfRestoreOrder( $group, $order ) {
 
 		\array_walk( $order, function ( &$pos ) use ( $mbox ) {
 			$pos = \str_replace( $mbox, '', $pos );
-			//$order = \str_replace( ',,', '', $order );
+			// $order = \str_replace( ',,', '', $order );
 			$pos = \preg_replace( '/(^,|,,+|,$)/', '', $pos );
 		} );
 
@@ -60,12 +59,17 @@ function acfResetMetaboxesForCPT( $cpt, $group ) {
 			return;
 		}
 
+		\wp_register_style( PREFIX . '-lock_metaboxes', '', array( PREFIX . '_customizer_vars' ) );
+		\wp_enqueue_style( PREFIX . '-lock_metaboxes', '', array( PREFIX . '_customizer_vars' ) );
+		\wp_register_script( PREFIX . '-lock_metaboxes', '', array( PREFIX . '-backend-script' ), false, true );
+		\wp_enqueue_script( PREFIX . '-lock_metaboxes', '', array( PREFIX . '-backend-script' ), false, true );
+
 		\wp_add_inline_style(
-			PREFIX . '_customizer_vars',
+			PREFIX . '-lock_metaboxes',
 			"#acf-{$group} .handle-order-higher, #acf-{$group} .handle-order-lower { display: none !important; } #acf-{$group} .postbox-header h2 { padding: 0 16px }"
 		);
 		\wp_add_inline_script(
-			PREFIX . '-backend-script',
+			PREFIX . '-lock_metaboxes',
 			"jQuery(function() { jQuery('#acf-{$group}').find('.hndle').removeClass('hndle ui-sortable-handle'); })"
 		);
 	} );
