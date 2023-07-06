@@ -1,6 +1,6 @@
 <?php
 /**
- * Hacks for specific plugins
+ * Hacks for specific plugins.
  */
 
 namespace CMLS_Base\Setup\PluginHacks;
@@ -15,3 +15,4 @@ require __DIR__ . '/extendify.php';
 require __DIR__ . '/publishpress-permissions.php';
 require __DIR__ . '/jc-submenu.php';
 require __DIR__ . '/git_updater.php';
+require __DIR__ . '/jetpack.php';
