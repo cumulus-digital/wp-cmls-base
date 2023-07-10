@@ -1,12 +1,9 @@
 <?php
 /**
- * Helper functions
+ * Helper functions.
  */
 
 namespace CMLS_Base;
-
-use WP_Query;
-use WP_Term;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
@@ -56,8 +53,6 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	/**
 	 * Return the filesystem path of the active theme directory.
 	 * If a child theme is active, this will return that theme's path.
-	 *
-	 * @return void
 	 */
 	function child_theme_path() {
 		return \untrailingslashit( \get_stylesheet_directory() );
@@ -85,7 +80,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Determine if a given array key value is filled
+	 * Determine if a given array key value is filled.
 	 *
 	 * @param array  $array
 	 * @param string $key
@@ -108,7 +103,8 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 * Return a basic post title without "protected" or "private" prepends,
 	 * but still filtered by the_title filter.
 	 *
-	 * @param int $post_id
+	 * @param int   $post_id
+	 * @param mixed $post
 	 *
 	 * @return string
 	 */
@@ -128,7 +124,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Convert a given hex color value to an array of R, G, and B values
+	 * Convert a given hex color value to an array of R, G, and B values.
 	 *
 	 * @param string $hex
 	 *
@@ -145,11 +141,11 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 			list( $r, $g, $b ) = \sscanf( $hex, '#%2x%2x%2x' );
 		}
 
-		return [$r, $g, $b];
+		return array( $r, $g, $b );
 	}
 
 	/**
-	 * Convert a given hex value to an "R, G, B" string
+	 * Convert a given hex value to an "R, G, B" string.
 	 *
 	 * @param string $hex
 	 *
@@ -160,19 +156,18 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Return the copyright field from the theme customizer
+	 * Return the copyright field from the theme customizer.
 	 *
 	 * @return string
 	 */
 	function getCopyright() {
 		$copyright = themeCustomizer_sanitizeSimpleHTML( themeMods::getRaw( 'text-copyright' ) );
-		$copyright = \str_replace( '$year', \date( 'Y' ), $copyright );
 
-		return $copyright;
+		return \str_replace( '$year', \date( 'Y' ), $copyright );
 	}
 
 	/**
-	 * Determine if the current WP query is paginated
+	 * Determine if the current WP query is paginated.
 	 *
 	 * @return bool
 	 */
@@ -197,7 +192,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Fetch a relative link to a file post's actual image file
+	 * Fetch a relative link to a file post's actual image file.
 	 *
 	 * @param mixed $post
 	 *
@@ -214,8 +209,6 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 				return \wp_make_link_relative( $filepost->guid );
 			}
 		}
-
-		return null;
 	}
 
 	/**
@@ -223,8 +216,6 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 * from custom field settings.
 	 *
 	 * @param int $id
-	 *
-	 * @return void
 	 */
 	function generateBodyClasses( $id = null ) {
 		$page_custom_fields = \get_fields( $id, false );
@@ -273,21 +264,20 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Custom get_template_part to use custom locate_template
+	 * Custom get_template_part to use custom locate_template.
 	 *
 	 * @param string $slug
 	 * @param string $name
 	 * @param string $args
 	 */
-	function cmls_get_template_part( $slug, $name = null, $args = [] ) {
-
+	function cmls_get_template_part( $slug, $name = null, $args = array() ) {
 		// Try to fill $name with current post type if not already filled
 		if ( $name === null && \in_the_loop() ) {
 			$name = \get_post_type();
 		}
 
 		\do_action( "get_template_part_{$slug}", $slug, $name, $args );
-		$templates = [];
+		$templates = array();
 		$name      = (string) $name;
 
 		if ( '' !== $name ) {
@@ -302,19 +292,19 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Custom replacement for locate_template which allows filtering template paths
+	 * Custom replacement for locate_template which allows filtering template paths.
 	 *
 	 * @param array|string $template_names
 	 * @param bool         $load
 	 * @param bool         $require_once
 	 * @param array        $args
 	 */
-	function cmls_locate_template( $template_names, $load = false, $require_once = true, $args = [] ) {
-		$paths = [
+	function cmls_locate_template( $template_names, $load = false, $require_once = true, $args = array() ) {
+		$paths = array(
 			STYLESHEETPATH,
 			TEMPLATEPATH,
 			ABSPATH . WPINC . '/theme-compat',
-		];
+		);
 		$paths = \apply_filters( 'cmls-locate_template_path', $paths );
 
 		$located = '';
@@ -341,11 +331,11 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Select tags used by posts in a specified category
+	 * Select tags used by posts in a specified category.
 	 *
-	 * @param WP_Term $cat
-	 * @param string  $tag_type
-	 * @param bool    $include_children
+	 * @param \WP_Term $cat
+	 * @param string   $tag_type
+	 * @param bool     $include_children
 	 *
 	 * @return array
 	 */
@@ -356,32 +346,43 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 			$cat = \get_queried_object();
 
 			if ( ! $cat ) {
-				return [];
+				return array();
 			}
 		}
 
 		if ( $include_children ) {
-			// get children of this tax
-			$children = \get_term_children( $cat->term_id, $cat->taxonomy );
+			// Handle top level
+			if ( ! $cat->term_id ) {
+				// Get all top level terms for taxonomy
+				$children = $wpdb->get_col( $wpdb->prepare( "
+					SELECT term_id FROM {$wpdb->term_taxonomy}
+					WHERE taxonomy=%s AND parent=0
+				", $cat->taxonomy ) );
+			} else {
+				// get children of this tax
+				$children = \get_term_children( $cat->term_id, $cat->taxonomy );
+			}
 
-			$ids = \array_merge( [$cat->term_id], $children );
+			$ids = \array_merge( array( $cat->term_id ), $children );
 
 			$placeholder = \implode( ',', \array_fill( 0, \count( $ids ), '%d' ) );
 
-			$posts = $wpdb->get_col( $wpdb->prepare( "
+			$query = $wpdb->prepare( "
 				SELECT ID FROM {$wpdb->posts}
 				LEFT JOIN {$wpdb->term_relationships} as t
 					ON ID = t.object_id
 				WHERE post_status = 'publish' AND t.term_taxonomy_id IN ({$placeholder})
-			", $ids ) );
+			", $ids );
 		} else {
-			$posts = $wpdb->get_col( $wpdb->prepare( "
+			$query = $wpdb->prepare( "
 				SELECT ID FROM {$wpdb->posts}
 				LEFT JOIN {$wpdb->term_relationships} as t
 					ON ID = t.object_id
 				WHERE post_status = 'publish' AND t.term_taxonomy_id = %d
-			", $cat->term_id ) );
+			", $cat->term_id );
 		}
+
+		$posts = $wpdb->get_col( $query );
 
 		if ( \count( $posts ) ) {
 			$terms = \wp_get_object_terms( $posts, $tag_type );
@@ -392,11 +393,11 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 			return $terms;
 		}
 
-		return [];
+		return array();
 	}
 
 	/**
-	 * Determine if the current query is for a hierarchical post type
+	 * Determine if the current query is for a hierarchical post type.
 	 *
 	 * @return bool
 	 */
@@ -411,7 +412,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Get ACF fields for an object, if none exist, try its ancestors
+	 * Get ACF fields for an object, if none exist, try its ancestors.
 	 *
 	 * @param object $term
 	 *
@@ -421,10 +422,10 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		$fields = \get_fields( $term );
 
 		if (
-				! $fields
-				&& \property_exists( $term, 'parent' )
-				&& $term->parent !== 0
-			) {
+			! $fields
+			&& \property_exists( $term, 'parent' )
+			&& $term->parent !== 0
+		) {
 			$parents = \get_ancestors( $term->term_id, $term->taxonomy );
 
 			foreach ( $parents as $parent ) {
@@ -441,10 +442,10 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Get a tax's ACF options, optionally bubbling up tax hierarchy
+	 * Get a tax's ACF options, optionally bubbling up tax hierarchy.
 	 *
-	 * @param string         $selector ACF field identifier
-	 * @param string|WP_Term $term     Term identifier
+	 * @param string          $selector ACF field identifier
+	 * @param string|\WP_Term $term     Term identifier
 	 *
 	 * @return string|array
 	 */
@@ -464,7 +465,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		if ( $useParent ) {
 			// If term has useParent, but it has no parent, we use defaults
 			if ( \property_exists( $term, 'parent' ) && $term->parent === 0 ) {
-				return [];
+				return array();
 			}
 
 			$gotParent = false;
@@ -477,7 +478,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 				$q            = $wpdb->prepare(
 					"SELECT term_id, meta_value FROM {$wpdb->termmeta} WHERE meta_key=%s AND term_id IN ({$placeholders})",
 					\array_merge(
-						[$meta_key],
+						array( $meta_key ),
 						$parents
 					)
 				);
@@ -485,8 +486,8 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 
 				foreach ( $parents as $i => $parent ) {
 					if (
-							\array_key_exists( $parent, $parentUseParent )
-							&& $parentUseParent[$parent] === 0
+						\array_key_exists( $parent, $parentUseParent )
+						&& $parentUseParent[$parent] === 0
 					) {
 						// Stop here, this is the parent to use
 						$fieldObj  = \get_field_object( $selector, $term, true, true );
@@ -498,7 +499,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 			}
 
 			if ( ! $gotParent ) {
-				$fieldObj = ['value' => []];
+				$fieldObj = array( 'value' => array() );
 			}
 		}
 
@@ -508,7 +509,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Array filter to remove truly empty values
+	 * Array filter to remove truly empty values.
 	 *
 	 * @param array $array
 	 *
@@ -533,7 +534,8 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	function not_empty( $val, $key = null, $false_is_empty = false ) {
 		if ( $key && ! isset( $val[$key] ) ) {
 			return false;
-		} elseif ( $key ) {
+		}
+		if ( $key ) {
 			$val = $val[$key];
 		}
 
@@ -555,14 +557,14 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Resolve args and default post display
+	 * Resolve args and default post display.
 	 *
 	 * @param array $args
 	 *
 	 * @return array
 	 */
-	function resolve_post_display_args( $args = [] ) {
-		$default = [
+	function resolve_post_display_args( $args = array() ) {
+		$default = array(
 			'display_format'          => \apply_filters( 'display-archive-display_format', null ),
 			'show_description'        => \apply_filters( 'display-archive-show_description', true ),
 			'show_sidebar'            => \apply_filters( 'display-archive-show_sidebar', true ),
@@ -577,28 +579,28 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 			'header-background_color' => null,
 			'header-background_image' => null,
 			'header-text_color'       => null,
-		];
+		);
 
 		return \apply_filters( 'display-archive-all', \array_merge( $default, (array) $args ) );
 	}
 
 	/**
-	 * Retrieve display args for a taxonomy archive
+	 * Retrieve display args for a taxonomy archive.
 	 *
-	 * @param WP_Term $term
-	 * @param array   $overrides Custom overrides
+	 * @param \WP_Term $term
+	 * @param array    $overrides Custom overrides
 	 *
 	 * @return array
 	 */
-	function get_tax_display_args( $term = null, $overrides = [] ) {
-		$return = [];
+	function get_tax_display_args( $term = null, $overrides = array() ) {
+		$return = array();
 
 		if ( \is_category() || \is_tag() || \is_tax() ) {
 			$term   = $term ? $term : \get_queried_object();
 			$fields = get_tax_acf( 'field_6128514db85a1', $term );
 
 			if ( $fields ) {
-				$return = \array_merge( [], remove_empty( $fields ) );
+				$return = \array_merge( array(), remove_empty( $fields ) );
 
 				// Handle any existing values using the depricated 'format' key
 				if ( isset( $fields['format'] ) ) {
@@ -621,9 +623,9 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Determine if a given taxonomy query includes children
+	 * Determine if a given taxonomy query includes children.
 	 *
-	 * @param WP_Query $query (optional) Query to check, or check global $wp_query
+	 * @param \WP_Query $query (optional) Query to check, or check global $wp_query
 	 *
 	 * @return bool
 	 */
@@ -651,7 +653,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Determine if the screen has the global sidebar and it has widgets
+	 * Determine if the screen has the global sidebar and it has widgets.
 	 *
 	 * @param bool $force Force a return value
 	 *
@@ -666,7 +668,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Determine if the theme supports block editor for widgets
+	 * Determine if the theme supports block editor for widgets.
 	 *
 	 * @return bool
 	 */
