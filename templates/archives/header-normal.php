@@ -2,7 +2,7 @@
 /**
  * CMLS Base Theme
  * Template part
- * Archive Header
+ * Archive Header.
  */
 
 namespace CMLS_Base;
@@ -34,12 +34,16 @@ namespace CMLS_Base;
 		) {
 			echo 'has_background';
 		}
-	?>"
+?>"
 >
 
 	<div class="row-container">
 
-		<?php \do_action( 'cmls_template-archive-inside_header-start' ); ?>
+		<?php if ( \has_action( 'cmls_template-archive-inside_header-start' ) ): ?>
+			<!-- action:cmls_template-archive-inside_header-start -->
+			<?php \do_action( 'cmls_template-archive-inside_header-start' ); ?>
+			<!-- /action:cmls_template-archive-inside_header-start -->
+		<?php endif; ?>
 
 		<?php if ( \is_a( $args['this_term'], 'WP_Term' ) && \is_taxonomy_hierarchical( $args['this_term']->taxonomy ) ): ?>
 
@@ -49,15 +53,15 @@ namespace CMLS_Base;
 
 					<span class="parent-back">&lsaquo;</span>
 					<?php
-	echo \get_term_parents_list(
-		$args['this_term']->term_id,
-		$args['this_term']->taxonomy,
-		[
-			'inclusive' => false,
-			'separator' => '<i></i>',
-		]
-	);
-					?>
+						echo \get_term_parents_list(
+							$args['this_term']->term_id,
+							$args['this_term']->taxonomy,
+							array(
+								'inclusive' => false,
+								'separator' => '<i></i>',
+							)
+						);
+				?>
 
 				</div>
 			<?php endif; ?>
@@ -87,9 +91,7 @@ namespace CMLS_Base;
 
 		</h1>
 
-		<?php
-			$subtitle = \get_field( 'field_6136452e5eecb', $args['this_term'] );
-		?>
+		<?php $subtitle = \get_field( 'field_6136452e5eecb', $args['this_term'] ); ?>
 
 		<?php if ( $subtitle ): ?>
 			<h2><?php echo $subtitle; ?></h2>
@@ -101,12 +103,20 @@ namespace CMLS_Base;
 			</div>
 		<?php endif; ?>
 
-		<?php \do_action( 'cmls_template-archive-inside_header-end' ); ?>
+		<?php if ( \has_action( 'cmls_template-archive-inside_header-end' ) ): ?>
+			<!-- action:cmls_template-archive-inside_header-end -->
+			<?php \do_action( 'cmls_template-archive-inside_header-end' ); ?>
+			<!-- /action:cmls_template-archive-inside_header-end -->
+		<?php endif; ?>
 
 	</div>
 
 	<?php if ( \is_search() ): ?>
-		<?php cmls_get_template_part( 'templates/pages/search-header', make_post_class(), ['include_header_tag' => false, 'title_tag' => 'h2'] ); ?>
+		<?php cmls_get_template_part(
+			'templates/pages/search-header',
+			make_post_class(),
+			array( 'include_header_tag' => false, 'title_tag' => 'h2' )
+		); ?>
 	<?php endif; ?>
 
 </header>

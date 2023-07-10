@@ -154,7 +154,7 @@ return $config
 			// Function defined by PHP should be called using the correct casing.
 			'native_function_casing' => true,
 			// Add leading `\` before function invocation to speed up resolving.
-			'native_function_invocation' => array( 'include' => $NFI_includes ),
+			'native_function_invocation' => array( 'include' => $NFI_includes, 'strict' => false ),
 			// Native type hints for functions should use the correct case.
 			'native_function_type_declaration_casing' => true,
 			// All instances created with `new` keyword must (not) be followed by braces.

@@ -2,7 +2,7 @@
 /**
  * CMLS Base Theme
  * Template
- * Masthead Menu
+ * Masthead Menu.
  */
 
 namespace CMLS_Base;
@@ -10,9 +10,9 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 // Defaults
-//$display_args = get_tax_display_args( isset( $args ) ? $args : [] );
+// $display_args = get_tax_display_args( isset( $args ) ? $args : [] );
 
-$display_args = [
+$display_args = array(
 	'display_format'          => 'list',
 	'show_description'        => true,
 	'show_sidebar'            => true,
@@ -27,7 +27,7 @@ $display_args = [
 	'header-background_color' => false,
 	'header-background_image' => false,
 	'header-text_color'       => false,
-];
+);
 $args = isset( $args ) ? \array_merge( (array) $args, $display_args ) : $display_args;
 
 \get_header();
@@ -50,17 +50,25 @@ $args = isset( $args ) ? \array_merge( (array) $args, $display_args ) : $display
 
 				<div>
 
-					<?php \do_action( 'cmls_template-search-before_content' ); ?>
+					<?php if ( \has_action( 'cmls_template-search-before_content' ) ): ?>
+						<!-- action:cmls_template-search-before_content -->
+						<?php \do_action( 'cmls_template-search-before_content' ); ?>
+						<!-- /action:cmls_template-search-before_content -->
+					<?php endif; ?>
 
 					<?php
 						cmls_get_template_part( 'templates/archives/post_list', make_post_class(), $args );
-					?>
+		?>
 
 					<?php if ( is_paginated() ): ?>
 						<?php cmls_get_template_part( 'templates/pages/pagination' ); ?>
 					<?php endif; ?>
 
-					<?php \do_action( 'cmls_template-search-after_content' ); ?>
+					<?php if( \has_action( 'cmls_template-search-after_content' ) ): ?>
+						<!-- action:cmls_template-search-after_content -->
+						<?php \do_action( 'cmls_template-search-after_content' ); ?>
+						<!-- /action:cmls_template-search-after_content -->
+					<?php endif; ?>
 
 				</div>
 			</div>

@@ -1,16 +1,16 @@
 <?php
 /**
  * CMLS Base Theme
- * Single post template
+ * Single post template.
  */
 
 namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
-$args = \array_merge( [
+$args = \array_merge( array(
 	'show_sidebar' => null,
-], isset( $args ) ? $args : [] );
+), isset( $args ) ? $args : array() );
 
 \get_header();
 ?>
@@ -27,7 +27,11 @@ $args = \array_merge( [
 
 			<div>
 
-				<?php \do_action( 'cmls_template-singular-before_post' ); ?>
+				<?php if ( \has_action( 'cmls_template-singular-before_post' ) ): ?>
+					<!-- action:cmls_template-singular-before_post -->
+					<?php \do_action( 'cmls_template-singular-before_post' ); ?>
+					<!-- /action:cmls_template-singular-before_post -->
+				<?php endif; ?>
 
 				<?php while ( \have_posts() ): \the_post(); ?>
 
@@ -35,7 +39,11 @@ $args = \array_merge( [
 
 				<?php endwhile; ?>
 
-				<?php \do_action( 'cmls_template-singular-after_post' ); ?>
+				<?php if ( \has_action( 'cmls_template-singular-after_post' ) ): ?>
+					<!-- action:cmls_template-singular-after_post -->
+					<?php \do_action( 'cmls_template-singular-after_post' ); ?>
+					<!-- /action:cmls_template-singular-after_post -->
+				<?php endif; ?>
 
 			</div>
 

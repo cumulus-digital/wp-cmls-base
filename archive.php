@@ -1,7 +1,7 @@
 <?php
 /**
  * CMLS Base Theme
- * Post archive template
+ * Post archive template.
  */
 
 namespace CMLS_Base;
@@ -12,7 +12,7 @@ namespace CMLS_Base;
 $this_term = isset( $args ) && \array_key_exists( 'this_term', $args ) ? $args['this_term'] : \get_queried_object();
 
 // Defaults
-$display_args = get_tax_display_args( $this_term, isset( $args ) ? $args : [] );
+$display_args = get_tax_display_args( $this_term, isset( $args ) ? $args : array() );
 $args         = isset( $args ) ? \array_merge( (array) $args, $display_args ) : $display_args;
 
 $term_children = null;
@@ -28,11 +28,11 @@ if (
 	$term_children_ids = $wpdb->get_col( $wpdb->prepare( "SELECT term_id FROM {$wpdb->term_taxonomy} WHERE parent=%d", $this_term->term_id ) );
 
 	if ( \is_array( $term_children_ids ) && \count( $term_children_ids ) ) {
-		$term_children = \get_terms( [
+		$term_children = \get_terms( array(
 			'taxonomy'   => $this_term->taxonomy,
 			'include'    => $term_children_ids,
 			'hide_empty' => true,
-		] );
+		) );
 	}
 	$args['term_children'] = $term_children;
 }
@@ -54,7 +54,11 @@ if (
 
 			<div>
 
-				<?php \do_action( 'cmls_template-archive-before_content' ); ?>
+				<?php if( \has_action( 'cmls_template-archive-before_content' ) ): ?>
+					<!-- action:cmls_template-archive-before_content -->
+					<?php \do_action( 'cmls_template-archive-before_content', $args ); ?>
+					<!-- /action:cmls_template-archive-before_content -->
+				<?php endif; ?>
 
 				<?php if ( \have_posts() ): ?>
 
@@ -72,7 +76,11 @@ if (
 
 				<?php endif; ?>
 
-				<?php \do_action( 'cmls_template-archive-after_content' ); ?>
+				<?php if ( \has_action( 'cmls_template-archive-after_content' ) ): ?>
+					<!-- action:cmls_template-archive-after_content -->
+					<?php \do_action( 'cmls_template-archive-after_content', $args ); ?>
+					<!-- /action:cmls_template-archive-after_content -->
+				<?php endif; ?>
 
 			</div>
 		</div>

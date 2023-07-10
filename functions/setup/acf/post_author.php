@@ -1,7 +1,6 @@
 <?php
-/*
- * Filters for acting on ACF post author fields
- */
+
+// Filters for acting on ACF post author fields
 
 namespace CMLS_Base;
 
@@ -14,7 +13,7 @@ function filterPostAuthorForAltAuthor( $display_name, $user_id = null, $original
 	if ( ! $post_id || ( \is_admin() && $pagenow === 'edit.php' ) ) {
 		return $display_name;
 	}
-	$alt_display_name = get_field( 'field_613a67efc94aa', $post_id );
+	$alt_display_name = \get_field( 'field_613a67efc94aa', $post_id );
 
 	if ( ! $alt_display_name || \mb_strlen( $alt_display_name ) < 1 ) {
 		return $display_name;
@@ -31,7 +30,7 @@ function filterPostAuthorLinkForAltAuthor( $link ) {
 	if ( ! $post_id ) {
 		return $link;
 	}
-	$alt_display_name = get_field( 'field_613a67efc94aa', $post_id );
+	$alt_display_name = \get_field( 'field_613a67efc94aa', $post_id );
 
 	if ( ! $alt_display_name || \mb_strlen( $alt_display_name ) < 1 ) {
 		return $link;
@@ -41,7 +40,7 @@ function filterPostAuthorLinkForAltAuthor( $link ) {
 }
 \add_filter( 'the_author_posts_link', ns( 'filterPostAuthorLinkForAltAuthor' ), 10, 1 );
 
-function filterPostAuthorAvatarforAltAuthor( $avatar = null, $id = null, $args = [] ) {
+function filterPostAuthorAvatarforAltAuthor( $avatar = null, $id = null, $args = array() ) {
 	// Only function when displaying posts
 	if ( ! \in_the_loop() ) {
 		return $avatar;
@@ -53,12 +52,10 @@ function filterPostAuthorAvatarforAltAuthor( $avatar = null, $id = null, $args =
 		return $avatar;
 	}
 
-	$alt_display_name = get_field( 'field_613a67efc94aa', $post_id );
+	$alt_display_name = \get_field( 'field_613a67efc94aa', $post_id );
 
 	if ( ! $alt_display_name || \mb_strlen( $alt_display_name ) < 1 ) {
 		return $avatar;
 	}
-
-	return null;
 }
 \add_filter( 'pre_get_avatar', ns( 'filterPostAuthorAvatarforAltAuthor' ), 10, 3 );

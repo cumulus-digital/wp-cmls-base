@@ -12,7 +12,7 @@ function acfRestoreOrder( $group, $order ) {
 			$mbox = 'acf-' . $group;
 		}
 
-		$field_group = acf_get_field_group( $group );
+		$field_group = \acf_get_field_group( $group );
 
 		if ( ! $field_group ) {
 			return $order;

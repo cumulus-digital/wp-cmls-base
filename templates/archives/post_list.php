@@ -1,7 +1,7 @@
 <?php
 /**
  * CMLS Base Theme
- * Archive / Post list
+ * Archive / Post list.
  */
 
 namespace CMLS_Base;
@@ -24,7 +24,11 @@ if ( ! isset( $args['row-class'] ) ) {
 <div class="row <?php echo $args['row-class']; ?>">
 	<div class="row-container <?php echo $args['display_format']; ?>">
 
-	<?php \do_action( 'cmls_template-archive-before_posts' ); ?>
+	<?php if ( \has_action( 'cmls_template-archive-before_posts' ) ): ?>
+		<!-- action:cmls_template-archive-before_posts -->
+		<?php \do_action( 'cmls_template-archive-before_posts' ); ?>
+		<!-- /action:cmls_template-archive-before_posts -->
+	<?php endif; ?>
 
 	<?php while ( $the_posts->have_posts() ): $the_posts->the_post(); ?>
 
@@ -34,7 +38,11 @@ if ( ! isset( $args['row-class'] ) ) {
 
 	<?php endwhile; ?>
 
-	<?php \do_action( 'cmls_template-archive-after_posts' ); ?>
+	<?php if ( \has_action( 'cmls_template-archive-after_posts' ) ): ?>
+		<!-- action:cmls_template-archive-after_posts -->
+		<?php \do_action( 'cmls_template-archive-after_posts' ); ?>
+		<!-- /action:cmls_template-archive-after_posts -->
+	<?php endif; ?>
 
 	</div>
 </div>

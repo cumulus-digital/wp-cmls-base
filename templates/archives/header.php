@@ -2,7 +2,7 @@
 /**
  * CMLS Base Theme
  * Template part
- * Archive Header
+ * Archive Header.
  */
 
 namespace CMLS_Base;
@@ -23,10 +23,10 @@ if ( \is_home() ) {
 }
 
 if ( $header_page_id && \is_int( $header_page_id ) ) {
-	$header_page = new \WP_Query( [
+	$header_page = new \WP_Query( array(
 		'p'         => $header_page_id,
 		'post_type' => 'page',
-	] );
+	) );
 
 	if ( $header_page->have_posts() ) {
 		$page_as_header = $header_page->post;
@@ -36,11 +36,19 @@ if ( $header_page_id && \is_int( $header_page_id ) ) {
 
 <!-- templates/archives/header -->
 
-<?php \do_action( 'cmls_template-archive-before_header' ); ?>
+<?php if ( \has_action( 'cmls_template-archive-before_header' ) ): ?>
+	<!-- action:cmls_template-archive-before_header -->
+	<?php \do_action( 'cmls_template-archive-before_header' ); ?>
+	<!-- /action:cmls_template-archive-before_header -->
+<?php endif; ?>
 
 <?php if ( $page_as_header ): ?>
 
-	<?php cmls_get_template_part( 'templates/archives/header-post', make_post_class(), \array_merge( $args, ['post' => $page_as_header] ) ); ?>
+	<?php cmls_get_template_part(
+		'templates/archives/header-post',
+		make_post_class(),
+		\array_merge( $args, array( 'post' => $page_as_header ) )
+	); ?>
 
 <?php elseif ( \is_author() ): ?>
 
@@ -58,6 +66,10 @@ if ( $header_page_id && \is_int( $header_page_id ) ) {
 
 <?php endif; ?>
 
-<?php \do_action( 'cmls_template-archive-after_header' ); ?>
+<?php if ( \has_action( 'cmls_template-archive-after_header' ) ): ?>
+	<!-- action:cmls_template-archive-after_header -->
+	<?php \do_action( 'cmls_template-archive-after_header' ); ?>
+	<!-- /action:cmls_template-archive-after_header -->
+<?php endif; ?>
 
 <!-- /templates/archives/header -->
