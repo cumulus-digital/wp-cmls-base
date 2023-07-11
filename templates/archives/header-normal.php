@@ -68,7 +68,19 @@ namespace CMLS_Base;
 
 		<?php endif; ?>
 
+		<?php if ( \has_action( 'cmls_template-archive-header-before_title' ) ): ?>
+			<!-- action:cmls_template-archive-header-before_title -->
+			<?php \do_action( 'cmls_template-archive-header-before_title' ); ?>
+			<!-- /action:cmls_template-archive-header-before_title -->
+		<?php endif; ?>
+
 		<h1>
+
+			<?php if ( \has_action( 'cmls_template-archive-header-before_title-inside' ) ): ?>
+				<!-- action:cmls_template-archive-header-before_title-inside -->
+				<?php \do_action( 'cmls_template-archive-header-before_title-inside' ); ?>
+				<!-- /action:cmls_template-archive-header-before_title-inside -->
+			<?php endif; ?>
 
 			<?php if ( \is_tag() ): ?>
 
@@ -89,7 +101,19 @@ namespace CMLS_Base;
 
 			<?php endif; ?>
 
+			<?php if ( \has_action( 'cmls_template-archive-header-after_title-inside' ) ): ?>
+				<!-- action:cmls_template-archive-header-after_title-inside -->
+				<?php \do_action( 'cmls_template-archive-header-after_title-inside' ); ?>
+				<!-- /action:cmls_template-archive-header-after_title-inside -->
+			<?php endif; ?>
+
 		</h1>
+
+		<?php if ( \has_action( 'cmls_template-archive-header-after_title' ) ): ?>
+			<!-- action:cmls_template-archive-header-after_title -->
+			<?php \do_action( 'cmls_template-archive-header-after_title' ); ?>
+			<!-- /action:cmls_template-archive-header-after_title -->
+		<?php endif; ?>
 
 		<?php $subtitle = \get_field( 'field_6136452e5eecb', $args['this_term'] ); ?>
 
