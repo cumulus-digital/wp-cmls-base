@@ -1,7 +1,7 @@
 <?php
 /**
  * CMLS Base Theme
- * Header
+ * Header.
  */
 
 namespace CMLS_Base;
@@ -25,8 +25,18 @@ if ( \is_object( $qo ) && \property_exists( $qo, 'post_name' ) ) {
 ?>
 <body <?php \body_class( $slug ); ?>>
 
-<?php if ( \function_exists( 'gtm4wp_the_gtm_tag' ) ) {
-	\gtm4wp_the_gtm_tag();
-} ?>
+<?php
+	if ( \function_exists( 'wp_body_open' ) ) {
+		\wp_body_open();
+	} else {
+		\do_action( 'wp_body_open' );
+	}
+?>
+
+<?php
+	if ( \function_exists( 'gtm4wp_the_gtm_tag' ) ) {
+		\gtm4wp_the_gtm_tag();
+	}
+?>
 
 	<?php cmls_get_template_part( 'templates/masthead/base' ); ?>
