@@ -1,7 +1,7 @@
 <?php
 /**
  * CMLS Base Theme
- * Adds a natural_title orderby field
+ * Adds a natural_title orderby field.
  */
 
 namespace CMLS_Base;
@@ -12,17 +12,17 @@ namespace CMLS_Base;
 	global $wpdb;
 
 	if ( \mb_strpos( $orderby, "{$wpdb->posts}.post_title" ) !== false ) {
-		return \sprintf(
+		$orderby = \preg_replace(
+			"|{$wpdb->posts}.post_title|",
 			"
 			CASE
 				WHEN SUBSTRING_INDEX( {$wpdb->posts}.post_title, ' ', 1 ) IN ( 'a', 'an', 'the' )
 				THEN SUBSTRING( {$wpdb->posts}.post_title, INSTR( {$wpdb->posts}.post_title, ' ' ) + 1 )
 				ELSE {$wpdb->posts}.post_title
-			END %s
+			END
 			",
-			'ASC' === \mb_strtoupper( $query->get( 'order' ) ) ? 'ASC' : 'DESC'
+			$orderby
 		);
-
 		/*
 		$matches = 'A|An|The';
 
@@ -31,7 +31,7 @@ namespace CMLS_Base;
 			"REGEXP_REPLACE( {$wpdb->posts}.post_title, '^({$matches})[[:space:]]+', '' )",
 			$orderby
 		);
-		*/
+		 */
 	}
 
 	return $orderby;
