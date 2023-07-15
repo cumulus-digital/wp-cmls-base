@@ -2,7 +2,7 @@
 /**
  * CMLS Base Theme
  * Template
- * Masthead Before-Menu Kink
+ * Masthead Before-Menu Kink.
  */
 
 namespace CMLS_Base;
@@ -24,7 +24,7 @@ namespace CMLS_Base;
 		<?php if ( themeMods::get( 'text-masthead-before_menu-link' ) ): ?>
 			<a
 				href="<?php echo themeMods::get( 'text-masthead-before_menu-link' ); ?>"
-				<?php echo (bool) themeMods::get( 'text-masthead-before_menu-link_newtab' ) ? 'target="_blank"' : ''; ?>
+				<?php echo (bool) themeMods::get( 'text-masthead-before_menu-link_newtab' ) ? 'target="_blank" rel="noopener"' : ''; ?>
 				rel="<?php echo themeMods::get( 'text-masthead-before_menu-link_rel' ); ?>"
 			>
 		<?php endif; ?>
