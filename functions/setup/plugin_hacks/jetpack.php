@@ -10,6 +10,17 @@ namespace CMLS_Base\Setup\PluginHacks;
 \add_filter( 'jetpack_sharing_counts', '__return_false', \PHP_INT_MAX );
 \add_filter( 'jetpack_implode_frontend_css', '__return_false', \PHP_INT_MAX );
 
+// Disable AI Assistant
+\add_filter( 'jetpack_ai_enabled', '__return false', \PHP_INT_MAX );
+\add_action( 'jetpack_register_gutenberg_extensions', function () {
+	if ( \is_callable( '\Jetpack_Gutenberg::set_extension_unavailable' ) ) {
+		\Jetpack_Gutenberg::set_extension_unavailable(
+			'jetpack/ai-assistant',
+			'no_ai_allowed'
+		);
+	}
+}, \PHP_INT_MAX );
+
 function remove_jetpack_css() {
 	$jetpack_options = \get_option( 'jetpack_active_modules' );
 	if ( $jetpack_options ) {
