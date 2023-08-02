@@ -109,9 +109,14 @@ function enqueueOutputCustomCSS() {
 // Override request to inject customizer vars
 function overrideInternalStyleRequest( $response, $parsed_args, $url ) {
 	if ( \mb_strstr( $url, '/cmls-block-editor-customizer-styles' ) ) {
+		if ( \class_exists( '\WpOrg\Requests\Response\Headers' ) ) {
+			$headers = new \WpOrg\Requests\Response\Headers();
+		} else {
+			$headers = new \Requests_Utility_CaseInsensitiveDictionary();
+		}
 		$response = array(
 			'body'     => generateCustomCSS(),
-			'headers'  => new \Requests_Utility_CaseInsensitiveDictionary(),
+			'headers'  => $headers,
 			'response' => array(
 				'code'    => 200,
 				'message' => 'OK',
