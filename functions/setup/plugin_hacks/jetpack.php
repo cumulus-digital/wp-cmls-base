@@ -14,20 +14,41 @@ namespace CMLS_Base\Setup\PluginHacks;
 \add_filter( 'jetpack_ai_enabled', '__return false', \PHP_INT_MAX );
 \add_action( 'jetpack_register_gutenberg_extensions', function () {
 	if ( \is_callable( '\Jetpack_Gutenberg::set_extension_unavailable' ) ) {
+		// Disable AI Assistant
 		\Jetpack_Gutenberg::set_extension_unavailable(
 			'jetpack/ai-assistant',
 			'no_ai_allowed'
 		);
+
+		// Disable VideoPress
+		\Jetpack_Gutenberg::set_extension_unavailable(
+			'videopress/video',
+			'not_used_here'
+		);
 	}
 }, \PHP_INT_MAX );
 
+// Remove VideoPress
+\add_filter( 'jetpack_get_available_modules', function ( $modules ) {
+	if ( \array_key_exists( 'videopress', $modules ) ) {
+		unset( $modules['videopress'] );
+	}
+
+	return $modules;
+} );
+\add_action( 'init', function () {
+	\unregister_block_type( 'videopress/video' );
+}, \PHP_INT_MAX );
+
 function remove_jetpack_css() {
-	$jetpack_options = \get_option( 'jetpack_active_modules' );
+	// $jetpack_options = \get_option( 'jetpack_active_modules' );
+	/*
 	if ( $jetpack_options ) {
 		if ( ! \in_array( 'videopress', $jetpack_options ) ) {
 			\wp_deregister_style( 'jetpack-videopress-video-block-view' ); // VideoPress Video Block
 		}
 	}
+	 */
 	// \wp_deregister_style( 'AtD_style' ); // After the Deadline
 	// \wp_deregister_style( 'jetpack_likes' ); // Likes
 	// \wp_deregister_style( 'jetpack_related-posts' ); // Related Posts

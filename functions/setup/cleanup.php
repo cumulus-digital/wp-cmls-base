@@ -103,6 +103,6 @@ if ( ! \is_admin() && ! \is_user_logged_in() ) {
 
 // Remove mediaelement.js and use native players
 \add_action( 'wp_enqueue_scripts', function () {
-	\wp_deregister_script( 'wp-mediaelement' );
-	\wp_deregister_style( 'wp-mediaelement' );
-}, \PHP_INT_MAX );
+	\wp_dequeue_script( 'wp-mediaelement' );
+	\wp_dequeue_style( 'wp-mediaelement' );
+}, 10 );
