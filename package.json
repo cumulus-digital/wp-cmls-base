@@ -40,8 +40,5 @@
     "jquery": "^3.5.1",
     "lodash": "^4.17.20",
     "prettier": "npm:wp-prettier@^2.6.2"
-  },
-  "browserslist": [
-    "last 3 versions or > 1%"
-  ]
+  }
 }
