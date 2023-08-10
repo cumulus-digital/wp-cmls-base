@@ -16,3 +16,4 @@ require __DIR__ . '/publishpress-permissions.php';
 require __DIR__ . '/jc-submenu.php';
 require __DIR__ . '/git_updater.php';
 require __DIR__ . '/jetpack.php';
+require __DIR__ . '/updraftplus.php';

@@ -44,3 +44,28 @@
 		\update_site_option( 'git_updater', $gu_config );
 	}
 }, \PHP_INT_MAX );
+
+// Remove nag
+\add_action( 'admin_init', function () {
+	$hooks = \_wp_array_get( $GLOBALS, array( 'wp_filter', 'admin_notices' ) );
+	if ( \property_exists( $hooks, 'callbacks' ) ) {
+		$callbacks = $hooks->callbacks;
+		if ( $callbacks && \is_array( $callbacks ) ) {
+			foreach ( $callbacks as $priority => $callback ) {
+				foreach ( $callback as $ref => $action ) {
+					if (
+						\array_key_exists( 'function', $action )
+						&& \is_array( $action['function'] )
+						&& \count( $action['function'] ) > 1
+						&& $action['function'][1] === 'get_license'
+						&& \is_a( $action['function'][0], 'Fragen\Git_Updater\Messages' )
+					) {
+						\remove_action( 'admin_notices', $ref );
+
+						break 2;
+					}
+				}
+			}
+		}
+	}
+} );
