@@ -44,7 +44,7 @@ namespace CMLS_Base\Setup\PluginHacks;
 }, \PHP_INT_MAX );
 
 // Disable upsell nags
-\add_filter( 'jetpack_just_in_time_msgs', '__return_false' );
+\add_filter( 'jetpack_just_in_time_msgs', '__return_false', \PHP_INT_MAX );
 
 // function remove_jetpack_css() {
 // $jetpack_options = \get_option( 'jetpack_active_modules' );
