@@ -17,7 +17,7 @@ function initCustomFonts() {
 
 	foreach ( $font_urls as $key => $url ) {
 		if ( \mb_strpos( $url, $google_url ) ) {
-			$has_google[] = true;
+			$has_google = true;
 		}
 		\wp_enqueue_style(
 			'custom-webfont-url-' . $key,
