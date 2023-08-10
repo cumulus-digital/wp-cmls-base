@@ -1,6 +1,6 @@
 <?php
 /**
- * Media inits and support
+ * Media inits and support.
  */
 
 namespace CMLS_Base;
@@ -33,7 +33,7 @@ function addAttachmentToPostCategory( $attachment_id ) {
 	$attachment = \get_post( $attachment_id );
 
 	if ( $attachment->post_parent ) {
-		$cats = \wp_get_post_categories( $attachment->post_parent, ['fields' => 'names'] );
+		$cats = \wp_get_post_categories( $attachment->post_parent, array( 'fields' => 'names' ) );
 
 		if ( $cats && \is_array( $cats ) ) {
 			\wp_set_object_terms(
@@ -62,12 +62,12 @@ function addAttachmentToPostCategory( $attachment_id ) {
 		return;
 	}
 
-	$tax = \filter_input( \INPUT_GET, 'taxonomy', \FILTER_SANITIZE_STRING );
-	$cat = \filter_input( \INPUT_GET, 'cat', \FILTER_SANITIZE_STRING );
+	$tax = \filter_input( \INPUT_GET, 'taxonomy', \FILTER_UNSAFE_RAW );
+	$cat = \filter_input( \INPUT_GET, 'cat', \FILTER_UNSAFE_RAW );
 
 	$tax = $tax ? $tax : 'category';
 
-	$args = [
+	$args = array(
 		'show_option_none'  => 'All Post Categories',
 		'option_none_value' => null,
 		'name'              => 'cat',
@@ -75,7 +75,7 @@ function addAttachmentToPostCategory( $attachment_id ) {
 		'value_field'       => 'term_id',
 		'taxonomy'          => $tax,
 		'hierarchical'      => true,
-	];
+	);
 	\wp_dropdown_categories( $args );
 } );
 
@@ -87,15 +87,15 @@ function addAttachmentToPostCategory( $attachment_id ) {
 		return;
 	}
 
-	$author = \filter_input( \INPUT_GET, 'author', \FILTER_SANITIZE_STRING );
+	$author = \filter_input( \INPUT_GET, 'author', \FILTER_UNSAFE_RAW );
 
-	$args = [
+	$args = array(
 		'show_option_none'  => 'All Authors',
 		'option_none_value' => null,
 		'name'              => 'author',
 		'selected'          => $author,
 		'value_field'       => 'id',
-	];
+	);
 	\wp_dropdown_users( $args );
 } );
 
@@ -107,10 +107,10 @@ function getImagesByCategory() {
 		\header( 'HTTP/1.0 400 Bad error' );
 		echo '{ error: "Bad category." }';
 	} else {
-		$args = [
+		$args = array(
 			'category'  => $category,
 			'post_type' => 'attachment',
-		];
+		);
 		$media = \get_posts( $args );
 
 		if ( ! empty( $_GET['callback'] ) ) {

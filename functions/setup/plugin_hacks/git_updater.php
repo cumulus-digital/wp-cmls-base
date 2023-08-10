@@ -1,17 +1,15 @@
 <?php
-/*
- * Hacks to make Git Updater work better
- */
+// Hacks to make Git Updater work better
 \add_filter( 'admin_init', function () {
 	\register_setting(
 		'general',
 		'cmls-github_key',
-		[
+		array(
 			'description'       => 'Github Key for Git Updater',
 			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
 			'default'           => null,
-		]
+		)
 	);
 	\add_settings_field(
 		'Github Key',
@@ -36,6 +34,7 @@
 
 	if (
 		$gu_config
+		&& \is_array( $gu_config )
 		&& (
 			! \array_key_exists( 'github_access_token', $gu_config )
 			|| \mb_strlen( $gu_config['github_access_token'] ) < 1

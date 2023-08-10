@@ -1,6 +1,6 @@
 <?php
 /**
- * Hacks for PublishPress Permissions
+ * Hacks for PublishPress Permissions.
  */
 
 namespace CMLS_Base\Setup\PluginHacks;
@@ -17,6 +17,7 @@ if ( \defined( 'PRESSPERMIT_VERSION' ) ) {
 				$closed[] = 'pp_read_page_exceptions';
 				$closed[] = 'pp_edit_page_exceptions';
 				$closed[] = 'pp_associate_page_exceptions';
+				$closed[] = 'pp_assign_page_exceptions';
 
 				return $closed;
 			}, 10, 1 );
