@@ -48,7 +48,7 @@ namespace CMLS_Base\Setup\PluginHacks;
 // Disable upsell nags
 \add_filter( 'jetpack_just_in_time_msgs', '__return_false', \PHP_INT_MAX );
 
-// Disable Google Photos
+// Disable Google Photos/Pexels
 \add_action(
 	'enqueue_block_editor_assets',
 	function () {
@@ -62,6 +62,12 @@ JS;
 	},
 	\PHP_INT_MAX
 );
+/*
+\add_action( 'init', function () {
+	global $wpcom_rest_api_v2_plugins;
+	unset( $wpcom_rest_api_v2_plugins['WPCOM_REST_API_V2_Endpoint_External_Media'] );
+} );
+ */
 
 // function remove_jetpack_css() {
 // $jetpack_options = \get_option( 'jetpack_active_modules' );
