@@ -36,12 +36,14 @@ namespace CMLS_Base\Setup\PluginHacks;
 
 	return $modules;
 } );
+/*
 \add_action( 'init', function () {
 	$registry = \WP_Block_Type_Registry::get_instance();
 	if ( $registry->get_registered( 'videopress/video' ) ) {
 		\unregister_block_type( 'videopress/video' );
 	}
 }, \PHP_INT_MAX );
+ */
 
 // Disable upsell nags
 \add_filter( 'jetpack_just_in_time_msgs', '__return_false', \PHP_INT_MAX );
@@ -52,12 +54,13 @@ namespace CMLS_Base\Setup\PluginHacks;
 	function () {
 		$disable_external_media = <<<'JS'
 document.addEventListener( 'DOMContentLoaded', function() {
-    wp.hooks.removeFilter( 'blocks.registerBlockType', 'external-media/individual-blocks' );
-    wp.hooks.removeFilter( 'editor.MediaUpload', 'external-media/replace-media-upload' );
+	wp.hooks.removeFilter( 'blocks.registerBlockType', 'external-media/individual-blocks' );
+	wp.hooks.removeFilter( 'editor.MediaUpload', 'external-media/replace-media-upload' );
 } );
 JS;
-		\wp_add_inline_script( 'jetpack-disable-external-media', $disable_external_media );
-	}
+		\wp_add_inline_script( 'jetpack-blocks-editor', $disable_external_media );
+	},
+	\PHP_INT_MAX
 );
 
 // function remove_jetpack_css() {
