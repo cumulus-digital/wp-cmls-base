@@ -46,6 +46,20 @@ namespace CMLS_Base\Setup\PluginHacks;
 // Disable upsell nags
 \add_filter( 'jetpack_just_in_time_msgs', '__return_false', \PHP_INT_MAX );
 
+// Disable Google Photos
+\add_action(
+	'enqueue_block_editor_assets',
+	function () {
+		$disable_external_media = <<<'JS'
+document.addEventListener( 'DOMContentLoaded', function() {
+    wp.hooks.removeFilter( 'blocks.registerBlockType', 'external-media/individual-blocks' );
+    wp.hooks.removeFilter( 'editor.MediaUpload', 'external-media/replace-media-upload' );
+} );
+JS;
+		\wp_add_inline_script( 'jetpack-disable-external-media', $disable_external_media );
+	}
+);
+
 // function remove_jetpack_css() {
 // $jetpack_options = \get_option( 'jetpack_active_modules' );
 /*

@@ -7,7 +7,7 @@ namespace CMLS_Base\Setup\Security;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
-\add_action( 'wp_headers', function () {
+function ModifyHeaders() {
 	// Don't send these headers in the admin
 	if ( \is_user_logged_in() || \is_admin() ) {
 		return;
@@ -40,7 +40,10 @@ namespace CMLS_Base\Setup\Security;
 
 	// Modicrom of support for old IE
 	\header( 'X-UA-Compatible: IE=edge,chrome=1' );
-} );
+}
+
+\add_action( 'wp_headers', __NAMESPACE__ . '\ModifyHeaders' );
+\add_action( 'send_headers', __NAMESPACE__ . '\ModifyHeaders' );
 
 // Last-modified header should reflect content
 /*
