@@ -7,6 +7,9 @@ namespace CMLS_Base\Setup\PluginHacks;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
+// Disable image sitemap
+\add_filter( 'jetpack_sitemap_image_skip_post', '__return_true' );
+
 \add_filter( 'jetpack_sharing_counts', '__return_false', \PHP_INT_MAX );
 \add_filter( 'jetpack_implode_frontend_css', '__return_false', \PHP_INT_MAX );
 
