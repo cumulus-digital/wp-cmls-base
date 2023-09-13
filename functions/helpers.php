@@ -576,12 +576,23 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 			'show_source'             => \apply_filters( 'display-archive-show_source', null ),
 			'show_excerpt'            => \apply_filters( 'display-archive-show_excerpt', null ),
 			'thumbnail_size'          => 'thumbnail-uncropped',
+			'thumbnail_attributes'    => array(),
 			'header-background_color' => null,
 			'header-background_image' => null,
 			'header-text_color'       => null,
 		);
 
-		return \apply_filters( 'display-archive-all', \array_merge( $default, (array) $args ) );
+		$newargs = \array_merge( $default, (array) $args );
+
+		// Work out sizes attribute
+		if ( ! \array_key_exists( 'sizes', $newargs['thumbnail_attributes'] ) ) {
+			switch ( $newargs['thumbnail_size'] ) {
+				case 'thumbnail-uncropped':
+					$newargs['thumbnail_attributes']['sizes'] = '400px';
+			}
+		}
+
+		return \apply_filters( 'display-archive-all', $newargs );
 	}
 
 	/**

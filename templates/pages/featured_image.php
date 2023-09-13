@@ -2,19 +2,20 @@
 /**
  * CMLS Base Theme
  * Template
- * Pages Featured Image
+ * Pages Featured Image.
  */
 
 namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 $args = \array_merge(
-	[
+	array(
 		'display_format'       => 'cards',
 		'thumbnail_size'       => 'thumbnail-uncropped',
+		'thumbnail_attributes' => array(),
 		'force_featured_image' => \apply_filters( 'force_featured_image', false ),
 		'disable_lazyload'     => \apply_filters( 'featurediamge_disable_lazyload', false ),
-	],
+	),
 	$args
 );
 ?>
@@ -34,8 +35,17 @@ $args = \array_merge(
 	</style>
 	<figure class="featured-image">
 
-		<?php
-			\the_post_thumbnail( $args['thumbnail_size'], [ 'alt' => \esc_attr( \get_the_title() ), 'loading' => $args['disable_lazyload'] ? 'eager' : 'lazy' ] );
+	<?php
+		\the_post_thumbnail(
+			$args['thumbnail_size'],
+			\array_merge(
+				$args['thumbnail_attributes'],
+				array(
+					'alt'     => \esc_attr( \get_the_title() ),
+					'loading' => $args['disable_lazyload'] ? 'eager' : 'lazy',
+				)
+			)
+		);
 	?>
 
 	</figure>

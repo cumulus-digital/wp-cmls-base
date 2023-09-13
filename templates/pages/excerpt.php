@@ -2,7 +2,7 @@
 /**
  * CMLS Base Theme
  * Template
- * Excerpts
+ * Excerpts.
  */
 
 namespace CMLS_Base;
@@ -21,13 +21,13 @@ $display_args = resolve_post_display_args( $args );
 	<?php
 		$post_classes = 'archive excerpt';
 
-		if ( \has_post_thumbnail() ) {
-			$post_classes .= ' has-post-thumbnail';
-		} else {
-			$post_classes .= ' no-post-thumbnail';
-		}
-		\post_class( $post_classes );
-	?>
+if ( \has_post_thumbnail() ) {
+	$post_classes .= ' has-post-thumbnail';
+} else {
+	$post_classes .= ' no-post-thumbnail';
+}
+\post_class( $post_classes );
+?>
 >
 
 	<?php if ( $display_args['display_format'] === 'cards' ): ?>
@@ -37,15 +37,12 @@ $display_args = resolve_post_display_args( $args );
 		<?php if ( $display_args['show_image'] ): ?>
 
 	<?php
-	cmls_get_template_part(
-		'templates/pages/featured_image',
-		make_post_class(),
-		\array_merge(
-			$display_args,
-			[ 'thumbnail_size' => $display_args['thumbnail_size'] ]
-		)
-	);
-	?>
+cmls_get_template_part(
+	'templates/pages/featured_image',
+	make_post_class(),
+	$display_args,
+);
+			?>
 
 		<?php endif; ?>
 
@@ -79,7 +76,7 @@ $display_args = resolve_post_display_args( $args );
 							<span class="author">
 								By
 								<?php if ( $display_args['display_format'] === 'list' ): ?>
-									<?php \the_author(); //\the_author_posts_link();?>
+									<?php \the_author(); // \the_author_posts_link();?>
 								<?php else: ?>
 									<?php \the_author(); ?>
 								<?php endif; ?>
