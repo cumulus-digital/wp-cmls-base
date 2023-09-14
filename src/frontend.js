@@ -1,4 +1,5 @@
 import './frontend.scss';
+import './global.js';
 
 import throttle from 'lodash/throttle';
 

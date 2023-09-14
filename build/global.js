@@ -1,1 +1,0 @@
-window.THEME_PREFIX="cmls_base";

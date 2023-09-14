@@ -1,6 +1,6 @@
 <?php
 /**
- * Global inits
+ * Global inits.
  */
 
 namespace CMLS_Base;
@@ -13,19 +13,21 @@ namespace CMLS_Base;
 
 // Set up global script included in both front and backend.
 function registerGlobalScript() {
+	/*
 	$assets = include theme_path() . '/build/global.asset.php';
 	\wp_register_script(
 		PREFIX . '_script-global',
 		theme_url() . '/build/global.js',
 		$assets['dependencies'],
 		$assets['version'],
-		false
+		true
 	);
+	 */
 
 	\wp_register_style(
 		PREFIX . '_customizer_vars',
 		theme_url() . '/build/default_variables.css',
-		[],
+		array(),
 		null,
 		'all'
 	);
