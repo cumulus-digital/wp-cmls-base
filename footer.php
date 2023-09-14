@@ -1,12 +1,24 @@
 <?php
 /**
  * CMLS Base Theme
- * Footer
+ * Footer.
  */
 
 namespace CMLS_Base;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
+
+$footer_logo_id = gav( themeMods::getFiles( true ), 'file-footer-logo', array( 'id' => null ) )['id'];
+$footer_logo    = $footer_logo_id
+	? \wp_get_attachment_image(
+		$footer_logo_id,
+		'thumbnail-uncropped',
+		false,
+		array(
+			'alt' => \get_bloginfo( 'name' ),
+		)
+	)
+	: null;
 ?>
 
 <!-- footer -->
@@ -14,10 +26,10 @@ namespace CMLS_Base;
 
 	<div class="row-container">
 
-		<?php if ( gav( themeMods::getFiles(), 'file-footer-logo' ) ) : ?>
+		<?php if ( $footer_logo ) : ?>
 		<div class="logo">
 			<a aria-label="Home" href="<?php echo \home_url(); ?>">
-				<img src="<?php echo gav( themeMods::getFiles(), 'file-footer-logo' ); ?>" alt="<?php echo \bloginfo( 'name' ); ?>">
+				<?php echo $footer_logo; ?>
 			</a>
 		</div>
 		<?php endif; ?>
