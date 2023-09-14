@@ -132,10 +132,10 @@ article {
 	}
 }
 
-@import "_wpadminbar";
-@import "_search";
 @import "./masthead/_";
+@import "_search";
 @import "./footer/_";
 @import "_pagination";
 @import "./archives/_";
 @import "_post_password";
+@import "_wpadminbar";

@@ -17,7 +17,7 @@ namespace CMLS_Base;
 		return $tag;
 	}
 
-	return '
+	$return = '
 		<link
 			rel="preload"
 			as="style"
@@ -26,4 +26,16 @@ namespace CMLS_Base;
 			onload="this.onload=null; this.rel=\'stylesheet\';"
 		>
 	';
+
+	if ( \mb_stristr( $href, 'dualpreload' ) ) {
+		$return .= '
+			<link
+				rel="stylesheet"
+				href="' . \esc_url( $href ) . '"
+				id="' . \esc_attr( $handle ) . '"
+			>
+		';
+	}
+
+	return $return;
 }, 10, 4 );
