@@ -1,4 +1,3 @@
-import 'classlist-polyfill';
 import throttle from 'lodash/throttle';
 import jQuery from 'jquery';
 
