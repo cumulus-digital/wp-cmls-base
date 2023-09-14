@@ -28,7 +28,7 @@ function frontendScriptsAndStyles() {
 		\wp_register_style(
 			PREFIX . '_style',
 			theme_url() . '/build/frontend.css',
-			array(), // array(PREFIX . '_customizer_vars'),
+			array( PREFIX . '_customizer_vars' ),
 			null,
 			'all'
 		);
