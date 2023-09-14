@@ -39,7 +39,8 @@ namespace CMLS_Base\Setup\PluginHacks;
 
 	return $modules;
 } );
-\add_action( 'wp_print_styles', function () {
+\add_action( 'init', function () {
+	\wp_deregister_style( 'jetpack-videopress-video-block' );
 	\wp_deregister_style( 'jetpack-videopress-video-block-view' );
 }, \PHP_INT_MAX );
 
