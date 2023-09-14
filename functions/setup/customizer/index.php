@@ -162,8 +162,8 @@ class themeMods {
 		return self::selfRef( self::$vars[$key] );
 	}
 
-	public static function getFiles() {
-		$cache_key   = 'getFiles';
+	public static function getFiles( $just_ids = false ) {
+		$cache_key   = 'getFiles' . ( $just_ids ? '-ids' : '' );
 		$cache_group = 'CMLS_Base::themeMods';
 
 		$cache = CMLS_Cache::get( $cache_key, $cache_group );
@@ -173,7 +173,6 @@ class themeMods {
 		}
 
 		$keys     = self::getFilteredKeys( 'file' );
-		$files    = array();
 		$post_ids = array();
 
 		foreach ( $keys as $key ) {
@@ -187,7 +186,15 @@ class themeMods {
 			}
 		}
 
+		$files = array();
+
 		if ( \count( $post_ids ) ) {
+			if ( $just_ids ) {
+				CMLS_Cache::set( $cache_key, $post_ids, $cache_group );
+
+				return $post_ids;
+			}
+
 			$posts = \get_posts( array(
 				'post_type' => 'attachment',
 				'post__in'  => \array_column( $post_ids, 'id' ),
@@ -203,12 +210,12 @@ class themeMods {
 					$posts_by_id[$pId['id']]->guid
 				);
 			}
-		}
 
-		if ( \count( $files ) ) {
-			CMLS_Cache::set( $cache_key, $files, $cache_group );
+			if ( \count( $files ) ) {
+				CMLS_Cache::set( $cache_key, $files, $cache_group );
 
-			return $files;
+				return $files;
+			}
 		}
 
 		return array();
