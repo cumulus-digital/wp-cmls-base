@@ -13,7 +13,7 @@ use const CMLS_Base\PREFIX;
 if ( \function_exists( 'extendifysdkCheckPluginInstalled' ) ) {
 	\add_filter( 'extendifysdk_load_library', '__return_false' );
 	\add_action( 'admin_head', function () {
-		\wp_register_style( PREFIX . '-disable_extendify_library', '' );
+		\wp_register_style( PREFIX . '-disable_extendify_library', '', array(), false, 'screen' );
 		\wp_enqueue_style( PREFIX . '-disable_extendify_library', '' );
 		\wp_add_inline_style(
 			PREFIX . '-disable_extendify_library',

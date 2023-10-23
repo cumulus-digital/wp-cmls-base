@@ -59,7 +59,7 @@ function acfResetMetaboxesForCPT( $cpt, $group ) {
 			return;
 		}
 
-		\wp_register_style( PREFIX . '-lock_metaboxes', '', array( PREFIX . '_customizer_vars' ) );
+		\wp_register_style( PREFIX . '-lock_metaboxes', '', array( PREFIX . '_customizer_vars' ), false, 'screen' );
 		\wp_enqueue_style( PREFIX . '-lock_metaboxes', '', array( PREFIX . '_customizer_vars' ) );
 		\wp_register_script( PREFIX . '-lock_metaboxes', '', array( PREFIX . '-backend-script' ), false, true );
 		\wp_enqueue_script( PREFIX . '-lock_metaboxes', '', array( PREFIX . '-backend-script' ), false, true );

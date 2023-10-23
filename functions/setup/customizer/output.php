@@ -140,7 +140,7 @@ function overrideExternalStyleRequest() {
 
 // Output customizations as CSS vars
 function directOutputCustomCSS() {
-	\wp_register_style( PREFIX . '-customizer_results', '', array( PREFIX . '_customizer_vars' ) );
+	\wp_register_style( PREFIX . '-customizer_results', '', array( PREFIX . '_customizer_vars' ), false, 'screen' );
 	\wp_enqueue_style( PREFIX . '-customizer_results', '', array( PREFIX . '_customizer_vars' ) );
 	\wp_add_inline_style(
 		PREFIX . '-customizer_results',

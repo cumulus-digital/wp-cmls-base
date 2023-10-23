@@ -30,7 +30,7 @@ function frontendScriptsAndStyles() {
 			theme_url() . '/build/frontend.css?nopreload',
 			array(), // array( PREFIX . '_customizer_vars' ),
 			null,
-			'all'
+			'screen'
 		);
 		\wp_enqueue_style( PREFIX . '_style' );
 	}

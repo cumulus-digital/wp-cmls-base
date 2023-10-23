@@ -66,7 +66,7 @@ function backendSetupScripts() {
 	$color_brand     = ThemeMods::get( 'color-brand' );
 	$color_highlight = ThemeMods::get( 'color-highlight' );
 
-	\wp_register_style( PREFIX . '-branded_logo', '' );
+	\wp_register_style( PREFIX . '-branded_logo', '', array(), false, 'screen' );
 	\wp_enqueue_style( PREFIX . '-branded_logo' );
 
 	\wp_add_inline_style(

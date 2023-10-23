@@ -29,7 +29,7 @@ function registerGlobalScript() {
 		theme_url() . '/build/default_variables.css',
 		array(),
 		null,
-		'all'
+		'screen'
 	);
 }
 function enqueueGlobalScript() {
