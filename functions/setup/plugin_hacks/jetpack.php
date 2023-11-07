@@ -14,6 +14,7 @@ namespace CMLS_Base\Setup\PluginHacks;
 \add_filter( 'jetpack_implode_frontend_css', '__return_false', \PHP_INT_MAX );
 
 // Disable AI Assistant
+/*
 \add_filter( 'jetpack_ai_enabled', '__return false', \PHP_INT_MAX );
 \add_action( 'jetpack_register_gutenberg_extensions', function () {
 	if ( \class_exists( '\Jetpack_Gutenberg' ) && \is_callable( '\Jetpack_Gutenberg::set_extension_unavailable' ) ) {
@@ -30,6 +31,7 @@ namespace CMLS_Base\Setup\PluginHacks;
 		);
 	}
 }, \PHP_INT_MAX );
+ */
 
 // Remove VideoPress
 \add_filter( 'jetpack_get_available_modules', function ( $modules ) {
