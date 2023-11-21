@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit68c41a34ef5606a729efc05054394373
+class ComposerStaticInitdeff5945c097eec61340b745e6358072
 {
     public static $files = array (
         'a5f882d89ab791a139cd2d37e50cdd80' => __DIR__ . '/..' . '/tgmpa/tgm-plugin-activation/class-tgm-plugin-activation.php',
@@ -38,9 +38,9 @@ class ComposerStaticInit68c41a34ef5606a729efc05054394373
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit68c41a34ef5606a729efc05054394373::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit68c41a34ef5606a729efc05054394373::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit68c41a34ef5606a729efc05054394373::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitdeff5945c097eec61340b745e6358072::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitdeff5945c097eec61340b745e6358072::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitdeff5945c097eec61340b745e6358072::$classMap;
 
         }, null, ClassLoader::class);
     }
