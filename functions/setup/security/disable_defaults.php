@@ -1,6 +1,6 @@
 <?php
 /**
- * Disable defaults
+ * Disable defaults.
  */
 
 namespace CMLS_Base\Setup\Security;
@@ -14,14 +14,20 @@ namespace CMLS_Base\Setup\Security;
 	}
 
 	// Remove sticky posts
-	if ( \get_option( 'sticky_posts' ) ) {
-		\update_option( 'sticky_posts', [] );
+	$disable_sticky = \get_option( 'cmls-disable_sticky' );
+	if ( ( empty( $disable_sticky ) || $disable_sticky === '1' ) && \get_option( 'sticky_posts' ) ) {
+		\update_option( 'sticky_posts', array() );
 	}
 } );
 
-/*
- * Remove users from core sitemap
- */
+// Ignore sticky posts
+\add_action( 'pre_get_posts', function ( $query ) {
+	if ( \get_option( 'cmls-disable_sticky' ) === '1' ) {
+		$query->set( 'ignore_sticky_posts', true );
+	}
+} );
+
+// Remove users from core sitemap
 \add_filter( 'wp_sitemaps_add_provider', function ( $provider, $name ) {
 	if ( $name === 'users' || \is_a( $provider, 'WP_Sitemaps_Users' ) ) {
 		return false;
@@ -30,15 +36,13 @@ namespace CMLS_Base\Setup\Security;
 	return $provider;
 }, 10, 2 );
 
-/*
- * Disable potentially dangerous REST endpoints for non-logged-in users.
- */
+// Disable potentially dangerous REST endpoints for non-logged-in users.
 \add_filter( 'rest_endpoints', function ( $endpoints ) {
 	if ( \is_user_logged_in() || \is_admin() ) {
 		return $endpoints;
 	}
 
-	$disable = [
+	$disable = array(
 		'/wp/v2/users',
 		'/wp/v2/users/me',
 		'/wp/v2/users/(?P<id>[\d]+)',
@@ -50,7 +54,7 @@ namespace CMLS_Base\Setup\Security;
 		'/acf/v3/users',
 		'/acf/v3/users/(?P<id>[\\d]+)/?(?P<field>[\\w\\-\\_]+)?',
 		'/acf/v3/users/(?P<id>[\d]+)/?(?P<field>[\w\-\_]+)?',
-	];
+	);
 
 	foreach ( $disable as $key => $endpoint ) {
 		if ( isset( $endpoints[$endpoint] ) ) {
@@ -61,7 +65,5 @@ namespace CMLS_Base\Setup\Security;
 	return $endpoints;
 } );
 
-/*
- * Disable XML-RPC
- */
+// Disable XML-RPC
 \add_filter( 'xmlrpc_enabled', '__return_false' );

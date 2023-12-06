@@ -1,6 +1,6 @@
 <?php
 /**
- * Theme initialization
+ * Theme initialization.
  */
 
 namespace CMLS_Base;
@@ -17,6 +17,7 @@ require __DIR__ . '/media.php';
 require __DIR__ . '/filters/index.php';
 require __DIR__ . '/shortcodes/index.php';
 require __DIR__ . '/backend.php';
+require __DIR__ . '/settings.php';
 require __DIR__ . '/frontend.php';
 require __DIR__ . '/sidebars.php';
 require __DIR__ . '/cleanup.php';
