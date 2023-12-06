@@ -19,7 +19,7 @@
 			?>
 				<label for="cmls-disable_sticky">
 					<input type="hidden" name="cmls-disable_sticky" value="0" />
-					<input type="checkbox" id="cmls-disable_sticky" name="cmls-disable_sticky" <?php echo empty( $value ) || $value === '1' ? 'checked' : ''; ?> value="<?php echo $value; ?>" />
+					<input type="checkbox" id="cmls-disable_sticky" name="cmls-disable_sticky" <?php echo $value === '1' ? 'checked' : ''; ?> value="1" />
 					Disable sticky posts
 				</label>
 			<?php

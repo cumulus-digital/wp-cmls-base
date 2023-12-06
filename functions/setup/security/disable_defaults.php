@@ -15,7 +15,7 @@ namespace CMLS_Base\Setup\Security;
 
 	// Remove sticky posts
 	$disable_sticky = \get_option( 'cmls-disable_sticky' );
-	if ( ( empty( $disable_sticky ) || $disable_sticky === '1' ) && \get_option( 'sticky_posts' ) ) {
+	if ( $disable_sticky === '1' && \get_option( 'sticky_posts' ) ) {
 		\update_option( 'sticky_posts', array() );
 	}
 } );
