@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/cumulus-digital/wp-cmls-base#readme",
   "devDependencies": {
-    "@wordpress/scripts": "^26.17.0",
+    "@wordpress/scripts": "^26.18.0",
     "bourbon": "^7.0.0",
     "classlist-polyfill": "^1.2.0",
     "colord": "^2.9.2",

@@ -8,34 +8,26 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 \add_filter( 'style_loader_tag', function ( $tag, $handle, $href, $media ) {
-	if (
-		\is_admin()
-		|| \mb_stristr( $href, 'nopreload' )
-		|| ( $media !== 'screen' && $media !== 'all' )
-		|| ! \apply_filters( 'preload_style_tag', true, $handle )
-	) {
-		return $tag;
+	if ( \get_option( 'cmls-async_fonts', '1' ) === '1' ) {
+		// Don't alter real preload tags or ones with existing onload attributes
+		if ( \mb_stristr( 'media="preload"', $tag ) || \mb_stristr( "media='preload'", $tag ) || \mb_stristr( 'onload', $tag ) ) {
+			return $tag;
+		}
+
+		if ( $media === 'preload' || $handle === 'wp-block-library' ) {
+			$replace_media = array(
+				'media="all"',
+				'media=\'all\'',
+				'media="preload"',
+				'media=\'preload\'',
+			);
+
+			$noscript = \str_ireplace( $replace_media, 'media="all"', $tag );
+			$onload   = \str_ireplace( $replace_media, 'media="print" onload="this.media=\'all\'"', $tag );
+
+			return "{$onload}\n<noscript>{$noscript}</noscript>";
+		}
 	}
 
-	$return = '
-		<link
-			rel="preload"
-			as="style"
-			href="' . \esc_url( $href ) . '"
-			id="preload-' . \esc_attr( $handle ) . '"
-			onload="this.onload=null; this.rel=\'stylesheet\';"
-		>
-	';
-
-	if ( \mb_stristr( $href, 'dualpreload' ) ) {
-		$return .= '
-			<link
-				rel="stylesheet"
-				href="' . \esc_url( $href ) . '"
-				id="' . \esc_attr( $handle ) . '"
-			>
-		';
-	}
-
-	return $return;
+	return $tag;
 }, 10, 4 );

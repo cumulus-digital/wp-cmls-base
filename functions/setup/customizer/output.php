@@ -23,7 +23,8 @@ function initCustomFonts() {
 			'custom-webfont-url-' . $key,
 			\esc_url( $url ),
 			array(),
-			null
+			null,
+			'preload'
 		);
 	}
 

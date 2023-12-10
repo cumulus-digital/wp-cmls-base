@@ -27,10 +27,9 @@ function frontendScriptsAndStyles() {
 
 		\wp_register_style(
 			PREFIX . '_style',
-			theme_url() . '/build/frontend.css?nopreload',
+			theme_url() . '/build/frontend.css',
 			array(), // array( PREFIX . '_customizer_vars' ),
 			null,
-			'screen'
 		);
 		\wp_enqueue_style( PREFIX . '_style' );
 	}
