@@ -10,16 +10,26 @@ namespace CMLS_Base;
 \add_filter( 'style_loader_tag', function ( $tag, $handle, $href, $media ) {
 	if ( \get_option( 'cmls-async_fonts', '1' ) === '1' ) {
 		// Don't alter real preload tags or ones with existing onload attributes
-		if ( \mb_stristr( 'media="preload"', $tag ) || \mb_stristr( "media='preload'", $tag ) || \mb_stristr( 'onload', $tag ) ) {
+		if (
+			\mb_stristr( $tag, 'media="preload"' )
+			|| \mb_stristr( $tag, "media='preload'" )
+			|| \mb_stristr( 'onload', $tag )
+		) {
 			return $tag;
 		}
 
-		if ( $media === 'preload' || $handle === 'wp-block-library' ) {
+		if (
+			$media     === 'preload'
+			|| $handle === 'wp-block-library'
+			|| \mb_stristr( $href, '&preload' )
+			|| \mb_stristr( $href, '?preload' )
+			|| \mb_stristr( $href, ';preload' )
+		) {
 			$replace_media = array(
 				'media="all"',
-				'media=\'all\'',
+				"media='all'",
 				'media="preload"',
-				'media=\'preload\'',
+				"media='preload'",
 			);
 
 			$noscript = \str_ireplace( $replace_media, 'media="all"', $tag );
