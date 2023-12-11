@@ -19,13 +19,14 @@ function initCustomFonts() {
 		if ( \mb_strpos( $url, $google_url ) ) {
 			$has_google = true;
 		}
-		\wp_enqueue_style(
-			'custom-webfont-url-' . $key,
-			\esc_url( $url ),
-			array(),
-			null,
-			'preload'
-		);
+		if ( \get_option( 'cmls-async_fonts', '1' ) !== '1' ) {
+			\wp_enqueue_style(
+				'custom-webfont-url-' . $key,
+				\esc_url( $url ),
+				array(),
+				null,
+			);
+		}
 	}
 
 	if ( $has_google ) {
@@ -40,6 +41,26 @@ function initCustomFonts() {
 	}
 }
 \add_action( 'init', ns( 'initCustomFonts' ) );
+
+if ( \get_option( 'cmls-async_fonts', '1' ) === '1' ) {
+	function enqueueCustomFonts() {
+		$font_urls = array(
+			'font-webfont_url'        => themeMods::get( 'font-webfont_url' ),
+			'font-header_webfont_url' => themeMods::get( 'font-header_webfont_url' ),
+		);
+
+		foreach ( $font_urls as $key => $url ) {
+			\wp_enqueue_style(
+				'custom-webfont-url-' . $key,
+				\esc_url( $url ),
+				array(),
+				null,
+			);
+		}
+	}
+	\add_action( 'wp_footer', ns( 'enqueueCustomFonts' ) );
+	\add_action( 'admin_footer', ns( 'enqueueCustomFonts' ) );
+}
 
 // Generate customization CSS
 function generateCustomCSS() {
