@@ -69,6 +69,7 @@ module.exports = {
 		),
 		//global: path.resolve(process.cwd(), 'src', 'global.js'),
 		backend: path.resolve( process.cwd(), 'src', 'backend.js' ),
-		frontend: path.resolve( process.cwd(), 'src', 'frontend.js' ),
+		frontend: path.resolve(process.cwd(), 'src', 'frontend.js'),
+		'swap-preloading-styles': path.resolve( process.cwd(), 'src', 'swap-preloading-styles.js' ),
 	},
 };

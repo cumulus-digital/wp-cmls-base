@@ -50,16 +50,22 @@ if ( \get_option( 'cmls-async_fonts', '1' ) === '1' ) {
 		);
 
 		foreach ( $font_urls as $key => $url ) {
+			if ( ! $url ) {
+				continue;
+			}
+
+			$newUrl = $url . ( \parse_url( $url, \PHP_URL_QUERY ) ? '&' : '?' ) . 'cmpreload';
+
 			\wp_enqueue_style(
 				'custom-webfont-url-' . $key,
-				\esc_url( $url ),
+				\esc_url( $newUrl ),
 				array(),
 				null,
 			);
 		}
 	}
-	\add_action( 'wp_footer', ns( 'enqueueCustomFonts' ) );
-	\add_action( 'admin_footer', ns( 'enqueueCustomFonts' ) );
+	\add_action( 'init', ns( 'enqueueCustomFonts' ) );
+	\add_action( 'admin_init', ns( 'enqueueCustomFonts' ) );
 }
 
 // Generate customization CSS

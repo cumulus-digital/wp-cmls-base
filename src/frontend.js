@@ -8,7 +8,7 @@ const setVh = () => {
 	const vh = window.innerHeight * 0.01;
 	document.documentElement.style.setProperty( '--vh', `${ vh }px` );
 };
-addEventListener( 'DOMContentLoaded', setVh );
+document.addEventListener( 'DOMContentLoaded', setVh );
 addEventListener( 'load', setVh );
 addEventListener( 'resize', throttle( setVh, 800 ) );
 

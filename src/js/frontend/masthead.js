@@ -20,12 +20,13 @@ let $j = jQuery.noConflict();
 		if ( ! Array.isArray( events ) ) {
 			events = [ { event: events, throttleTime: throttleTime } ];
 		}
-		events.forEach( function ( e ) {
+		events.forEach(function (e) {
+			const place = e?.place || window;
 			let cb = callback;
 			if ( e.throttleTime ) {
 				cb = throttle( callback, e.throttleTime );
 			}
-			$( window ).on( e.event + '.cmlsBase', cb );
+			$( place ).on( e.event + '.cmlsBase', cb );
 			//window.addEventListener(e.event, cb);
 		} );
 		if ( immediateLaunch ) {
@@ -64,13 +65,14 @@ let $j = jQuery.noConflict();
 		[
 			{ event: 'scroll', throttleTime: 200 },
 			{ event: 'resize', throttleTime: 1000 },
-			{ event: 'DOMContentLoaded' },
+			{ place: document, event: 'DOMContentLoaded' },
 			{ event: 'load' },
 		],
 		detectBodyUnderMasthead,
 		null,
 		true
 	);
+	detectBodyUnderMasthead();
 
 	// Prevent masthead from getting too large or too small
 	/*
