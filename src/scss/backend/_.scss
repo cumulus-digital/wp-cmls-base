@@ -24,6 +24,10 @@ h6 {
 body {
 	padding: 0 1rem;
 }
+body:where(.post-type-post .editor-styles-wrapper) .is-root-container,
+body:where(.post-type-post.editor-styles-wrapper) .is-root-container {
+	font-family: $system-font;
+}
 
 .wp-block-image .components-resizable-box__container img[src*=".svg"],
 figure img[src*=".svg"] {
