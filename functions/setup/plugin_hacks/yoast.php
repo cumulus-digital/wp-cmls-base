@@ -1,12 +1,9 @@
 <?php
 /**
- * Hacks for Yoast
+ * Hacks for Yoast.
  */
 
 namespace CMLS_Base\Setup\PluginHacks;
-
-use WPSEO_Frontend;
-use Yoast_Notification_Center;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
@@ -19,7 +16,7 @@ use Yoast_Notification_Center;
 				return;
 			}
 
-			$instance = WPSEO_Frontend::get_instance();
+			$instance = \WPSEO_Frontend::get_instance();
 
 			// make sure future version of the plugin does not break our site.
 			if ( ! \method_exists( $instance, 'debug_mark' ) ) {
@@ -27,7 +24,7 @@ use Yoast_Notification_Center;
 			}
 
 			// ok, let us remove the love letter.
-			\remove_action( 'wpseo_head', [ $instance, 'debug_mark' ], 2 );
+			\remove_action( 'wpseo_head', array( $instance, 'debug_mark' ), 2 );
 		}, \PHP_INT_MAX );
 
 		// Move Yoast post box to bottom
@@ -41,9 +38,9 @@ use Yoast_Notification_Center;
 		// Remove Yoast admin notifications
 		\add_action( 'admin_init', function () {
 			if ( \class_exists( 'Yoast_Notification_Center' ) ) {
-				$yoast_nc = Yoast_Notification_Center::get();
-				\remove_action( 'admin_notices', [$yoast_nc, 'display_notifications'] );
-				\remove_action( 'all_admin_notices', [$yoast_nc, 'display_notifications'] );
+				$yoast_nc = \Yoast_Notification_Center::get();
+				\remove_action( 'admin_notices', array( $yoast_nc, 'display_notifications' ) );
+				\remove_action( 'all_admin_notices', array( $yoast_nc, 'display_notifications' ) );
 			}
 		} );
 	}
@@ -55,6 +52,9 @@ use Yoast_Notification_Center;
 
 	if ( \is_admin() && \property_exists( $screen, 'post_type' ) ) {
 		\add_filter( "get_user_option_closedpostboxes_{$screen->post_type}", function ( $closed ) {
+			if ( ! $closed ) {
+				$closed = array();
+			}
 			$closed[] = 'wpseo_meta';
 
 			return $closed;
