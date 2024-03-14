@@ -1,8 +1,14 @@
 <?php
 // Hacks to make Git Updater work better
 \add_filter( 'admin_init', function () {
+	\add_settings_section(
+		'cmls-theme_settings-git_updater',
+		'Git Updater',
+		null,
+		'cmls-theme_settings'
+	);
 	\register_setting(
-		'general',
+		'cmls-theme_settings',
 		'cmls-github_key',
 		array(
 			'description'       => 'Github Key for Git Updater',
@@ -21,7 +27,8 @@
 				<p><small>Automatically re-injects Github key into Git Updater settings when Git Updater wipes it out.</small></p>
 			<?php
 		},
-		'general'
+		'cmls-theme_settings',
+		'cmls-theme_settings-git_updater'
 	);
 } );
 \add_action( 'init', function () {
