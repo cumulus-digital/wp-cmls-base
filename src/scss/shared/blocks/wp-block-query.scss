@@ -40,6 +40,13 @@
 		display: flex;
 		word-break: break-word;
 
+		&.has-text-align-right {
+			justify-content: right;
+		}
+		&.has-text-align-center {
+			justify-content: center;
+		}
+
 		a {
 			text-decoration-line: none;
 			color: inherit;
