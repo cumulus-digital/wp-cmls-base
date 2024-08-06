@@ -50,6 +50,12 @@ body.disable_bottom_padding > main {
 }
 
 .page_title {
+	background-color: var(--page_title-background_color);
+	background-image: var(--page_title-background_image);
+	background-position: var(--page_title-background_position);
+	background-repeat: var(--page_title-background_repeat);
+	background-size: var(--page_title-background_size);
+
 	padding-top: 1rem;
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
@@ -74,11 +80,6 @@ body.disable_bottom_padding > main {
 			margin-bottom: 0;
 		}
 	}
-	background-color: var(--page_title-background_color);
-	background-image: var(--page_title-background_image);
-	background-position: var(--page_title-background_position);
-	background-repeat: var(--page_title-background_repeat);
-	background-size: var(--page_title-background_size);
 
 	h1 {
 		color: var(--page_title-title_color);

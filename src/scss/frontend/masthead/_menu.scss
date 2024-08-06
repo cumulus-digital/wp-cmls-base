@@ -33,12 +33,12 @@
 	overscroll-behavior: contain;
 	opacity: 0;
 
+	transition: max-height 0.16s ease-in;
+	transition-delay: 0.05s;
+
 	@include phone() {
 		width: 100%;
 	}
-
-	transition: max-height 0.16s ease-in;
-	transition-delay: 0.05s;
 
 	ul,
 	li {

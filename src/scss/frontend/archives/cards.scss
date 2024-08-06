@@ -25,9 +25,9 @@
 	}
 
 	& > article {
-		@include card;
-
 		font-size: 0.8em;
+
+		@include card;
 
 		& > a {
 			display: flex;

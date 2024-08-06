@@ -71,15 +71,15 @@
 		//font-size: 1rem;
 
 		& > li {
-			@include card;
 			box-sizing: border-box;
-
-			@include hover {
-				transform: none;
-			}
 
 			margin: 0;
 			padding: 0;
+
+			@include card;
+			@include hover {
+				transform: none;
+			}
 
 			/*
 			.wp-block-post-featured-image {
