@@ -10,7 +10,11 @@ import './acf-title.js';
 
 	// Hide the sticky option, force it false
 	const styles = document.createElement( 'style' );
-	styles.innerHTML = '#sticky-span { display: none !important; }';
+	styles.innerHTML = `
+		.editor-post-panel__row:has(.editor-post-sticky__toggle-control),
+		.editor-post-sticky__toggle-control,
+		#sticky-span { display: none !important; }
+	`;
 	document.body.appendChild( styles );
 	let isSticky = null;
 	const { select, subscribe } = wp.data;
