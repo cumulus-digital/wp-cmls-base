@@ -79,8 +79,10 @@
 
 		&[href*="twitter.com"i],
 		&[href*="t.co"i],
-		&[aria-label*="twitter"i] {
-			--icon: url("images/twitter.svg");
+		&[aria-label*="twitter"i],
+		&[href*="x.com"],
+		&[aria-label="x"] {
+			--icon: url("images/x.svg");
 		}
 
 		&[href*="vimeo.com"i],
