@@ -15,7 +15,8 @@ $footer_logo    = $footer_logo_id
 		'thumbnail-uncropped',
 		false,
 		array(
-			'alt' => \get_bloginfo( 'name' ),
+			'alt'     => \get_bloginfo( 'name' ),
+			'loading' => 'lazy',
 		)
 	)
 	: null;
