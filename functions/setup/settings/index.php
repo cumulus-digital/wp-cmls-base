@@ -83,5 +83,32 @@ namespace CMLS_Base;
 		'cmls-theme_settings',
 		'cmls-theme_settings-general'
 	);
+
+	\register_setting(
+		'cmls-theme_settings',
+		'cmls-youtube_nocookie',
+		array(
+			'description'       => 'Use Privacy-Friendly Video Embeds',
+			'type'              => 'boolean',
+			'sanitize_callback' => 'sanitize_text_field',
+			'default'           => '1',
+		)
+	);
+	\add_settings_field(
+		'cmls-youtube_nocookie',
+		'<label for="cmls-youtube_nocookie">Use "Privacy-Friendly" Youtube/Vimeo Embeds</label>',
+		function () {
+			$value = \get_option( 'cmls-youtube_nocookie' );
+			?>
+				<label for="cmls-youtube_nocookie">
+					<input type="hidden" name="cmls-youtube_nocookie" value="1" />
+					<input type="checkbox" id="cmls-youtube_nocookie" name="cmls-youtube_nocookie" <?php echo $value === '1' ? 'checked' : ''; ?> value="1" />
+					Attempt to use privacy-friendly Youtube (youtube-nocookie.com) and Vimeo (dnt=1) embeds
+				</label>
+			<?php
+		},
+		'cmls-theme_settings',
+		'cmls-theme_settings-general'
+	);
 } );
 require __DIR__ . '/head-scripts.php';

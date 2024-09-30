@@ -9,13 +9,13 @@ namespace CMLS_Base\BlockFilters\CoreEmbed;
 
 \add_filter( 'render_block', function ( $content, $block ) {
 	if (
-		\in_array( $block['blockName'], array( 'core/embed', 'core/html' ) )
+		! \in_array( $block['blockName'], array( 'core/embed', 'core/html' ) )
 	) {
 		return $content;
 	}
 
 	try {
-		if ( \mb_strpos( $content, '<iframe' ) ) {
+		if ( \mb_stripos( $content, '<iframe' ) ) {
 			$use_errors = \libxml_use_internal_errors( true );
 			$dom        = new \DOMDocument( '1.0', 'UTF-8' );
 
@@ -44,21 +44,23 @@ namespace CMLS_Base\BlockFilters\CoreEmbed;
 			$iframes = $xpath->query( '//iframe' );
 
 			foreach ( $iframes as $iframe ) {
-				// Set loading to lazy if not already set
-				$loading = $iframe->getAttribute( 'loading' );
-				if ( ! $loading ) {
-					$iframe->setAttribute( 'loading', 'lazy' );
-				}
-
-				// Add title attribute if missing
-				$title = $iframe->getAttribute( 'title' );
-				if ( ! $title ) {
-					$new_title = 'Iframe embed';
-					$src       = $iframe->getAttribute( 'src' );
-					if ( \mb_stripos( $src, 'megaphone.fm' ) ) {
-						$new_title = 'Podcast embed';
+				if ( $iframe instanceof \DOMElement ) {
+					// Set loading to lazy if not already set
+					$loading = $iframe->getAttribute( 'loading' );
+					if ( ! $loading ) {
+						$iframe->setAttribute( 'loading', 'lazy' );
 					}
-					$iframe->setAttribute( 'title', $new_title );
+
+					// Add title attribute if missing
+					$title = $iframe->getAttribute( 'title' );
+					if ( ! $title ) {
+						$new_title = 'Iframe embed';
+						$src       = $iframe->getAttribute( 'src' );
+						if ( \mb_stripos( $src, 'megaphone.fm' ) ) {
+							$new_title = 'Podcast embed';
+						}
+						$iframe->setAttribute( 'title', $new_title );
+					}
 				}
 			}
 			$content = $dom->saveHTML();
