@@ -15,19 +15,35 @@ jQuery( () => {
 				window.parent.scrollTo( 0, 0 )
 			);
 		}
-		i.addEventListener( 'load', initialLoad );
+		i.addEventListener( 'load', initialLoad, { once: true } );
 
 		// Add current page's search params to jotform and set the src
-		let src = i.getAttribute( 'src' );
-		if ( i.getAttribute( 'data-src' ) ) {
-			src = i.getAttribute( 'data-src' );
-		}
-		if ( window.location?.search?.length > 1 ) {
+		function addParams( src ) {
 			const get = window.location.search.substring( 1 );
-			src += ( src.indexOf( '?' ) > -1 ? '&' : '?' ) + get;
+			return ( src += ( src.indexOf( '?' ) > -1 ? '&' : '?' ) + get );
 		}
-		if ( src !== i.getAttribute( 'src' ) ) {
-			i.setAttribute( 'src', src );
+		if ( i.getAttribute( 'data-src' ) ) {
+			// Support OneTrust handling of iframes
+			const classes = i.getAttribute( 'class' );
+			if (
+				'OneTrust' in window &&
+				classes &&
+				( classes.includes( 'optanon-category' ) ||
+					i.getAttribute( 'data-ot-ignore' ) )
+			) {
+				i.setAttribute(
+					'data-src',
+					addParams( i.getAttribute( 'data-src' ) )
+				);
+			} else {
+				// Rewrite non-OneTrust iframes
+				i.setAttribute(
+					'src',
+					addParams( i.getAttribute( 'data-src' ) )
+				);
+			}
+		} else if ( i.getAttribute( 'src' ) ) {
+			i.setAttribute( 'src', addParams( i.getAttribute( 'src' ) ) );
 		}
 	} );
 
