@@ -56,9 +56,7 @@ $args = isset( $args ) ? \array_merge( (array) $args, $display_args ) : $display
 						<!-- /action:cmls_template-search-before_content -->
 					<?php endif; ?>
 
-					<?php
-						cmls_get_template_part( 'templates/archives/post_list', make_post_class(), $args );
-		?>
+					<?php cmls_get_template_part( 'templates/archives/post_list', make_post_class(), $args ); ?>
 
 					<?php if ( is_paginated() ): ?>
 						<?php cmls_get_template_part( 'templates/pages/pagination' ); ?>
