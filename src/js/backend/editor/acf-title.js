@@ -352,13 +352,19 @@ window.acfWatchChanges = function ( config ) {
 
 				// ACF display option styles
 				const editorCSS = require( './acf-title.css?raw' );
-				if ( ! document.querySelector( '#cmls-acf_post_title' ) ) {
-					window.acfWatchChanges.$inContext(
-						'.editor-styles-wrapper'
-					).prepend( `
-					<style id="cmls-acf_post_title">${ editorCSS }</style>
-				` );
-				}
+				$( function () {
+					if ( ! document.querySelector( '#cmls-acf_post_title' ) ) {
+						window.acfWatchChanges
+							.$inContext( '.editor-styles-wrapper' )
+							.prepend(
+								`<style id="cmls-acf_post_title">${ editorCSS }</style>`
+							);
+					} else {
+						console.warn(
+							'Could not inject ACF display option styles'
+						);
+					}
+				} );
 
 				setupWatch();
 			}
