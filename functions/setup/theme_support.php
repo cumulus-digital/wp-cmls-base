@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Init theme support
+ * Init theme support.
  */
 
 namespace CMLS_Base;
@@ -11,8 +12,8 @@ function init_theme_support() {
 	\add_theme_support( 'custom-logo' );
 	\add_theme_support( 'menus' );
 	\add_theme_support( 'editor-styles' );
-	//\add_editor_style('build/backend.css');
-	\add_theme_support( 'html5', [ 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'style', 'script' ] );
+	// \add_editor_style('build/backend.css');
+	\add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'style', 'script' ) );
 
 	\add_theme_support( 'align-wide' );
 	\add_theme_support( 'custom-spacing' );
@@ -22,12 +23,12 @@ function init_theme_support() {
 	\add_theme_support( 'wp-block-styles' );
 	\add_theme_support( 'responsive-embeds' );
 	\add_theme_support( 'post-thumbnails' );
-	//\add_theme_support( 'post-formats', [ ] );
+	// \add_theme_support( 'post-formats', [ ] );
 	\remove_theme_support( 'post-formats' );
 
-	///\remove_theme_support( 'core-block-patterns' );
+	// /\remove_theme_support( 'core-block-patterns' );
 	\remove_theme_support( 'block-templates' );
-	//\remove_theme_support( 'widgets-block-editor' );
+	// \remove_theme_support( 'widgets-block-editor' );
 
 	\add_post_type_support( 'page', 'excerpt' );
 
@@ -64,7 +65,7 @@ function init_theme_support() {
 			'slug' => 'huge',
 		],
 	] );
-	*/
+	 */
 
 	// Disable custom font sizes for all but admin
 	if ( ! \current_user_can( 'administrator' ) ) {
@@ -76,7 +77,7 @@ function init_theme_support() {
 /*
 global $content_width;
 $content_width = 1200;
-*/
+ */
 
 // Separate stylesheets for blocks
-\add_filter( 'should_load_separate_core_block_assets', '__return_false' );
+\add_filter( 'should_load_separate_core_block_assets', '__return_true' );

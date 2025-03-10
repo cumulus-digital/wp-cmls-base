@@ -35,6 +35,19 @@ for ( let i in rules ) {
 	) {
 		rules[ i ] = {};
 	}
+	// Silence sass deprecations
+	for ( let use in rules[ i ].use ) {
+		if ( rules[ i ].use[ use ]?.loader?.includes( 'sass-loader' ) ) {
+			rules[ i ].use[ use ].options = {
+				...rules[ i ].use[ use ]?.options,
+				sassOptions: {
+					...rules[ i ].use[ use ].options?.sassOptions,
+					quietDeps: true,
+					silenceDeprecations: [ 'import' ],
+				},
+			};
+		}
+	}
 }
 // Refer svgs to build path
 rules.push(
@@ -61,6 +74,13 @@ defaultConfig.module.rules = rules;
 
 module.exports = {
 	...defaultConfig,
+	resolve: {
+		...defaultConfig.resolve,
+		alias: {
+			...defaultConfig.resolve.alias,
+			'~': path.resolve( __dirname, 'src' ),
+		},
+	},
 	entry: {
 		default_variables: path.resolve(
 			process.cwd(),
@@ -69,7 +89,11 @@ module.exports = {
 		),
 		//global: path.resolve(process.cwd(), 'src', 'global.js'),
 		backend: path.resolve( process.cwd(), 'src', 'backend.js' ),
-		frontend: path.resolve(process.cwd(), 'src', 'frontend.js'),
-		'swap-preloading-styles': path.resolve( process.cwd(), 'src', 'swap-preloading-styles.js' ),
+		frontend: path.resolve( process.cwd(), 'src', 'frontend.js' ),
+		'swap-preloading-styles': path.resolve(
+			process.cwd(),
+			'src',
+			'swap-preloading-styles.js'
+		),
 	},
 };
