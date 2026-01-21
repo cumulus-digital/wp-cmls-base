@@ -11,7 +11,7 @@ class ComposerStaticInitdeff5945c097eec61340b745e6358072
     );
 
     public static $prefixLengthsPsr4 = array (
-        'C' => 
+        'C' =>
         array (
             'CMLS_Base\\Vendors\\vena\\AcfJson\\' => 31,
             'CMLS_Base\\Vendors\\WPTRT\\Customize\\Control\\' => 42,
@@ -19,11 +19,11 @@ class ComposerStaticInitdeff5945c097eec61340b745e6358072
     );
 
     public static $prefixDirsPsr4 = array (
-        'CMLS_Base\\Vendors\\vena\\AcfJson\\' => 
+        'CMLS_Base\\Vendors\\vena\\AcfJson\\' =>
         array (
             0 => __DIR__ . '/..' . '/vena/acf-json/src',
         ),
-        'CMLS_Base\\Vendors\\WPTRT\\Customize\\Control\\' => 
+        'CMLS_Base\\Vendors\\WPTRT\\Customize\\Control\\' =>
         array (
             0 => __DIR__ . '/..' . '/wptrt/control-color-alpha/src',
         ),

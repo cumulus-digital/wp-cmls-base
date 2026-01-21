@@ -11,7 +11,7 @@ fi
 echo "Setting up composer vendors without dev"
 composer install --no-scripts --no-dev --prefer-dist
 echo "Scoping..."
-php-scoper add-prefix --output-dir build/composer --force
+php -d error_reporting="E_ALL & ~E_DEPRECATED" $(which php-scoper) add-prefix --output-dir build/composer --force -vvv
 echo "Updating vendor_keep autoloader"
 composer dump-autoload --working-dir build/composer --classmap-authoritative
 echo "Reinstalling dev"
