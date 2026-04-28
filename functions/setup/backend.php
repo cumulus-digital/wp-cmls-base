@@ -102,12 +102,13 @@ function backendSetupScripts() {
 
 // Brand the login page
 \add_action( 'login_enqueue_scripts', function () {
-	$logo_id = ThemeMods::get( 'file-masthead-logo' );
-	$logo    = \get_post( $logo_id );
+	$logo = \preg_replace(
+		'#https?://#i',
+		'',
+		\get_site_icon_url()
+	);
+	$logo_css = empty( $logo ) ? 'none' : 'url(' . $logo . ')';
 
-	if ( ! $logo ) {
-		return;
-	}
 	$color_masthead_bg = ThemeMods::get( 'color-masthead-background' );
 	$color_masthead_fg = ThemeMods::get( 'color-masthead-foreground' );
 	$color_brand       = ThemeMods::get( 'color-brand' );
@@ -123,7 +124,7 @@ function backendSetupScripts() {
 			background-color: {$color_masthead_bg} !important;
 		}
 		#login h1 a, .login h1 a {
-			background-image: url({$logo->guid});
+			background-image: {$logo_css};
 			background-size: contain;
 			background-position: center center;
 			background-repeat: no-repeat;
