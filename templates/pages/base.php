@@ -13,7 +13,7 @@ namespace CMLS_Base;
 <!-- templates/pages/base -->
 <article
 	id="post-<?php \the_ID(); ?>"
-	<?php \post_class( \is_singular() ? 'single' : 'archive' ); ?>
+	<?php \post_class( array( \is_singular() ? 'single' : 'archive', is_singular() && is_main_query() ? 'main-query' : null ) ); ?>
 >
 
 	<?php if ( ! \is_singular() ): ?>
