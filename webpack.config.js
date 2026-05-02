@@ -2,7 +2,6 @@ const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
 let defaultConfig = require( './node_modules/@wordpress/scripts/config/webpack.config.js' );
 const path = require( 'path' );
 
-// Ensure CleanWebpackPlugin doesn't remove composer build dir from php-scoper
 let plugins = defaultConfig.plugins;
 for ( let i in plugins ) {
 	if ( plugins[ i ] instanceof CleanWebpackPlugin ) {
@@ -74,6 +73,13 @@ defaultConfig.module.rules = rules;
 
 module.exports = {
 	...defaultConfig,
+	output: {
+		...defaultConfig.output,
+		clean: {
+			...defaultConfig.output.clean,
+			keep: /^(fonts|images|composer)\//,
+		},
+	},
 	resolve: {
 		...defaultConfig.resolve,
 		alias: {
