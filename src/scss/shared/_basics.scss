@@ -13,8 +13,8 @@ html {
 	--vh100: calc(var(--vh) * 100);
 
 	// WP 6.1.1 randomly forgets these in global inline styles
-	--wp--style--global--content-size: calc(#{$width-max} - 2rem);
-	--wp--style--global--wide-size: calc(#{$width-max} + 2rem);
+	--wp--style--global--content-size: calc(var(--#{$PREFIX}-width-max) - 2rem);
+	--wp--style--global--wide-size: calc(var(--#{$PREFIX}-width-max) + 2rem);
 }
 
 html,
@@ -58,6 +58,7 @@ h1,
 .edit-post-visual-editor__post-title-wrapper > h1 {
 	font-size: 2.5em;
 	line-height: 1.1;
+	font-weight: 800;
 }
 h2 {
 	font-size: 2.25em;
@@ -98,7 +99,7 @@ h6 {
 	}
 }
 
-// Different page title size for posts
+// Different headline sizes for posts
 .single-post .page_title {
 	h1 {
 		font-size: 1.75em;
@@ -119,6 +120,37 @@ h6 {
 		}
 		h3 {
 			font-size: 1.15em;
+		}
+	}
+}
+.single-post article > .body {
+	h1 {
+		font-size: 1.65em;
+	}
+	h2 {
+		font-size: 1.5em;
+	}
+	h3 {
+		font-size: 1.35em;
+	}
+	h4 {
+		font-size: 1.25em;
+	}
+	h5 {
+		font-size: 1.15em;
+	}
+	h6 {
+		font-size: 1.05em;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		strong {
+			font-weight: inherit;
 		}
 	}
 }
@@ -205,7 +237,7 @@ body > main {
 }
 .row-container {
 	margin: 0 auto;
-	max-width: $width-max;
+	max-width: var(--#{$PREFIX}-width-max);
 	position: relative;
 	overflow-x: visible;
 

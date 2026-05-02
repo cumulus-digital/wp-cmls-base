@@ -26,7 +26,7 @@ body {
 }
 body:where(.post-type-post .editor-styles-wrapper) .is-root-container,
 body:where(.post-type-post.editor-styles-wrapper) .is-root-container {
-	font-family: $system-font;
+	font-family: var(--#{$PREFIX}-system-font);
 }
 
 .wp-block-image .components-resizable-box__container img[src*=".svg"],

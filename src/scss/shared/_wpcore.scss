@@ -127,5 +127,5 @@ a img.aligncenter {
 	margin-right: -1rem;
 }
 [data-align="wide"] {
-	max-width: calc(#{$width-max} + 2em) !important;
+	max-width: calc(var(--#{$PREFIX}-width-max) + 2em) !important;
 }

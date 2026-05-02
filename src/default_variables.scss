@@ -1,9 +1,24 @@
 @import "global.scss";
+@import "scss/shared/_variables.scss";
+
+/*
+$width-max: 1200px;
+$width-large: 1030px;
+$width-medium: 820px;
+$width-small: 640px;
+$system-font: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+*/
 
 :root,
 ::after,
 ::before {
 	--#{$PREFIX}-default_variables: 1;
+	--#{$PREFIX}-width-max: #{$width_max};
+	--#{$PREFIX}-width-large: #{$width_large};
+	--#{$PREFIX}-width-medium: #{$width_medium};
+	--#{$PREFIX}-width-small: #{$width_small};
+	--#{$PREFIX}-system-font: #{$system_font};
+
 	--#{$PREFIX}-color-site-background: transparent;
 
 	--#{$PREFIX}-color-masthead-background: #00598e;

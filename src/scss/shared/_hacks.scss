@@ -11,7 +11,12 @@
 }
 
 // Only child figures should be inline-block
-:root figure.wp-block-image:only-child {
+:root
+	figure.wp-block-image:only-child:not(
+		.alignleft,
+		.aligncenter,
+		.alignright
+	) {
 	display: inline-block;
 	margin-bottom: 0;
 }
@@ -27,7 +32,7 @@
 
 // Handle Kadence inherit max content width from theme
 .kb-theme-content-width {
-	max-width: $width-max;
+	max-width: var(--#{$PREFIX}-width-max);
 }
 
 // Allow reversing columns on mobile
