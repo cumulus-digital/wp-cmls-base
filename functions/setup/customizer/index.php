@@ -36,6 +36,9 @@ if ( \is_admin() ) {
 } );
 
 class themeMods {
+	// magic value which, internally, means "undefined"
+	public const UNDEFINED = "a09ehIO^h8&ja9j)Zhzgaa&*";
+
 	private static $cache = array();
 
 	/**
@@ -97,6 +100,18 @@ class themeMods {
 	);
 
 	/**
+	 * Add a defined theme mod var, with optional default value.
+	 *
+	 * @param string $key
+	 * @param mixed  $default
+	 *
+	 * @return void
+	 */
+	public static function addVar( $key, $default = self::UNDEFINED ) {
+		self::$vars[ $key ] = $default;
+	}
+
+	/**
 	 * Retrieve a defined theme mod var, optionally override predefined default. Strips all tags.
 	 *
 	 * @param string $key
@@ -104,7 +119,7 @@ class themeMods {
 	 *
 	 * @return mixed
 	 */
-	public static function get( $key, $default = 893759834267529 ) {
+	public static function get( $key, $default = self::UNDEFINED ) {
 		return \wp_strip_all_tags( self::getRaw( $key, $default ) );
 	}
 
@@ -116,18 +131,18 @@ class themeMods {
 	 *
 	 * @return mixed
 	 */
-	public static function getRaw( $key, $default = 893759834267529 ) {
+	public static function getRaw( $key, $default = self::UNDEFINED ) {
 		self::check( $key );
 
 		// If a default is not overridden, use our predefined default
-		if ( $default == 893759834267529 ) {
+		if ( $default == self::UNDEFINED ) {
 			$default = self::getDefault( $key );
 		}
 
 		$mod = self::selfRef( \get_theme_mod( $key, $default ) );
 
 		// If a theme mod is not set, set the predefined default.
-		if ( ! $mod && $mod !== $default && ! \mb_strpos( $default, 'ref:' ) ) {
+		if ( ! $mod && $mod !== $default && $default !== self::UNDEFINED && ! \mb_strpos( $default, 'ref:' ) ) {
 			\set_theme_mod( $key, $default );
 		}
 
@@ -240,7 +255,7 @@ class themeMods {
 		return $settings;
 	}
 
-	public static function getStripped( $key, $default = 893759834267529 ) {
+	public static function getStripped( $key, $default = self::UNDEFINED ) {
 		return \wp_strip_all_tags( self::get( $key, $default ) );
 	}
 
