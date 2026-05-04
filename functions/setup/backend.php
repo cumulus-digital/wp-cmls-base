@@ -77,15 +77,15 @@ function backendSetupScripts() {
 		}
 		#wpadminbar #wp-admin-bar-wp-logo,
 		#editor .edit-post-header .edit-post-fullscreen-mode-close.has-icon {
-			background-color: {$color_brand};
-			background-image: url({$logo}) !important;
+			background-color: " . sanitize_css_value($color_brand) . ";
+			background-image: url(" . sanitize_css_value($logo) . ") !important;
 			background-position: center center !important;
 			background-repeat: no-repeat !important;
 			background-size: 70% !important;
 		}
 		#wpadminbar #wp-admin-bar-wp-logo:hover {
-			background-color: {$color_highlight};
-			background-image: url({$logo}) !important;
+			background-color: " . sanitize_css_value($color_highlight) . ";
+			background-image: url(" . sanitize_css_value($logo) . ") !important;
 		}
 		#wpadminbar #wp-admin-bar-wp-logo > .ab-item .ab-icon:before {
 			content: '' !important;
@@ -121,10 +121,10 @@ function backendSetupScripts() {
 		PREFIX . '-branded_logo',
 		"
 		body {
-			background-color: {$color_masthead_bg} !important;
+			background-color: " . sanitize_css_value( $color_masthead_bg ) . " !important;
 		}
 		#login h1 a, .login h1 a {
-			background-image: {$logo_css};
+			background-image: " . sanitize_css_value( $logo_css ) . ";
 			background-size: contain;
 			background-position: center center;
 			background-repeat: no-repeat;
@@ -135,13 +135,13 @@ function backendSetupScripts() {
 			border-radius: .5em;
 		}
 		#wp-submit {
-			background-color: {$color_brand} !important;
+			background-color: " . sanitize_css_value( $color_brand ) . " !important;
 		}
 		.login #backtoblog a, .login #nav a {
-			color: {$color_masthead_fg} !important;
+			color: " . sanitize_css_value( $color_masthead_fg ) . " !important;
 		}
 		.login #backtoblog a:hover, .login #nav a:hover {
-			color: {$color_highlight} !important;
+			color: " . sanitize_css_value( $color_highlight ) . " !important;
 		}
 		"
 	);
