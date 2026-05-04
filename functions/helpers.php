@@ -344,57 +344,63 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 
 		if ( ! $cat ) {
 			$cat = \get_queried_object();
-
 			if ( ! $cat ) {
 				return array();
 			}
 		}
 
+		// Resolve the target Category/Term IDs
+		$source_term_ids = array();
 		if ( $include_children ) {
-			// Handle top level
 			if ( ! $cat->term_id ) {
-				// Get all top level terms for taxonomy
-				$children = $wpdb->get_col( $wpdb->prepare( "
+				$source_term_ids = $wpdb->get_col( $wpdb->prepare( "
 					SELECT term_id FROM {$wpdb->term_taxonomy}
 					WHERE taxonomy=%s AND parent=0
 				", $cat->taxonomy ) );
 			} else {
-				// get children of this tax
 				$children = \get_term_children( $cat->term_id, $cat->taxonomy );
+				$source_term_ids = \array_merge( array( $cat->term_id ), $children );
 			}
-
-			$ids = \array_merge( array( $cat->term_id ), $children );
-
-			$placeholder = \implode( ',', \array_fill( 0, \count( $ids ), '%d' ) );
-
-			$query = $wpdb->prepare( "
-				SELECT ID FROM {$wpdb->posts}
-				LEFT JOIN {$wpdb->term_relationships} as t
-					ON ID = t.object_id
-				WHERE post_status = 'publish' AND t.term_taxonomy_id IN ({$placeholder})
-			", $ids );
 		} else {
-			$query = $wpdb->prepare( "
-				SELECT ID FROM {$wpdb->posts}
-				LEFT JOIN {$wpdb->term_relationships} as t
-					ON ID = t.object_id
-				WHERE post_status = 'publish' AND t.term_taxonomy_id = %d
-			", $cat->term_id );
+			$source_term_ids = array( $cat->term_id );
 		}
 
-		$posts = $wpdb->get_col( $query );
+		if ( empty( $source_term_ids ) ) {
+			return array();
+		}
 
-		if ( \count( $posts ) ) {
-			$terms = \wp_get_object_terms( $posts, $tag_type );
-			\array_walk( $terms, function ( $term ) {
+		// Find all terms of $tag_type that are related to published posts 
+		// which are ALSO in our source categories.
+		$placeholders = \implode( ',', \array_fill( 0, \count( $source_term_ids ), '%d' ) );
+		
+		$query = $wpdb->prepare( "
+			SELECT DISTINCT t.*, tt.*
+			FROM {$wpdb->terms} AS t
+			INNER JOIN {$wpdb->term_taxonomy} AS tt ON t.term_id = tt.term_id
+			INNER JOIN {$wpdb->term_relationships} AS tr1 ON tt.term_taxonomy_id = tr1.term_taxonomy_id
+			INNER JOIN {$wpdb->posts} AS p ON tr1.object_id = p.ID
+			INNER JOIN {$wpdb->term_relationships} AS tr2 ON p.ID = tr2.object_id
+			INNER JOIN {$wpdb->term_taxonomy} AS tt2 ON tr2.term_taxonomy_id = tt2.term_taxonomy_id
+			WHERE p.post_status = 'publish'
+			AND tt.taxonomy = %s
+			AND tt2.term_id IN ({$placeholders})
+		", \array_merge( array( $tag_type ), $source_term_ids ) );
+
+		$results = $wpdb->get_results( $query );
+
+		if ( ! empty( $results ) ) {
+			$terms = \array_map( function( $row ) {
+				$term = new \WP_Term( $row );
 				$term->link = \get_term_link( $term );
-			} );
+				return $term;
+			}, $results );
 
 			return $terms;
 		}
 
 		return array();
 	}
+
 
 	/**
 	 * Determine if the current query is for a hierarchical post type.
@@ -685,5 +691,12 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	 */
 	function has_widget_block_editor() {
 		return (bool) \get_theme_support( 'widgets-block-editor' );
+	}
+
+	/**
+	 * Very simple sanitizer for CSS values.
+	 */
+	function sanitize_css_value( $val ) {
+		return \str_replace( [ ';', '{', '}' ], '', $val );
 	}
 }
