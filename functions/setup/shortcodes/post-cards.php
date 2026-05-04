@@ -160,20 +160,18 @@ $hooks = array(
 	'trashed_post',
 	'untrashed_post',
 	'transition_post_status',
-	'publish_post',
-	'publish_page',
-	'post_updated',
 	'created_term',
-	'edited_terms',
+	'edited_term',
 	'delete_term',
-	'create_category',
-	'edit_category',
 );
 
 function flush_post_cards_cache() {
+	if ( \defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
 	CMLS_Cache::flushGroup( 'CMLS_Base::shortcode_post_cards' );
 }
 
 foreach( $hooks as $hook ) {
-	\add_action( $hook, ns( 'flush_post_cards_cache' ), 10, 3 );
+	\add_action( $hook, ns( 'flush_post_cards_cache', __NAMESPACE__ ), 10, 3 );
 }
