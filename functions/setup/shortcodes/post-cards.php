@@ -7,6 +7,11 @@
 namespace CMLS_Base\Shortcodes;
 
 use WP_Query;
+use CMLS_Base\CMLS_Cache;
+use function CMLS_Base\sanitize_css_value;
+use function CMLS_Base\cmls_get_template_part;
+use function CMLS_Base\make_post_class;
+use function CMLS_Base\ns;
 
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
@@ -46,6 +51,7 @@ function shortcode_post_cards( $attr ) {
 		'card-width-mobile' => '25%',
 		'card-gap'          => '.2em',
 		'justify'           => 'center',
+		'posts-per-page'    => 40,
 	], $taxes, $not_taxes ), $attr, 'post-cards' );
 
 	$q = [
@@ -53,7 +59,7 @@ function shortcode_post_cards( $attr ) {
 		'post_status'    => 'publish',
 		'orderby'        => 'post_title',
 		'order'          => 'asc',
-		'posts_per_page' => -1,
+		'posts_per_page' => $attr['posts-per-page'],
 		'tax_query'      => [],
 	];
 
@@ -84,7 +90,14 @@ function shortcode_post_cards( $attr ) {
 		}
 	}
 
-	$posts = (new WP_Query( $q ))->get_posts();
+	$cache_group = 'CMLS_Base::shortcode_post_cards';
+	$cache_key   = \md5( \json_encode( $q ) );
+	$posts = CMLS_Cache::get( $cache_key, $cache_group );
+	
+	if ($posts === false) {
+		$posts = (new WP_Query( $q ))->get_posts();
+		CMLS_Cache::set( $cache_key, $posts, $cache_group, 300 );
+	}
 
 	if ( \count( $posts ) ) {
 		\ob_start();
@@ -93,39 +106,40 @@ function shortcode_post_cards( $attr ) {
 		global $post;
 		$originalPost = $post; ?>
 
-		<div id="<?php echo $q_id; ?>" class="inline-archive cards">
+		<div id="<?php echo \esc_attr( $q_id ); ?>" class="inline-archive cards">
 			<style>
-				#<?php echo $q_id; ?> {
-					--card-width: <?php echo \esc_attr( $attr['card-width'] ); ?>;
-					--card-gap: <?php echo \esc_attr( $attr['card-gap'] ); ?>;
-					justify-content: <?php echo \esc_attr( $attr['justify'] ); ?>;
+				#<?php echo \esc_attr( $q_id ); ?> {
+					--card-width: <?php echo sanitize_css_value( $attr['card-width'] ); ?>;
+					--card-gap: <?php echo sanitize_css_value( $attr['card-gap'] ); ?>;
+					justify-content: <?php echo sanitize_css_value( $attr['justify'] ); ?>;
 				}
 				@media (max-width: 640px) {
 					#<?php echo $q_id; ?> {
-						--card-width: <?php echo \esc_attr( $attr['card-width-mobile'] ); ?>;
+						--card-width: <?php echo sanitize_css_value( $attr['card-width-mobile'] ); ?>;
 					}
 				}
 			</style>
 			<?php foreach ( $posts as $cardPost ): ?>
 				<?php
-					global $post;
-		\setup_postdata( $cardPost );
-		$post = $cardPost; ?>
-				<?php
-				\CMLS_Base\cmls_get_template_part(
-			'templates/pages/excerpt',
-			\CMLS_Base\make_post_class(),
-			[
-				'display_format'       => 'cards',
-				'show_image'           => true,
-				'force_featured_image' => true,
-				'thumbnail_size'       => 'thumbnail-uncropped',
-				'show_title'           => false,
-				'show_date'            => false,
-				'show_author'          => false,
-				'show_excerpt'         => false,
-			]
-		); ?>
+				global $post;
+				\setup_postdata( $cardPost );
+				$post = $cardPost; ?>
+						<?php
+						cmls_get_template_part(
+					'templates/pages/excerpt',
+					make_post_class(),
+					[
+						'display_format'       => 'cards',
+						'show_image'           => true,
+						'force_featured_image' => true,
+						'thumbnail_size'       => 'thumbnail-uncropped',
+						'show_title'           => false,
+						'show_date'            => false,
+						'show_author'          => false,
+						'show_excerpt'         => false,
+					]
+				); 
+				?>
 			<?php endforeach; ?>
 		</div>
 		<?php
@@ -139,3 +153,27 @@ function shortcode_post_cards( $attr ) {
 	return null;
 }
 \add_shortcode( 'post-cards', __NAMESPACE__ . '\\shortcode_post_cards' );
+
+$hooks = array(
+	'save_post',
+	'deleted_post',
+	'trashed_post',
+	'untrashed_post',
+	'transition_post_status',
+	'publish_post',
+	'publish_page',
+	'post_updated',
+	'created_term',
+	'edited_terms',
+	'delete_term',
+	'create_category',
+	'edit_category',
+);
+
+function flush_post_cards_cache() {
+	CMLS_Cache::flushGroup( 'CMLS_Base::shortcode_post_cards' );
+}
+
+foreach( $hooks as $hook ) {
+	\add_action( $hook, ns( 'flush_post_cards_cache' ), 10, 3 );
+}
