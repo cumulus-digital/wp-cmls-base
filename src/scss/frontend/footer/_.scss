@@ -14,7 +14,7 @@ body > footer {
 	.row-container {
 		display: flex;
 		flex-direction: row;
-		flex-wrap: nowrap;
+		flex-wrap: wrap;
 		gap: 1.5rem;
 		align-items: center;
 		justify-content: space-between;
@@ -104,7 +104,7 @@ body > footer {
 		text-align: right;
 		margin-left: auto;
 
-		@include phone {
+		@include tablet {
 			text-align: center;
 			margin-right: auto;
 		}
