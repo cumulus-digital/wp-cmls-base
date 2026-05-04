@@ -14,7 +14,7 @@
 a[name],
 .wp-block-query {
 	scroll-margin-top: calc(
-		var(--cmls_base-masthead-height, 8vh) + 1rem +
+		var(--cmls_base-masthead-height, 8vh) + 1.5rem +
 			var(--cmls_base-extra-scroll-margin-top, 0px)
 	);
 }
@@ -121,7 +121,6 @@ main.single article.type-post {
 		font-family: $system_font;
 	}
 }
-
 
 .cmls-anchor {
 	display: block;
