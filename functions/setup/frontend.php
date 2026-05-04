@@ -73,7 +73,7 @@ function filterRemoveArchivePrepend( $title ) {
 	} elseif ( \is_tag() ) {
 		$title = \single_tag_title( '', false );
 	} elseif ( \is_author() ) {
-		$title = '<span class="vcard">' . \get_the_author() . '</span>';
+		$title = '<span class="vcard">' . \esc_html( \get_the_author() ) . '</span>';
 	} elseif ( \is_post_type_archive() ) {
 		$title = \post_type_archive_title( '', false );
 	} elseif ( \is_tax() ) {
@@ -143,11 +143,21 @@ function letPagesOverrideArchives( &$query ) {
 			}
 
 			if ( $slug ) {
+				$cache_group = 'CMLS_Base::letPagesOverrideArchives';
 				global $wpdb;
-				$check = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(post_title) FROM {$wpdb->posts} WHERE post_name=%s AND post_type='page' AND post_status='publish' LIMIT 1", $slug ) );
+				$check = CMLS_Cache::get( $slug, $cache_group );
+				if ( empty( $check ) ) {
+					$check = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(post_title) FROM {$wpdb->posts} WHERE post_name=%s AND post_type='page' AND post_status='publish' LIMIT 1", $slug ) );
+					CMLS_Cache::set(
+						$slug,
+						$check,
+						$cache_group,
+						3600
+					);
+				}
 
 				if ( $check ) {
-					\do_action( 'qm/debug', 'The requested tax archive has been overridden by a post with the same slug.' );
+					\do_action( 'qm/debug', 'The requested tax archive has been overridden by a page with the same slug.' );
 
 					$query->init();
 					$query->set( 'post_type', 'page' );
@@ -163,6 +173,29 @@ function letPagesOverrideArchives( &$query ) {
 	return $query;
 }
 \add_action( 'pre_get_posts', ns( 'letPagesOverrideArchives' ), 1 );
+
+// Clear cache group on post or taxonomy save
+function clearLetPagesOverrideArchivesCache( $post_id, $post, $update ) {
+	CMLS_Cache::flushGroup( 'CMLS_Base::letPagesOverrideArchives' );
+}
+$clearLetPagesOverrideArchivesHooks = array(
+	'save_post',
+	'deleted_post',
+	'trashed_post',
+	'untrashed_post',
+	'transition_post_status',
+	'publish_post',
+	'publish_page',
+	'post_updated',
+	'created_term',
+	'edited_terms',
+	'delete_term',
+	'create_category',
+	'edit_category',
+);
+foreach( $clearLetPagesOverrideArchivesHooks as $hook ) {
+	\add_action( $hook, ns( 'clearLetPagesOverrideArchivesCache' ), 10, 3 );
+}
 
 /**
  * Provides filters and default exclusions for what may be discovered in
