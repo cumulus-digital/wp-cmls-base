@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Helper functions.
  */
@@ -358,7 +359,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 					WHERE taxonomy=%s AND parent=0
 				", $cat->taxonomy ) );
 			} else {
-				$children = \get_term_children( $cat->term_id, $cat->taxonomy );
+				$children        = \get_term_children( $cat->term_id, $cat->taxonomy );
 				$source_term_ids = \array_merge( array( $cat->term_id ), $children );
 			}
 		} else {
@@ -369,10 +370,10 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 			return array();
 		}
 
-		// Find all terms of $tag_type that are related to published posts 
+		// Find all terms of $tag_type that are related to published posts
 		// which are ALSO in our source categories.
 		$placeholders = \implode( ',', \array_fill( 0, \count( $source_term_ids ), '%d' ) );
-		
+
 		$query = $wpdb->prepare( "
 			SELECT DISTINCT t.*, tt.*
 			FROM {$wpdb->terms} AS t
@@ -389,9 +390,10 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		$results = $wpdb->get_results( $query );
 
 		if ( ! empty( $results ) ) {
-			$terms = \array_map( function( $row ) {
-				$term = new \WP_Term( $row );
+			$terms = \array_map( function ( $row ) {
+				$term       = new \WP_Term( $row );
 				$term->link = \get_term_link( $term );
+
 				return $term;
 			}, $results );
 
@@ -400,7 +402,6 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 
 		return array();
 	}
-
 
 	/**
 	 * Determine if the current query is for a hierarchical post type.
@@ -448,70 +449,104 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Get a tax's ACF options, optionally bubbling up tax hierarchy.
+	 * Get a tax's ACF options. If a tax's "use parent" option is enabled,
+	 * bubble up to the first parent that does not "use parent".
 	 *
 	 * @param string          $selector ACF field identifier
 	 * @param string|\WP_Term $term     Term identifier
 	 *
-	 * @return string|array
+	 * @return array
 	 */
 	function get_tax_acf( $selector, $term ) {
+		$term = \get_term( $term );
+
+		if ( ! $term || \is_wp_error( $term ) ) {
+			return array();
+		}
+
 		$cache_group = 'CMLS_Base::get_tax_acf';
 		$cache_key   = $term->term_id;
 
 		$cached = CMLS_Cache::get( $cache_key, $cache_group );
-
 		if ( $cached !== false ) {
-			return $cached;
+			return (array) $cached;
 		}
 
-		$fieldObj  = \get_field_object( $selector, $term, true, true );
+		// Default to the current term's field object
+		$fieldObj = \get_field_object( $selector, $term, true, true );
+
+		// Check if "use parent" (field_612877c8d84d3) is enabled for the current term
 		$useParent = \get_field( 'field_612877c8d84d3', $term );
 
 		if ( $useParent ) {
-			// If term has useParent, but it has no parent, we use defaults
-			if ( \property_exists( $term, 'parent' ) && $term->parent === 0 ) {
-				return array();
-			}
+			\do_action( 'qm/debug', 'Using parent taxonomy display settings' );
 
-			$gotParent = false;
-			$parents   = \get_ancestors( $term->term_id, $term->taxonomy );
-			$meta_key  = $fieldObj['name'];
+			// If it has no parent, we can't inherit, so return defaults
+			if ( empty( $term->parent ) ) {
+				\do_action( 'qm/debug', 'Term has no parent, using defaults' );
+				$fieldObj = array( 'value' => array() );
+			} else {
+				$parents   = \get_ancestors( $term->term_id, $term->taxonomy );
+				$gotParent = false;
 
-			if ( $parents ) {
-				global $wpdb;
-				$placeholders = \implode( ',', \array_fill( 0, \count( $parents ), '%d' ) );
-				$q            = $wpdb->prepare(
-					"SELECT term_id, meta_value FROM {$wpdb->termmeta} WHERE meta_key=%s AND term_id IN ({$placeholders})",
-					\array_merge(
-						array( $meta_key ),
-						$parents
-					)
-				);
-				$parentUseParent = $wpdb->get_results( $q, OBJECT_K );
+				if ( $parents ) {
+					global $wpdb;
 
-				foreach ( $parents as $i => $parent ) {
-					if (
-						\array_key_exists( $parent, $parentUseParent )
-						&& $parentUseParent[$parent] === 0
-					) {
-						// Stop here, this is the parent to use
-						$fieldObj  = \get_field_object( $selector, $term, true, true );
-						$gotParent = true;
+					// We must query for the 'use_parent' field name (cmls-tax-use_parent),
+					// not the settings group name, to check inheritance status of ancestors.
+					$useParentField = \get_field_object( 'field_612877c8d84d3', $term );
+					$useParentName  = $useParentField['name'] ?? 'cmls-tax-use_parent';
 
-						break;
+					$placeholders = \implode( ',', \array_fill( 0, \count( $parents ), '%d' ) );
+					$query        = $wpdb->prepare(
+						"SELECT term_id, meta_value FROM {$wpdb->termmeta} WHERE meta_key = %s AND term_id IN ({$placeholders})",
+						\array_merge( array( $useParentName ), $parents )
+					);
+
+					// Key results by term_id for easy lookup
+					$parentMeta = $wpdb->get_results( $query, OBJECT_K );
+
+					foreach ( $parents as $parent_id ) {
+						// Check if this ancestor has "use parent" DISABLED (value '0').
+						// If it is '0', this is the ancestor whose settings we should use.
+						if (
+							isset( $parentMeta[ $parent_id ] )
+							&& $parentMeta[ $parent_id ]->meta_value == '0'
+						) {
+							// Fetch the actual settings from the parent
+							$fieldObj  = \get_field_object( $selector, 'term_' . $parent_id, true, true );
+							$gotParent = true;
+
+							break;
+						}
+						// Note: If an ancestor isn't in $parentMeta or is '1', we continue bubbling up.
 					}
 				}
-			}
 
-			if ( ! $gotParent ) {
-				$fieldObj = array( 'value' => array() );
+				if ( ! $gotParent ) {
+					\do_action( 'qm/debug', 'No parent found with explicit settings, using empty defaults' );
+					$fieldObj = array( 'value' => array() );
+				}
 			}
 		}
 
-		CMLS_Cache::set( $cache_key, $fieldObj['value'], $cache_group );
+		$value = $fieldObj['value'] ?? array();
+		CMLS_Cache::set( $cache_key, $value, $cache_group );
 
-		return $fieldObj['value'];
+		return (array) $value;
+	}
+
+	// Clear tax ACF cache group when terms are altered
+	function clearTaxACFCache( $term_id, $term, $taxonomy ) {
+		CMLS_Cache::flushGroup( 'CMLS_Base::get_tax_acf' );
+	}
+	$clearTaxACFCacheHooks = array(
+		'created_term',
+		'edited_terms',
+		'delete_term',
+	);
+	foreach ( $clearTaxACFCacheHooks as $hook ) {
+		\add_action( $hook, ns( 'clearTaxACFCache' ), 10, 3 );
 	}
 
 	/**
@@ -546,7 +581,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		}
 
 		if ( \is_string( $val ) ) {
-			return (bool) \mb_strlen( \trim( $val ) );
+			return (bool) \mb_strlen( \mb_trim( $val ) );
 		}
 
 		if ( \is_numeric( $val ) || \is_bool( $val ) ) {
@@ -559,7 +594,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 
 		return false;
 
-		return \mb_strlen( \trim( $val ) ) || \is_numeric( $val ) || \is_bool( $val );
+		return \mb_strlen( \mb_trim( $val ) ) || \is_numeric( $val ) || \is_bool( $val );
 	}
 
 	/**
@@ -695,8 +730,10 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 
 	/**
 	 * Very simple sanitizer for CSS values.
+	 *
+	 * @param mixed $val
 	 */
 	function sanitize_css_value( $val ) {
-		return \str_replace( [ ';', '{', '}' ], '', $val );
+		return \str_replace( array( ';', '{', '}' ), '', $val );
 	}
 }
