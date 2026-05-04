@@ -35,7 +35,7 @@ function ModifyHeaders() {
 	// X-Content-Type-Options: nosniff - Prevent MIME Type sniffing
 	\header( 'X-Content-Type-Options: nosniff' );
 
-	// HSTS
+	// HSTS - now handled by security plugin
 	// \header( 'Strict-Transport-Security "max-age=31536000; includeSubDomains"' );
 
 	// Modicrom of support for old IE

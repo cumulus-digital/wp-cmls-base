@@ -10,25 +10,21 @@ namespace CMLS_Base\Setup\Security;
 /*
  * Disable pingbacks, pings, comments, and registration
  */
-\add_action( 'init', function () {
-	$disable_options = [
-		'default_pingback_flag'        => 0,
-		'default_ping_status'          => 'closed',
-		'default_comment_status'       => 'closed',
-		'close_comments_for_old_posts' => 1,
-		'comments_notify'              => 1,
-		'comment_moderation'           => 1,
-		'comment_registration'         => 1,
-	];
+function __return_1() { return 1; }
+function __return_closed() { return 'closed'; }
+$disable_options = [
+	'default_pingback_flag'        => '__return_zero',
+	'default_ping_status'          => __NAMESPACE__ . '\\__return_closed',
+	'default_comment_status'       => __NAMESPACE__ . '\\__return_closed',
+	'close_comments_for_old_posts' => __NAMESPACE__ . '\\__return_1',
+	'comments_notify'              => __NAMESPACE__ . '\\__return_1',
+	'comment_moderation'           => __NAMESPACE__ . '\\__return_1',
+	'comment_registration'         => __NAMESPACE__ . '\\__return_1',
+];
+foreach ( $disable_options as $key => $value ) {
+	add_filter( "pre_option_{$key}", $value );
+}
 
-	foreach ( $disable_options as $key => $value ) {
-		$opt = \get_option( $key );
-
-		if ( (string) $opt !== (string) $value ) {
-			\update_option( $key, $value );
-		}
-	}
-} );
 
 /*
  * Disable comments on attachments
