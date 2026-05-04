@@ -1,3 +1,5 @@
+.agent/
+
 # Composer
 vendor/
 !build/composer/vendor/
