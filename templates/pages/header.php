@@ -26,6 +26,7 @@ if ( ! empty( $display_args['background_color'] ) || ! empty( $display_args['bac
 		<style>
 			#post-<?php \the_ID(); ?> {
 			<?php foreach ( $display_args as $d_key => $d_arg ): ?>
+				<?php if ( empty( $d_arg ) ): continue; endif; ?>
 				<?php if ( \mb_strstr( $d_key, 'image' ) ): ?>
 					--page_title-<?php echo $d_key; ?>: url('<?php echo \esc_attr( $d_arg ); ?>');
 				<?php elseif ( \mb_strstr( $d_key, 'margin' ) ): ?>
