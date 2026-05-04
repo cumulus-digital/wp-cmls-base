@@ -59,11 +59,15 @@ function makeMenu( $location, $options = [] ) {
 	return $menu;
 }
 
+function has_menu_with_items($location) {
+	return \has_nav_menu( $location ) && \wp_nav_menu( array( 'theme_location' => $location, 'echo' => false )) !== false;
+}
+
 function header_menu() {
 	makeMenu( 'header-menu' );
 }
 function has_header_menu() {
-	return \has_nav_menu( 'header-menu' );
+	return has_menu_with_items( 'header-menu' );
 }
 
 function extra_header_menu() {
@@ -71,14 +75,14 @@ function extra_header_menu() {
 }
 
 function has_extra_header_menu() {
-	return \has_nav_menu( 'extra-header-menu' );
+	return has_menu_with_items( 'extra-header-menu' );
 }
 
 function footer_menu() {
-	makeMenu( 'footer-menu' );
+	makeMenu( 'footer-menu', [ 'show_description' => false ] );
 }
 function has_footer_menu() {
-	return \has_nav_menu( 'footer-menu', [ 'show_description' => false ] );
+	return has_menu_with_items( 'footer-menu' );
 }
 
 function social_menu( $options = [] ) {
@@ -96,7 +100,7 @@ function social_menu( $options = [] ) {
 	);
 }
 function has_social_menu() {
-	return \has_nav_menu( 'social-menu' );
+	return has_menu_with_items( 'social-menu' );
 }
 
 /*

@@ -58,7 +58,7 @@ let $j = jQuery.noConflict();
 					menuClose();
 				} else if (
 					e.target.matches(
-						'.hamburger, .hamburger *, .menu-beforetext:not(:has(a)), .menu-beforetext *:not(a):not(:has(a))'
+						'.hamburger, .hamburger *, .menu-beforetext:not(:has(a)), .menu-beforetext *:not(a)'
 					)
 				) {
 					if ( menuIsOpen ) {
