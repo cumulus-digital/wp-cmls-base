@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Customizer setup.
  */
@@ -37,7 +38,7 @@ if ( \is_admin() ) {
 
 class themeMods {
 	// magic value which, internally, means "undefined"
-	public const UNDEFINED = "a09ehIO^h8&ja9j)Zhzgaa&*";
+	public const UNDEFINED = 'a09ehIO^h8&ja9j)Zhzgaa&*';
 
 	private static $cache = array();
 
@@ -104,8 +105,6 @@ class themeMods {
 	 *
 	 * @param string $key
 	 * @param mixed  $default
-	 *
-	 * @return void
 	 */
 	public static function addVar( $key, $default = self::UNDEFINED ) {
 		self::$vars[ $key ] = $default;
@@ -142,7 +141,7 @@ class themeMods {
 		$mod = self::selfRef( \get_theme_mod( $key, $default ) );
 
 		// If a theme mod is not set, set the predefined default.
-		if ( ! $mod && $mod !== $default && $default !== self::UNDEFINED && ! \mb_strpos( $default, 'ref:' ) ) {
+		if ( ! $mod && $mod !== $default && $default !== self::UNDEFINED && ! ( $default && \mb_strpos( $default, 'ref:' ) ) ) {
 			\set_theme_mod( $key, $default );
 		}
 

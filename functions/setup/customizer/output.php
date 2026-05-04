@@ -79,7 +79,7 @@ function generateCustomCSS() {
 		'font-header_family'      => themeMods::get( 'font-header_family' ),
 	);
 	$text = array(
-		'text-copyright'                 => themeMods::get( 'text-copyright' ),
+		'text-copyright'                 => getCopyright(),
 		'text-masthead-before_menu'      => themeMods::get( 'text-masthead-before_menu' ),
 		'text-masthead-before_menu-link' => themeMods::get( 'text-masthead-before_menu-link' ),
 	);
@@ -112,6 +112,7 @@ function generateCustomCSS() {
 
 	foreach ( $vars as $key => $val ) {
 		$val = \wp_strip_all_tags( $val );
+		$val = sanitize_css_value( $val );
 		$val = \str_replace( ';', '\3A', $val );
 
 		if ( ! empty( $val ) ) {
@@ -136,7 +137,7 @@ function enqueueOutputCustomCSS() {
 
 // Override request to inject customizer vars
 function overrideInternalStyleRequest( $response, $parsed_args, $url ) {
-	if ( \mb_strstr( $url, '/cmls-block-editor-customizer-styles' ) ) {
+	if ( \mb_strstr( $url, '/cmls-block-editor-customizer-styles' ) && is_user_logged_in() ) {
 		if ( \class_exists( '\WpOrg\Requests\Response\Headers' ) ) {
 			$headers = new \WpOrg\Requests\Response\Headers();
 		} else {
@@ -158,7 +159,7 @@ function overrideInternalStyleRequest( $response, $parsed_args, $url ) {
 }
 \add_filter( 'pre_http_request', ns( 'overrideInternalStyleRequest' ), 10, 3 );
 function overrideExternalStyleRequest() {
-	if ( \mb_strstr( $_SERVER['REQUEST_URI'], '/cmls-block-editor-customizer-styles' ) ) {
+	if ( \mb_strstr( $_SERVER['REQUEST_URI'], '/cmls-block-editor-customizer-styles' ) && is_user_logged_in() ) {
 		echo generateCustomCSS();
 
 		exit();
@@ -168,14 +169,25 @@ function overrideExternalStyleRequest() {
 
 // Output customizations as CSS vars
 function directOutputCustomCSS() {
+	$cache_key = PREFIX . '-customizer_results';
+	$css = \get_transient( $cache_key );
+
+	if ( $css === false ) {
+		$css = generateCustomCSS();
+		\set_transient( $cache_key, $css, \HOUR_IN_SECONDS );
+	}
+	
 	\wp_register_style( PREFIX . '-customizer_results', '', array( PREFIX . '_customizer_vars' ), false, 'screen' );
 	\wp_enqueue_style( PREFIX . '-customizer_results', '', array( PREFIX . '_customizer_vars' ) );
-	\wp_add_inline_style(
-		PREFIX . '-customizer_results',
-		generateCustomCSS()
-	);
+	\wp_add_inline_style( PREFIX . '-customizer_results', $css );
 }
 \add_action( 'init', ns( 'directOutputCustomCSS' ), 100 );
+
+// Clear transient when customizer is saved
+function clearCustomCSSCache() {
+	\delete_transient( PREFIX . '-customizer_results' );
+}
+\add_action( 'customize_save_after', ns( 'clearCustomCSSCache' ) );
 
 // Register customizations as editor options
 function registerCustomEditorColors() {
