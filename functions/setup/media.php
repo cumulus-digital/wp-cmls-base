@@ -100,6 +100,8 @@ function addAttachmentToPostCategory( $attachment_id ) {
 } );
 
 // Allow WP AJAX calls to get images by category
+// DEPRECATED
+/*
 function getImagesByCategory() {
 	$category = \json_decode( $_POST['category'], true );
 
@@ -107,21 +109,38 @@ function getImagesByCategory() {
 		\header( 'HTTP/1.0 400 Bad error' );
 		echo '{ error: "Bad category." }';
 	} else {
+		// Do not allow accessing Uncategorized images
+		if ( $category === 1 ) {
+			\wp_send_json_error( array( 'error' => 'Access denied.' ) );
+			return;
+		}
+
 		$args = array(
 			'category'  => $category,
 			'post_type' => 'attachment',
 		);
 		$media = \get_posts( $args );
 
-		if ( ! empty( $_GET['callback'] ) ) {
-			echo $_GET['callback'] . '(' . \json_encode( $media ) . ');';
+		if ( ! empty( $_GET['callback'] ) || ! empty( $_GET['_jsonp'] ) ) {
+			$callback = empty( $_GET['callback'] ) ? $_GET['_jsonp'] : $_GET['callback'];
+			if ( ! \wp_check_jsonp_callback( $callback ) ) {
+				\wp_die( 'Bad callback' );
+			}
+
+			$response = new \WP_REST_Response( $callback . '(' . \json_encode( $media ) . ');', 200 );
+			$response->set_content_type( 'application/javascript; charset=UTF-8' );
+			$response->header('X-Content-Type-Options', 'nosniff');
+			$response->header('X-Robots-Tag', 'noindex');
+			
+			\WP_REST_Server::serve_request();
 		} else {
-			echo \json_encode( $media );
+			\wp_send_json_success( $media );
 		}
 	}
 }
 \add_action( 'wp_ajax_get_images_by_category', ns( 'getImagesByCategory' ) );
 \add_action( 'wp_ajax_nopriv_get_images_by_category', ns( 'getImagesByCategory' ) );
+*/
 
 // Recognize SVG files
 function addSvgToMimes( $mimes ) {
@@ -133,7 +152,7 @@ function addSvgToMimes( $mimes ) {
 
 // Exclude SVGs from Jetpack Photon, it cannot handle them
 function photonExcludeSVG( $val, $src, $tag ) {
-	if ( \mb_strpos( \mb_strtolower( $src ), '.svg' ) >= -1 ) {
+	if ( \mb_strpos( \mb_strtolower( $src ), '.svg' ) !== false ) {
 		return true;
 	}
 
