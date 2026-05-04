@@ -66,6 +66,17 @@ let $j = jQuery.noConflict();
 					} else {
 						menuOpen();
 					}
+				} else if (
+					// handle anchor tags in menu for same page navigation
+					e.target.matches( 'body > header a[href^="#"]' ) ||
+					e.target.matches(
+						`body > header a[href^="${ window.location.pathname }#"]`
+					) ||
+					e.target.matches(
+						`body > header a[href^="${ window.Location.origin }${ window.location.pathname }#"]`
+					)
+				) {
+					menuClose();
 				}
 			},
 			200,
