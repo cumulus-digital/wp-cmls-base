@@ -157,10 +157,11 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
-	 * Sanitize simple HTML
-	 * 
+	 * Sanitize simple HTML.
+	 *
 	 * @param string $html
-	 * 
+	 * @param mixed  $input
+	 *
 	 * @return string
 	 */
 	function sanitizeSimpleHTML( $input ) {
@@ -528,7 +529,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 					$placeholders = \implode( ',', \array_fill( 0, \count( $parents ), '%d' ) );
 					$query        = $wpdb->prepare(
 						"SELECT term_id, meta_value FROM {$wpdb->termmeta} WHERE meta_key = %s AND term_id IN ({$placeholders})",
-						\array_merge( array( $useParentName ), $parents )
+						\array_merge( array( $useParentName ), $parents ),
 					);
 
 					// Key results by term_id for easy lookup
@@ -609,7 +610,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		}
 
 		if ( \is_string( $val ) ) {
-			return (bool) \mb_strlen( \mb_trim( $val ) );
+			return (bool) \mb_strlen( \trim( $val ) );
 		}
 
 		if ( \is_numeric( $val ) || \is_bool( $val ) ) {
@@ -622,7 +623,7 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 
 		return false;
 
-		return \mb_strlen( \mb_trim( $val ) ) || \is_numeric( $val ) || \is_bool( $val );
+		return \mb_strlen( \trim( $val ) ) || \is_numeric( $val ) || \is_bool( $val );
 	}
 
 	/**
@@ -756,5 +757,5 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		return (bool) \get_theme_support( 'widgets-block-editor' );
 	}
 
-	require(__DIR__ . '/css-validator.php');
+	require __DIR__ . '/css-validator.php';
 }

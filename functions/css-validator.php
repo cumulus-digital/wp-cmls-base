@@ -88,7 +88,7 @@ final class CSSValidator {
 		self::initializePrimitives();
 
 		// Normalize whitespace
-		$value = \mb_trim( \preg_replace( '/\s+/', ' ', $value ) );
+		$value = \trim( \preg_replace( '/\s+/', ' ', $value ) );
 
 		if ( $value === '' ) {
 			return false;
@@ -158,7 +158,7 @@ final class CSSValidator {
 			'background-position'   => self::list( self::repeatRange(
 				self::oneOf( array( $lengthOrPercent, self::keywordList( 'left|center|right|top|bottom' ) ) ),
 				1,
-				2
+				2,
 			) ),
 			'background-size' => self::list( self::oneOf( array(
 				self::keywordList( 'cover|contain' ),
@@ -171,7 +171,7 @@ final class CSSValidator {
 			) ) ),
 
 			// --- Flexbox & Alignment ---
-			'flex-basis' => $lengthPercentAuto,
+			'flex-basis'      => $lengthPercentAuto,
 			'justify-content' => self::oneOf( array(
 				self::keywordList( 'normal|stretch|space-between|space-around|space-evenly' ),
 				self::keywordList( 'center|start|end|flex-start|flex-end|left|right' ),
@@ -265,20 +265,32 @@ final class CSSValidator {
 	 * ========================================================= */
 
 	private static function compile( array $node ): string {
-		return match ( $node['type'] ) {
-			'list'       => '(?:' . self::compile( $node['node'] ) . ')(?:\s*,\s*(?:' . self::compile( $node['node'] ) . '))*',
-			'oneOf'      => '(?:' . \implode( '|', \array_map( array( self::class, 'compile' ), $node['nodes'] ) ) . ')',
-			'keyword'    => \preg_quote( $node['value'], '/' ),
-			'length'     => self::$length_primitive,
-			'percentage' => '-?\d*\.?\d+%',
-			'color'      => self::$color_primitive,
-			'range'      => '(?:' . self::compile( $node['node'] ) . ')(?:\s+' . self::compile( $node['node'] ) . '){' . ( $node['min'] - 1 ) . ',' . ( $node['max'] - 1 ) . '}',
-			'function'   => \preg_quote( $node['name'], '/' ) . '\s*\(\s*' . self::compile( $node['arg'] ) . '\s*\)',
-			'anyOrder'   => self::compileAnyOrder( $node['nodes'] ),
-			'sequence'   => self::compileSequence( $node['nodes'] ),
-			'regex'      => $node['value'],
-			default      => ''
-		};
+		switch ( $node['type'] ) {
+			case 'list':
+				return '(?:' . self::compile( $node['node'] ) . ')(?:\s*,\s*(?:' . self::compile( $node['node'] ) . '))*';
+			case 'oneOf':
+				return '(?:' . \implode( '|', \array_map( array( self::class, 'compile' ), $node['nodes'] ) ) . ')';
+			case 'keyword':
+				return \preg_quote( $node['value'], '/' );
+			case 'length':
+				return self::$length_primitive;
+			case 'percentage':
+				return '-?\d*\.?\d+%';
+			case 'color':
+				return self::$color_primitive;
+			case 'range':
+				return '(?:' . self::compile( $node['node'] ) . ')(?:\s+' . self::compile( $node['node'] ) . '){' . ( $node['min'] - 1 ) . ',' . ( $node['max'] - 1 ) . '}';
+			case 'function':
+				return \preg_quote( $node['name'], '/' ) . '\s*\(\s*' . self::compile( $node['arg'] ) . '\s*\)';
+			case 'anyOrder':
+				return self::compileAnyOrder( $node['nodes'] );
+			case 'sequence':
+				return self::compileSequence( $node['nodes'] );
+			case 'regex':
+				return $node['value'];
+			default:
+				return '';
+		}
 	}
 
 	private static function compileAnyOrder( array $nodes ): string {
@@ -304,21 +316,21 @@ final class CSSValidator {
 		$units  = 'px|em|ex|ch|rem|vw|vh|vmin|vmax|cm|mm|in|pt|pc|deg|grad|rad|turn|s|ms';
 
 		// Recursive regex for math functions and nested parentheses
-		$math = '(?:calc|min|max|clamp)\s*(?&balanced)';
+		$math                   = '(?:calc|min|max|clamp)\s*(?&balanced)';
 		self::$length_primitive = "(?:0|{$number}(?:{$units})|{$math})";
 
 		// Color components
-		$num_pct = "(?:{$number}%?|var\s*(?&balanced))";
-		$pct     = "(?:{$number}%|var\s*(?&balanced))";
+		$num_pct = "(?:{$number}%?|var\\s*(?&balanced))";
+		$pct     = "(?:{$number}%|var\\s*(?&balanced))";
 		$sep     = '(?:\s*,\s*|\s+)'; // Supports both comma and space separators (CSS Color 4)
-		$alpha_p = "(?:\s*[\/,]\s*{$num_pct})";
-		
+		$alpha_p = "(?:\\s*[\\/,]\\s*{$num_pct})";
+
 		// Modern CSS Color 4: rgb/rgba and hsl/hsla are aliases supporting 3 or 4 args
-		$rgb_body  = "{$num_pct}{$sep}{$num_pct}{$sep}{$num_pct}(?:{$alpha_p})?";
-		$rgba = "(?:rgb|rgba)\s*\(\s*{$rgb_body}\s*\)";
-		
-		$hsl_body  = "{$num_pct}{$sep}{$pct}{$sep}{$pct}(?:{$alpha_p})?";
-		$hsla = "(?:hsl|hsla)\s*\(\s*{$hsl_body}\s*\)";
+		$rgb_body = "{$num_pct}{$sep}{$num_pct}{$sep}{$num_pct}(?:{$alpha_p})?";
+		$rgba     = "(?:rgb|rgba)\\s*\\(\\s*{$rgb_body}\\s*\\)";
+
+		$hsl_body = "{$num_pct}{$sep}{$pct}{$sep}{$pct}(?:{$alpha_p})?";
+		$hsla     = "(?:hsl|hsla)\\s*\\(\\s*{$hsl_body}\\s*\\)";
 
 		self::$color_primitive = "(?:#(?:[0-9a-f]{8}|[0-9a-f]{6}|[0-9a-f]{4}|[0-9a-f]{3})|{$rgba}|{$hsla}|[a-z]+|transparent|currentcolor)";
 

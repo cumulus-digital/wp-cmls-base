@@ -2,6 +2,8 @@
 
 // PHP-CS-Fixer project configuration
 $config = new PhpCsFixer\Config();
+$config->setPhpExecutable( '/opt/homebrew/opt/php@7.4/bin/php' );
+
 require_once __DIR__ . '/vendor/cumulus-digital/wp-php-cs-fixer/loader.php';
 
 // Load WP core classes/functions/constants for qualifying
@@ -9,7 +11,7 @@ $wp_core      = \str_getcsv( \file_get_contents( __DIR__ . '/.php-cs-fixer/wp-co
 $NFI_includes = \array_filter( \array_merge(
 	array( '@compiler_optimized' ),
 	array( '@internal' ),
-	$wp_core
+	$wp_core,
 ) );
 
 return $config
@@ -140,6 +142,7 @@ return $config
 			// Magic method definitions and calls must be using the correct casing.
 			'magic_method_casing' => true,
 			// Replace non multibyte-safe functions with corresponding mb function.
+			// Note: If running on PHP 8.4+, this may introduce mb_trim, which requires symfony/polyfill-php84 for PHP 7.4.
 			'mb_str_functions' => true,
 			// In method arguments and method call, there MUST NOT be a space before each comma and there MUST be one space after each comma. Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line.
 			'method_argument_space' => array( 'on_multiline' => 'ensure_fully_multiline' ),
@@ -371,7 +374,8 @@ return $config
 			// Standardize spaces around ternary operator.
 			'ternary_operator_spaces' => true,
 			// Multi-line arrays, arguments list, parameters list and `match` expressions must have a trailing comma.
-			'trailing_comma_in_multiline' => true,
+			// Restricted to 'arrays' and 'arguments' for PHP 7.4 compatibility.
+			'trailing_comma_in_multiline' => array( 'elements' => array( 'arrays', 'arguments' ) ),
 			// A single space or none should be around union type and intersection type operators.
 			'types_spaces' => array( 'space' => 'single' ),
 			// Unary operators should be placed adjacent to their operands.
