@@ -7,8 +7,9 @@
 namespace CMLS_Base\Shortcodes;
 
 use WP_Query;
+use const CMLS_Base\PREFIX;
 use CMLS_Base\CMLS_Cache;
-use function CMLS_Base\sanitize_css_value;
+use CMLS_Base\CSSValidator;
 use function CMLS_Base\cmls_get_template_part;
 use function CMLS_Base\make_post_class;
 use function CMLS_Base\ns;
@@ -91,7 +92,7 @@ function shortcode_post_cards( $attr ) {
 	}
 
 	$cache_group = 'CMLS_Base::shortcode_post_cards';
-	$cache_key   = \md5( \json_encode( $q ) );
+	$cache_key   = PREFIX . '-post_cards-' . \md5( \json_encode( $q ) );
 	$posts = CMLS_Cache::get( $cache_key, $cache_group );
 	
 	if ($posts === false) {
@@ -109,13 +110,21 @@ function shortcode_post_cards( $attr ) {
 		<div id="<?php echo \esc_attr( $q_id ); ?>" class="inline-archive cards">
 			<style>
 				#<?php echo \esc_attr( $q_id ); ?> {
-					--card-width: <?php echo sanitize_css_value( $attr['card-width'] ); ?>;
-					--card-gap: <?php echo sanitize_css_value( $attr['card-gap'] ); ?>;
-					justify-content: <?php echo sanitize_css_value( $attr['justify'] ); ?>;
+					<?php if ( CSSValidator::validateLength( $attr['card-width'] ) ): ?>
+						--card-width: <?php echo $attr['card-width']; ?>;
+					<?php endif; ?>
+					<?php if ( CSSValidator::validateGap( $attr['card-gap'] ) ): ?>
+						--card-gap: <?php echo $attr['card-gap']; ?>;
+					<?php endif; ?>
+					<?php if ( CSSValidator::validateFlexAlignment( $attr['justify'] ) ): ?>
+						justify-content: <?php echo $attr['justify']; ?>;
+					<?php endif; ?>
 				}
 				@media (max-width: 640px) {
 					#<?php echo $q_id; ?> {
-						--card-width: <?php echo sanitize_css_value( $attr['card-width-mobile'] ); ?>;
+						<?php if ( CSSValidator::validateLength( $attr['card-width-mobile'] ) ): ?>
+							--card-width: <?php echo $attr['card-width-mobile']; ?>;
+						<?php endif; ?>
 					}
 				}
 			</style>

@@ -23,7 +23,7 @@ if ( \is_admin() ) {
 				'defaultAriaLabel' => \__( 'Select default color' ),
 				'pick'             => \__( 'Select Color' ),
 				'defaultLabel'     => \__( 'Color value' ),
-			)
+			),
 		);
 	}
 }
@@ -221,7 +221,7 @@ class themeMods {
 
 			foreach ( $post_ids as $pId ) {
 				$files[$pId['key']] = \wp_make_link_relative(
-					$posts_by_id[$pId['id']]->guid
+					$posts_by_id[$pId['id']]->guid,
 				);
 			}
 
@@ -309,10 +309,12 @@ function themeCustomizerScripts() {
 	CMLS_Cache::flushGroup( 'CMLS_Base::themeMods' );
 } );
 
+require __DIR__ . '/validators.php';
 require __DIR__ . '/sanitizers.php';
 require __DIR__ . '/identity.php';
 require __DIR__ . '/menu.php';
 require __DIR__ . '/masthead.php';
 require __DIR__ . '/content.php';
 require __DIR__ . '/footer.php';
+
 require __DIR__ . '/output.php';

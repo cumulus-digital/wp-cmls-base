@@ -70,51 +70,63 @@ if ( \get_option( 'cmls-async_fonts', '1' ) === '1' ) {
 
 // Generate customization CSS
 function generateCustomCSS() {
-	$files  = themeMods::getFiles();
+	$files = themeMods::getFiles();
+
+	// Validate file URLs and set CSS URLs
+	foreach ( $files as $key => $val ) {
+		$files[$key]             = "'" . \esc_url_raw( $val ) . "'";
+		$files[$key . '-cssurl'] = "url('" . \esc_url_raw( $val ) . "')";
+		if ( ! CSSValidator::validateImage( $files[$key . '-cssurl'] ) ) {
+			unset( $files[$key . '-cssurl'] );
+		}
+	}
+
 	$colors = themeMods::getColors();
-	$fonts  = array(
-		'font-webfont_url'        => themeMods::get( 'font-webfont_url' ),
+
+	// Validate colors
+	foreach ( $colors as $key => $val ) {
+		if ( ! CSSValidator::validateColor( $val ) ) {
+			unset( $colors[$key] );
+		}
+	}
+
+	$fonts = array(
+		'font-webfont_url'        => \filter_var( themeMods::get( 'font-webfont_url' ), \FILTER_VALIDATE_URL ) ? themeMods::get( 'font-webfont_url' ) : null,
 		'font-font_family'        => themeMods::get( 'font-font_family' ),
-		'font-header_webfont_url' => themeMods::get( 'font-header_webfont_url' ),
+		'font-header_webfont_url' => \filter_var( themeMods::get( 'font-header_webfont_url' ), \FILTER_VALIDATE_URL ) ? themeMods::get( 'font-header_webfont_url' ) : null,
 		'font-header_family'      => themeMods::get( 'font-header_family' ),
 	);
+	$fonts = \array_filter( $fonts );
+
 	$text = array(
 		'text-copyright'                 => getCopyright(),
 		'text-masthead-before_menu'      => themeMods::get( 'text-masthead-before_menu' ),
 		'text-masthead-before_menu-link' => themeMods::get( 'text-masthead-before_menu-link' ),
 	);
-	$settings = themeMods::getSettings();
-
-	// Generate CSS URL vars for files
-	foreach ( $files as $key => $val ) {
-		$val                     = \addslashes( $val );
-		$files[$key]             = "'{$val}'";
-		$files[$key . '-cssurl'] = "url('{$val}')";
-	}
 
 	// Sanitize text
 	\array_walk_recursive( $text, function ( &$item, $key ) {
 		$item = "'" . \addslashes( $item ) . "'";
 	} );
 
-	// Sanitize colors
-	$colors = \preg_replace( '/[^\'",\.\(\)#0-9a-z]/', '', $colors );
+	$settings = themeMods::getSettings();
 
 	$vars = \array_merge(
 		$files,
 		$colors,
 		$fonts,
 		$text,
-		$settings
+		$settings,
 	);
+
+	\array_walk_recursive( $vars, function ( &$item, $key ) {
+		$item = \wp_strip_all_tags( $item );
+		$item = \str_replace( ';', '\3A', $item );
+	} );
 
 	$css = ":root,::after,::before {\n";
 
 	foreach ( $vars as $key => $val ) {
-		$val = \wp_strip_all_tags( $val );
-		$val = sanitize_css_value( $val );
-		$val = \str_replace( ';', '\3A', $val );
-
 		if ( ! empty( $val ) ) {
 			$css .= '--' . PREFIX . '-' . $key . ':' . $val . ';' . "\n";
 		}
@@ -130,14 +142,14 @@ function generateCustomCSS() {
  * inline stylesheets. The request for the remove file will get intercepted
  * in overrideInternalStyleRequest() and overrideExternalStyleRequest().
  */
-function enqueueOutputCustomCSS() {
+function enqueueOutputCustomCSSForEditor() {
 	\add_editor_style( theme_url() . '/cmls-block-editor-customizer-styles' );
 }
-\add_action( 'after_setup_theme', ns( 'enqueueOutputCustomCSS' ), 12 );
+\add_action( 'after_setup_theme', ns( 'enqueueOutputCustomCSSForEditor' ), 12 );
 
 // Override request to inject customizer vars
 function overrideInternalStyleRequest( $response, $parsed_args, $url ) {
-	if ( \mb_strstr( $url, '/cmls-block-editor-customizer-styles' ) && is_user_logged_in() ) {
+	if ( \mb_strstr( $url, '/cmls-block-editor-customizer-styles' ) && \is_user_logged_in() ) {
 		if ( \class_exists( '\WpOrg\Requests\Response\Headers' ) ) {
 			$headers = new \WpOrg\Requests\Response\Headers();
 		} else {
@@ -159,7 +171,7 @@ function overrideInternalStyleRequest( $response, $parsed_args, $url ) {
 }
 \add_filter( 'pre_http_request', ns( 'overrideInternalStyleRequest' ), 10, 3 );
 function overrideExternalStyleRequest() {
-	if ( \mb_strstr( $_SERVER['REQUEST_URI'], '/cmls-block-editor-customizer-styles' ) && is_user_logged_in() ) {
+	if ( \mb_strstr( $_SERVER['REQUEST_URI'], '/cmls-block-editor-customizer-styles' ) && \is_user_logged_in() ) {
 		echo generateCustomCSS();
 
 		exit();
@@ -170,13 +182,13 @@ function overrideExternalStyleRequest() {
 // Output customizations as CSS vars
 function directOutputCustomCSS() {
 	$cache_key = PREFIX . '-customizer_results';
-	$css = \get_transient( $cache_key );
+	$css       = \get_transient( $cache_key );
 
 	if ( $css === false ) {
 		$css = generateCustomCSS();
-		\set_transient( $cache_key, $css, \HOUR_IN_SECONDS );
+		\set_transient( $cache_key, $css, HOUR_IN_SECONDS );
 	}
-	
+
 	\wp_register_style( PREFIX . '-customizer_results', '', array( PREFIX . '_customizer_vars' ), false, 'screen' );
 	\wp_enqueue_style( PREFIX . '-customizer_results', '', array( PREFIX . '_customizer_vars' ) );
 	\wp_add_inline_style( PREFIX . '-customizer_results', $css );

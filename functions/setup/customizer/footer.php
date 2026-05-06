@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Customizer section FOOTER
+ * Customizer section FOOTER.
  */
 
 namespace CMLS_Base;
@@ -8,72 +9,73 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 use CMLS_Base\Vendors\WPTRT\Customize\Control\ColorAlpha;
-use WP_Customize_Media_Control;
 
 // Register customizable colors
 function themeCustomizerFooter( $wpc ) {
-	$wpc->add_panel( 'cmls-footer', [
+	$wpc->add_panel( 'cmls-footer', array(
 		'title'    => 'Footer',
 		'priority' => 103,
-	] );
+	) );
 
-	$wpc->add_section( 'cmls-footer-colors', [
+	$wpc->add_section( 'cmls-footer-colors', array(
 		'title'    => 'Colors',
 		'panel'    => 'cmls-footer',
 		'priority' => 30,
-	] );
-	$wpc->add_setting( 'color-footer-background', [
+	) );
+	$wpc->add_setting( 'color-footer-background', array(
 		'default'           => themeMods::getDefault( 'color-footer-background' ),
 		'sanitize_callback' => ns( 'themeCustomizer_sanitizeColorString' ),
-	] );
+		'validate_callback' => ns( 'themeCustomizer_validateColorString' ),
+	) );
 	$wpc->add_control(
 		new ColorAlpha(
 			$wpc,
 			'color-footer-background',
-			[
+			array(
 				'label'    => 'Footer Background',
 				'section'  => 'cmls-footer-colors',
 				'settings' => 'color-footer-background',
-			]
-		)
+			),
+		),
 	);
-	$wpc->add_setting( 'color-footer-foreground', [
+	$wpc->add_setting( 'color-footer-foreground', array(
 		'default'           => themeMods::getDefault( 'color-footer-foreground' ),
 		'sanitize_callback' => ns( 'themeCustomizer_sanitizeColorString' ),
-	] );
+		'validate_callback' => ns( 'themeCustomizer_validateColorString' ),
+	) );
 	$wpc->add_control(
 		new ColorAlpha(
 			$wpc,
 			'color-footer-foreground',
-			[
+			array(
 				'label'    => 'Footer Text',
 				'section'  => 'cmls-footer-colors',
 				'settings' => 'color-footer-foreground',
-			]
-		)
+			),
+		),
 	);
 
-	$wpc->add_section( 'cmls-footer-images', [
+	$wpc->add_section( 'cmls-footer-images', array(
 		'title'    => 'Images',
 		'panel'    => 'cmls-footer',
 		'priority' => 31,
-	] );
-	$wpc->add_setting( 'file-footer-logo', [
-		'default'              => themeMods::getDefault( 'file-footer-logo' ),
-		'sanitize_callback'    => ns( 'themeCustomizer_requireImage' ),
-		'sanitize_js_callback' => ns( 'themeCustomizer_requireImage' ),
-	] );
+	) );
+	$wpc->add_setting( 'file-footer-logo', array(
+		'default'           => themeMods::getDefault( 'file-footer-logo' ),
+		'sanitize_callback' => ns( 'themeCustomizer_sanitizeImage' ),
+		'validate_callback' => ns( 'themeCustomizer_validateImage' ),
+	) );
 	$wpc->add_control(
-		new WP_Customize_Media_Control(
+		new \WP_Customize_Media_Control(
 			$wpc,
 			'file-footer-logo',
-			[
+			array(
 				'label'       => 'Footer logo',
 				'description' => 'Defaults to Masthead Logo.',
 				'section'     => 'cmls-footer-images',
 				'mime_type'   => 'image',
-			]
-		)
+			),
+		),
 	);
 
 	/*
@@ -93,6 +95,6 @@ function themeCustomizerFooter( $wpc ) {
 					'label' => 'Copyright Notice',
 					'description' => 'Customize the footer copyright notice.<br>Available macros: $year'
 				));
-	*/
+	 */
 }
 \add_action( 'customize_register', ns( 'themeCustomizerFooter' ) );
