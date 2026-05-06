@@ -11,6 +11,55 @@ use Walker_Nav_Menu;
 
 class CleanMenuWalker extends Walker_Nav_Menu {
 
+	/**
+	 * Traverse elements to create list from elements.
+	 *
+	 * This override efficiently filters out items referencing non-published posts
+	 * using a single lightweight ID-only query to minimize memory overhead.
+	 *
+	 * @param array $elements  List of elements.
+	 * @param int   $max_depth Max depth to traverse.
+	 * @param mixed ...$args   Additional arguments.
+	 * @return string Resulting HTML.
+	 */
+	public function walk( $elements, $max_depth, ...$args ) {
+		$post_ids = [];
+		foreach ( $elements as $item ) {
+			if ( 'post_type' === $item->type ) {
+				$post_ids[] = (int) $item->object_id;
+			}
+		}
+
+		$published_ids = [];
+		if ( ! empty( $post_ids ) ) {
+			// Fetch ONLY the IDs of posts that are actually published.
+			$published_ids = \get_posts( [
+				'post__in'               => $post_ids,
+				'post_type'              => 'any',
+				'post_status'            => 'publish',
+				'posts_per_page'         => -1,
+				'fields'                 => 'ids',
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+			] );
+
+			// Ensure we have an array of integers for reliable comparison.
+			$published_ids = \array_map( 'intval', $published_ids );
+		}
+
+		// Filter the elements list.
+		$elements = \array_filter( $elements, function ( $item ) use ( $published_ids ) {
+			if ( 'post_type' === $item->type ) {
+				return \in_array( (int) $item->object_id, $published_ids, true );
+			}
+
+			return true;
+		} );
+
+		return parent::walk( $elements, $max_depth, ...$args );
+	}
+
 	public function start_lvl( &$output, $depth = 0, $args = null ) {
 		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
 			$t = '';
