@@ -157,12 +157,40 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 	}
 
 	/**
+	 * Sanitize simple HTML
+	 * 
+	 * @param string $html
+	 * 
+	 * @return string
+	 */
+	function sanitizeSimpleHTML( $input ) {
+		$allowed = array(
+			'a' => array(
+				'href'   => array(),
+				'title'  => array(),
+				'target' => array(),
+				'rel'    => array(),
+			),
+			'br' => array(
+				'clear' => array(),
+			),
+			'em' => array(
+				'class' => array(),
+			),
+			'strong' => array(),
+			'small'  => array(),
+		);
+
+		return \wp_kses( $input, $allowed, array( 'http', 'https', 'sms', 'tel', 'mailto' ) );
+	}
+
+	/**
 	 * Return the copyright field from the theme customizer.
 	 *
 	 * @return string
 	 */
 	function getCopyright() {
-		$copyright = themeCustomizer_sanitizeSimpleHTML( themeMods::getRaw( 'text-copyright' ) );
+		$copyright = sanitizeSimpleHTML( themeMods::getRaw( 'text-copyright' ) );
 
 		return \str_replace( '$year', \date( 'Y' ), $copyright );
 	}
@@ -728,12 +756,5 @@ if ( ! \defined( __NAMESPACE__ . '\CMLS_HELPERS_IMPORTED' ) ) {
 		return (bool) \get_theme_support( 'widgets-block-editor' );
 	}
 
-	/**
-	 * Very simple sanitizer for CSS values.
-	 *
-	 * @param mixed $val
-	 */
-	function sanitize_css_value( $val ) {
-		return \str_replace( array( ';', '{', '}' ), '', $val );
-	}
+	require(__DIR__ . '/css-validator.php');
 }
