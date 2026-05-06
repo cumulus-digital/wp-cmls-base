@@ -56,96 +56,116 @@ function backendSetupScripts() {
 
 	$logo = \preg_replace(
 		'#https?://#i',
-		'',
+		'//',
 		\get_site_icon_url()
 	);
 	if ( ! $logo ) {
 		return;
 	}
 
-	$color_brand     = ThemeMods::get( 'color-brand' );
-	$color_highlight = ThemeMods::get( 'color-highlight' );
+	$cache_key = PREFIX . '-branded_logo-inline_style';
+
+	$inline_style = \get_transient( $cache_key );
+
+	if ( ! $inline_style ) {
+		$color_brand     = ThemeMods::get( 'color-brand' );
+		$color_highlight = ThemeMods::get( 'color-highlight' );
+
+		$inline_style = "
+			#wpadminbar #wp-admin-bar-wp-logo a {
+				background: transparent !important;
+			}
+			#wpadminbar #wp-admin-bar-wp-logo,
+			#editor .edit-post-header .edit-post-fullscreen-mode-close.has-icon {
+				" . (CSSValidator::validateColor( $color_brand ) ? "background-color: {$color_brand};" : '') . "
+				" . ( ! empty($logo) ? "background-image: url(" . esc_url_raw($logo) . ") !important;" : '') . "
+				background-position: center center !important;
+				background-repeat: no-repeat !important;
+				background-size: 70% !important;
+			}
+			#wpadminbar #wp-admin-bar-wp-logo:hover {
+				" . (CSSValidator::validateColor( $color_highlight ) ? "background-color: {$color_highlight};" : '') . "
+				" . ( ! empty($logo) ? "background-image: url(" . esc_url_raw($logo) . ") !important;" : '') . "
+			}
+			#wpadminbar #wp-admin-bar-wp-logo > .ab-item .ab-icon:before {
+				content: '' !important;
+			}
+			.edit-post-fullscreen-mode-close.has-icon::before {
+				box-shadow: none;
+			}
+			#editor .edit-post-header .edit-post-fullscreen-mode-close.has-icon svg {
+				display: none;
+			}
+		";
+		\set_transient( $cache_key, $inline_style, \HOUR_IN_SECONDS );
+	}
 
 	\wp_register_style( PREFIX . '-branded_logo', '', array(), false, 'screen' );
 	\wp_enqueue_style( PREFIX . '-branded_logo' );
-
 	\wp_add_inline_style(
 		PREFIX . '-branded_logo',
-		"
-		#wpadminbar #wp-admin-bar-wp-logo a {
-			background: transparent !important;
-		}
-		#wpadminbar #wp-admin-bar-wp-logo,
-		#editor .edit-post-header .edit-post-fullscreen-mode-close.has-icon {
-			background-color: " . sanitize_css_value($color_brand) . ";
-			background-image: url(" . sanitize_css_value($logo) . ") !important;
-			background-position: center center !important;
-			background-repeat: no-repeat !important;
-			background-size: 70% !important;
-		}
-		#wpadminbar #wp-admin-bar-wp-logo:hover {
-			background-color: " . sanitize_css_value($color_highlight) . ";
-			background-image: url(" . sanitize_css_value($logo) . ") !important;
-		}
-		#wpadminbar #wp-admin-bar-wp-logo > .ab-item .ab-icon:before {
-			content: '' !important;
-		}
-		.edit-post-fullscreen-mode-close.has-icon::before {
-			box-shadow: none;
-		}
-		#editor .edit-post-header .edit-post-fullscreen-mode-close.has-icon svg {
-			display: none;
-		}
-		"
+		$inline_style
 	);
 } );
 
 // Brand the login page
 \add_action( 'login_enqueue_scripts', function () {
-	$logo = \preg_replace(
-		'#https?://#i',
-		'',
-		\get_site_icon_url()
-	);
-	$logo_css = empty( $logo ) ? 'none' : 'url(' . $logo . ')';
+	$cache_key = PREFIX . '-branded_login-inline_style';
+	$inline_style = \get_transient($cache_key);
 
-	$color_masthead_bg = ThemeMods::get( 'color-masthead-background' );
-	$color_masthead_fg = ThemeMods::get( 'color-masthead-foreground' );
-	$color_brand       = ThemeMods::get( 'color-brand' );
-	$color_highlight   = ThemeMods::get( 'color-highlight' );
+	if ( ! $inline_style ) {
+		$logo = \preg_replace(
+			'#https?://#i',
+			'//',
+			\get_site_icon_url()
+		);
 
-	\wp_register_style( PREFIX . '-branded_logo', '' );
-	\wp_enqueue_style( PREFIX . '-branded_logo' );
+		$color_masthead_bg = ThemeMods::get( 'color-masthead-background' );
+		$color_masthead_fg = ThemeMods::get( 'color-masthead-foreground' );
+		$color_brand       = ThemeMods::get( 'color-brand' );
+		$color_highlight   = ThemeMods::get( 'color-highlight' );
+
+		$inline_style = "
+			body {
+				" . (CSSValidator::validateColor( $color_masthead_bg ) ? "background-color: {$color_masthead_bg} !important;" : '') . "
+			}
+			#login h1 a, .login h1 a {
+				" . ( ! empty( $logo ) ? "background-image: url(" . \esc_url_raw($logo) . ") !important;" : '' ) . "
+				background-size: contain;
+				background-position: center center;
+				background-repeat: no-repeat;
+				width: 150px;
+				height: 150px;
+			}
+			#loginform {
+				border-radius: .5em;
+			}
+			#wp-submit {
+				" . (CSSValidator::validateColor( $color_brand ) ? "background-color: {$color_brand} !important;" : '') . "
+			}
+			.login #backtoblog a, .login #nav a {
+				" . (CSSValidator::validateColor( $color_masthead_fg ) ? "color: {$color_masthead_fg} !important;" : '') . "
+			}
+			.login #backtoblog a:hover, .login #nav a:hover {
+				" . (CSSValidator::validateColor( $color_highlight ) ? "color: {$color_masthead_fg} !important;" : '') . "
+			}
+		";
+		\set_transient( $cache_key, $inline_style, \HOUR_IN_SECONDS );
+	}
+
+	\wp_register_style( PREFIX . '-branded_login', '' );
+	\wp_enqueue_style( PREFIX . '-branded_login' );
 
 	\wp_add_inline_style(
-		PREFIX . '-branded_logo',
-		"
-		body {
-			background-color: " . sanitize_css_value( $color_masthead_bg ) . " !important;
-		}
-		#login h1 a, .login h1 a {
-			background-image: " . sanitize_css_value( $logo_css ) . ";
-			background-size: contain;
-			background-position: center center;
-			background-repeat: no-repeat;
-			width: 150px;
-			height: 150px;
-		}
-		#loginform {
-			border-radius: .5em;
-		}
-		#wp-submit {
-			background-color: " . sanitize_css_value( $color_brand ) . " !important;
-		}
-		.login #backtoblog a, .login #nav a {
-			color: " . sanitize_css_value( $color_masthead_fg ) . " !important;
-		}
-		.login #backtoblog a:hover, .login #nav a:hover {
-			color: " . sanitize_css_value( $color_highlight ) . " !important;
-		}
-		"
+		PREFIX . '-branded_login',
+		$inline_style
 	);
 } );
 \add_action( 'login_headerurl', function () {
 	return \home_url();
+} );
+
+\add_action( 'customize_save_after', function() {
+	\delete_transient(PREFIX . '-branded_logo-inline_style'); 
+	\delete_transient(PREFIX . '-branded_login-inline_style');
 } );
