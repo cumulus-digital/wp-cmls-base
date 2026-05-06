@@ -175,7 +175,7 @@ function letPagesOverrideArchives( &$query ) {
 \add_action( 'pre_get_posts', ns( 'letPagesOverrideArchives' ), 1 );
 
 // Clear cache group on post or taxonomy save
-function clearLetPagesOverrideArchivesCache( $post_id, $post, $update ) {
+function clearLetPagesOverrideArchivesCache() {
 	CMLS_Cache::flushGroup( 'CMLS_Base::letPagesOverrideArchives' );
 }
 $clearLetPagesOverrideArchivesHooks = array(
@@ -194,7 +194,7 @@ $clearLetPagesOverrideArchivesHooks = array(
 	'edit_category',
 );
 foreach( $clearLetPagesOverrideArchivesHooks as $hook ) {
-	\add_action( $hook, ns( 'clearLetPagesOverrideArchivesCache' ), 10, 3 );
+	\add_action( $hook, ns( 'clearLetPagesOverrideArchivesCache' ), 10 );
 }
 
 /**
