@@ -171,9 +171,23 @@ final class CSSValidator {
 			) ) ),
 
 			// --- Flexbox & Alignment ---
-			'flex-basis'      => $lengthPercentAuto,
-			'justify-content' => self::keywordList( 'flex-start|flex-end|center|space-between|space-around|space-evenly' ),
-			'align-items'     => self::keywordList( 'stretch|center|flex-start|flex-end|baseline' ),
+			'flex-basis' => $lengthPercentAuto,
+			'justify-content' => self::oneOf( array(
+				self::keywordList( 'normal|stretch|space-between|space-around|space-evenly' ),
+				self::keywordList( 'center|start|end|flex-start|flex-end|left|right' ),
+				self::sequence( array(
+					self::keywordList( 'safe|unsafe' ),
+					self::keywordList( 'center|start|end|flex-start|flex-end|left|right' ),
+				) ),
+			) ),
+			'align-items' => self::oneOf( array(
+				self::keywordList( 'normal|stretch|baseline|first baseline|last baseline' ),
+				self::keywordList( 'center|start|end|self-start|self-end|flex-start|flex-end' ),
+				self::sequence( array(
+					self::keywordList( 'safe|unsafe' ),
+					self::keywordList( 'center|start|end|self-start|self-end|flex-start|flex-end' ),
+				) ),
+			) ),
 		);
 	}
 
@@ -211,6 +225,10 @@ final class CSSValidator {
 
 	private static function anyOrder( array $nodes ): array {
 		return array( 'type' => 'anyOrder', 'nodes' => $nodes );
+	}
+
+	private static function sequence( array $nodes ): array {
+		return array( 'type' => 'sequence', 'nodes' => $nodes );
 	}
 
 	private static function cssFunction( string $name, array $arg ): array {
@@ -257,6 +275,7 @@ final class CSSValidator {
 			'range'      => '(?:' . self::compile( $node['node'] ) . ')(?:\s+' . self::compile( $node['node'] ) . '){' . ( $node['min'] - 1 ) . ',' . ( $node['max'] - 1 ) . '}',
 			'function'   => \preg_quote( $node['name'], '/' ) . '\s*\(\s*' . self::compile( $node['arg'] ) . '\s*\)',
 			'anyOrder'   => self::compileAnyOrder( $node['nodes'] ),
+			'sequence'   => self::compileSequence( $node['nodes'] ),
 			'regex'      => $node['value'],
 			default      => ''
 		};
@@ -266,6 +285,10 @@ final class CSSValidator {
 		$patterns = \implode( '|', \array_map( array( self::class, 'compile' ), $nodes ) );
 
 		return "(?:{$patterns})(?:\\s+(?:{$patterns})){0," . ( \count( $nodes ) - 1 ) . '}';
+	}
+
+	private static function compileSequence( array $nodes ): string {
+		return \implode( '\\s+', \array_map( array( self::class, 'compile' ), $nodes ) );
 	}
 
 	/* =========================================================

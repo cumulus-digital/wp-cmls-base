@@ -125,6 +125,13 @@ class CSSValidatorTest {
         echo "\n\e[1;33m[Flexbox]\e[0m\n";
         $this->assert('validateFlexAlignment', 'center', true, 'Justify center');
         $this->assert('validateFlexAlignment', 'space-between', true, 'Justify space-between');
+        $this->assert('validateFlexAlignment', 'safe center', true, 'Overflow safe center');
+        $this->assert('validateFlexAlignment', 'unsafe end', true, 'Overflow unsafe end');
+        
+        // Strict safe/unsafe rules
+        $this->assert('validateFlexAlignment', 'center safe', false, 'Overflow wrong order');
+        $this->assert('validateFlexAlignment', 'safe space-between', false, 'Overflow with distributed alignment');
+        $this->assert('validateFlexAlignment', 'normal', true, 'Justify normal');
     }
 
     private function testSecurity(): void {
