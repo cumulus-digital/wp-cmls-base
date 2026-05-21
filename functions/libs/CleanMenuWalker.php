@@ -10,17 +10,17 @@ namespace CMLS_Base;
 
 class CleanMenuWalker extends \Walker_Nav_Menu {
 	/**
-		 * Traverse elements to create list from elements.
-		 *
-		 * This override efficiently filters out items referencing non-published posts
-		 * using a single lightweight ID-only query to minimize memory overhead.
-		 *
-		 * @param array $elements  list of elements
-		 * @param int   $max_depth max depth to traverse
-		 * @param mixed ...$args   Additional arguments.
-		 *
-		 * @return string resulting HTML
-		 */
+	 * Traverse elements to create list from elements.
+	 *
+	 * This override efficiently filters out items referencing non-published posts
+	 * using a single lightweight ID-only query to minimize memory overhead.
+	 *
+	 * @param array $elements  list of elements
+	 * @param int   $max_depth max depth to traverse
+	 * @param mixed ...$args   Additional arguments.
+	 *
+	 * @return string resulting HTML
+	 */
 	public function walk( $elements, $max_depth, ...$args ) {
 		$post_ids = array();
 		foreach ( $elements as $item ) {
