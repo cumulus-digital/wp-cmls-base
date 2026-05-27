@@ -8,6 +8,22 @@ namespace CMLS_Base;
 \defined( 'ABSPATH' ) || exit( 'No direct access allowed.' );
 
 if ( \get_option( 'cmls-async_fonts', '1' ) === '1' ) {
+	\add_filter( 'style_loader_tag', function ($tag, $handle, $href, $media) {
+		// Never break editor-critical styles
+		if ( is_admin() ) {
+			return $tag;
+		}
+
+		// Add preload hint WITHOUT removing stylesheet behavior
+		if ( \mb_stristr( $tag, 'rel="stylesheet"' ) !== false ) {
+			return
+				'<link rel="preload" as="style" href="' . esc_url( $href ) . '">' .
+				$tag;
+		}
+		return $tag;
+	}, \PHP_INT_MAX, 4 );
+
+	/*
 	\add_filter( 'style_loader_tag', function ( $tag, $handle, $href, $media ) {
 		// Don't alter real preload tags
 		if (
@@ -42,21 +58,6 @@ if ( \get_option( 'cmls-async_fonts', '1' ) === '1' ) {
 			$preload = \str_ireplace( $replace_media, 'rel="preload" as="style" fetchpriority="low"', $norel );
 
 			return "{$preload}\n<noscript id={$handle}-noscript>{$tag}</noscript>";
-			/*
-			$replace_media = array(
-				'media="all"',
-				"media='all'",
-				'media="screen"',
-				"media='screen'",
-				'media="preload"',
-				"media='preload'",
-			);
-
-			$noscript = \str_ireplace( $replace_media, 'media="all"', $tag );
-			$onload   = \str_ireplace( $replace_media, 'media="print" data-cmpreloading', $tag );
-
-			return "{$onload}\n<noscript>{$noscript}</noscript>";
-			 */
 		}
 
 		return $tag;
@@ -72,4 +73,5 @@ if ( \get_option( 'cmls-async_fonts', '1' ) === '1' ) {
 		);
 		\wp_enqueue_script( PREFIX . '_script-swap_preloading_styles' );
 	}, \PHP_INT_MIN );
+	*/
 }
