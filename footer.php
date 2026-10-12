@@ -60,5 +60,11 @@ $footer_logo    = $footer_logo_id
 
 
 <!-- this site was built too quickly by github.com/vena -->
+<!-- <?php
+try {
+	$theme_version = wp_get_theme('wp-cmls-base')->get('Version');
+	echo $theme_version;
+} catch (Exception $e) {}
+?> -->
 </body>
 </html>
