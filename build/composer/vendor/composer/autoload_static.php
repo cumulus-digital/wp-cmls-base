@@ -32,7 +32,6 @@ class ComposerStaticInit8b213a6df91d64c432b1475b4c55288e
     public static $classMap = array (
         'CMLS_Base\\Vendors\\WPTRT\\Customize\\Control\\ColorAlpha' => __DIR__ . '/..' . '/wptrt/control-color-alpha/src/ColorAlpha.php',
         'CMLS_Base\\Vendors\\vena\\AcfJson\\Loader' => __DIR__ . '/..' . '/vena/acf-json/src/Loader.php',
-        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

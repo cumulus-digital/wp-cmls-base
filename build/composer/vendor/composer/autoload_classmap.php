@@ -8,5 +8,4 @@ $baseDir = dirname($vendorDir);
 return array(
     'CMLS_Base\\Vendors\\WPTRT\\Customize\\Control\\ColorAlpha' => $vendorDir . '/wptrt/control-color-alpha/src/ColorAlpha.php',
     'CMLS_Base\\Vendors\\vena\\AcfJson\\Loader' => $vendorDir . '/vena/acf-json/src/Loader.php',
-    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
 );
